@@ -1,0 +1,3 @@
+export const GET_ALL_ORDERS ="GET_ALL_ORDERS";
+export const VIEW_ORDER ="VIEW_ORDER";
+export const AFTER_STATUS_CHANGE= "AFTER_STATUS_CHANGE";

@@ -1,0 +1,4 @@
+
+export const PRODUCT_DATA = 'PRODUCT_DATA';
+export const PRODUCT_DETAIL = 'PRODUCT_DETAIL';
+

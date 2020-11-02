@@ -1,0 +1,41 @@
+export const SubIssue = {
+  Order: [
+    "Buyer/Order verification",
+    "Order cancellation assistance",
+    "Order information/processing assistance",
+    "Returns",
+    "Issues with order processing",
+    "Other Orders related Queries",
+    "Packaging Material Related Query",
+    "Dropship related queries/complaints",
+  ],
+  Listing: [
+    "Add or change requests",
+    "Listing related issues",
+    "Report Infringment/Fraud",
+    "Stock file",
+    "Listing visibility",
+    "Brand Regulations",
+    "Smart Seller related Query/complaint",
+  ],
+  Payments: [
+    "SPF related queries",
+    "Payment related complaints",
+    "TDS related queries",
+    "Commission Invoice Request/Query",
+    "Payments General Queries/Clarifications",
+    "Rate card related queries/compalints",
+    "TCS related queries",
+  ],
+  Promotions: [
+    "My Promotion Related Queries",
+    "Amvirgin Promotion Related Queries",
+    "Freebie Related Queries",
+  ],
+  Logistic: ["Pickup is done, but orders are still visible in pending handover tab",
+  "Logistic partner did not pick order",
+   "Pickup Reschedule", "Order was already cancelled, still reattempt marked",
+   "False reattempt marked, nobody came to pickup"
+  ],
+  Others: ["others"],
+};

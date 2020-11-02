@@ -1,0 +1,76 @@
+
+.BrandSearch {
+    position: absolute;
+    left: 20px;
+    top: 100px;
+    width: 22%;
+    z-index: 5;
+    max-height: 200px;
+    overflow-y: auto;
+    min-height: 33px;
+    padding: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #eee;
+    border-image: initial;
+    border-radius: 3px;
+    background: rgb(255, 255, 255);
+}
+
+.destypehover:hover{
+    color:red;
+}
+
+
+#main li.active {
+    background:rgba(0, 0, 0, 0.9);
+
+}
+
+#main li.active a,#childcategory li.active a,#subchildcategory li.active a{
+    color:white; 
+}
+
+#childcategory li.active {
+    background:rgba(0, 0, 0, 0.9);
+}
+
+#subchildcategory li.active {
+    background:rgba(0, 0, 0, 0.9);
+}
+
+.selectbrandcont{
+  flex-direction: row!important;
+}
+
+
+.hr-text {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: black;
+  text-align: center;
+  height: 1.5em;
+  opacity: .5;
+  &:before {
+    content: '';
+    background: linear-gradient(to right, transparent, #818078, transparent);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    color: black;
+
+    padding: 0 .5em;
+    line-height: 1.5em;
+    color: #818078;
+    background-color: #fcfcfa;
+  }
+}

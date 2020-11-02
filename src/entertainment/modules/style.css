@@ -1,0 +1,18 @@
+.logout {
+    cursor: pointer;
+    color: rgb(20, 19, 19)!important;
+    display: none;
+    top: 50px;
+    width:100px;
+    right:0;
+    padding:6px;
+    position: fixed;
+    background:rgb(250, 249, 250);
+}
+.logP06:hover .logout{
+    display: block;
+    transition: 2s;
+}
+ul {
+    list-style: none;
+}

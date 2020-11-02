@@ -1,0 +1,419 @@
+.flipper {
+    padding: 30px 100px;
+    width: 550px;
+    height: 820px;
+    position: relative;
+    margin: 0px auto 50px;
+  background: transparent;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  
+}
+
+.front, .back {
+/*background-color: rgba(0,0,0,.3);*/
+position: absolute;
+  padding:10px 30px;
+top: 0;
+left: 0;
+right: 0;
+  
+  backface-visibility: hidden;
+}
+
+.front{
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+  
+}
+
+.back{
+  transform: rotateY(180deg);
+  
+}
+.flip{
+      transform: rotateY(180deg);
+}
+.formsection input{
+  width:100%;
+  margin-bottom:15px;
+  height:40px;
+  box-sizing: border-box;
+  padding:10px;
+  background-color: transparent;
+}
+
+.front .title{
+text-align: left;
+color: #eee;
+}
+.back .title{
+text-align: left;
+color: #fff;
+}
+.flipbutton{
+  color:#4096ee;
+  text-decoration:none;
+  text-align:left !important;
+}
+
+.logologin{
+  width: 100%;
+  margin: 30px auto 0px;
+  padding-top: 2px;
+}
+.logologin img{
+  width: 80px;
+  margin: 0px auto 0px;
+  display: block;
+  text-align: center;
+}
+
+.formsection input{
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #eee;
+}
+.formsection input:select , .formsection input:focus {
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #eee;
+}
+
+.checkcheck{
+  width: 5%!important;
+  height: 15px!important;
+  margin: 10px 0px;
+  color: #ddd;
+}
+
+.formsection input[type=button]{
+  background: linear-gradient(rgba(240,0,0,0.8), rgba(204,0,0,0.2));
+  color: #fff;
+  border: 0px solid #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: Montserrat;
+  margin: 27px auto;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+.formsection input[type=button]:hover{
+  margin: 15px auto 25px;
+}
+.formsection form{
+  padding: 30px 50px 30px;
+  background-color: rgba(0,0,0,.8);
+  margin: 50px 0px;
+}
+.halfleft{
+   width: 50%;
+   float: left;
+
+}
+.halfleft h6{
+   color: #c00;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 25px;
+  margin-bottom: 20px;
+  line-height: 1;
+  font-family: Montserrat;
+  text-transform: uppercase;
+}
+.halfleft h6::after{
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 35px;
+  display: inline-block;
+  height: 5px;
+  width: 10%;
+  border-bottom: 2px solid;
+  margin-top: 5px;
+  color: #c00;
+}
+
+.halfright{
+  float: right;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 15px;
+  margin-bottom: 20px;
+  line-height: 1;
+  font-family: Montserrat;
+  text-transform: uppercase;
+}
+.halfright:hover{
+  color: #c00;
+}
+
+.socialbtn{
+width: 40%;
+float: left;
+margin: 20px 5%;
+}
+
+.socialbtn .facebookbtn{
+width: 100%;
+background-color: #3b5998;
+border: 0px solid #000;
+border-radius: 5px;
+padding: 5px 10%;
+}
+
+.socialbtn .facebookbtn img{
+width: 20%;
+float: left;
+ padding: 3px 0px;
+}
+
+.socialbtn .facebookbtn span{
+width: 70%;
+margin-left: 5%;
+margin-right: 5%;
+float: left;
+font-size: 14px;
+font-family: Montserrat;
+ padding: 5px 0px;
+ font-weight: 600;
+ color: #fff;
+}
+
+
+.socialbtn .googlebtn{
+width: 100%;
+background-color: #ddd;
+ border: 0px solid #000;
+border-radius: 5px;
+padding: 5px 10%;
+}
+
+.socialbtn .googlebtn img{
+  width: 20%;
+  float: left;
+  padding: 3px 0px;
+}
+
+.socialbtn .googlebtn span{
+width: 70%;
+margin-left: 5%;
+margin-right: 5%;
+float: left;
+font-size: 14px;
+font-family: Montserrat;
+padding: 5px 0px;
+ border: 0px solid #000;
+border-radius: 5px;
+font-weight: 600;
+}
+
+.hrsign{
+border-top: 1px solid rgba(255,255,255,.3)!important;
+margin-top: 3rem!important;
+  margin-bottom: 0rem!important;
+}
+.signwith{
+   background-color: #000;
+  color: #ddd;
+  font-size: 14px;
+  letter-spacing: 1px;
+  width: 40%;
+  margin: -8px auto 35px;
+  text-align: center;
+}
+
+.agreeinput{
+  color: #cfcfcf;
+  margin-bottom: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: Montserrat;
+}
+
+.forgotpwd{
+  width: 45%;
+  float: left;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 8px;
+  text-transform: uppercase;
+  font-family: Montserrat;
+  margin: 20px 2.5% ;
+  border-radius: 5px;
+}
+.forgotpwd:hover{
+   padding: 10px 8px;
+  background: linear-gradient(rgba(240,0,0,0.8), rgba(204,0,0,0.2));
+   color: #fff;
+   margin: 15px 2.5% 25px;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.signinbtn{
+  width: 45%!important;
+  margin: 20px 2.5%;
+}
+.field-icon {
+float: right;
+margin-right: 15px;
+margin-top: -42px;
+position: relative;
+z-index: 2;
+color: #fff;
+}
+
+.loginsignupform .input-field {
+   position: relative;
+   width: 100%;
+   height: 70px;
+   line-height: 40px;
+}
+.loginsignupform label {
+   background-color: transparent;
+   position: absolute;
+   top: 0;
+   left: 10px;
+   width: 100%;
+   color: #d3d3d3;
+   transition: 0.2s all;
+   cursor: text;
+   font-size: 15px;
+   font-family: Montserrat;
+}
+.loginsignupform input {
+   width: 100%;
+   border: 0;
+   outline: 0;
+   border-bottom: 2px solid #d3d3d3;
+   box-shadow: none;
+}
+.loginsignupform input:invalid {
+   outline: 0;
+}
+.loginsignupform input:focus, .loginsignupform input:valid {
+   border-color: #ddd;
+}
+
+.loginsignupform input:focus ~ label, .loginsignupform input:valid ~ label {
+  font-size: 13px;
+  font-family: Montserrat;
+  top: -24px;
+  color: #ddd;
+}
+
+@media (min-width: 320px) and (max-width: 720px) {
+
+.flipper {
+  padding: 30px 10px;
+  width: 100%;
+}
+.formsection form {
+  padding: 30px 15px 30px;
+}	
+.socialbtn {
+  width: 46%;
+  float: left;
+  margin: 20px 2%;
+}
+.socialbtn .facebookbtn span{
+  padding: 2px 0px;
+}
+.socialbtn .googlebtn span{
+  padding: 2px 0px;
+}
+.logologin img {
+  width: 80px;
+  margin: 0px auto 20px;
+}
+.signwith {
+  width: 50%;
+}
+}
+
+.kep-login-facebook{
+  width: 36%;
+  margin-left: 5%;
+  margin-right: 5%;
+  float: left;
+  font-size: 14px !important;
+  font-family: Montserrat !important;
+  padding: 14px 0px !important;
+  text-transform: none !important;
+  border-radius: 3% !important;
+}
+.kep-login-facebook .fa-facebook {
+  width: 20%;
+  float: left;
+  padding: 3px 0px;
+  margin-right:0 !important;
+}
+.googleLogin{
+  width: 44% !important;
+  border: 0px solid #000 !important;
+  border-radius: 5px !important;
+  padding: 5px 2% !important;
+}
+.googleLogin span{
+  width: 70%;
+    margin-left: 5%;
+    margin-right: 5%;
+    float: left;
+    font-size: 14px;
+    font-family: Montserrat;
+    padding: 5px 0px;
+    border: 0px solid #000;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.loginsignupform .alert {
+  font-size: 12px;
+  font-weight: 400;
+  width: 100%;
+  position: absolute;
+  padding: 0px 0px;
+  margin-bottom: -1rem; 
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  left: 0%;
+  top: 34px;
+}
+
+.loginsignupform .alert-danger {
+  color: #ce3838;
+  background-color: transparent; 
+  border-color: transparent; 
+}
+
+.loginsignupform .agreeinput{
+  margin-bottom: 0px;
+}
+.loginsignupform .agreeinput a{
+  color: rgb(204, 0, 0);
+}
+
+.changeBtn{
+  font-size: 18px;
+  height: 40px;
+  width: 250px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 1px 1px 0px 2px rgba (0,0,0,0.3);
+  background: rgb(204, 0, 0);
+  cursor: pointer;
+  color: #fff;
+}

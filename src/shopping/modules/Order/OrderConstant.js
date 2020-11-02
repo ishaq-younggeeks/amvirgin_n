@@ -1,0 +1,4 @@
+
+export const ADDRESS_DETAIL = 'ADDRESS_DETAIL';
+
+

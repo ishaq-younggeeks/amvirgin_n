@@ -1,0 +1,4 @@
+
+export const VIDEO_DATA = 'VIDEO_DATA';
+export const CLEAR_VIDEO_DATA = 'CLEAR_VIDEO_DATA';
+export const TRENDING_DATA = 'TRENDING_DATA';

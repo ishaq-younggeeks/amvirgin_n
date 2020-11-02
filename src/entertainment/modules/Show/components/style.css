@@ -1,0 +1,87 @@
+/*@import "../../../node_modules/video-react/dist/video-react.css";*/
+.read-more-button {
+    margin-top: 5px;
+    background: linear-gradient(to bottom, #c00 0%, #900 100%);
+    color: #fff;
+    border: 0px solid #c00;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: 700;
+    -webkit-transition: all .1s;
+    transition: all .1s;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    width: 100px;
+}
+.qualityVideo{
+    outline: none;
+    position: relative;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 4em;
+    position: relative;
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 11px;
+    text-overflow: '';
+    color: #fff;
+    cursor: pointer;
+}
+.qualityVideo option{
+    color: #fff;
+    background: #1e242c;
+}
+
+/* #menu * { 
+    font: 12px georgia; 
+    list-style-type:none;}
+#menu a { 
+    display: block; 
+    text-decoration: none; 
+    color: #fff;}
+#menu ul li ul li {
+    width: 71px; 
+    border: none; 
+    color:#fff;  
+    padding-top: 3px; 
+    padding-bottom:3px; 
+    padding-left: 3px; 
+    padding-right: 3px; 
+    background: #1e242c;
+    z-index:1;
+}
+#menu ul li ul li a { 
+    font: 11px arial; 
+    font-weight:normal; 
+    font-variant: small-caps; 
+    padding-top:3px; 
+    padding-bottom:3px;}
+#menu ul li a {
+    padding: 8px 6px;}
+#menu li{ 
+    position:relative; 
+    float:left;}
+#menu ul li ul, #menu:hover ul li ul, #menu:hover ul li:hover ul li ul{ 
+    display:none;
+    list-style-type:none; 
+    width: 140px;}
+#menu:hover ul, #menu:hover ul li:hover ul, #menu:hover ul li:hover ul li:hover ul { 
+    display:block;}
+#menu:hover ul li:hover ul li:hover ul { 
+    position: absolute;
+    margin-left: 145px;
+    margin-top: -22px;
+    font: 10px;}
+#menu:hover ul li:hover ul { 
+    position: absolute;
+    margin-top: 1px;
+    font: 10px;
+}
+#menu>ul>li:hover>ul { 
+    bottom:100%;
+    border-bottom: 1px solid transparent
+} */

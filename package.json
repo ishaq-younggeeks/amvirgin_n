@@ -1,0 +1,91 @@
+{
+  "name": "create-react-app-example",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^2.0.0-beta.6",
+    "axios": "^0.19.1",
+    "bootstrap": "^4.5.0",
+    "canvas": "^2.6.1",
+    "chart.js": "^2.9.3",
+    "connected-react-router": "^6.8.0",
+    "formik": "^2.1.5",
+    "history": "^4.10.1",
+    "image-to-base64": "^2.1.0",
+    "install": "^0.13.0",
+    "jquery": "^3.5.1",
+    "jsbarcode": "^3.11.0",
+    "jspdf": "^1.5.3",
+    "jspdf-autotable": "^3.5.6",
+    "loadjs": "^4.2.0",
+    "moment": "^2.27.0",
+    "npm": "^6.14.6",
+    "prop-types": "^15.7.2",
+    "qrcode": "^1.4.4",
+    "qrcode.react": "^1.0.0",
+    "query-string": "^6.13.1",
+    "razorpay": "^2.0.6",
+    "react": "^16.13.1",
+    "react-barcode": "^1.4.0",
+    "react-bootstrap": "^1.2.1",
+    "react-chartjs-2": "^2.9.0",
+    "react-compound-timer": "^1.2.0",
+    "react-cookies": "^0.1.1",
+    "react-data-export": "^0.6.0",
+    "react-dom": "^16.13.1",
+    "react-facebook-login": "^4.1.1",
+    "react-fileupload-progress": "^0.5.0",
+    "react-google-login": "^5.1.21",
+    "react-helmet": "^5.2.1",
+    "react-hot-loader": "^4.12.21",
+    "react-image-magnify": "^2.7.4",
+    "react-load-script": "0.0.6",
+    "react-loader-spinner": "^3.1.14",
+    "react-minimal-pie-chart": "^6.0.1",
+    "react-modal": "^3.11.2",
+    "react-redux": "^7.2.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "^3.4.1",
+    "react-slick": "^0.25.2",
+    "react-table-v6": "^6.8.6",
+    "react-toasts": "^3.0.6",
+    "react-transition-group": "^4.4.1",
+    "read-more-react": "^1.0.9",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-form": "^8.3.6",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^5.4.5",
+    "tempa-xlsx": "^0.8.20",
+    "video-react": "^0.14.1",
+    "xlsx": "^0.16.3",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "react-cosmos": "^4.6.4"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+.linkbtn{
+    background:#fff;
+    border:1px solid #990000;
+    padding :5px 30px;
+}
+
+.linkbtn:hover{
+    background:#990000;
+    color:white;
+}
+
+.linkbtn a{
+    color:#990000;
+}
+.linkbtn:hover a{
+    color:#ffffff; 
+}
+
+.tccontainer{
+  padding:20px;
+  width:900px;
+  height:320px;
+  overflow-x: auto;
+  overflow-y: auto;
+  border:1px solid dodgerblue;
+  box-shadow:3px 3px 3px dodgerblue;
+  margin-top:10px;
+
+}

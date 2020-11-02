@@ -1,0 +1,40 @@
+.catlink li {
+  padding: 25px 15px;
+  overflow: hidden;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+  cursor: pointer;
+  background-color: #fff;
+  color: #1f1f1f;
+  transition: all 0s ease-in-out;
+  -moz-transition: all 0s ease-in-out;
+  -webkit-transition: all 0s ease-in-out;
+  -ms-transition: all 0s ease-in-out;
+  -o-transition: all 0s ease-in-outs;
+  font-size: 17px;
+}
+.fixed-top{
+padding: 20px!important;
+}
+.catlink li i {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+a {
+  cursor: pointer;
+}
+
+.PofileMenu{
+  width: 168px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 8px 0px, rgba(0, 0, 0, 0.12) 0px 3px 3px -2px, rgba(0, 0, 0, 0.14) 0px 3px 4px 0px;
+    background: rgb(255, 255, 255);
+    border-radius: 3px;
+    top: 50px;
+    position: absolute;
+    right: 0;
+    padding-left:20px;
+}
+
+.listMenu >li {
+  cursor: pointer;
+}

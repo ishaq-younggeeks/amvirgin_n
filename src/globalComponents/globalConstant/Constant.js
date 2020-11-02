@@ -1,0 +1,2 @@
+export const GLOBAL_SEARCH_DATA = 'GLOBAL_SEARCH_DATA';
+export const CLEAR_DATA = 'CLEAR_DATA';

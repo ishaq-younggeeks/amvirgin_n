@@ -1,0 +1,127 @@
+  .tabin a {
+    background-color: inherit;
+    /* border: 1px solid #000; */
+    outline: none;
+    cursor: pointer;
+    padding: 4px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    margin:5px 5px 0;
+  }
+
+  .tabin a:hover {
+    background-color: #ddd;
+  }
+  
+  .tabin a.active {
+    background-color: #ccc;
+    border-top:2px solid red;
+  }
+
+  .navhr {
+    margin:0 15px;
+  }
+
+  .overview-card {
+    min-height: 200px;
+    width: 30%;
+    padding: 16px 20px;
+    margin: 15px 0px 0 20px;
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 2px;
+    vertical-align: top;
+    box-shadow: 0 -1px 3px 0 rgba(51, 51, 51, 0.53);
+}
+
+.card-header {
+    margin-bottom: 6px;
+    font-weight: 400;
+}
+
+.desc-date-block {
+    display: block;
+    width: 100%;
+}
+
+.card-inner-block {
+    min-height: 79px;
+    font-size: 16px;
+}
+
+.footer-label {
+    display: inline-block;
+    width: 20%;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.date-block {
+    width: 22%;
+    display: inline-block;
+    margin: 5px 0 0;
+    padding: 8px 5px;
+    background-color: #fcf8e3;
+    border: solid 1px #faf2cc;
+    border-radius: 3px;
+    vertical-align: top;
+    font-family: 'Riona Sans', sans-serif;
+    font-size: 13px;
+    text-align: center;
+    color: #fa5f65;
+}
+
+.desc-block {
+    display: inline-block;
+    min-height: 34px;
+    width: 75%;
+    font-family: Arial;
+    color: #909090;
+    font-size: 12px;
+    margin: 5px 0 0;
+}
+
+.overview-price {
+    float:right;
+    margin-left:20px;
+    color:rgb(3, 156, 245);
+}
+
+.Paymenttable {
+  margin:15px;
+
+}
+
+.Paymenttable th {
+  border:1px solid #99999938;
+  font-size:15px;
+  text-align: center;
+}
+
+.Paymenttable tr td{
+  padding: 12px;    
+  border:1px solid #99999938;
+}
+
+.datepicker {
+  margin:10px 15px;
+}
+
+.date-head{
+  padding:5px;
+  text-align: center;
+}
+
+.date-select input {
+  padding:5px 10px;
+
+}
+
+.search-submit {
+  cursor:pointer;
+  background: rgba(0,0,0,0.8);
+  color:white;
+  padding:10px 10px;
+  margin-left: 20px;
+}
+

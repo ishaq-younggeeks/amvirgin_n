@@ -1,0 +1,99 @@
+.title {
+  color: #fff;
+}
+
+.orderHeading {
+  font-size: 30px;
+  text-transform: capitalize;
+  padding: 23px;
+  text-align: left;
+  margin-top: 3%;
+}
+
+.rt-resizable-header-content{
+  font-weight:600;
+  padding: 5px 0;
+}
+
+.ReactTable .rt-tbody .rt-td{
+  border-right:none;
+}
+.ReactTable
+{
+  width:100%;
+}
+
+.ordercard {
+  margin:6% auto;
+  background: #fff;
+  border: none;
+}
+.ordertable{
+  border:1px solid lightgray;
+  border-radius: 7px;
+}
+
+.toolnewtip {
+  position: relative;
+  display: inline-block;
+}
+
+.order p{
+  margin-bottom:5px;
+  color:#2e2e2edb;
+}
+
+.order p span{
+  color:#2e2e2edb;
+}
+.order h4{
+  color:#bf0000
+}
+
+.toolnewtip .tooltiptext {
+  visibility: hidden;
+  width: 80px;
+  background-color: #000000cc;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  top: -35px;
+  left: -20px;
+  z-index: 999;
+  transition: 0s;
+}
+
+.toolnewtip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.ordertable th{
+  border:1px solid #99999938;
+  font-size:15px;
+  text-align: center;
+  color:#4e4a4a
+}
+.ordertable tr td{
+  padding: 10px; 
+  border:1px solid #99999938;
+}
+
+.tablelist tbody tr:hover {
+    background: rgba(231, 165, 165, 0.5);
+}
+
+.ordertiles {
+  cursor: pointer;
+  height:50px;
+  border:1px solid #99999938;
+  padding:10px;
+  margin-bottom: 10px;
+
+}
+
+.activetile{
+  border:1px solid dodgerblue;
+  color:dodgerblue
+}
