@@ -60,11 +60,16 @@ import AddProduct from "./seller/modules/Dashboard/components/MyProducts/compone
 import NewsContainer from "./news/modules/News"
 import NewsDetailContainer from "./news/modules/NewsDetails"
 
+// Footer Routes
+import PrivacyPolicy from "./footer/components/PrivacyPolicy"
+import TermsCondition from "./footer/components/TermsCondition"
+
 class App extends Component {
   componentDidMount = () => {
     this.props.getSellerProfile();
     this.props.getSessionProfile();
   };
+  
   render() {
     const { currentUser } = this.props;
     const token = localStorage.getItem("token");
@@ -80,6 +85,10 @@ class App extends Component {
           {/* News Routes */}
           <Route exact path="/news" component={NewsContainer}/>
           <Route exact path="/news/newsDetails" component={NewsDetailContainer}/>
+
+          {/* Footer Routes */}
+          <Route exact path="/privacypolicy" component={PrivacyPolicy}/>
+          <Route exact path="/termsconditions" component={TermsCondition}/>
 
           {/* Shopping Routes */}
           {/* <Route exact path="/" component={ShoppingHomeContainer} /> */}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
 
 class Footer extends Component {
     render(){
@@ -11,9 +12,10 @@ class Footer extends Component {
                             <div className="row">
                                 <div className="col-md-4 footerline">
                                     <ul style={{padding:'inherit'}}><h4 style={{color:'#fff'}}>Legal</h4>
-                                        <li>Privacy Policy</li>
+                                        <li><Link to="/privacypolicy">Privacy Policy</Link></li>
                                         <li>Refund Policy</li>
-                                        <li>Terms & Conditions</li>
+                                        <li><Link to="/termsconditions">Terms & Conditions</Link></li>
+                                        <li></li>
                                     </ul>
                                 </div>
                                 <div className="col-md-4 footerline">
