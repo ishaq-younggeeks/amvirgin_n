@@ -94,7 +94,7 @@ function PrivacyPolicy() {
           We use your Personal Information to provide you with targeted
           advertisements or marketing communications we believe may be of
           interest to you. Mention opt-out links from external services such as:
-          <ul>
+          <ul style={{ listStyleType: "circle", marginLeft: "20px" }}>
             <li>
               <a href="google.com">Google</a>
             </li>
