@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../entertainment/modules/Footer"
 
 function PrivacyPolicy() {
   return (
@@ -120,6 +121,8 @@ function PrivacyPolicy() {
           United States.
         </div>
       </div>
+      <br/>
+      <Footer/>
     </>
   );
 }

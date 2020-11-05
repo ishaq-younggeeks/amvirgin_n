@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../entertainment/modules/Footer"
 
 function TermsCondition() {
   return (
@@ -13,8 +14,8 @@ function TermsCondition() {
         <br />
         <div>
           These terms and conditions outline the rules and regulations for the
-          use of Amvirgin's Website, located at{" "}
-          <a href="amvirgin.com">amvirgin.com</a>.
+          use of Amvirgin's Website, located at
+          <a href="amvirgin.com"> amvirgin.com</a>.
         </div>
         <br />
         <div>
@@ -109,6 +110,8 @@ function TermsCondition() {
           </ul>
         </div>
       </div>
+      <br/>
+      <Footer/>
     </>
   );
 }
