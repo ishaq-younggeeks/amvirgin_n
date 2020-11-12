@@ -48,17 +48,15 @@ export default class Advthome extends Component {
       <div className="container-fliud" style={{ marginTop: "5%" }}>
         {/* <AdvtNavigation activeTab1="true"/> */}
         <div className="row">
-          <h3>Advertising</h3>
-         
-        </div>
-        <hr/>
+        <h3 style={{marginLeft:"30px", marginTop:"20px"}}>Advertising</h3>        </div>
+        <hr style={{margin:"0px 15px"}}/>
         <div>
          
           <div
             className="categorycontainer myprocontainer w-50 row"
-            style={{ textAlign: "center", padding: "20px" }}
+            style={{ textAlign: "center", padding: "20px", marginLeft:"15px" }}
           >
-            <div className="w-50" >
+            <div className="w-50">
               <p>Wanna go for advertisment?</p>
             </div>
            
@@ -68,7 +66,7 @@ export default class Advthome extends Component {
                   className="btn btn-primary"
                  onClick={this.activeModal}
                 >
-                  Create your adevertisment
+                  Create your advertisment
                 </button>
               </div>
             </div>
