@@ -38,6 +38,7 @@ import sellerSupportReducer from "../seller/modules/Dashboard/components/SellerS
 import sellerPaymentReducer from "../seller/modules/Dashboard/components/Payments/PaymentReducer";
 import sellerGrowthReducer from "../seller/modules/Dashboard/components/Sales/SellerGrowthReducer";
 import sellerAdvtReducer from "../seller/modules/Dashboard/components/Advertisement/AdvReducer"
+import sellerDashboardReducer from "../seller/modules/Dashboard/DashboardReducer";
 
 /*--------------------------NEWS------------------------------------*/
 import newsReducer from "../news/modules/News/NewsReducer"
@@ -77,8 +78,11 @@ const rootReducer = combineReducers({
   sellerPayment:sellerPaymentReducer,
   sellerGrowth:sellerGrowthReducer,
   sellerAdvt:sellerAdvtReducer,
+  sellerDashboard:sellerDashboardReducer,
+
   /*-----------------NEWS REDUCER--------------*/
   news:newsReducer,
   newsDetail:newsDetailReducer,
+
 });
 export default rootReducer;
