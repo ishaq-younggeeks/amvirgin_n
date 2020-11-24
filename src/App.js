@@ -62,6 +62,7 @@ import NewsDetailContainer from "./news/modules/NewsDetails"
 
 // Footer Routes
 import PrivacyPolicy from "./footer/components/PrivacyPolicy"
+import RefundPolicy from "./footer/components/RefundPolicy"
 import TermsCondition from "./footer/components/TermsCondition"
 
 class App extends Component {
@@ -88,6 +89,7 @@ class App extends Component {
 
           {/* Footer Routes */}
           <Route exact path="/privacypolicy" component={PrivacyPolicy}/>
+          <Route exact path="/refundpolicy" component={RefundPolicy}/>
           <Route exact path="/termsconditions" component={TermsCondition}/>
 
           {/* Shopping Routes */}

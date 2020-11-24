@@ -136,7 +136,7 @@ class Dashboard extends Component {
                       </div>
                       <div className="col-sm-6">
                         <p style={{ fontWeight: "500", marginBottom: "0px" }}>
-                          Canceled Orders
+                          Cancelled Orders
                         </p>
                         <h1>{this.props.dashboardData.cancelled}</h1>
                       </div>

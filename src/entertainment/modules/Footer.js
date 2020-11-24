@@ -13,7 +13,7 @@ class Footer extends Component {
                                 <div className="col-md-4 footerline">
                                     <ul style={{padding:'inherit'}}><h4 style={{color:'#fff'}}>Legal</h4>
                                         <li><Link to="/privacypolicy">Privacy Policy</Link></li>
-                                        <li>Refund Policy</li>
+                                        <li><Link to="/refundpolicy">Refund Policy</Link></li>
                                         <li><Link to="/termsconditions">Terms & Conditions</Link></li>
                                         <li></li>
                                     </ul>
@@ -21,7 +21,7 @@ class Footer extends Component {
                                 <div className="col-md-4 footerline">
                                     <ul style={{padding:'inherit'}}><h4 style={{color:'#fff'}}>Customer</h4>
                                         <li>My Account</li>
-                                        <li>Login</li>
+                                        <li><Link to="/login">Login</Link></li>
                                         <li>Register</li>
                                     </ul>
                                 </div>

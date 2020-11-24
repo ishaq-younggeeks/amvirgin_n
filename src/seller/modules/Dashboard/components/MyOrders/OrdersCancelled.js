@@ -48,7 +48,6 @@ import Filter from "./Filter"
       <MyOrderNavigation activeTab3={true}/>
         <div className="row" style={{padding:'20px'}}>
         <Filter metaData={this.props.metaData} maxPage = {this.state.maxPage} myOrderList={this.props.myOrderList} activeState={"cancelled"} {...this.props}/>
-
           < br/>
           < br/>
           <table className="tablelist" style={{width:'100%'}}>            
@@ -58,6 +57,7 @@ import Filter from "./Filter"
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>
+                <th>Cancellation Reason</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -74,6 +74,7 @@ import Filter from "./Filter"
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.cancellationReason ? data.cancellationReason : "N/A"}</td>
                   <td>
                     <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                       <Link to="/seller/dashboard/vieworders">
@@ -95,6 +96,7 @@ import Filter from "./Filter"
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.cancellationReason ? data.cancellationReason : "N/A"}</td>
                 <td>
                   <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                     <Link to="/seller/dashboard/vieworders">
