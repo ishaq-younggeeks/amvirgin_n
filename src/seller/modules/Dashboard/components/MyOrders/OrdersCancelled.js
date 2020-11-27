@@ -57,7 +57,9 @@ import Filter from "./Filter"
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>
+                <th>Cancelled By</th>
                 <th>Cancellation Reason</th>
+                <th>Cancellation Date</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -74,7 +76,9 @@ import Filter from "./Filter"
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.cancelledBy ? data.cancelledBy : "N/A"}</td>
                 <td>{data.cancellationReason ? data.cancellationReason : "N/A"}</td>
+                <td>{data.cancelledOn ? data.cancelledOn : "N/A"}</td>
                   <td>
                     <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                       <Link to="/seller/dashboard/vieworders">
@@ -96,7 +100,9 @@ import Filter from "./Filter"
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.cancelledBy ? data.cancelledBy : "N/A"}</td>
                 <td>{data.cancellationReason ? data.cancellationReason : "N/A"}</td>
+                <td>{data.cancelledOn ? data.cancelledOn : "N/A"}</td>
                 <td>
                   <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                     <Link to="/seller/dashboard/vieworders">

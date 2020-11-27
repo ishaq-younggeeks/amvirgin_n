@@ -12,41 +12,65 @@ class Login extends Component {
     redirect: false,
     email: "",
     password: "",
-    passwordHidden: true
+    passwordHidden: true,
   };
 
-  handleRedirect = e => {
+  handleRedirect = (e) => {
     this.setState({
-      redirect: !this.state.redirect
+      redirect: !this.state.redirect,
     });
   };
-  handleOnChange = e => {
+  handleOnChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleSubmit = e => {
+  validate = () => {
+    let errors = {}
+    if(!this.state.email.trim()){
+      errors.email = "Email cannot be blank";
+    }
+    else if(!/\S+@\S+\.\S+/.test(this.state.email)){
+      errors.email = "Invalid Email";
+    }
+
+    if(!this.state.password.trim()){
+      errors.password = "Password cannot be blank";
+    }
+
+    return errors;
+  }
+
+  handleSubmit = (e) => {
     e.preventDefault();
+    let isValid = this.validate();
+    console.log("isValid", isValid)
+    if(Object.keys(isValid).length === 0){
     let creds = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
     this.props.login(creds);
     this.setState({
       email: "",
-      password: ""
+      password: "",
     });
+  }
   };
 
   hiddenPasswordHandler = () => {
     this.setState({
-      passwordHidden: !this.state.passwordHidden
+      passwordHidden: !this.state.passwordHidden,
     });
   };
 
+
   render() {
     const { loginError, currentUser } = this.props;
+    console.log("loginError", loginError);
+    let errors = this.validate();
+    console.log("Errors", errors);
     const token = localStorage.getItem("token");
     if (currentUser && token) {
       return <Redirect to="/seller/dashboard" />;
@@ -60,9 +84,12 @@ class Login extends Component {
               <img src={Logo} alt="Logo" />
             </a>
           </div>
-          <div className="card" style={{backgroundColor:'#0000007a!important'}}>
+          <div
+            className="card"
+            style={{ backgroundColor: "#0000007a!important" }}
+          >
             <h3 style={{ color: "#fff" }}>Seller Login</h3>
-            <form onSubmit={this.handleSubmit}>
+            <form noValidate onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1" style={{ color: "#fff" }}>
                   Email address
@@ -74,9 +101,13 @@ class Login extends Component {
                   aria-describedby="emailHelp"
                   placeholder="Enter email"
                   name="email"
+                  required="true"
                   value={this.state.email}
                   onChange={this.handleOnChange}
                 />
+                <div className="error">
+                {errors.email ? <p>{errors.email}</p>:null}
+                </div>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
                 </small>
@@ -91,9 +122,15 @@ class Login extends Component {
                   id="password"
                   placeholder="Password"
                   name="password"
+                  required="true"
+                  minLength="6"
+                  maxLength="20"
                   value={this.state.password}
                   onChange={this.handleOnChange}
                 />
+                <div className="error">
+                {errors.password ? <p>{errors.password}</p>:null}
+                </div>
                 {this.state.passwordHidden ? (
                   <span onClick={this.hiddenPasswordHandler}>
                     <i className="far fa-eye-slash pwdeye"></i>
@@ -123,16 +160,16 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loginError: state.sellerAuth.loginError,
-    currentUser: state.sellerAuth.currentUser
+    currentUser: state.sellerAuth.currentUser,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    login: creds => dispatch(login(creds))
+    login: (creds) => dispatch(login(creds)),
   };
 };
 

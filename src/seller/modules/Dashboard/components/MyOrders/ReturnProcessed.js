@@ -32,6 +32,7 @@ export default class PendingLabel extends Component {
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>
+                <th>Return Date</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -48,6 +49,7 @@ export default class PendingLabel extends Component {
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.returnDate ? data.returnDate : "N/A"}</td>
                   <td>
                     <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                       <Link to="/seller/dashboard/vieworders">
@@ -69,6 +71,7 @@ export default class PendingLabel extends Component {
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.returnDate ? data.returnDate : "N/A"}</td>
                 <td>
                   <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                     <Link to="/seller/dashboard/vieworders">

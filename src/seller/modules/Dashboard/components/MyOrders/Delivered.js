@@ -31,6 +31,7 @@ export default class PandingLabel extends Component {
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>
+                <th>Delivered On</th>
                 <th>View Order</th>
               </tr>
             </thead>
@@ -47,6 +48,7 @@ export default class PandingLabel extends Component {
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.status === "delivered" ? data.deliveredOn : "N/A"}</td>
                   <td>
                     <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                       <Link to="/seller/dashboard/vieworders">
@@ -68,6 +70,7 @@ export default class PandingLabel extends Component {
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
+                <td>{data.status === "delivered" ? data.deliveredOn : "N/A"}</td>
                 <td>
                   <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
                     <Link to="/seller/dashboard/vieworders">

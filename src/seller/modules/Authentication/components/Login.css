@@ -70,7 +70,7 @@
   transform: translateY(-3px);
 }
 .error {
-  text-align: center;
+  text-align: left;
 }
 
 .error p {
