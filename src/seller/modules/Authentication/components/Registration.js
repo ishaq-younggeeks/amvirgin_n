@@ -19,6 +19,12 @@ class Registration extends Component {
     error: "",
     passwordHidden: true,
     confirmPasswordHidden: true,
+    nameError: "",
+    emailError: "",
+    phoneError: "",
+    passwordError: "",
+    cpasswordError: "",
+    otpError: ""
   };
 
   handleRedirect = (e) => {
@@ -45,49 +51,66 @@ class Registration extends Component {
     });
   };
 
-  validate = () => {
-    let errors = {};
+  validate = () => { 
+    let nameError = "";
+    let emailError = "";
+    let phoneError = "";
+    let passwordError = "";
+    let cpasswordError = "";
+    let otpError = "";
+
     if (!this.state.name.trim()) {
-      errors.name = "Name cannot be blank";
+      nameError = "Name cannot be blank";
     }
 
     if (!this.state.email.trim()) {
-      errors.email = "Email cannot be blank";
+      emailError = "Email cannot be blank";
     } else if (!/\S+@\S+\.\S+/.test(this.state.email)) {
-      errors.email = "Invalid Email";
+      emailError = "Invalid Email";
     }
 
     if (!this.state.phoneNumber.trim()) {
-      errors.phoneNumber = "Phone Number cannot be blank";
+      phoneError = "Phone Number cannot be blank";
     }
     else if (!/^[0-9]{10}$/.test(this.state.phoneNumber)) {
-      errors.phoneNumber = "Invalid Phone Number";
+      phoneError = "Invalid Phone Number";
     }
 
     if (!this.state.password.trim()) {
-      errors.password = "Password cannot be blank";
+      passwordError = "Password cannot be blank";
     }
 
     if(!this.state.confirmPassword.trim()){
-      errors.confirmPassword = "Confirm Password cannot be blank";
+      cpasswordError = "Confirm Password cannot be blank";
     }
     else if (this.state.password !== this.state.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
+      cpasswordError = "Passwords do not match";
     }
 
     if (!this.state.otp.trim()) {
-      errors.otp = "Please enter OTP";
+      otpError = "Please enter OTP";
     }
 
-    return errors;
+    if(nameError || emailError || phoneError || passwordError || cpasswordError || otpError){
+      this.setState({
+        nameError,
+        emailError,
+        phoneError,
+        passwordError,
+        cpasswordError,
+        otpError
+      });
+      return false
+    }
+
+    return true;
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
     let isValid = this.validate();
-    console.log("isValid", isValid);
-    if (Object.keys(isValid).length === 0) {
+    if (isValid) {
       if (this.state.password !== this.state.confirmPassword) {
         return this.setState({
           error: "Passwords do not match",
@@ -125,7 +148,6 @@ class Registration extends Component {
 
   render() {
     const { registrationError, currentUser } = this.props;
-    let errors = this.validate();
     const token = localStorage.getItem("token");
     if (currentUser && token) {
       return <Redirect to="/seller/dashboard" />;
@@ -140,7 +162,7 @@ class Registration extends Component {
             </a>
           </div>
           <div className="card" style={{ background: "#0000007a!important" }}>
-            <form onSubmit={this.handleSubmit}>
+            <form noValidate onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="sellerName" style={{ color: "#fff" }}>
                   Seller Name
@@ -156,7 +178,7 @@ class Registration extends Component {
                   onChange={this.handleOnChange}
                 />
                 <div className="error">
-                  {errors.name ? <p>{errors.name}</p> : null}
+                  <p>{this.state.nameError}</p>
                 </div>
               </div>
               <div className="form-group">
@@ -175,7 +197,7 @@ class Registration extends Component {
                   onChange={this.handleOnChange}
                 />
                 <div className="error">
-                  {errors.email ? <p>{errors.email}</p> : null}
+                <p>{this.state.emailError}</p>
                 </div>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
@@ -198,7 +220,7 @@ class Registration extends Component {
                 />
               </div>
               <div className="error">
-                {errors.phoneNumber ? <p>{errors.phoneNumber}</p> : null}
+              <p>{this.state.phoneError}</p>
               </div>
               <div className="form-group pwdgroup">
                 <label htmlFor="password" style={{ color: "#fff" }}>
@@ -227,7 +249,7 @@ class Registration extends Component {
                 )}
               </div>
               <div className="error">
-                {errors.password ? <p>{errors.password}</p> : null}
+              <p>{this.state.passwordError}</p>
               </div>
               <div className="form-group pwdgroup2">
                 <label htmlFor="confirmPassword" style={{ color: "#fff" }}>
@@ -256,7 +278,7 @@ class Registration extends Component {
                 )}
               </div>
               <div className="error">
-                {errors.confirmPassword ? <p>{errors.confirmPassword}</p> : null}
+              <p>{this.state.cpasswordError}</p>
               </div>
               <div className="form-group">
                 <label htmlFor="otp" style={{ color: "#fff" }}>
@@ -274,7 +296,7 @@ class Registration extends Component {
                 />
               </div>
               <div className="error">
-                {errors.otp ? <p>{errors.otp}</p> : null}
+              <p>{this.state.otpError}</p>
               </div>
               <button className="btn btn-block" type="submit">
                 SIGN UP

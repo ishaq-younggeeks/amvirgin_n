@@ -13,6 +13,8 @@ class Login extends Component {
     email: "",
     password: "",
     passwordHidden: true,
+    emailError: "",
+    passwordError: ""
   };
 
   handleRedirect = (e) => {
@@ -27,26 +29,36 @@ class Login extends Component {
   };
 
   validate = () => {
-    let errors = {}
+    let emailError = "";
+    let passwordError = "";
+    
     if(!this.state.email.trim()){
-      errors.email = "Email cannot be blank";
+      emailError = "Email cannot be blank";
     }
     else if(!/\S+@\S+\.\S+/.test(this.state.email)){
-      errors.email = "Invalid Email";
+      emailError = "Invalid Email";
     }
 
     if(!this.state.password.trim()){
-      errors.password = "Password cannot be blank";
+      passwordError = "Password cannot be blank";
     }
 
-    return errors;
+    if(emailError || passwordError){
+      this.setState({
+        emailError,
+        passwordError
+      });
+      return false
+    }
+
+    return true;
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
     let isValid = this.validate();
     console.log("isValid", isValid)
-    if(Object.keys(isValid).length === 0){
+    if(isValid){
     let creds = {
       email: this.state.email,
       password: this.state.password,
@@ -55,6 +67,8 @@ class Login extends Component {
     this.setState({
       email: "",
       password: "",
+      emailError: "",
+      passwordError: ""
     });
   }
   };
@@ -69,8 +83,6 @@ class Login extends Component {
   render() {
     const { loginError, currentUser } = this.props;
     console.log("loginError", loginError);
-    let errors = this.validate();
-    console.log("Errors", errors);
     const token = localStorage.getItem("token");
     if (currentUser && token) {
       return <Redirect to="/seller/dashboard" />;
@@ -106,7 +118,7 @@ class Login extends Component {
                   onChange={this.handleOnChange}
                 />
                 <div className="error">
-                {errors.email ? <p>{errors.email}</p>:null}
+                <p>{this.state.emailError}</p>
                 </div>
                 <small id="emailHelp" className="form-text text-muted">
                   We'll never share your email with anyone else.
@@ -129,7 +141,7 @@ class Login extends Component {
                   onChange={this.handleOnChange}
                 />
                 <div className="error">
-                {errors.password ? <p>{errors.password}</p>:null}
+                <p>{this.state.passwordError}</p>
                 </div>
                 {this.state.passwordHidden ? (
                   <span onClick={this.hiddenPasswordHandler}>
