@@ -167,6 +167,12 @@ const Navigation = (props) => {
                       Manage Profile
                     </li>
                   </Link> */}
+                  <Link to="/seller/dashboard/return" className="catlink">
+                    <li className={state.activeIndex === 3 || props.location.pathname.match(/return/)=="return" ? "active" : ""} role="presentation" onClick={() => addActive(3)} >
+                      <i className="fa fa-exchange"></i>
+                      Return
+                    </li>
+                  </Link>
                   <Link to="/seller/dashboard/notification" className="catlink">
                     <li className={state.activeIndex === 5 || props.location.pathname.match(/notification/)=="notification"? "active" : ""} role="presentation" onClick={() => addActive(5)} >
                       <i className="fa fa-bell fa-fw"></i>

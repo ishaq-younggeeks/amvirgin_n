@@ -25,7 +25,7 @@ class Sales extends Component {
   render() {
     const { salesDetail } = this.props;
     return (
-      <div className="container-fliud emp-profile">
+      <div className="c-margin container-fliud emp-profile">
         <div className="row">
           <div className="col-md-12">
             <div className="row tabin">

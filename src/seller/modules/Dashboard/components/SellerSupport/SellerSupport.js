@@ -29,14 +29,14 @@ class SellerSupport extends React.Component {
   render() {
     
     return (
-      <div className="container-fliud emp-profile" style={{ marginTop: "6%" }}>
+      <div className="left container-fliud emp-profile" style={{ marginTop: "6%" }}>
         <div className="row" style={{margin:"0px 20px", alignItems:"center"}}>
           <h3 style={{marginTop:"20px"}}>Ask for queries</h3>
-          <div style={{right:"20px",position:"absolute", marginTop:"10px"}}>
-          <Link className="btn btn-outline-dark" to="/seller/dashboard/support/myticket">My Ticket</Link>
+          <div className="c-btn btn btn-outline-dark" style={{right:"20px",position:"absolute", marginTop:"10px"}}>
+          <Link to="/seller/dashboard/support/myticket">My Ticket</Link>
           </div>
         </div>
-        <hr style={{marginLeft:"20px"}}/>
+        <hr className="hr" style={{marginLeft:"20px"}}/>
         <div style={{marginLeft:"20px"}}>
           <h5>Select type of category related issues </h5>
         </div>  

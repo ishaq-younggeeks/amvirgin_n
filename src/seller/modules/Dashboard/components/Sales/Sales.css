@@ -39,3 +39,17 @@ body {font-family: Arial;}
   border-top: none;
 }
 
+
+/* Phone */
+@media (max-width:765px){
+  .c-margin{
+    margin-left: 18%;
+  } 
+}
+  
+/* Tablets */
+@media (min-width:769px) and (max-width:1279px){
+  .c-margin{
+    margin-left: 3%;
+  }    
+}

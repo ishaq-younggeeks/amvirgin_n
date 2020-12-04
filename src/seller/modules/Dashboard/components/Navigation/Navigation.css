@@ -38,3 +38,70 @@ a {
 .listMenu >li {
   cursor: pointer;
 }
+
+/* Mobile */
+@media (max-width:765px){
+  .catlink li {
+    width: 13em;
+    padding: 15px 10px;
+    overflow: hidden;
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+    cursor: pointer;
+    background-color: #fff;
+    color: #1f1f1f;
+    transition: all 0s ease-in-out;
+    -moz-transition: all 0s ease-in-out;
+    -webkit-transition: all 0s ease-in-out;
+    -ms-transition: all 0s ease-in-out;
+    -o-transition: all 0s ease-in-outs;
+    font-size: 13px;
+  }
+
+  .side-nav{
+    width: 10em;
+  }
+
+  .nav-item > div{
+    width: 10em;
+  }
+}
+
+/* Tablets */
+@media (min-width:769px) and (max-width:1279px){
+  .catlink li {
+    width: 13em;
+    padding: 15px 6px;
+    overflow: hidden;
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+    cursor: pointer;
+    background-color: #fff;
+    color: #1f1f1f;
+    transition: all 0s ease-in-out;
+    -moz-transition: all 0s ease-in-out;
+    -webkit-transition: all 0s ease-in-out;
+    -ms-transition: all 0s ease-in-out;
+    -o-transition: all 0s ease-in-outs;
+    font-size: 15px;
+  }
+
+  .side-nav{
+    width: 13em;
+  }
+
+  .nav-item > div{
+    margin-right: 30%;
+  }
+
+  /* .userimage{
+    margin-right: 70%; 
+  }
+
+  .PofileMenu{
+    margin-right: 70%; 
+  }
+
+  .listMenu{
+    margin-right: 70%;
+  } */
+
+}

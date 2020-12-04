@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Filter from "./Filter";
 import { Helmet } from "react-helmet";
+import Modal from "react-modal";
+import "./MyOrders.css";
 
 import { downloadLabel, downloadManifest } from "./global";
+import { date } from "yup";
+import { data } from "jquery";
 
 export default class PendingHandover extends Component {
   constructor(props) {
@@ -17,60 +21,171 @@ export default class PendingHandover extends Component {
       search: false,
       pagination: 10,
       bulkArray: [],
-      selectAll:false
-
+      selectAll: false,
+      modalIsOpen1: false,
+      modalIsOpen2: false,
+      courier: "",
+      bill: "",
+      dispatchDate: date,
+      courierError: "",
+      billError: "",
+      dispatchDateError: "",
+      orderId: "",
     };
+
+    this.openModal1 = this.openModal1.bind(this);
+    this.openModal2 = this.openModal2.bind(this);
+    this.closeModal1 = this.closeModal1.bind(this);
+    this.closeModal2 = this.closeModal2.bind(this);
   }
 
-  onchangeBulkHandler = (e,orderid) => {
+  onchangeBulkHandler = (e, orderid) => {
     let bulk_list = this.state.bulkArray;
     let check = e.target.checked;
-    if(check){
-      this.setState({
-        bulkArray: [...this.state.bulkArray, orderid]
-      },console.log("list state",this.state))
-  }else{ 
+    if (check) {
+      this.setState(
+        {
+          bulkArray: [...this.state.bulkArray, orderid],
+        },
+        console.log("list state", this.state)
+      );
+    } else {
       var index = this.state.bulkArray.indexOf(orderid);
       if (index > -1) {
         bulk_list.splice(index, 1);
-          this.setState({
-            bulkArray: bulk_list
-          },console.log("list state",this.state))
-      } 
-  }
-  }
+        this.setState(
+          {
+            bulkArray: bulk_list,
+          },
+          console.log("list state", this.state)
+        );
+      }
+    }
+  };
 
   selectAllOrder = (e) => {
     let bulk_array;
-    bulk_array = this.props.ordersList.map((item,index)=>{
-      return item.orderId
-    })
+    bulk_array = this.props.ordersList.map((item, index) => {
+      return item.orderId;
+    });
     let check = e.target.checked;
-    if(check)
-    this.setState({selectAll:true,bulkArray:bulk_array})
-    else
-    this.setState({selectAll:true,bulkArray:[]})
-  }
-
+    if (check) this.setState({ selectAll: true, bulkArray: bulk_array });
+    else this.setState({ selectAll: true, bulkArray: [] });
+  };
 
   changeStatus = () => {
-    this.props.changeOrderStatus(this.state.bulkArray,"dispatched");
-    this.setState({bulkArray:[]})
+    this.props.changeOrderStatus(this.state.bulkArray, "dispatched");
+    this.setState({ bulkArray: [] });
+  };
+
+  customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  openModal1() {
+    this.setState({
+      modalIsOpen1: true,
+    });
   }
 
+  closeModal1() {
+    this.setState({
+      modalIsOpen1: false,
+    });
+  }
+
+  openModal2() {
+    this.setState({
+      modalIsOpen2: true,
+      modalIsOpen1: false,
+    });
+  }
+
+  closeModal2() {
+    this.setState({
+      modalIsOpen2: false,
+      courier: "",
+      bill: "",
+      dispatchDate: "",
+      courierError: "",
+      billError: date,
+      dispatchDateError: "",
+    });
+  }
+
+  validate = () => {
+    let courierError = "";
+    let billError = "";
+    let dispatchDateError = "";
+
+    if (!this.state.courier.trim()) {
+      courierError = "Field cannot be blank";
+    }
+    if (!this.state.bill.trim()) {
+      billError = "Field cannot be blank";
+    }
+    if (!this.state.dispatchDate) {
+      dispatchDateError = "Field cannot be blank";
+    }
+
+    if (courierError || billError || dispatchDateError) {
+      this.setState({
+        courierError,
+        billError,
+        dispatchDateError,
+      });
+      return false;
+    }
+    return true;
+  };
+
+  handleOnChangeModal = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleSubmitModal = (e, orderId) => {
+    e.preventDefault();
+    let isValid = this.validate();
+    if (isValid) {
+      let status = "dispatched";
+      let shippingMethod = "seller";
+      let courierName = this.state.courier;
+      let airwayBillNumber = this.state.bill;
+      let dispatchedOn = this.state.dispatchDate;
+      this.props.changeOrderStatus(
+        [orderId],
+        status,
+        shippingMethod,
+        courierName,
+        airwayBillNumber,
+        dispatchedOn
+      );
+      console.log("date: ", dispatchedOn);
+      this.closeModal2();
+    }
+  };
+
   render() {
-    console.log("list state",this.state)
     return (
       <React.Fragment>
-        <hr/>
+        <hr />
         <div className="row" style={{ marginLeft: "15px" }}>
           <div style={{ padding: "5px" }}>Action in Bulk</div>
-         
+
           <button
             className="btn btn-outline-primary"
             onClick={this.changeStatus}
             style={{ marginLeft: "10px" }}
-            disabled={this.state.bulkArray.length===0?true:false}
+            disabled={this.state.bulkArray.length === 0 ? true : false}
           >
             Mark Dispatched
           </button>
@@ -78,7 +193,7 @@ export default class PendingHandover extends Component {
             className="btn btn-outline-primary"
             onClick={() => downloadLabel(this.state.bulkArray)}
             style={{ marginLeft: "10px" }}
-            disabled={this.state.bulkArray.length===0?true:false}
+            disabled={this.state.bulkArray.length === 0 ? true : false}
           >
             Reprint Label
           </button>
@@ -86,7 +201,7 @@ export default class PendingHandover extends Component {
             className="btn btn-outline-primary"
             onClick={() => downloadManifest(this.state.bulkArray)}
             style={{ marginLeft: "10px" }}
-            disabled={this.state.bulkArray.length===0?true:false}
+            disabled={this.state.bulkArray.length === 0 ? true : false}
           >
             Manifest <i className="fas fa-download" />
           </button>
@@ -105,7 +220,13 @@ export default class PendingHandover extends Component {
           <table className="tablelist" style={{ width: "100%" }}>
             <thead>
               <tr>
-                <th><input type="checkbox" style={{width:'15px'}} onChange={this.selectAllOrder}></input></th>
+                <th>
+                  <input
+                    type="checkbox"
+                    style={{ width: "15px" }}
+                    onChange={this.selectAllOrder}
+                  ></input>
+                </th>
                 <th>OrderId</th>
                 <th>Quantity</th>
                 <th>Order Date</th>
@@ -118,8 +239,21 @@ export default class PendingHandover extends Component {
               {this.props.ordersList &&
                 this.props.ordersList.map((data, i) =>
                   i <= this.state.pagination - 1 ? (
-                    <tr key={data.orderId}>
-                      <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.orderId)} checked={this.state.bulkArray.indexOf(data.orderId)===-1?false:true}></input></td>
+                    <tr key={data.orderNumber}>
+                      <td className="checkbox">
+                        <input
+                          type="checkbox"
+                          style={{ width: "15px" }}
+                          onChange={(e) =>
+                            this.onchangeBulkHandler(e, data.orderId)
+                          }
+                          checked={
+                            this.state.bulkArray.indexOf(data.orderId) === -1
+                              ? false
+                              : true
+                          }
+                        ></input>
+                      </td>
                       <td>{data.orderNumber}</td>
                       <td>{data.quantity}</td>
                       <td>{data.orderDate}</td>
@@ -139,10 +273,8 @@ export default class PendingHandover extends Component {
                         <button
                           className="btn btn-outline-primary"
                           onClick={() => {
-                            this.props.changeOrderStatus(
-                              [data.orderId],
-                              "dispatched"
-                            );
+                            this.setState({ orderId: data.orderId });
+                            this.openModal1();
                           }}
                           style={{ marginLeft: "10px" }}
                         >
@@ -168,6 +300,147 @@ export default class PendingHandover extends Component {
                 )}
             </tbody>
           </table>
+          <div>
+            {data.orderId}
+            <Modal
+              isOpen={this.state.modalIsOpen1}
+              onRequestClose={this.closeModal1}
+              style={this.customStyles}
+              ariaHideApp={false}
+            >
+              <div className="dispatch-btn">
+                {this.state.orderId}
+                <h3>Dispatch Options :</h3>
+                <button
+                  style={{
+                    marginTop: "10px",
+                    padding: "10px 12px",
+                  }}
+                  onClick={this.openModal2}
+                >
+                  Fullfilment By Merchant
+                </button>
+                <button
+                  style={{
+                    margin: "8px 10px",
+                    padding: "10px 48px",
+                  }}
+                  onClick={() => {
+                    this.props.changeOrderStatus(
+                      [this.state.orderId],
+                      "dispatched",
+                      "seller-smart"
+                    );
+                    this.closeModal1();
+                  }}
+                >
+                  By Amvirgin
+                </button>
+                <button
+                  style={{ padding: "10px 60px" }}
+                  onClick={this.closeModal1}
+                >
+                  Cancel
+                </button>
+              </div>
+            </Modal>
+          </div>
+          <div>
+            <Modal
+              isOpen={this.state.modalIsOpen2}
+              onRequestClose={this.closeModal2}
+              style={this.customStyles}
+              ariaHideApp={false}
+            >
+              <div>
+                <h3>Fullfilment by Merchant :</h3>
+              </div>
+              <div>
+                <form
+                  noValidate
+                  onSubmit={(e) =>
+                    this.handleSubmitModal(e, this.state.orderId)
+                  }
+                >
+                  <label
+                    style={{ marginTop: "15px" }}
+                    htmlFor="courier-name"
+                    className="courier-name"
+                  >
+                    Courier Name :
+                  </label>
+                  {this.state.orderId}
+                  <input
+                    type="text"
+                    name="courier"
+                    id="courier-name"
+                    placeholder="Enter Courier Name"
+                    value={this.state.courier}
+                    onChange={this.handleOnChangeModal}
+                  />
+                  <div className="error">
+                    <p>{this.state.courierError}</p>
+                  </div>
+                  <label
+                    style={{ marginTop: "15px" }}
+                    htmlFor="airway-bill"
+                    className="airway-bill"
+                  >
+                    Airway Bill Number :
+                  </label>
+                  <input
+                    type="text"
+                    name="bill"
+                    id="airway-bill"
+                    placeholder="Enter Airway Bill Number"
+                    value={this.state.bill}
+                    onChange={this.handleOnChangeModal}
+                  />
+                  <div className="error">
+                    <p>{this.state.billError}</p>
+                  </div>
+                  <label
+                    style={{ marginTop: "15px" }}
+                    htmlFor="dispatch-date"
+                    className="dispatch-date"
+                  >
+                    Dispatch Date :
+                  </label>
+                  <input
+                    type="date"
+                    name="dispatchDate"
+                    id="dispatch-date"
+                    value={this.state.dispatchDate}
+                    onChange={this.handleOnChangeModal}
+                  />
+                  <div className="error">
+                    <p>{this.state.dispatchDateError}</p>
+                  </div>
+                  <div className="dispatch-btn">
+                    <button
+                      style={{
+                        marginTop: "12px",
+                        padding: "10px 26px",
+                      }}
+                      type="submit"
+                    >
+                      Submit
+                    </button>
+                    <button
+                      style={{
+                        marginLeft: "10px",
+                        marginTop: "10px",
+                        padding: "10px 32px",
+                      }}
+                      onClick={this.closeModal2}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </Modal>
+          </div>
         </div>
         <div id="qr" style={{ display: "none" }}></div>
       </React.Fragment>

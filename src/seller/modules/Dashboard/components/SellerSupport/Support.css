@@ -21,7 +21,6 @@
 .issuetable>div:hover{
   border:1px solid red;
   color:red;
-
 }
 
 .supportitext >p {
@@ -30,3 +29,63 @@
   color:dodgerblue;
 
 }
+
+
+
+/* Mobile Phones */
+@media (max-width: 768px){
+  .issuetable{
+    margin: 0%;
+  }
+
+  .issuetable>div{
+    width: 12em;
+    height:5.7em;
+    padding: 0em;
+  }
+
+  .issuetable>div:hover{
+    border:1px solid red;
+    color:red;
+  }
+
+  .hr{
+    width: 100%;
+  }
+
+  .left{
+    width: 40em;
+    margin-left: 17%;
+  }
+
+  .Paymenttable{
+  margin-left: 20%;
+  }
+
+  .c-row{
+    margin-left: 20%;
+  }
+}
+
+/* Tablets */
+@media (min-width:769px) and (max-width:1279px){
+   .issuetable{
+    margin: 0%;
+  }
+
+  .issuetable>div{
+    width: 18em;
+    height:9.7em;
+    padding: 3.8em;
+  }
+
+  .issuetable>div:hover{
+    border:1px solid red;
+    color:red;
+  }
+
+  .hr{
+    width: 100%;
+  }
+}
+ 
