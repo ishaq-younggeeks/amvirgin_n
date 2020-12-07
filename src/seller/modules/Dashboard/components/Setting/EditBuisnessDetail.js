@@ -333,7 +333,7 @@ this.props.saveBusinessDetails(fd);
             <div className="form-group row">
               <div className="col-sm-4 text-left">
                 <label className="" htmlFor="gstIN">
-                  GSTIN
+                  GST
                 </label>
               </div>
               <div className="col-sm-4">
@@ -346,13 +346,13 @@ this.props.saveBusinessDetails(fd);
                 />
               </div>
             </div>
-            <div className="row">
-              <div>
-                <label className="col-sm-4" htmlFor="gstCertificate">
-                  upload gstCertificate
+            <div className="form-group row">
+              <div className="col-sm-4 text-left">
+                <label htmlFor="gstCertificate">
+                  Upload GST Certificate
                 </label>
               </div>
-              <div className="">
+              <div className="col-sm-4">
                 <input
                   type="file"
                   accept="application/pdf"
@@ -368,14 +368,14 @@ this.props.saveBusinessDetails(fd);
                   className="btn btn-primary"
                   onClick={(e) => this.handleAddImage(e, "4")}
                 >
-                  upload
+                  Upload
                 </button>
               </div>
-              <div style={{width:"100px"}}>
+              {/* <div style={{width:"100px"}}>
                 {this.state.previewgstCertificate}
-              </div>
+              </div> */}
             </div>
-            <div className="form-group row">
+            {/* <div className="form-group row">
               <div className="col-sm-4 text-left">
                 <label className="" htmlFor="tan">
                   TAN
@@ -390,7 +390,7 @@ this.props.saveBusinessDetails(fd);
                   onChange={this.onChangeHandler}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="form-group row">
               <div className="col-sm-4 text-left">
                 <label className="" htmlFor="rbaFirstLine">
@@ -426,7 +426,7 @@ this.props.saveBusinessDetails(fd);
             <div className="form-group row">
               <div className="col-sm-4 text-left">
                 <label className="" htmlFor="pan">
-                  PAN No
+                  PAN Number
                 </label>
               </div>
               <div className="col-sm-4">
@@ -439,13 +439,13 @@ this.props.saveBusinessDetails(fd);
                 />
               </div>
             </div>
-            <div className="row">
-              <div>
-                <label className="col-sm-4" htmlFor="panProofDocument">
-                  upload pancard
+            <div className="form-group row">
+              <div className="col-sm-4 text-left">
+                <label htmlFor="panProofDocument">
+                  Upload Pancard
                 </label>
               </div>
-              <div className="">
+              <div className="col-sm-4">
                 <input
                   type="file"
                   accept="image/*"
@@ -461,7 +461,7 @@ this.props.saveBusinessDetails(fd);
                   className="btn btn-primary"
                   onClick={(e) => this.handleAddImage(e, "3")}
                 >
-                  upload
+                  Upload
                 </button>
               </div>
               <div>
@@ -497,13 +497,13 @@ this.props.saveBusinessDetails(fd);
                 </select>
               </div>
             </div>
-            <div className="row">
-              <div>
-                <label className="col-sm-4" htmlFor="addressProofDocument">
-                  upload address proof
+            <div className="form-group row">
+              <div className="col-sm-4 text-left">
+                <label htmlFor="addressProofDocument">
+                  Upload Address Proof
                 </label>
               </div>
-              <div className="">
+              <div className="col-sm-4">
                 <input
                   type="file"
                   accept="image/*"
@@ -519,7 +519,7 @@ this.props.saveBusinessDetails(fd);
                   className="btn btn-primary"
                   onClick={(e) => this.handleAddImage(e, "1")}
                 >
-                  upload
+                  Upload
                 </button>
               </div>
               <div>
@@ -534,7 +534,7 @@ this.props.saveBusinessDetails(fd);
             <div className="form-group row">
               <div className="col-sm-4 text-left">
                 <label className="" htmlFor="rbaPinCode">
-                  PinCode
+                  Pincode
                 </label>
               </div>
               <div className="col-sm-4">
@@ -544,6 +544,7 @@ this.props.saveBusinessDetails(fd);
                   name="rbaPinCode"
                   value={this.state.rbaPinCode}
                   onChange={this.onChangeHandler}
+                  maxLength="8"
                 />
               </div>
             </div>
@@ -588,7 +589,7 @@ this.props.saveBusinessDetails(fd);
                   value={this.state.rbaStateId}
                   onChange={this.onChangeList}
                 >
-                  <option value="select">Select state</option>
+                  <option value="select">Select State</option>
                   {this.props.statelist &&
                     this.props.statelist.length &&
                     this.props.statelist.map((state) => {
@@ -628,13 +629,13 @@ this.props.saveBusinessDetails(fd);
                 </select>
               </div>
             </div>
-            <div className="row">
-              <div>
-                <label className="col-sm-4" htmlFor="signature">
+            <div className="form-group row">
+              <div className="col-sm-4 text-left">
+                <label htmlFor="signature">
                   Signature
                 </label>
               </div>
-              <div className="">
+              <div className="col-sm-4">
                 <input
                   type="file"
                   accept="image/*"
@@ -650,7 +651,7 @@ this.props.saveBusinessDetails(fd);
                   className="btn btn-primary"
                   onClick={(e) => this.handleAddImage(e, "2")}
                 >
-                  upload
+                  Upload
                 </button>
               </div>
               <div>
@@ -663,15 +664,15 @@ this.props.saveBusinessDetails(fd);
               </div>
             </div>
             <div className="row">
-              <div>
+              <div style={{marginLeft:"16px"}}>
                 <input
                   type="button"
                   className="btn btn-primary"
-                  value="cancel"
+                  value="Cancel"
                   onClick={this.closeModal}
                 />
               </div>
-              <div>
+              <div style={{marginLeft:"10px"}}>
                 <input type="submit" className="btn btn-primary" value="Save" />
               </div>
               <div

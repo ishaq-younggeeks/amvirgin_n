@@ -220,13 +220,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
       myOrderList: (activeState,current,perPage) => dispatch(myOrderList(activeState,current,perPage)),
-      changeOrderStatus:(id,status) => dispatch(changeOrderStatus(id,status)),
+      changeOrderStatus:(id, status, shippingMethod, courierName, airwayBillNumber, dispatchedOn) => dispatch(changeOrderStatus(id, status, shippingMethod, courierName, airwayBillNumber, dispatchedOn)),
       downloadLabel:(id) => dispatch(downloadLabel(id)),
       FilterBySearch:(currentPage,perPage,query,status) => dispatch(FilterBySearch(currentPage,perPage,query,status)),
       clearState:(state,type) => dispatch(clearState(state,type)),
       changeOrderStatusInBulk:(orderId,status) => dispatch(changeOrderStatusInBulk(orderId,status))
-
-
   });
 }
 

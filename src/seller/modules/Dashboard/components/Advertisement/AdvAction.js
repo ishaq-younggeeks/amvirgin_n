@@ -61,6 +61,26 @@ export const creatAdvt = (data) => {
   }
 }
 
+export const deleteAdvt = (key) => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    };
+    axios.delete(`${baseURL}/seller/promotions/${key}`, config)
+    .then(res =>{
+        // dispatch({  
+        //   type: DELETE_ADVT,
+        //   payload: res.data
+        // });
+      console.log("Delete Advt", res)
+    })
+    .catch(err => console.log(err))
+  }
+}
+
 export const clearState = (state,type) => {
   return dispatch => {
     dispatch({

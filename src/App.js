@@ -53,6 +53,7 @@ import BusinessDetail from "./seller/modules/Dashboard/components/Setting/Busine
 import ViewProductDetails from "./seller/modules/Dashboard/components/MyProducts/components/ViewProductDetails";
 import { getSellerProfile } from "./seller/modules/Authentication/sellerAuthAction";
 import {getSessionProfile} from './globalComponents/sessionprofileAction.js'
+import Return from "./seller/modules/Dashboard/components/Return/Return";
 import { Loader } from "./seller/modules/assets/loader.gif";
 import AddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
 
@@ -137,6 +138,7 @@ class App extends Component {
               <Route path="/seller/dashboard/payments/order-transaction" exact component={SellerOrderTransactions} />
               <Route path="/seller/dashboard/advertisement" exact component={SellerAdvertisement}/>
               <Route path="/seller/dashboard/advertisement/create-advt" exact component ={SellerCreateAdvts}/>
+              <Route path="/seller/dashboard/return" exact component={Return}/>
               <Route
                 path="/seller/dashboard/myorders"
                 exact

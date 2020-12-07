@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Advthome from './Advthome'
-import {creatAdvt,fetchAdvt,clearState} from './AdvAction'
+import {creatAdvt,fetchAdvt,clearState, deleteAdvt} from './AdvAction'
 
 
 const mapStateToProps = state => {
@@ -14,7 +14,8 @@ const mapDispatchToProps = dispatch => {
   return ({
     creatAdvt:(data) =>dispatch(creatAdvt(data)),
     fetchAdvt:() => dispatch(fetchAdvt()),
-    clearState:(state,type) => dispatch(clearState(state,type))
+    clearState:(state,type) => dispatch(clearState(state,type)),
+    deleteAdvt:(key) => dispatch(deleteAdvt(key))
   })
 }
 

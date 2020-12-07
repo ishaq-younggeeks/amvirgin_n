@@ -117,16 +117,8 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">TAN</p>
-                      </div>
-                      <div className="col-md-12">
-                        <p>{buisnessDetails.tan}</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
                         <p className="headerlab">
-                          GSTIN / Provisional ID Number*
+                          GST
                         </p>
                       </div>
                       <div className="col-md-12">
@@ -143,7 +135,7 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">Registered business address</p>
+                        <p className="headerlab">Registered Business Address</p>
                       </div>
                       <div className="col-md-12">
                         <p>
@@ -193,7 +185,7 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">Account number</p>
+                        <p className="headerlab">Account Number</p>
                       </div>
                       <div className="col-md-12">
                         <p>{bankDetails.accountNumber}</p>
@@ -201,7 +193,7 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">Bank name</p>
+                        <p className="headerlab">Bank Name</p>
                       </div>
                       <div className="col-md-12">
                         <p>{bankDetails.bankName}</p>
@@ -209,7 +201,7 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">branch name</p>
+                        <p className="headerlab">Branch Name</p>
                       </div>
                       <div className="col-md-12">
                         <p>{bankDetails.branch}</p>
@@ -217,7 +209,7 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">Ifsc</p>
+                        <p className="headerlab">IFSC</p>
                       </div>
                       <div className="col-md-12">
                         <p>{bankDetails.ifsc}</p>

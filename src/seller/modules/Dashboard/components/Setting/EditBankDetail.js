@@ -248,7 +248,7 @@ export default class EditBankDetail extends Component {
 									<label className="" htmlFor="accountNumber" >Account Number</label>
 								</div>
 								<div className="col-sm-4">
-									<input type="text" className="form-control" name="accountNumber" value={this.state.accountNumber} onChange={this.onChangeHandler}/>
+									<input type="text" className="form-control" name="accountNumber" maxLength="18" value={this.state.accountNumber} onChange={this.onChangeHandler}/>
 								</div>
 							</div>
 							<div className="form-group row">
@@ -302,7 +302,7 @@ export default class EditBankDetail extends Component {
             					    value={this.state.stateId}
             					    onChange={this.onChangeList}
             					  >
-            					    <option value="select">Select state</option>
+            					    <option value="select">Select State</option>
             					    {this.props.statelist && this.props.statelist.length && this.props.statelist.map(state => {
             					  return (
             					    <option key={state.id} value={state.id}>
@@ -341,7 +341,7 @@ export default class EditBankDetail extends Component {
 									<label className="" htmlFor="ifsc" >IFSC Code</label>
 								</div>
 								<div className="col-sm-4">
-									<input type="text" className="form-control" name="ifsc" value={this.state.ifsc} onChange={this.onChangeHandler}/>
+									<input type="text" className="form-control" name="ifsc" maxLength="11" value={this.state.ifsc} onChange={this.onChangeHandler}/>
 								</div>
 							</div>
 							<div className="form-group row">
@@ -363,11 +363,11 @@ export default class EditBankDetail extends Component {
             					  </select>
 								</div>
 							</div>
-							<div className="row">
-								<div>
-								<label className="col-sm-4" htmlFor="cancelledCheque" >Cancelled cheque</label>
+							<div className="form-group row">
+								<div className="col-sm-4 text-left">
+								<label htmlFor="cancelledCheque" >Cancelled cheque</label>
 								</div>
-								<div className="">
+								<div className="col-sm-4">
 									<input type="file"  accept="image/*" name="cancelledCheque" className="form-control" onChange={(e)=>this.handleImageChange(e,"previewcCheque")} ref={this.imageButton2} style={{ display: "none" }} />
 									<button className="btn btn-primary" onClick={(e)=>this.handleAddImage(e,"2")}>upload</button>
 								</div>
@@ -376,10 +376,10 @@ export default class EditBankDetail extends Component {
 								</div>
 							</div>
 							<div className="row">
-								<div>
-									<input type="button" className="btn btn-primary" value="cancel" onClick={this.closeModal}/>
+								<div style={{marginLeft:"16px"}}>
+									<input type="button" className="btn btn-primary" value="Cancel" onClick={this.closeModal}/>
 								</div>
-								<div>
+								<div style={{marginLeft:"10px"}}>
 									<input type="submit" className="btn btn-primary" value="Save"/>
 								</div>
 								<div style={{background:"rgba(0, 0, 0, 0.9)",marginLeft:"10px"}}>

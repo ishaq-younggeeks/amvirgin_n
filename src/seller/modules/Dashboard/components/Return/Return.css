@@ -1,0 +1,18 @@
+.approve-btn{
+    font-size: 30px;
+    border: none;
+}
+
+.disApprove-btn{
+    font-size: 30px;
+    border: none;
+    margin-left: 10px;
+}
+
+.approve-btn:hover{
+    color: green;
+}
+
+.disApprove-btn:hover{
+    color: red;
+}
