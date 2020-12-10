@@ -39,7 +39,7 @@ export default class PlacedOrder extends Component {
   selectAllOrder = (e) => {
     let bulk_array;
     bulk_array = this.props.ordersList.map((item,index)=>{
-      return item.orderId
+      return item.key
     })
     let check = e.target.checked;
     if(check)
@@ -107,9 +107,9 @@ export default class PlacedOrder extends Component {
               {this.state.search === true
                 ? this.state.items.map((data, i) =>
                     i <= this.state.pagination - 1 ? (
-                      <tr key={data.orderId}>
-                        <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.orderId)} checked={this.state.bulkArray.indexOf(data.orderId)===-1?false:true}></input></td>
-                        <td>{data.orderNumber}</td>
+                      <tr key={data.key}>
+                        <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.key)} checked={this.state.bulkArray.indexOf(data.key)===-1?false:true}></input></td>
+                        <td>{data.key}</td>
                         <td>{data.quantity}</td>
                         <td>{data.orderDate}</td>
                         <td>{data.status}</td>
@@ -117,7 +117,7 @@ export default class PlacedOrder extends Component {
                           <button
                             className="btn toolnewtip"
                             onClick={() => {
-                              localStorage.setItem("orderId", data.orderId);
+                              localStorage.setItem("orderId", data.key);
                             }}
                           >
                             <Link to="/seller/dashboard/vieworders">
@@ -130,11 +130,11 @@ export default class PlacedOrder extends Component {
                     ) : null
                   )
                 : this.props.ordersList &&
-                  this.props.ordersList.map((data, i) =>
+                  Array.from(this.props.ordersList).map((data, i) =>
                     i <= this.state.pagination - 1 ? (
-                      <tr key={data.orderId}>
-                        <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.orderId)} checked={this.state.bulkArray.indexOf(data.orderId)===-1?false:true}></input></td>
-                        <td>{data.orderNumber}</td>
+                      <tr key={data.key}>
+                        <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.key)} checked={this.state.bulkArray.indexOf(data.key)===-1?false:true}></input></td>
+                        <td>{data.key}</td>
                         <td>{data.quantity}</td>
                         <td>{data.orderDate}</td>
                         <td>{data.status}</td>
@@ -142,7 +142,7 @@ export default class PlacedOrder extends Component {
                           <button
                             className="btn toolnewtip"
                             onClick={() => {
-                              localStorage.setItem("orderId", data.orderId);
+                              localStorage.setItem("orderId", data.key);
                             }}
                           >
                             <Link to="/seller/dashboard/vieworders">
@@ -154,7 +154,7 @@ export default class PlacedOrder extends Component {
                             className="btn btn-outline-primary"
                             onClick={() => {
                               this.props.changeOrderStatus(
-                                [data.orderId],
+                                [data.key],
                                 "cancelled"
                               );
                             }}
@@ -166,7 +166,7 @@ export default class PlacedOrder extends Component {
                             className="btn btn-outline-primary"
                             onClick={() => {
                               this.props.changeOrderStatus(
-                                [data.orderId],
+                                [data.key],
                                 "ready-for-dispatch"
                               );
                             }}

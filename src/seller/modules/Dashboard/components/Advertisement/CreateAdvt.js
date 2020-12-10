@@ -114,8 +114,11 @@ export default class CreateAdvt extends Component {
         ariaHideApp={false}
         style={customStyles}
       >
+      <div>
+      <h3>Create Advertisement : </h3>
+      </div>
+      <hr/>
       <div className="container-fliud" style={{ marginTop: "5%" }}>
-    
         <form onSubmit={this.onSubmitHandler} autoComplete="off">
           <div className="form-group row">
             <div className="col-sm-4 text-left">
@@ -130,6 +133,7 @@ export default class CreateAdvt extends Component {
                 name="subject"
                 value={this.state.subject}
                 onChange={this.onChangeHandler}
+                maxLength="50"
               />
             </div>
           </div>
@@ -147,6 +151,7 @@ export default class CreateAdvt extends Component {
                 name="message"
                 value={this.state.message}
                 onChange={this.onChangeHandler}
+                maxLength="150"
               />
             </div>
           </div>
@@ -168,7 +173,7 @@ export default class CreateAdvt extends Component {
                 
               </div>
             </div>
-            <div>
+            <div style={{marginLeft:"16px"}}>
             <button
                   className="btn btn-primary"
                   onClick={(e) => this.handleAddImage(e)}

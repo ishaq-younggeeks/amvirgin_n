@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseURL } from "../../../../../credential.json";
-import {FETCH_CREATEADVT,CREATEADVT_STATUS,FETCH_ADVT} from './AdvConstant'
+import {FETCH_CREATEADVT,CREATEADVT_STATUS,FETCH_ADVT, EDIT_ADVT, DELETE_ADVT} from './AdvConstant'
 import React from 'react';
 import $ from 'jquery'
 
@@ -32,8 +32,6 @@ export const fetchAdvt = (page=1) => {
 };
 
 
-
-
 export const creatAdvt = (data) => {
   return dispatch => {
     let token = localStorage.getItem("token");
@@ -61,6 +59,31 @@ export const creatAdvt = (data) => {
   }
 }
 
+
+export const editAdvt = (data, key) => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+    console.log(data, key)
+    axios.post(`${baseURL}/seller/promotions/${key}/update`, data, config)
+    .then(res => {
+      if(res.data.status === 200){
+        dispatch({
+            type: EDIT_ADVT,
+            payload: res.data
+        })
+      }
+      console.log("Edit promotion details: ", res);
+    })
+    .catch(err => console.log("Edit", err))
+  }
+}
+
+
 export const deleteAdvt = (key) => {
   return dispatch => {
     let token = localStorage.getItem("token");
@@ -71,10 +94,10 @@ export const deleteAdvt = (key) => {
     };
     axios.delete(`${baseURL}/seller/promotions/${key}`, config)
     .then(res =>{
-        // dispatch({  
-        //   type: DELETE_ADVT,
-        //   payload: res.data
-        // });
+        dispatch({  
+          type: DELETE_ADVT,
+          payload: res.data
+        });
       console.log("Delete Advt", res)
     })
     .catch(err => console.log(err))

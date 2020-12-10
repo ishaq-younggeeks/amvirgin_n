@@ -112,7 +112,7 @@ renderComponent = () => {
       if (prevprops.metaData !== this.props.metaData) {
         this.setState({
           maxPage: Math.floor(
-            this.props.metaData.pagination.pages
+            this.props.metaData.total
           ),
         });
       }

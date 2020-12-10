@@ -22,12 +22,19 @@ export default class Advthome extends Component {
         openModal: false,
         
       };
-    } else return null;
+    }
+    if (nextProps.deleteStatus && nextProps.deleteStatus.status === 204) {
+      ToastsStore.success("Deleted succesfully");
+      nextProps.clearState('deleteStatus',{});
+      return null;
+    }
+    else return null;
   }
 
   classMethod = () => {
     console.log("calling")
     this.props.clearState('savedStatus',{});
+    this.props.clearState('deleteStatus',{});
   };
 
  

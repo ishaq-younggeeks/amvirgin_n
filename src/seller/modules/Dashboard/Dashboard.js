@@ -118,13 +118,13 @@ class Dashboard extends Component {
                     <div className="row">
                       <div className="col-sm-6">
                         <p style={{ fontWeight: "500", marginBottom: "0px" }}>
-                          New Orders
+                          Placed Orders
                         </p>
                         <h1>{this.props.dashboardData.new}</h1>
                       </div>
                       <div className="col-sm-6">
                         <p style={{ fontWeight: "500", marginBottom: "0px" }}>
-                          Urgent Orders
+                          Pending Orders
                         </p>
                         <h1>{this.props.dashboardData.pending}</h1>
                       </div>

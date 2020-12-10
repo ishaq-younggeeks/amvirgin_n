@@ -1,3 +1,5 @@
 export const FETCH_CREATEADVT ="FETCH_CREATEADVT";
 export const CREATEADVT_STATUS = "CREATEADVT_STATUS";
 export const FETCH_ADVT = "FETCH_ADVT";
+export const DELETE_ADVT = "DELETE_ADVT";
+export const EDIT_ADVT = "EDIT_ADVT";

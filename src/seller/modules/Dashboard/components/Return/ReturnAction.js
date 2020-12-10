@@ -37,7 +37,7 @@ export const approveReturn = (key) => {
         }
         console.log("API", config);
         axios
-        .post(`${baseURL}/seller/returns/${key}/approve`, config)
+        .post(`${baseURL}/seller/returns/${key}/approve`, {}, config)
         .then(res => {
             console.log("Return Response", res);
             if(res.data.status === 200){
@@ -62,9 +62,8 @@ export const disApproveReturn = (key) => {
                 Authorization: "Bearer " + token
             }
         }
-        console.log("API", config);
         axios
-        .post(`${baseURL}/seller/returns/${key}/disapprove`, config)
+        .post(`${baseURL}/seller/returns/${key}/disapprove`, {}, config)
         .then(res => {
             console.log("Return Response", res);
             if(res.data.status === 200){

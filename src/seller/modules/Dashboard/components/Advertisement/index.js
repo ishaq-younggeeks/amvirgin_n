@@ -1,12 +1,13 @@
 import {connect} from 'react-redux'
 import Advthome from './Advthome'
-import {creatAdvt,fetchAdvt,clearState, deleteAdvt} from './AdvAction'
+import {creatAdvt,fetchAdvt,clearState, deleteAdvt, editAdvt} from './AdvAction'
 
 
 const mapStateToProps = state => {
   return {
     advtlist:state.sellerAdvt.advtlist,
-    savedStatus:state.sellerAdvt.savedStatus
+    savedStatus:state.sellerAdvt.savedStatus,
+    deleteStatus:state.sellerAdvt.deleteStatus
   }
 }
 

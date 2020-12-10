@@ -27,9 +27,22 @@ export default class EditBuisnessDetail extends Component {
       pan: "",
       previewpanProofDocument: "",
       panProofDocument: "",
-      gstCertificate:"",
-      previewgstCertificate:""
-
+      gstCertificate: "",
+      previewgstCertificate: "",
+      nameError: "",
+      gstError: "",
+      gstCertificateError: "",
+      rbaFirstLineError: "",
+      rbaSecondLineError: "",
+      panError: "",
+      panProofDocumentError: "",
+      addressProofTypeError: "",
+      addressProofDocumentError: "",
+      rbaPinCodeError: "",
+      rbaCountryError: "",
+      rbaStateError: "",
+      rbaCityError: "",
+      signatureError: "",
     };
   }
 
@@ -60,9 +73,9 @@ export default class EditBuisnessDetail extends Component {
         previewaddressProofDocument: buisnessDetails.addressProof
           ? buisnessDetails.addressProof.document
           : "",
-          previewgstCertificate: buisnessDetails.gstCertificate
+        previewgstCertificate: buisnessDetails.gstCertificate
           ? buisnessDetails.gstCertificate
-          : "",  
+          : "",
       },
       console.log("current state", this.state)
     );
@@ -115,7 +128,7 @@ export default class EditBuisnessDetail extends Component {
     if (picked === "1") this.imageButton1.current.click();
     else if (picked === "3") this.imageButton3.current.click();
     else if (picked === "4") this.imageButton4.current.click();
-    else  this.imageButton.current.click();
+    else this.imageButton.current.click();
   };
 
   handleImageChange(e, preview) {
@@ -136,136 +149,196 @@ export default class EditBuisnessDetail extends Component {
     //this.saveData();
   }
 
+  validate = () => {
+    let nameError = "";
+    let gstError = "";
+    let gstCertificateError = "";
+    let rbaFirstLineError = "";
+    let rbaSecondLineError = "";
+    let panError = "";
+    let panProofDocumentError = "";
+    let addressProofTypeError = "";
+    let addressProofDocumentError = "";
+    let rbaPinCodeError = "";
+    let rbaCountryError = "";
+    let rbaStateError = "";
+    let rbaCityError = "";
+    let signatureError = "";
+
+    if (!this.state.name.trim()) {
+      nameError = "This field cannot be blank";
+    }
+
+    if (!this.state.gstIN.trim()) {
+      gstError = "This field cannot be blank";
+    } else if (!/^[0-9]*$/.test(this.state.gstIN)) {
+      gstError = "Please Enter Numbers Only";
+    }
+
+    if (!this.state.rbaFirstLine.trim()) {
+      rbaFirstLineError = "This field cannot be blank";
+    }
+
+    if (!this.state.rbaSecondLine.trim()) {
+      rbaSecondLineError = "This field cannot be blank";
+    }
+
+    if (!this.state.pan.trim()) {
+      panError = "This field cannot be blank";
+    } else if (!/[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(this.state.pan)) {
+      panError = "Invalid Pan Number";
+    }
+
+    if (!this.state.rbaPinCode.trim()) {
+      rbaPinCodeError = "This field cannot be blank";
+    } else if (!/^[1-9][0-9]{5}$/.test(this.state.rbaPinCode)) {
+      rbaPinCodeError = "Invalid Pincode";
+    }
+
+    if (
+      nameError ||
+      gstError ||
+      rbaFirstLineError ||
+      rbaSecondLineError ||
+      panError ||
+      rbaPinCodeError
+    ) {
+      this.setState({
+        nameError,
+        gstError,
+        rbaFirstLineError,
+        rbaSecondLineError,
+        panError,
+        rbaPinCodeError,
+      });
+      return false;
+    }
+    return true;
+  };
+
   onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // const file = new File( this.state.signature,{
-    // 	type: 'image/jpeg'})
+    let isValid = this.validate();
+    // const file = new File(this.state.signature, {
+    //   type: "image/jpeg",
+    // });
+    console.log("isValid", isValid);
+    if (isValid) {
+      function srcToFile(src, fileName, mimeType) {
+        console.log("src:", src, "filename:", fileName);
+        return fetch(src)
+          .then(function (res) {
+            return res.arrayBuffer();
+          })
+          .then(function (buf) {
+            return new File([buf], fileName, { type: mimeType });
+          });
+      }
 
-    function srcToFile(src, fileName, mimeType) {
-      console.log("src:", src, "filename:", fileName);
-      return fetch(src)
-        .then(function (res) {
-          return res.arrayBuffer();
-        })
-        .then(function (buf) {
-          return new File([buf], fileName, { type: mimeType });
+      //usage example: (works in Chrome and Firefox)
+      //convert src to File and upload to server php
+
+      let data = {
+        name: this.state.name,
+        gstIN: this.state.gstIN,
+        tan: parseInt(this.state.tan),
+        signature: this.state.signature ? this.state.signature : null,
+        gstCertificate: this.state.gstCertificate
+          ? this.state.gstCertificate
+          : null,
+        rbaFirstLine: this.state.rbaFirstLine,
+        rbaSecondLine: this.state.rbaSecondLine,
+        rbaPinCode: parseInt(this.state.rbaPinCode),
+        rbaCityId: parseInt(this.state.rbaCityId),
+        rbaStateId: parseInt(this.state.rbaStateId),
+        rbaCountryId: parseInt(this.state.rbaCountryId),
+        pan: this.state.pan,
+        panProofDocument: this.state.panProofDocument
+          ? this.state.panProofDocument
+          : null,
+        addressProofType: this.state.addressProofType,
+        addressProofDocument: this.state.addressProofDocument
+          ? this.state.addressProofDocument
+          : null,
+      };
+
+      const fd = new FormData();
+
+      let objectToFormData = function (obj, form, namespace) {
+        let formKey;
+
+        for (var property in obj) {
+          if (obj.hasOwnProperty(property)) {
+            if (namespace) {
+              formKey = namespace + "[" + property + "]";
+            } else {
+              formKey = property;
+            }
+
+            // if the property is an object, but not a File,
+            // use recursivity.
+            if (
+              typeof obj[property] === "object" &&
+              !(obj[property] instanceof File)
+            ) {
+              objectToFormData(obj[property], fd, formKey);
+            } else {
+              // if it's a string or a File object
+              fd.append(formKey, obj[property]);
+            }
+          }
+        }
+      };
+
+      objectToFormData(data);
+      let fileDoc = [
+        { value: this.state.signature, property: "signature" },
+        { value: this.state.panProofDocument, property: "panProofDocument" },
+        {
+          value: this.state.addressProofDocument,
+          property: "addressProofDocument",
+        },
+        {
+          value: this.state.gstCertificate,
+          property: "gstCertificate",
+        },
+      ];
+      let count = 0;
+      let preview = false;
+      let fileDocfinal = [];
+      fileDoc.map((item, index) => {
+        console.log("calling it", index);
+        if (item["value"] === "") fileDocfinal.push(item);
+      });
+
+      if (fileDocfinal.length) {
+        let ext = [".png", ".jpg", "jpeg", ".pdf"];
+        console.log("calling filedoc final", fileDocfinal.length);
+        fileDocfinal.map((item, index) => {
+          let temp = "preview" + item.property;
+          let source = this.state[`${temp}`];
+          let extension = ext.map((item) => {
+            let res = source.search(item);
+            if (res !== -1) {
+              return item;
+            }
+          });
+          console.log("extension are", extension);
+          srcToFile(source, "new.jpeg", "image/jpeg").then((file) => {
+            console.log("calling for", file);
+            fd.append(`${item.property}`, file);
+            if (fileDocfinal.length === index + 1) {
+              console.log("calling final fieldoc");
+              this.props.saveBusinessDetails(fd);
+            }
+          });
         });
+      } else {
+        console.log("not calling");
+        this.props.saveBusinessDetails(fd);
+      }
     }
-
-    //usage example: (works in Chrome and Firefox)
-    //convert src to File and upload to server php
-
-    let data = {
-      name: this.state.name,
-      gstIN: this.state.gstIN,
-      tan: parseInt(this.state.tan),
-      signature: this.state.signature ? this.state.signature : null,
-      gstCertificate:this.state.gstCertificate?this.state.gstCertificate:null,
-      rbaFirstLine: this.state.rbaFirstLine,
-      rbaSecondLine: this.state.rbaSecondLine,
-      rbaPinCode: parseInt(this.state.rbaPinCode),
-      rbaCityId: parseInt(this.state.rbaCityId),
-      rbaStateId: parseInt(this.state.rbaStateId),
-      rbaCountryId: parseInt(this.state.rbaCountryId),
-      pan: this.state.pan,
-      panProofDocument: this.state.panProofDocument
-        ? this.state.panProofDocument
-        : null,
-      addressProofType: this.state.addressProofType,
-      addressProofDocument: this.state.addressProofDocument
-        ? this.state.addressProofDocument
-        : null,
-    };
-
-    const fd = new FormData();
-
-    let objectToFormData = function (obj, form, namespace) {
-      let formKey;
-
-      for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-          if (namespace) {
-            formKey = namespace + "[" + property + "]";
-          } else {
-            formKey = property;
-          }
-
-          // if the property is an object, but not a File,
-          // use recursivity.
-          if (
-            typeof obj[property] === "object" &&
-            !(obj[property] instanceof File)
-          ) {
-            objectToFormData(obj[property], fd, formKey);
-          } else {
-            // if it's a string or a File object
-            fd.append(formKey, obj[property]);
-          }
-        }
-      }
-    };
-
-    objectToFormData(data);
-    let fileDoc = [
-      { value: this.state.signature, property: "signature" },
-      { value: this.state.panProofDocument, property: "panProofDocument" },
-      {
-        value: this.state.addressProofDocument,
-        property: "addressProofDocument",
-      },
-      {
-        value: this.state.gstCertificate,
-        property: "gstCertificate",
-      }
-    ];
-    let count = 0
-    let preview=false;
-    let fileDocfinal=[]
-fileDoc.map((item, index) => {
-
-      console.log("calling it", index);
-      if (item["value"] === "") 
-          fileDocfinal.push(item)
-    });
-    
-  
-if(fileDocfinal.length)
-{
-  let ext = [".png",".jpg","jpeg",".pdf"]
-  console.log("calling filedoc final",fileDocfinal.length)
-fileDocfinal.map((item,index)=>{
-
-    let temp = "preview" + item.property;
-    let source = this.state[`${temp}`]
-    let extension = ext.map((item)=>{
-      let res = source.search(item)
-        if(res!==-1){
-          return item
-        }
-    })
-    console.log("extension are",extension)
-    srcToFile(source, "new.jpeg", "image/jpeg").then(
-      (file) => {
-        console.log("calling for",file);
-          fd.append(`${item.property}`, file);
-        if (fileDocfinal.length === index+1) {
-          console.log("calling final fieldoc")
-          this.props.saveBusinessDetails(fd);
-        }
-      }
-    );
-    
-  
-})
-}
-else
-{
-  console.log("not calling")
-this.props.saveBusinessDetails(fd);
-}
-
-
 
     // if(this.state.signature==="" && this.state.panProofDocument==="" && this.state.addressProofDocument==="")
     // {
@@ -328,6 +401,7 @@ this.props.saveBusinessDetails(fd);
                   value={this.state.name}
                   onChange={this.onChangeHandler}
                 />
+                <p style={{ color: "red" }}>{this.state.nameError}</p>
               </div>
             </div>
             <div className="form-group row">
@@ -343,14 +417,14 @@ this.props.saveBusinessDetails(fd);
                   name="gstIN"
                   value={this.state.gstIN}
                   onChange={this.onChangeHandler}
+                  maxLength="15"
                 />
+                <p style={{ color: "red" }}>{this.state.gstError}</p>
               </div>
             </div>
             <div className="form-group row">
               <div className="col-sm-4 text-left">
-                <label htmlFor="gstCertificate">
-                  Upload GST Certificate
-                </label>
+                <label htmlFor="gstCertificate">Upload GST Certificate</label>
               </div>
               <div className="col-sm-4">
                 <input
@@ -370,6 +444,11 @@ this.props.saveBusinessDetails(fd);
                 >
                   Upload
                 </button>
+                {this.state.previewgstCertificate && (
+                  <div style={{ marginTop: "5px", color:"red" }}>
+                    Click Upload for new doc.
+                  </div>
+                )}
               </div>
               {/* <div style={{width:"100px"}}>
                 {this.state.previewgstCertificate}
@@ -404,7 +483,9 @@ this.props.saveBusinessDetails(fd);
                   name="rbaFirstLine"
                   value={this.state.rbaFirstLine}
                   onChange={this.onChangeHandler}
+                  maxLength="150"
                 />
+                <p style={{ color: "red" }}>{this.state.rbaFirstLineError}</p>
               </div>
             </div>
             <div className="form-group row">
@@ -420,7 +501,9 @@ this.props.saveBusinessDetails(fd);
                   name="rbaSecondLine"
                   value={this.state.rbaSecondLine}
                   onChange={this.onChangeHandler}
+                  maxLength="150"
                 />
+                <p style={{ color: "red" }}>{this.state.rbaSecondLineError}</p>
               </div>
             </div>
             <div className="form-group row">
@@ -436,14 +519,14 @@ this.props.saveBusinessDetails(fd);
                   name="pan"
                   value={this.state.pan}
                   onChange={this.onChangeHandler}
+                  maxLength="10"
                 />
+                <p style={{ color: "red" }}>{this.state.panError}</p>
               </div>
             </div>
             <div className="form-group row">
               <div className="col-sm-4 text-left">
-                <label htmlFor="panProofDocument">
-                  Upload Pancard
-                </label>
+                <label htmlFor="panProofDocument">Upload Pancard</label>
               </div>
               <div className="col-sm-4">
                 <input
@@ -463,14 +546,14 @@ this.props.saveBusinessDetails(fd);
                 >
                   Upload
                 </button>
-              </div>
-              <div>
-                <img
-                  alt="previewImg"
-                  src={this.state.previewpanProofDocument}
-                  style={{ height: "200px", width: "200px" }}
-                  id="previewImg"
-                />
+                <div style={{ marginTop: "5px" }}>
+                  <img
+                    alt="previewImg"
+                    src={this.state.previewpanProofDocument}
+                    style={{ height: "200px", width: "200px" }}
+                    id="previewImg"
+                  />
+                </div>
               </div>
             </div>
 
@@ -521,14 +604,14 @@ this.props.saveBusinessDetails(fd);
                 >
                   Upload
                 </button>
-              </div>
-              <div>
-                <img
-                  alt="previewImg"
-                  src={this.state.previewaddressProofDocument}
-                  style={{ height: "200px", width: "200px" }}
-                  id="previewImg"
-                />
+                <div style={{ marginTop: "10px" }}>
+                  <img
+                    alt="previewImg"
+                    src={this.state.previewaddressProofDocument}
+                    style={{ height: "200px", width: "200px" }}
+                    id="previewImg"
+                  />
+                </div>
               </div>
             </div>
             <div className="form-group row">
@@ -544,8 +627,9 @@ this.props.saveBusinessDetails(fd);
                   name="rbaPinCode"
                   value={this.state.rbaPinCode}
                   onChange={this.onChangeHandler}
-                  maxLength="8"
+                  maxLength="6"
                 />
+                <p style={{ color: "red" }}>{this.state.rbaPinCodeError}</p>
               </div>
             </div>
             <div className="form-group row">
@@ -631,9 +715,7 @@ this.props.saveBusinessDetails(fd);
             </div>
             <div className="form-group row">
               <div className="col-sm-4 text-left">
-                <label htmlFor="signature">
-                  Signature
-                </label>
+                <label htmlFor="signature">Signature</label>
               </div>
               <div className="col-sm-4">
                 <input
@@ -653,18 +735,18 @@ this.props.saveBusinessDetails(fd);
                 >
                   Upload
                 </button>
-              </div>
-              <div>
-                <img
-                  alt="previewImg"
-                  src={this.state.previewsignature}
-                  style={{ height: "200px", width: "200px" }}
-                  id="previewImg"
-                />
+                <div style={{ marginTop: "5px" }}>
+                  <img
+                    alt="previewImg"
+                    src={this.state.previewsignature}
+                    style={{ height: "200px", width: "200px" }}
+                    id="previewImg"
+                  />
+                </div>
               </div>
             </div>
             <div className="row">
-              <div style={{marginLeft:"16px"}}>
+              <div style={{ marginLeft: "16px" }}>
                 <input
                   type="button"
                   className="btn btn-primary"
@@ -672,7 +754,7 @@ this.props.saveBusinessDetails(fd);
                   onClick={this.closeModal}
                 />
               </div>
-              <div style={{marginLeft:"10px"}}>
+              <div style={{ marginLeft: "10px" }}>
                 <input type="submit" className="btn btn-primary" value="Save" />
               </div>
               <div

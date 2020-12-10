@@ -24,8 +24,8 @@ export const myOrderList = (activeState, current, perPage) => {
         if (res.data.status === 200) {
           dispatch({
             type: GET_ALL_ORDERS,
-            payload: res.data.data,
-            payload2: res.data.meta,
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta,
           });
         }
       })

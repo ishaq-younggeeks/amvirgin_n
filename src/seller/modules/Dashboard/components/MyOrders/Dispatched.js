@@ -63,7 +63,7 @@ export default class PandingLabel extends Component {
               )
             )
             :            
-            (this.props.ordersList.map((data,i)=>
+            (Array.from(this.props.ordersList).map((data,i)=>
               i<=this.state.pagination-1 ? 
               <tr key={data.orderId}>
                 <td>{data.orderNumber}</td>

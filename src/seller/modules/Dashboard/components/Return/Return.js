@@ -24,22 +24,22 @@ class Return extends Component {
     const { isFetching } = this.props;
     return (
       <>
-        <div className="row" style={{ padding: "20px", marginTop: "5%" }}>
-        <div>
+        <div style={{marginTop: "5%", width:"100%"}}>
         <h2>Return</h2>
+        <hr/>
         </div>
+        <div>
           <Table
             striped
             bordered
             hover
             size="sm"
-            style={{ marginRight: "22px", marginTop:"10px" }}
           >
             <thead>
               <tr>
                 <th>Customer</th>
                 <th>Product</th>
-                <th>Description</th>
+                <th>Order ID</th>
                 <th>Quantity</th>
                 <th>Date</th>
                 <th>Reason</th>
@@ -55,7 +55,7 @@ class Return extends Component {
                     <tr key={i}>
                       <td>{data.customer.name}</td>
                       <td>{data.item.product.name}</td>
-                      <td>{data.item.product.description}</td>
+                      <td>{data.order.key}</td>
                       <td>{data.item.quantity}</td>
                       <td>{data.raised}</td>
                       <td>{data.reason}</td>
@@ -66,16 +66,15 @@ class Return extends Component {
                           <button
                             className="fas fa-check approve-btn"
                             onClick={() => {
-                              this.props.approveReturn([data.key])
+                              this.props.approveReturn(data.key);
                             }}
                           ></button>
                           <button
                             className="fa fa-close disApprove-btn"
                             onClick={() => {
-                              this.props.disApproveReturn([data.key])
+                              this.props.disApproveReturn(data.key);
                             }}
                           ></button>
-                          {data.key}
                         </td>
                       ) : (
                         <td style={{ fontWeight: "bold" }}>
@@ -93,6 +92,7 @@ class Return extends Component {
                         color="#000"
                         height={100}
                         width={100}
+                        style={{marginTop:"30px"}}
                       />
                     </div>
               </tbody>

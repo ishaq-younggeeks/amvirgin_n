@@ -93,9 +93,9 @@ import Filter from "./Filter"
               )
             )
             :            
-            (this.props.ordersList.map((data,i)=>
+            (Array.from(this.props.ordersList).map((data,i)=>
               i<=this.state.pagination-1 ? 
-              <tr key={data.orderId}>
+              <tr key={data.key}>
                 <td>{data.orderNumber}</td>
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
