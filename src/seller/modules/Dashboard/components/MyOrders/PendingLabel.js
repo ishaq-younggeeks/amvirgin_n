@@ -19,15 +19,15 @@ export default class PendingLabel extends Component {
 
   };
 
-  onchangeBulkHandler = (e,orderid) => {
+  onchangeBulkHandler = (e,key) => {
     let bulk_list = this.state.bulkArray;
     let check = e.target.checked;
     if(check){
       this.setState({
-        bulkArray: [...this.state.bulkArray, orderid]
+        bulkArray: [...this.state.bulkArray, key]
       },console.log("list state",this.state))
   }else{ 
-      var index = this.state.bulkArray.indexOf(orderid);
+      var index = this.state.bulkArray.indexOf(key);
       if (index > -1) {
         bulk_list.splice(index, 1);
           this.setState({
@@ -40,7 +40,7 @@ export default class PendingLabel extends Component {
   selectAllOrder = (e) => {
     let bulk_array;
     bulk_array = this.props.ordersList.map((item,index)=>{
-      return item.orderId
+      return item.key
     })
     let check = e.target.checked;
     if(check)
@@ -88,20 +88,20 @@ downloadLabel(this.state.bulkArray,1);
             {            
             (this.props.ordersList.length ? this.props.ordersList.map((data,i)=>
               i<=this.state.pagination-1 ? 
-              <tr key={data.orderId}>
-                <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.orderId)} checked={this.state.bulkArray.indexOf(data.orderId)===-1?false:true}></input></td>
-                <td>{data.orderNumber}</td>
+              <tr key={data.key}>
+                <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.key)} checked={this.state.bulkArray.indexOf(data.key)===-1?false:true}></input></td>
+                <td>{data.key}</td>
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
                 <td>
-                  <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
+                  <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.key) }}>
                     <Link to="/seller/dashboard/vieworders">
                         <i className="fas fa-eye" />                  
-                        <span class="tooltiptext">View</span>
+                        <span className="tooltiptext">View</span>
                     </Link>
                   </button>
-                  <button className="btn btn-outline-primary" onClick={() => downloadLabel([data.orderId],1)} style={{marginLeft:"10px"}}>             
+                  <button className="btn btn-outline-primary" onClick={() => downloadLabel([data.key],1)} style={{marginLeft:"10px"}}>             
                       Print Label
                   </button>              
                 </td>

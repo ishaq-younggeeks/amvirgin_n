@@ -91,20 +91,35 @@ export default class Filter extends Component {
             </select>
           </div>
           
-          {metaData && metaData.pagination ? (
+          {metaData && metaData.total ? (
+            // <div style={{ padding: "5px" }}>
+            //   <p>
+            //     {" "}
+            //     {metaData.pagination.items.totalRec?(this.state.currentPage - 1) *
+            //       metaData.pagination.items.chunk +
+            //       1:0}
+            //     -
+            //     {" "}{(this.state.currentPage - 1) *
+            //       metaData.pagination.items.chunk +
+            //       metaData.pagination.items.total}{" "}
+            //     of {metaData.pagination.items.totalRec} items |{" "}
+            //     {this.state.currentPage} of{" "}
+            //     {Math.floor(metaData.pagination.pages)} pages
+            //   </p>
+            // </div>
             <div style={{ padding: "5px" }}>
               <p>
                 {" "}
-                {metaData.pagination.items.totalRec?(this.state.currentPage - 1) *
-                  metaData.pagination.items.chunk +
+                {metaData.total?(this.state.currentPage - 1) *
+                  metaData.per_page +
                   1:0}
                 -
                 {" "}{(this.state.currentPage - 1) *
-                  metaData.pagination.items.chunk +
-                  metaData.pagination.items.total}{" "}
-                of {metaData.pagination.items.totalRec} items |{" "}
+                  metaData.per_page +
+                  metaData.total}{" "}
+                of {metaData.total} items |{" "}
                 {this.state.currentPage} of{" "}
-                {Math.floor(metaData.pagination.pages)} pages
+                {Math.floor(metaData.last_page)} pages
               </p>
             </div>
           ) : null}
@@ -149,7 +164,7 @@ export default class Filter extends Component {
             </ul>
           </div>
 
-          <div className="col-auto colwidth25">
+          {/* <div className="col-auto colwidth25">
             <form onSubmit={this.onSubmit}>
               <input
                 type="search"
@@ -183,7 +198,7 @@ export default class Filter extends Component {
                 <i className="fa fa-search" />
               </button>
             </form>
-          </div> 
+          </div>  */}
       </>
     )
   }

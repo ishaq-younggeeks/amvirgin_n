@@ -26,7 +26,7 @@ export default class PendingHandover extends Component {
       modalIsOpen2: false,
       courier: "",
       bill: "",
-      dispatchDate: date,
+      dispatchDate: new Date,
       courierError: "",
       billError: "",
       dispatchDateError: "",
@@ -66,7 +66,7 @@ export default class PendingHandover extends Component {
   selectAllOrder = (e) => {
     let bulk_array;
     bulk_array = this.props.ordersList.map((item, index) => {
-      return item.orderId;
+      return item.key;
     });
     let check = e.target.checked;
     if (check) this.setState({ selectAll: true, bulkArray: bulk_array });
@@ -131,7 +131,7 @@ export default class PendingHandover extends Component {
     if (!this.state.bill.trim()) {
       billError = "Field cannot be blank";
     }
-    if (!this.state.dispatchDate) {
+    if (!/^((19|20)?[0-9]{2})[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])*$/.test(this.state.dispatchDate)) {
       dispatchDateError = "Field cannot be blank";
     }
 
@@ -152,7 +152,7 @@ export default class PendingHandover extends Component {
     });
   };
 
-  handleSubmitModal = (e, orderId) => {
+  handleSubmitModal = (e, key) => {
     e.preventDefault();
     let isValid = this.validate();
     if (isValid) {
@@ -161,15 +161,21 @@ export default class PendingHandover extends Component {
       let courierName = this.state.courier;
       let airwayBillNumber = this.state.bill;
       let dispatchedOn = this.state.dispatchDate;
-      this.props.changeOrderStatus(
-        [orderId],
-        status,
-        shippingMethod,
-        courierName,
-        airwayBillNumber,
-        dispatchedOn
-      );
-      console.log("date: ", dispatchedOn);
+      let date = new Date(); 
+      let hours = date.getHours();
+      let min = date.getMinutes();
+      let seconds = date.getSeconds();
+      let time = hours + ":" + min + ":" + seconds;
+      dispatchedOn = dispatchedOn + " " + time;
+      // this.props.changeOrderStatus(
+      //   [key],
+      //   status,
+      //   shippingMethod,
+      //   courierName,
+      //   airwayBillNumber,
+      //   dispatchedOn
+      // );
+      console.log("Date ", dispatchedOn );
       this.closeModal2();
     }
   };
@@ -178,7 +184,7 @@ export default class PendingHandover extends Component {
     return (
       <React.Fragment>
         <hr />
-        <div className="row" style={{ marginLeft: "15px" }}>
+        {/* <div className="row" style={{ marginLeft: "15px" }}>
           <div style={{ padding: "5px" }}>Action in Bulk</div>
 
           <button
@@ -205,7 +211,7 @@ export default class PendingHandover extends Component {
           >
             Manifest <i className="fas fa-download" />
           </button>
-        </div>
+        </div> */}
         <div className="row" style={{ padding: "20px" }}>
           <Filter
             metaData={this.props.metaData}
@@ -220,13 +226,13 @@ export default class PendingHandover extends Component {
           <table className="tablelist" style={{ width: "100%" }}>
             <thead>
               <tr>
-                <th>
+                {/* <th>
                   <input
                     type="checkbox"
                     style={{ width: "15px" }}
                     onChange={this.selectAllOrder}
                   ></input>
-                </th>
+                </th> */}
                 <th>OrderId</th>
                 <th>Quantity</th>
                 <th>Order Date</th>
@@ -240,21 +246,21 @@ export default class PendingHandover extends Component {
                 Array.from(this.props.ordersList).map((data, i) =>
                   i <= this.state.pagination - 1 ? (
                     <tr key={data.key}>
-                      <td className="checkbox">
+                      {/* <td className="checkbox">
                         <input
                           type="checkbox"
                           style={{ width: "15px" }}
                           onChange={(e) =>
-                            this.onchangeBulkHandler(e, data.orderId)
+                            this.onchangeBulkHandler(e, data.key)
                           }
                           checked={
-                            this.state.bulkArray.indexOf(data.orderId) === -1
+                            this.state.bulkArray.indexOf(data.key) === -1
                               ? false
                               : true
                           }
                         ></input>
-                      </td>
-                      <td>{data.orderNumber}</td>
+                      </td> */}
+                      <td>{data.key}</td>
                       <td>{data.quantity}</td>
                       <td>{data.orderDate}</td>
                       <td>{data.status}</td>
@@ -262,18 +268,18 @@ export default class PendingHandover extends Component {
                         <button
                           className="btn toolnewtip"
                           onClick={() => {
-                            localStorage.setItem("orderId", data.orderId);
+                            localStorage.setItem("orderId", data.key);
                           }}
                         >
                           <Link to="/seller/dashboard/vieworders">
                             <i className="fas fa-eye" />
-                            <span class="tooltiptext">View</span>
+                            <span className="tooltiptext">View</span>
                           </Link>
                         </button>
                         <button
                           className="btn btn-outline-primary"
                           onClick={() => {
-                            this.setState({ orderId: data.orderId });
+                            this.setState({ orderId: data.key });
                             this.openModal1();
                           }}
                           style={{ marginLeft: "10px" }}
@@ -282,14 +288,14 @@ export default class PendingHandover extends Component {
                         </button>
                         <button
                           className="btn btn-outline-primary"
-                          onClick={() => downloadLabel([data.orderId])}
+                          onClick={() => downloadLabel([data.key])}
                           style={{ marginLeft: "10px" }}
                         >
                           Reprint Label
                         </button>
                         <button
                           className="btn btn-outline-primary"
-                          onClick={() => downloadManifest([data.orderId])}
+                          onClick={() => downloadManifest([data.key])}
                           style={{ marginLeft: "10px" }}
                         >
                           Manifest <i className="fas fa-download" />
@@ -301,7 +307,6 @@ export default class PendingHandover extends Component {
             </tbody>
           </table>
           <div>
-            {data.orderId}
             <Modal
               isOpen={this.state.modalIsOpen1}
               onRequestClose={this.closeModal1}
@@ -309,7 +314,7 @@ export default class PendingHandover extends Component {
               ariaHideApp={false}
             >
               <div className="dispatch-btn">
-                {this.state.orderId}
+              
                 <h3>Dispatch Options :</h3>
                 <button
                   style={{
@@ -369,12 +374,13 @@ export default class PendingHandover extends Component {
                   >
                     Courier Name :
                   </label>
-                  {this.state.orderId}
+                
                   <input
                     type="text"
                     name="courier"
                     id="courier-name"
                     placeholder="Enter Courier Name"
+                    maxLength="50"
                     value={this.state.courier}
                     onChange={this.handleOnChangeModal}
                   />
@@ -389,10 +395,11 @@ export default class PendingHandover extends Component {
                     Airway Bill Number :
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     name="bill"
                     id="airway-bill"
                     placeholder="Enter Airway Bill Number"
+                    maxLength="50"
                     value={this.state.bill}
                     onChange={this.handleOnChangeModal}
                   />
@@ -410,6 +417,7 @@ export default class PendingHandover extends Component {
                     type="date"
                     name="dispatchDate"
                     id="dispatch-date"
+                    required
                     value={this.state.dispatchDate}
                     onChange={this.handleOnChangeModal}
                   />

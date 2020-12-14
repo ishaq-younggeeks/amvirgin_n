@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
   
     return (
       <React.Fragment>
-        <div class="row tabin">
+        <div className="row tabin">
           <div className="col-md-10">
             <Link
               to="/seller/dashboard/payments/summary"

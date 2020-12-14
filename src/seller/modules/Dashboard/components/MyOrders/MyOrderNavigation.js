@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
   
     return (
       <React.Fragment>
-        <div class="row tabin">
+        <div className="row tabin">
           <div className="col-md-10">
             <Link
               to="/seller/dashboard/myorders?activeState=placed"
@@ -15,14 +15,14 @@ import {Link} from 'react-router-dom'
             >
               My Orders
             </Link>
-            <Link
+            {/* <Link
               to="/seller/dashboard/myorders/returns-order?activeState=refund-processing"
               className={
                 props.activeTab2 ? "btn tablinks active" : "btn tablinks"
               }
             >
               Returns
-            </Link>
+            </Link> */}
             <Link
               to="/seller/dashboard/myorders/cancelled-orders"
               className={

@@ -18,15 +18,15 @@ export default class PlacedOrder extends Component {
     };
   }
 
-  onchangeBulkHandler = (e,orderid) => {
+  onchangeBulkHandler = (e,key) => {
     let bulk_list = this.state.bulkArray;
     let check = e.target.checked;
     if(check){
       this.setState({
-        bulkArray: [...this.state.bulkArray, orderid]
+        bulkArray: [...this.state.bulkArray, key]
       },console.log("list state",this.state))
   }else{ 
-      var index = this.state.bulkArray.indexOf(orderid);
+      var index = this.state.bulkArray.indexOf(key);
       if (index > -1) {
         bulk_list.splice(index, 1);
           this.setState({
@@ -50,7 +50,7 @@ export default class PlacedOrder extends Component {
 
 
   changeStatus = (status) => {
-    this.props.changeOrderStatus(this.state.bulkArray,status);
+    this.props.changeOrderStatusBulk(this.state.bulkArray,status);
     this.setState({bulkArray:[]})
   }
 
@@ -147,7 +147,7 @@ export default class PlacedOrder extends Component {
                           >
                             <Link to="/seller/dashboard/vieworders">
                               <i className="fas fa-eye" />
-                              <span class="tooltiptext">View</span>
+                              <span className="tooltiptext">View</span>
                             </Link>
                           </button>
                           <button

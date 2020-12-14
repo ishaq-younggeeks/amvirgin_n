@@ -33,7 +33,7 @@ import Filter from "./Filter"
       console.log("metadate in order canceller",this.props.metaData)
       this.setState({
         maxPage: Math.floor(
-          this.props.metaData.pagination.pages
+          this.props.metaData.last_page
         ),
       });
     }
@@ -71,8 +71,8 @@ import Filter from "./Filter"
             (
               this.state.items.map((data,i)=>
               i<=this.state.pagination-1 ?
-              <tr key={data.orderId}>
-                <td>{data.orderNumber}</td>  
+              <tr key={data.key}>
+                <td>{data.key}</td>  
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
@@ -80,7 +80,7 @@ import Filter from "./Filter"
                 <td>{data.cancellationReason ? data.cancellationReason : "N/A"}</td>
                 <td>{data.cancelledOn ? data.cancelledOn : "N/A"}</td>
                   <td>
-                    <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
+                    <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.key) }}>
                       <Link to="/seller/dashboard/vieworders">
                         <i className="fas fa-eye" />                  
                         <span class="tooltiptext">View</span>
@@ -96,7 +96,7 @@ import Filter from "./Filter"
             (Array.from(this.props.ordersList).map((data,i)=>
               i<=this.state.pagination-1 ? 
               <tr key={data.key}>
-                <td>{data.orderNumber}</td>
+                <td>{data.key}</td>
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
@@ -104,10 +104,10 @@ import Filter from "./Filter"
                 <td>{data.cancellationReason ? data.cancellationReason : "N/A"}</td>
                 <td>{data.cancelledOn ? data.cancelledOn : "N/A"}</td>
                 <td>
-                  <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
+                  <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.key) }}>
                     <Link to="/seller/dashboard/vieworders">
                         <i className="fas fa-eye" />                  
-                        <span class="tooltiptext">View</span>
+                        <span className="tooltiptext">View</span>
                     </Link>
                   </button>
                                 

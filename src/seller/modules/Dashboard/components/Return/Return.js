@@ -85,8 +85,7 @@ class Return extends Component {
                   ))}
               </tbody>
             ) : (
-              <tbody>
-                    <div className="loaderHorizontal">
+              <tbody className="loaderHorizontal">
                       <Loader
                         type="ThreeDots"
                         color="#000"
@@ -94,7 +93,6 @@ class Return extends Component {
                         width={100}
                         style={{marginTop:"30px"}}
                       />
-                    </div>
               </tbody>
             )}
           </Table>

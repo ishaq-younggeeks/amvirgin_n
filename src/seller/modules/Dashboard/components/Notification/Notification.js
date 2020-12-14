@@ -86,15 +86,16 @@ class Subscription extends React.Component {
                       : null}
                   </tbody>
                 ) : (
-                  <div className="loaderClass">
+                  <tbody className="loaderHorizontal">
                   <Loader
                     type="Puff"
                     color="#00BFFF"
                     height={100}
                     width={100}
                     timeout={3000} //3 secs
+                    style={{marginTop:"150px"}}
                   />
-                  </div>
+                  </tbody>
                 )}
               </table>
             </div>

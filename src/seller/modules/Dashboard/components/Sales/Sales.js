@@ -119,9 +119,9 @@ class Sales extends Component {
                     Customer Return in Unit > <br />
                     <br />
                     <h2>
-                      {salesDetail ? (
-                        <h2>{salesDetail.customerReturns}</h2>
-                      ) : null}
+                      {salesDetail ? 
+                        salesDetail.customerReturns
+                       : null}
                     </h2>
                   </div>
                 </div>

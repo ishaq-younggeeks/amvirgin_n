@@ -1,96 +1,93 @@
 import "./MyOrders.css";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
-import { ViewOrderItem } from './sellerOrderAction';
+import { ViewOrderItem } from "./sellerOrderAction";
 import { VIEW_ORDER } from "./sellerOrderConstant";
 
 class ViewOrder extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      orderid:''
-  };   
- }
+      orderid: "",
+    };
+  }
 
   componentDidMount = () => {
-    let id=localStorage.getItem('orderId');
-    this.props.ViewOrderItem(id);   
+    let id = localStorage.getItem("orderId");
+    this.props.ViewOrderItem(id);
   };
 
-   activeClass = ()  => {
-    let cl = "btn btn-circle btn-primary"
+  activeClass = () => {
+    let cl = "btn btn-circle btn-primary";
     return cl;
-  
-  }
-  
-   defaultClass = () => {
-    let cl = "btn btn-circle btn-default"
+  };
+
+  defaultClass = () => {
+    let cl = "btn btn-circle btn-default";
     return cl;
-  }
+  };
 
   render() {
-    const {viewOrder}  =this.props
+    const { viewOrder } = this.props;
     return (
-      <div className="card ordercard ordertable" style={{padding:'0px 0'}}>
-        
-        <div className="" style={{background:'#efefefb8',padding:'10px 20px'}}>
-        <button className="btn btn-outline-dark" onClick={this.props.history.goBack} style={{marginRight:"10px"}}><i className="fas fa-angle-double-left"/> Back</button>
-        </div> 
-        {Object.keys(viewOrder).length?
-        <div style={{marginLeft:"10px"}}>
-        <div style={{color:"dodgerblue",marginTop:"20px"}}>
-          Buyers Details:
+      <div className="card ordercard ordertable" style={{ padding: "0px 0" }}>
+        <div
+          className=""
+          style={{ background: "#efefefb8", padding: "10px 20px" }}
+        >
+          <button
+            className="btn btn-outline-dark"
+            onClick={this.props.history.goBack}
+            style={{ marginRight: "10px" }}
+          >
+            <i className="fas fa-angle-double-left" /> Back
+          </button>
         </div>
-        <div className="col col-auto">
-        <div>
-         Customer Name:{viewOrder.customer.name}
-        </div>
-        </div>
-        <div style={{color:"dodgerblue",marginTop:"20px"}}>
-          Order Details:
-        </div>
-        <table className="tablelist" style={{width:'100%'}}>            
-            <thead>
-              <tr>
-                <th>Quantity</th>
-                <th>Product name</th>
-                <th>Product Category</th>
-                <th>Original price</th>
-                <th>Selling price</th>
-              </tr>
-            </thead>
+        {Object.keys(viewOrder).length ? (
+          <div style={{ marginLeft: "10px" }}>
+            <div style={{ color: "dodgerblue", marginTop: "20px" }}>
+              Buyers Details:
+            </div>
+            <div className="col col-auto">
+              <div>Customer Name:{viewOrder.customer.name}</div>
+            </div>
+            <div style={{ color: "dodgerblue", marginTop: "20px" }}>
+              Order Details:
+            </div>
+            <table className="tablelist" style={{ width: "100%" }}>
+              <thead>
+                <tr>
+                  <th>Quantity</th>
+                  <th>Product name</th>
+                  <th>Product Category</th>
+                  <th>Original price</th>
+                  <th>Selling price</th>
+                </tr>
+              </thead>
 
-            <tbody>
-        {viewOrder.items.length?       
-        viewOrder.items.map((item) =>
-        {
-    return (
-      <tr>
- <td>
- {item.quantity}
-</td>
-<td>
-{item.product?item.product.name:null}
-  </td>
-  <td>
-{item.product?item.product.category:null}
-  </td>
-  <td>
-{item.product?item.product.originalPrice:null}
-  </td>
-  <td>
-{item.product?item.product.sellingPrice:null}
-  </td>
-  </tr>
-    )
-        }
-          )
-        :null}
-        </tbody>
-          </table>
-       </div>  
-        :null}
+              <tbody>
+                {viewOrder.items.length
+                  ? viewOrder.items.map((item) => {
+                      return (
+                        <tr key={item.product.key}>
+                          <td>{item.quantity}</td>
+                          <td>{item.product ? item.product.name : null}</td>
+                          <td>{item.product ? item.product.category : null}</td>
+                          <td>
+                            {item.product ? item.product.originalPrice : null}
+                          </td>
+                          <td>
+                            {item.product ? item.product.sellingPrice : null}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
+          </div>
+        ) : null}
         {/* {viewOrder.transitions?
     <div className="stepwizard col-md-offset-3" style={{background:"black",marginTop:"20px",}}>  
                     <div className="stepwizard-row setup-panel">
@@ -119,16 +116,16 @@ class ViewOrder extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("view order",state.sellerOrders.viewOrder)
-  return ({
-      viewOrder:state.sellerOrders.viewOrder,
-  })
-}
+  console.log("view order", state.sellerOrders.viewOrder);
+  return {
+    viewOrder: state.sellerOrders.viewOrder,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
-  return ({
-    ViewOrderItem: (id) => dispatch(ViewOrderItem(id))
-  });
-}
+  return {
+    ViewOrderItem: (id) => dispatch(ViewOrderItem(id)),
+  };
+};
 
-export default connect( mapStateToProps, mapDispatchToProps )(ViewOrder);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewOrder);

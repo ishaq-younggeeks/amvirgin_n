@@ -20,7 +20,7 @@ export const myOrderList = (activeState, current, perPage) => {
     axios
       .get(`${baseURL}/seller/orders?status=${activeState}`, config)
       .then((res) => {
-        console.log("my order list ", res);
+        console.log("My Orders List ", res);
         if (res.data.status === 200) {
           dispatch({
             type: GET_ALL_ORDERS,
@@ -33,7 +33,34 @@ export const myOrderList = (activeState, current, perPage) => {
   };
 };
 
-export const changeOrderStatus = (orderId, status, shippingMethod=null, courierName=null, airwayBillNumber=null, dispatchedOn=null) => {
+export const changeOrderStatusBulk = (key=null, status) => {
+  return (dispatch) => {
+    let allKey = key.toString();
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      params: {
+        allKey,
+      },
+    };
+    console.log("Dispatched Order Bulk: ", allKey);
+     axios.put(`${baseURL}/seller/orders/status?key=${allKey}&status=${status}`, {}, config)
+     .then(res => {
+       console.log("Bulk Order Status",res)
+       if (res.data.status === 200) {
+        dispatch({
+          type: AFTER_STATUS_CHANGE,
+          payload: allKey,
+        });
+      }
+    })
+    .catch(err => console.log(err));
+  };
+};
+
+export const changeOrderStatus = (key, status, shippingMethod=null, courierName=null, airwayBillNumber=null, dispatchedOn=null) => {
   return (dispatch) => {
     let token = localStorage.getItem("token");
     let config = {
@@ -41,7 +68,7 @@ export const changeOrderStatus = (orderId, status, shippingMethod=null, courierN
         Authorization: "Bearer " + token,
       },
       params: {
-        orderId,
+        key,
       },
     };
 
@@ -53,14 +80,14 @@ export const changeOrderStatus = (orderId, status, shippingMethod=null, courierN
       dispatchedOn,
     };
 
-    console.log("Dispatched Data:", data);
-     axios.put(`${baseURL}/seller/orders/status`,data, config)
+    console.log("Dispatched Order Single: ", data);
+     axios.put(`${baseURL}/seller/orders/${key}/status`, data, config)
      .then(res => {
-      console.log("order status",res)
-      if (res.data.status === 200) {
+       console.log("Single Order Status",res)
+       if (res.data.status === 200) {
         dispatch({
           type: AFTER_STATUS_CHANGE,
-          payload: orderId,
+          payload: key,
         });
       }
     })
@@ -68,34 +95,34 @@ export const changeOrderStatus = (orderId, status, shippingMethod=null, courierN
   };
 };
 
-export const changeOrderStatusInBulk = (orderId, status) => {
-  return (dispatch) => {
-    let token = localStorage.getItem("token");
-    let config = {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      params: {
-        orderId,
-      },
-    };
-    let data = {
-      status,
-    };
-    axios
-      .put(`${baseURL}/seller/status/batch-update`, data, config)
-      .then((res) => {
-        console.log("order status", res);
-        if (res.data.status === 200) {
-          dispatch({
-            type: AFTER_STATUS_CHANGE,
-            payload: orderId,
-          });
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-};
+// export const changeOrderStatusInBulk = (orderId, status) => {
+//   return (dispatch) => {
+//     let token = localStorage.getItem("token");
+//     let config = {
+//       headers: {
+//         Authorization: "Bearer " + token,
+//       },
+//       params: {
+//         orderId,
+//       },
+//     };
+//     let data = {
+//       status,
+//     };
+//     axios
+//       .put(`${baseURL}/seller/status/batch-update`, data, config)
+//       .then((res) => {
+//         if (res.data.status === 200) {
+//           console.log("Bulk Order Status", res);
+//           dispatch({
+//             type: AFTER_STATUS_CHANGE,
+//             payload: orderId,
+//           });
+//         }
+//       })
+//       .catch((err) => console.log(err));
+//   };
+// };
 
 export const downloadLabel = (id) => {
   return (dispatch) => {
@@ -125,8 +152,8 @@ export const FilterBySearch = (currentPage, perPage, query, status) => {
         if (res.data.status === 200) {
           dispatch({
             type: GET_ALL_ORDERS,
-            payload: res.data.data,
-            payload2: res.data.meta,
+            payload: res.data.payload.data,  //res.data.data,
+            payload2: res.data.payload.meta  //res.data.meta,
           });
         }
       })

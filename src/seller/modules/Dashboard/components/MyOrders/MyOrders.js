@@ -13,7 +13,7 @@ import PendingHandover from './PendingHandover'
 import Dispatched from './Dispatched'
 import InTransit from './InTransit'
 import Delivered from './Delivered'
-import { myOrderList,changeOrderStatus,downloadLabel,FilterBySearch,clearState,changeOrderStatusInBulk} from './sellerOrderAction';
+import { myOrderList,changeOrderStatus,changeOrderStatusBulk, downloadLabel,FilterBySearch,clearState} from './sellerOrderAction';
 
 class MyOrders extends Component {
   constructor(props){
@@ -50,17 +50,17 @@ renderComponent = () => {
 
   switch (this.state.activeState) {
     case "placed":
-      return <PlacedOrder ordersList={this.props.ordersList} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
+      return <PlacedOrder ordersList={this.props.ordersList} changeOrderStatusBulk={this.props.changeOrderStatusBulk} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
     case "ready-for-dispatch":
       return <PendingLabel ordersList={this.props.ordersList} downloadLabel={this.props.downloadLabel} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
     case "pending-dispatch":
       return <PendingHandover ordersList={this.props.ordersList} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
     case "dispatched":
-      return <Dispatched ordersList={this.props.ordersList} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
+      return <Dispatched ordersList={this.props.ordersList} changeOrderStatusBulk={this.props.changeOrderStatusBulk} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
     case "delivered":
-      return <Delivered ordersList={this.props.ordersList} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
+      return <Delivered ordersList={this.props.ordersList} changeOrderStatusBulk={this.props.changeOrderStatusBulk} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
     default:
-      return <PlacedOrder ordersList={this.props.ordersList} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
+      return <PlacedOrder ordersList={this.props.ordersList} changeOrderStatusBulk={this.props.changeOrderStatusBulk} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
 
   }
 }
@@ -112,7 +112,7 @@ renderComponent = () => {
       if (prevprops.metaData !== this.props.metaData) {
         this.setState({
           maxPage: Math.floor(
-            this.props.metaData.total
+            this.props.metaData.last_page
           ),
         });
       }
@@ -220,11 +220,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
       myOrderList: (activeState,current,perPage) => dispatch(myOrderList(activeState,current,perPage)),
+      changeOrderStatusBulk:(id, status) => dispatch(changeOrderStatusBulk(id, status)),
       changeOrderStatus:(id, status, shippingMethod, courierName, airwayBillNumber, dispatchedOn) => dispatch(changeOrderStatus(id, status, shippingMethod, courierName, airwayBillNumber, dispatchedOn)),
       downloadLabel:(id) => dispatch(downloadLabel(id)),
       FilterBySearch:(currentPage,perPage,query,status) => dispatch(FilterBySearch(currentPage,perPage,query,status)),
       clearState:(state,type) => dispatch(clearState(state,type)),
-      changeOrderStatusInBulk:(orderId,status) => dispatch(changeOrderStatusInBulk(orderId,status))
+      // changeOrderStatusInBulk:(orderId,status) => dispatch(changeOrderStatusInBulk(orderId,status))
   });
 }
 

@@ -43,14 +43,14 @@ export default class PandingLabel extends Component {
             (
               this.state.items.map((data,i)=>
               i<=this.state.pagination-1 ?
-              <tr key={data.orderId}>
-                <td>{data.orderNumber}</td>  
+              <tr key={data.key}>
+                <td>{data.key}</td>  
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
                 <td>{data.dispatchedOn ? data.dispatchedOn : "N/A"}</td>
                   <td>
-                    <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
+                    <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.key) }}>
                       <Link to="/seller/dashboard/vieworders">
                         <i className="fas fa-eye" />                  
                         <span class="tooltiptext">View</span>
@@ -65,17 +65,17 @@ export default class PandingLabel extends Component {
             :            
             (Array.from(this.props.ordersList).map((data,i)=>
               i<=this.state.pagination-1 ? 
-              <tr key={data.orderId}>
-                <td>{data.orderNumber}</td>
+              <tr key={data.key}>
+                <td>{data.key}</td>
                 <td>{data.quantity}</td>  
                 <td>{data.orderDate}</td>
                 <td>{data.status}</td>
                 <td>{data.dispatchedOn ? data.dispatchedOn : "N/A"}</td>
                 <td>
-                  <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.orderId) }}>
+                  <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.key) }}>
                     <Link to="/seller/dashboard/vieworders">
                         <i className="fas fa-eye" />                  
-                        <span class="tooltiptext">View</span>
+                        <span className="tooltiptext">View</span>
                     </Link>
                   </button>
                             
