@@ -4,7 +4,7 @@ import './Payment.css';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import ReactExport from "react-data-export";
-import {getPaymentHistory} from './PaymentAction'
+import {getPaymentHistory, getPaymentHistoryInitial} from './PaymentAction'
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -27,14 +27,13 @@ class PreviousPayment extends Component {
   }
 
   componentDidMount(){
-    this.props.getPaymentHistory();
+    this.props.getPaymentHistoryInitial();
   }
 
   ExcelSheet = () => {
     const {paymentHistory} = this.props
-    let result = paymentHistory.map(({paymentDate,total,bankDetails,transactionId})=>{
-      let bankName=bankDetails.bankName
-      let final = {paymentDate,total,bankName,transactionId}
+    let result = paymentHistory.map(({paidAt,amount,account,transactionId})=>{
+      let final = {paidAt,amount,account,transactionId}
       return final
     })
     return result
@@ -70,24 +69,24 @@ class PreviousPayment extends Component {
             <input type="date" id="to" name="to" onChange={this.onChangeHandler}/>
           </div>
           <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,this.state.from,this.state.to,null)}>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </div>
           <div className="date-head" style={{marginLeft:"20px",marginRight:"20px"}}>
             <p>or</p>
           </div>
           <div className="form-group has-search">
-          <input type="text" className="form-control" name="query" placeholder="Search by NEFT Id" onChange={this.onChangeHandler}/>
+          <input type="text" className="form-control" name="query" placeholder="Search by NEFT ID" onChange={this.onChangeHandler} minLength="2"/>
         </div>
         <div className="search-submit" disabled={this.state.query ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,null,null,this.state.query)}>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </div>
           <div style={{marginLeft:"20px"}}>
           <ExcelFile filename="paymenthistory" element={<button disabled={this.props.paymentHistory.length?false:true}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
-                    <ExcelColumn label="Payment Date" value="paymentDate"/>
-                    <ExcelColumn label="BANK ACCOUNT" value="bankName"/>
+                    <ExcelColumn label="Payment Date" value="paidAt"/>
+                    <ExcelColumn label="BANK ACCOUNT" value="account"/>
                     <ExcelColumn label="NEFT ID" value="transactionId"/>
-                    <ExcelColumn label="PAYMENT AMOUNT" value="total"/>
+                    <ExcelColumn label="PAYMENT AMOUNT" value="amount"/>
                 </ExcelSheet>
             </ExcelFile>
             </div>
@@ -104,12 +103,12 @@ class PreviousPayment extends Component {
           </thead>
           <tbody>
             {paymentHistory?paymentHistory.map((item,index) =>
-             <tr>
-             <td>{item.paymentDate}</td>
-            <td>{item.bankDetails.bankName}</td>
+             <tr key={item.account}>
+             <td>{item.paidAt}</td>
+            <td>{item.account}</td>
             <td>{item.transactionId}</td>
             <td>{item.neftId}</td>
-            <td>{item.total}</td>
+            <td>{item.amount}</td>
            </tr>
  
             ):null
@@ -132,7 +131,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPaymentHistory : (page,per_page,from,to,query) => dispatch(getPaymentHistory(page,per_page,from,to,query))
+    getPaymentHistory : (page,per_page,from,to,query) => dispatch(getPaymentHistory(page,per_page,from,to,query)),
+    getPaymentHistoryInitial: () => dispatch(getPaymentHistoryInitial())
   }
 }
 

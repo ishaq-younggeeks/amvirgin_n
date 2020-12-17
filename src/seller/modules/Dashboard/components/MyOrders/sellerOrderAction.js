@@ -60,7 +60,7 @@ export const changeOrderStatusBulk = (key=null, status) => {
   };
 };
 
-export const changeOrderStatus = (key, status, shippingMethod=null, courierName=null, airwayBillNumber=null, dispatchedOn=null) => {
+export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=null, airwayBillNumber=null, dispatchedOn=null) => {
   return (dispatch) => {
     let token = localStorage.getItem("token");
     let config = {
@@ -71,14 +71,21 @@ export const changeOrderStatus = (key, status, shippingMethod=null, courierName=
         key,
       },
     };
-
-    let data = {
+    let data = {};
+    if(status !== null && fulfilledBy !== null && courierName === null){
+      data = {
+        status,
+        fulfilledBy,
+      };  
+    }
+    else data = {
       status,
-      shippingMethod,
+      fulfilledBy,
       courierName,
       airwayBillNumber,
       dispatchedOn,
-    };
+    }
+   
 
     console.log("Dispatched Order Single: ", data);
      axios.put(`${baseURL}/seller/orders/${key}/status`, data, config)

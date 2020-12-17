@@ -71,7 +71,7 @@ class Subscription extends Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.props.subscribeListData()
     }
 

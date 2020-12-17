@@ -75,7 +75,7 @@ export default class PandingLabel extends Component {
                   <button className="btn toolnewtip" onClick={() => { localStorage.setItem('orderId',data.key) }}>
                     <Link to="/seller/dashboard/vieworders">
                         <i className="fas fa-eye" />                  
-                        <span class="tooltiptext">View</span>
+                        <span className="tooltiptext">View</span>
                     </Link>
                   </button>               
                 </td>

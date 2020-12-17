@@ -9,19 +9,19 @@ import { createCanvas } from "canvas";
 import "jspdf-autotable";
 
 export const downloadLabel = (orderId, update = 0) => {
+  let keys = orderId.toString();
   let token = localStorage.getItem("token");
   let config = {
     headers: {
       Authorization: "Bearer " + token,
     },
     params: {
-      orderId,
+      keys,
       update,
     },
   };
-
   axios
-    .get(`${baseURL}/seller/manifest/download`, config)
+    .get(`${baseURL}/seller/manifest/download?key=${keys}&update=${update}`, config)
     .then((res) => {
       console.log("Download Label: ", res);
       if (res.data.status === 200) {
@@ -67,7 +67,6 @@ export const downloadLabel = (orderId, update = 0) => {
                 total: item.product.sellingPrice,
               });
             });
-
             return body;
           }
           doc.autoTable({
@@ -79,12 +78,16 @@ export const downloadLabel = (orderId, update = 0) => {
           let cad = JsBarcode(canvas, item.order.key);
           let barcode = canvas.toDataURL();
           doc.addImage(barcode, "JPEG", 10, 80, 80, 20);
-          QRCode.toDataURL(item.order.key).then((url) => {
-            console.log("image url", url);
-            doc.addImage(url, "JPEG", 150, 10, 50, 50);
-            // doc.autoPrint()
-            doc.save(`label_${item.order.key}.pdf`);
-          });
+          console.log("canvas :", canvas);
+          console.log("barcode :", barcode);
+          console.log("Key :", item.order.key);
+          doc.save(`label_${item.order.key}.pdf`);
+          // QRCode.toDataURL(item.order.key).then((url) => {
+          //   console.log("image url", url);
+          //   doc.addImage(url, "JPEG", 150, 10, 50, 50);
+          //   // doc.autoPrint()
+          //   doc.save(`label_${item.order.key}.pdf`);
+          // }).catch((err) => console.log("err", err));
         });
         console.log("working download label", res);
       }
@@ -92,7 +95,7 @@ export const downloadLabel = (orderId, update = 0) => {
     .catch((err) => console.log(err));
 };
 
-export const downloadManifest = (orderId) => {
+export const downloadManifest = (orderId, update = 0) => {
   let token = localStorage.getItem("token");
   let config = {
     headers: {
@@ -104,7 +107,7 @@ export const downloadManifest = (orderId) => {
   };
 
   axios
-    .get(`${baseURL}/seller/manifest/download`, config)
+    .get(`${baseURL}/seller/manifest/download?key=${orderId}&update=${update}`, config)
     .then((res) => {
       console.log("Download Manifest: ", res);
       if (res.data.status === 200) {

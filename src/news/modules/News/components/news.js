@@ -17,7 +17,7 @@ class News extends React.Component {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.newsListData();
   }
 

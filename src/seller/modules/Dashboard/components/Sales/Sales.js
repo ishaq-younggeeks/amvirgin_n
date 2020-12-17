@@ -60,11 +60,17 @@ class Sales extends Component {
 
             <div id="London" className="tabcontent">
               {this.state.activeTab === 1 ? (
-                <p><b>Your Performance for Last 7 days </b></p>
+                <p>
+                  <b>Your Performance for Last 7 days </b>
+                </p>
               ) : this.state.activeTab === 2 ? (
-                <p><b>Your Performance for Last 30 days </b></p>
+                <p>
+                  <b>Your Performance for Last 30 days </b>
+                </p>
               ) : this.state.activeTab === 3 ? (
-                <p><b>Your Performance for Last 90 days </b></p>
+                <p>
+                  <b>Your Performance for Last 90 days </b>
+                </p>
               ) : (
                 <p>Your Performance for 0 days </p>
               )}
@@ -80,7 +86,7 @@ class Sales extends Component {
                     <br />
                     <br />
                     {salesDetail.sales ? (
-                      <h2>{salesDetail.sales.salesInUnit}</h2>
+                      <h2>{salesDetail.sales.amount}</h2>
                     ) : null}
                   </div>
                 </div>
@@ -89,7 +95,7 @@ class Sales extends Component {
                     Sales in Unit > <br />
                     <br />
                     {salesDetail.sales ? (
-                      <h2>{salesDetail.sales.salesInUnit}</h2>
+                      <h2>{salesDetail.sales.units}</h2>
                     ) : null}
                   </div>
                 </div>
@@ -105,24 +111,14 @@ class Sales extends Component {
                   <div className="card-container">
                     Averager product in Rating > <br />
                     <br />
-                    {salesDetail ? (
-                      <h2>
-                        {salesDetail.averageRating
-                          ? salesDetail.averageRating
-                          : ""}
-                      </h2>
-                    ) : null}
+                    {salesDetail.product ? <h2>{salesDetail.product.rating}</h2> : null}
                   </div>
                 </div>
                 <div className="col-md-3">
                   <div className="card-container">
                     Customer Return in Unit > <br />
                     <br />
-                    <h2>
-                      {salesDetail ? 
-                        salesDetail.customerReturns
-                       : null}
-                    </h2>
+                    {salesDetail.product ? <h2>{salesDetail.customerReturns}</h2> : null}
                   </div>
                 </div>
               </div>

@@ -21,7 +21,7 @@ class Header extends Component {
     this.props.globalSearch(this.state.search)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     var token = cookie.load("token");
     const { getuserbyid } = this.props;
     if (token) {

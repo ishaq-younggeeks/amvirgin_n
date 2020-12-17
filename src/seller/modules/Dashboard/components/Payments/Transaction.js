@@ -27,8 +27,9 @@ class OrderTransaction extends Component {
 
   ExcelSheet = () => {
     const {orderTransaction} = this.props
-    let result = orderTransaction.map(({orderDate,total,orderId,orderNumber,transactionId,})=>{
-      let final = {orderDate,total,orderId,orderNumber,transactionId}
+    let result = orderTransaction.map(({date,amount,key,transactionId,})=>{
+      let finalAmount = amount.requested
+      let final = {date,finalAmount,key,transactionId}
       return final
     })
     return result
@@ -63,25 +64,24 @@ class OrderTransaction extends Component {
             <input type="date" id="to" name="to" onChange={this.onChangeHandler}/>
           </div>
           <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,this.state.from,this.state.to,null)}>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </div>
           <div className="date-head" style={{marginLeft:"20px",marginRight:"20px"}}>
             <p>or</p>
           </div>
           <div className="form-group has-search">
-          <input type="text" className="form-control" name="query" placeholder="Search by Order No" onChange={this.onChangeHandler}/>
+          <input type="text" className="form-control" name="query" placeholder="Search by Transaction ID" onChange={this.onChangeHandler}/>
         </div>
         <div className="search-submit" disabled={this.state.query? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,null,null,this.state.query)}>
-            <i class="fas fa-search"></i>
+            <i className="fas fa-search"></i>
           </div>
           <div style={{marginLeft:"20px"}}>
           <ExcelFile filename="order_transaction" element={<button disabled={this.props.orderTransaction.length?false:true}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
-                    <ExcelColumn label="ORDER DATE" value="orderDate"/>
-                    <ExcelColumn label="ORDER ID" value="orderId"/>
-                    <ExcelColumn label="ORDER NO" value="orderNumber"/>
+                    <ExcelColumn label="ORDER DATE" value="date"/>
+                    <ExcelColumn label="ORDER ID" value="key"/>
                     <ExcelColumn label="Transaction Id" value="transactionId"/>
-                    <ExcelColumn label=" AMOUNT" value="total"/>
+                    <ExcelColumn label=" AMOUNT" value="finalAmount"/>
                 </ExcelSheet>
             </ExcelFile>
             </div>
@@ -91,20 +91,18 @@ class OrderTransaction extends Component {
             <tr>
               <th>ORDER DATE</th>
               <th> ORDER ID</th>
-              <th>ORDER NO</th>
               <th>Transaction Id</th>
               <th> AMOUNT </th>
             </tr>
           </thead>
           <tbody>
             {this.props.orderTransaction?
-            this.props.orderTransaction.map((item,index)=>
-            <tr>
-              <td>{item.orderDate}</td>
-            <td>{item.orderId}</td>
-            <td>{item.orderNumber}</td>
+            Array.from(this.props.orderTransaction).map((item,index)=>
+            <tr key={item.key}>
+            <td>{item.date}</td>
+            <td>{item.key}</td>
             <td>{item.transactionId}</td>
-            <td>{item.total}</td>
+            <td>{item.amount.requested}</td>
             </tr>
             )
               :null}

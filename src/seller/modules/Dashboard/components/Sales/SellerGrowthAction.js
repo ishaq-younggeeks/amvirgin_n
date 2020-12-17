@@ -17,7 +17,7 @@ export const getSales = (days) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/growth/overview`, config)
+      .get(`${baseURL}/seller/growth/overview?days=${days}`, config)
       .then(res => {
 		   console.log("getting growth sales details",res);
         if (res.data.status === 200) {

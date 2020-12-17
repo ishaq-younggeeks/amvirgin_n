@@ -132,7 +132,7 @@ export default class PendingHandover extends Component {
       billError = "Field cannot be blank";
     }
     if (!/^((19|20)?[0-9]{2})[- /.](0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])*$/.test(this.state.dispatchDate)) {
-      dispatchDateError = "Field cannot be blank";
+      dispatchDateError = "Invalid Date";
     }
 
     if (courierError || billError || dispatchDateError) {
@@ -163,18 +163,18 @@ export default class PendingHandover extends Component {
       let dispatchedOn = this.state.dispatchDate;
       let date = new Date(); 
       let hours = date.getHours();
-      let min = date.getMinutes();
-      let seconds = date.getSeconds();
+      let min = ((date.getMinutes()<10?'0':'') + date.getMinutes());
+      let seconds = ((date.getSeconds()<10?'0':'') + date.getSeconds());
       let time = hours + ":" + min + ":" + seconds;
       dispatchedOn = dispatchedOn + " " + time;
-      // this.props.changeOrderStatus(
-      //   [key],
-      //   status,
-      //   shippingMethod,
-      //   courierName,
-      //   airwayBillNumber,
-      //   dispatchedOn
-      // );
+      this.props.changeOrderStatus(
+        [key],
+        status,
+        shippingMethod,
+        courierName,
+        airwayBillNumber,
+        dispatchedOn
+      );
       console.log("Date ", dispatchedOn );
       this.closeModal2();
     }
@@ -334,7 +334,7 @@ export default class PendingHandover extends Component {
                     this.props.changeOrderStatus(
                       [this.state.orderId],
                       "dispatched",
-                      "seller-smart"
+                      "amvirgin"
                     );
                     this.closeModal1();
                   }}
