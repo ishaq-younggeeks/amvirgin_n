@@ -241,7 +241,7 @@ class AdvtEdit extends Component {
                   <input
                     type="submit"
                     className="btn btn-primary"
-                    value="Create"
+                    value="Update"
                   />
                 </div>
               </div>

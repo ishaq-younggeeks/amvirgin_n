@@ -67,12 +67,14 @@ class Return extends Component {
                             className="fas fa-check approve-btn"
                             onClick={() => {
                               this.props.approveReturn(data.key);
+                              this.props.getAllReturnOrders();
                             }}
                           ></button>
                           <button
                             className="fa fa-close disApprove-btn"
                             onClick={() => {
                               this.props.disApproveReturn(data.key);
+                              this.props.getAllReturnOrders();
                             }}
                           ></button>
                         </td>

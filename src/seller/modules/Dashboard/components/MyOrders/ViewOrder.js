@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import { ViewOrderItem } from "./sellerOrderAction";
 import { VIEW_ORDER } from "./sellerOrderConstant";
+import { View } from "@react-pdf/renderer";
 
 class ViewOrder extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class ViewOrder extends Component {
   render() {
     const { viewOrder } = this.props;
     return (
-      <div className="card ordercard ordertable" style={{ padding: "0px 0" }}>
+      <div className="card ordercard ordertable" style={{ padding: "0px 0", height:"325px" }}>
         <div
           className=""
           style={{ background: "#efefefb8", padding: "10px 20px" }}
@@ -49,16 +50,24 @@ class ViewOrder extends Component {
             <div style={{ color: "dodgerblue", marginTop: "20px" }}>
               Buyers Details:
             </div>
-            <div className="col col-auto">
-              <div>Customer Name:{viewOrder.customer.name}</div>
+            <div>
+              <div>Customer Name: {viewOrder.customer ? viewOrder.customer.name : null}</div>
+            </div>
+            <div>
+              <div>Address: {viewOrder.address ? viewOrder.address.address : null}</div>
+            </div>
+            <div>
+              <div>Contact: {viewOrder.address ? viewOrder.address.mobile : null}</div>
             </div>
             <div style={{ color: "dodgerblue", marginTop: "20px" }}>
               Order Details:
             </div>
-            <table className="tablelist" style={{ width: "100%" }}>
+            <table className="tablelist" style={{ width: "99.5%" }}>
               <thead>
                 <tr>
+                  <th>Order ID</th>
                   <th>Quantity</th>
+                  <th>Date</th>
                   <th>Product name</th>
                   <th>Product Category</th>
                   <th>Original price</th>
@@ -67,11 +76,25 @@ class ViewOrder extends Component {
               </thead>
 
               <tbody>
-                {viewOrder.items.length
+                <tr>
+                  <td>{viewOrder ? viewOrder.key : null}</td>
+                  <td>{viewOrder.items[0].product ? viewOrder.items[0].quantity : null}</td>
+                  <td>{viewOrder ? viewOrder.placed : null}</td>
+                  <td>{viewOrder.items[0].product ? viewOrder.items[0].product.name : null}</td>
+                  <td>{viewOrder.items[0].product ? viewOrder.items[0].product.category : null}</td>
+                  <td>{viewOrder.items[0].product ? viewOrder.items[0].product.originalPrice : null}</td>
+                  <td>{viewOrder.items[0].product ? viewOrder.items[0].product.sellingPrice : null}</td>
+                </tr>
+                {/* {viewOrder.items.length
                   ? viewOrder.items.map((item) => {
                       return (
                         <tr key={item.product.key}>
+                          <td>{item.customer ? item.customer.name : null}</td>
+                          <td>{item.address ? item.address.address : null}</td>
+                          <td>{item.customer ? item.customer.mobile : null}</td>
+                          <td>{item.key}</td>
                           <td>{item.quantity}</td>
+                          <td>{item.placed}</td>
                           <td>{item.product ? item.product.name : null}</td>
                           <td>{item.product ? item.product.category : null}</td>
                           <td>
@@ -83,7 +106,7 @@ class ViewOrder extends Component {
                         </tr>
                       );
                     })
-                  : null}
+                  : null} */}
               </tbody>
             </table>
           </div>

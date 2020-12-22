@@ -157,12 +157,12 @@ class Dashboard extends Component {
             </div>
 
             <div className="col-sm-4" style={{ marginTop: "20px" }}>
-              <div className="pbox">
+              <div className="pbox" style={{height:"193px"}}>
                 Gross Revenue
                 <br />
                   <h1>&#8377; {this.props.dashboardData.grossRevenue}</h1>
                 <br />
-                <button className="btn mybtn">View Full Stats</button>
+                {/* <button className="btn mybtn">View Full Stats</button> */}
               </div>
             </div>
             {/* <div className="col-sm-12" style={{marginTop:'20px'}}>

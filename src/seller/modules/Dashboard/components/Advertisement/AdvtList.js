@@ -132,6 +132,7 @@ export default class Advtlist extends React.Component {
         message={this.state.message}
         banner={this.state.banner}
         keyValue={this.state.keyValue}
+        fetchAdvt={this.props.fetchAdvt}      
         /> : null
         }        
       </>
