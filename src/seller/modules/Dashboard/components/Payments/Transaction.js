@@ -76,7 +76,7 @@ class OrderTransaction extends Component {
             <i className="fas fa-search"></i>
           </div>
           <div style={{marginLeft:"20px"}}>
-          <ExcelFile filename="order_transaction" element={<button disabled={this.props.orderTransaction.length?false:true}>Download <i className="fas fa-download"></i></button>}>
+          <ExcelFile filename="order_transaction" element={<button disabled={this.props.orderTransaction.length?false:true} onClick={() => alert("Downloading Transaction Report!")}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
                     <ExcelColumn label="ORDER DATE" value="date"/>
                     <ExcelColumn label="ORDER ID" value="key"/>

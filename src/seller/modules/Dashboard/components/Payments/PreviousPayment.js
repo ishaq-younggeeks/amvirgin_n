@@ -9,10 +9,6 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
-
-
-
-
 class PreviousPayment extends Component {
   constructor(props){
     super(props)
@@ -75,13 +71,13 @@ class PreviousPayment extends Component {
             <p>or</p>
           </div>
           <div className="form-group has-search">
-          <input type="text" className="form-control" name="query" placeholder="Search by NEFT ID" onChange={this.onChangeHandler} minLength="2"/>
+          <input type="text" className="form-control" name="query" placeholder="Search by Order ID" onChange={this.onChangeHandler} minLength="2"/>
         </div>
         <div className="search-submit" disabled={this.state.query ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,null,null,this.state.query)}>
             <i className="fas fa-search"></i>
           </div>
           <div style={{marginLeft:"20px"}}>
-          <ExcelFile filename="paymenthistory" element={<button disabled={this.props.paymentHistory.length?false:true}>Download <i className="fas fa-download"></i></button>}>
+          <ExcelFile filename="paymenthistory" element={<button disabled={this.props.paymentHistory.length?false:true} onClick={() => alert("Downloading Payments Report!")}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
                     <ExcelColumn label="Payment Date" value="paidAt"/>
                     <ExcelColumn label="BANK ACCOUNT" value="account"/>

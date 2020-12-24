@@ -222,7 +222,7 @@ const Navigation = (props) => {
                         </li>
                     </ul>
                     <ul className="nav navbar-nav navbar-right">
-                      <li className="nav-item upp2">
+                      {/* <li className="nav-item upp2">
                         <div className="nav-item searchbtn">
                           <div className="container">
                             <form className="searchbox" method="post">
@@ -238,7 +238,7 @@ const Navigation = (props) => {
                             </form>
                           </div>
                         </div>
-                      </li>
+                      </li> */}
                       <li className="nav-item"  >
                         <div onMouseEnter={handleShow} onMouseLeave={handleHide}>
                         <Link className="nav-link" ref={menuProfile}>

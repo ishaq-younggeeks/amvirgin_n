@@ -8,14 +8,14 @@ import {Link} from 'react-router-dom'
       <React.Fragment>
         <div className="row tabin">
           <div className="col-md-10">
-            <Link
+            {/* <Link
               to="/seller/dashboard/payments/summary"
               className={
                 props.activeTab1 ? "btn tablinks active" : "btn tablinks"
               }
             >
               Payments Overview
-            </Link>
+            </Link> */}
             <Link
               to="/seller/dashboard/payments/previous-payment"
               className={

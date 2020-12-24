@@ -63,7 +63,7 @@ export default class Advtlist extends React.Component {
             <i class="fas fa-search"></i>
           </div>
         </div> */}
-          <table className="Paymenttable" style={{ width: "50%" }}>
+          <table className="Paymenttable" style={{ width: "50%", marginLeft: "0px" }}>
             <thead>
               <tr>
                 <th style={{ padding: "0px 60px" }}>SUBJECTS</th>

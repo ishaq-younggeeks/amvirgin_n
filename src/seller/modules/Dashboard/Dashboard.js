@@ -90,26 +90,25 @@ class Dashboard extends Component {
                 </div>
               </div>
             </div>
-
-            <div className="col-sm-4" style={{ marginTop: "20px" }}>
+            <Link to="/seller/dashboard/myproducts" className="col-sm-4" style={{ marginTop: "20px" }}>
               <div className="pbox hov">
                 <h1>{this.props.dashboardData.products}</h1>{" "}
                 <i className="fas fa-clipboard-list fa-2x"></i>
                 <h5>Products</h5>
               </div>
-            </div>
-            <div className="col-sm-4" style={{ marginTop: "20px" }}>
+            </Link>
+            <Link to="/seller/dashboard/sales" className="col-sm-4" style={{ marginTop: "20px" }}>
               <div className="pbox hov">
                 <h1>{this.props.dashboardData.sales}</h1> <i className="fas fa-dollar fa-2x"></i>
                 <h5>Sales</h5>
               </div>
-            </div>
-            <div className="col-sm-4" style={{ marginTop: "20px" }}>
+            </Link>
+            <Link to="/seller/dashboard/myorders" className="col-sm-4" style={{ marginTop: "20px" }}>
               <div className="pbox hov">
                   <h1>{this.props.dashboardData.orders}</h1> <i className="fas fa-boxes fa-2x"></i>
                 <h5>Orders</h5>
               </div>
-            </div>
+            </Link>
 
             <div className="col-sm-8" style={{ marginTop: "20px" }}>
               <div className="pbox">

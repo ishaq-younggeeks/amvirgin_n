@@ -25,11 +25,15 @@ class Sales extends Component {
   render() {
     const { salesDetail } = this.props;
     return (
-      <div className="c-margin container-fliud emp-profile">
+      // <div className="c-margin container-fliud emp-profile">
         <div className="row">
+        <div style={{margin: "5% 20px 0px 20px", width:"100%"}}>
+        <h2>Growth</h2>
+        <hr/>
+        </div>
           <div className="col-md-12">
-            <div className="row tabin">
-              <div className="col-md-2">Showing results for</div>
+            <div className="row tabin" style={{alignItems:"center"}}>
+              <div style={{marginLeft:"16px"}}><h4>Showing results for</h4></div>
               <div className="col-md-10">
                 <button
                   className={
@@ -162,7 +166,7 @@ class Sales extends Component {
             </div>
           </div>
         </div>
-      </div>
+      // </div>
     );
   }
 }

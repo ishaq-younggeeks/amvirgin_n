@@ -12,15 +12,14 @@ import "./Support.css"
   render() {
     return (
       <React.Fragment>
-         <div className="container-fliud" style={{marginTop:"6%"}}>
-          <div className="c-row row" style={{margin:"0px 20px", alignItems:"center"}}>
-            <h3 className="c-row" style={{marginTop:"20px"}}>Your Ticket DashBoard</h3>
-              <div style={{right:"20px",position:"absolute", marginTop:"10px"}}>
-              <Link className="btn btn-outline-dark" to="/seller/dashboard/support">Ask for Query</Link>  
+         <div className="row" style={{marginTop:"5%", marginLeft: "4px"}}>
+            <h2>Your Ticket DashBoard</h2>
+              <div className="btn btn-outline-dark" style={{right:"20px", position:"absolute"}}>
+              <Link to="/seller/dashboard/support">Ask for Query</Link>  
               </div>
-          </div>
-        <hr className="c-row"/>
-        <table className="Paymenttable" style={{width:"80%"}}>
+        </div> 
+        <hr/>
+        <table className="Paymenttable" style={{width:"80%", marginLeft: "0px"}}>
           <thead>
             <tr>
               <th>S NO.</th>
@@ -43,7 +42,6 @@ import "./Support.css"
             
           </tbody>
         </table>
-      </div>
       </React.Fragment>
 
     )

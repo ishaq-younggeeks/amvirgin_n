@@ -52,16 +52,21 @@ export default class Advthome extends Component {
     return (
       <React.Fragment>
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
-      <div className="container-fliud" style={{ marginTop: "5%" }}>
+      {/* <div className="container-fliud" style={{ marginTop: "5%" }}> */}
         {/* <AdvtNavigation activeTab1="true"/> */}
-        <div className="row">
-        <h3 style={{marginLeft:"30px", marginTop:"20px"}}>Advertising</h3>        </div>
-        <hr style={{margin:"0px 15px"}}/>
+        <div style={{marginTop: "5%", width:"100%"}}>
+        <h2>Advertising</h2>
+        <hr/>
+        </div>
+        {/* <div className="row"> */}
+        {/* <h3 style={{marginLeft:"30px", marginTop:"20px"}}>Advertising</h3>  */}
+        {/* </div> */}
+        {/* <hr style={{margin:"0px 15px"}}/> */}
         <div>
          
           <div
             className="categorycontainer myprocontainer w-50 row"
-            style={{ textAlign: "center", padding: "20px", marginLeft:"15px" }}
+            style={{ textAlign: "center", padding: "20px", marginLeft:"2px" }}
           >
             <div className="w-50">
               <p>Wanna go for advertisment?</p>
@@ -80,7 +85,7 @@ export default class Advthome extends Component {
           </div>
         </div>
         <AdvList {...this.props}/>
-      </div>
+      {/* </div> */}
       {this.state.openModal?<CreateAdvt openModal={this.state.openModal} closeModal={this.closeModal} creatAdvt={this.props.creatAdvt} {...this.props}/>:null}
       </React.Fragment>
     );
