@@ -19,8 +19,13 @@ class Dashboard extends Component {
   }
 
   render() {
-
     if (this.props.profileData) {
+      let from = this.props.range.from;
+      if(from)
+      from = from.substring(0, 10);
+      let to = this.props.range.to;
+      if(to)
+      to = to.substring(0, 10); 
       return (
         <div
           className="card allproductcard"
@@ -88,13 +93,14 @@ class Dashboard extends Component {
                     </button>
                   </div>
                 </div>
-              </div>
+                <h5 style={{marginTop: "15px", color: "#3399FF", fontWeight: "bolder"}}>FROM: {from} TO: {to}</h5>
+                </div>
             </div>
             <Link to="/seller/dashboard/myproducts" className="col-sm-4" style={{ marginTop: "20px" }}>
               <div className="pbox hov">
                 <h1>{this.props.dashboardData.products}</h1>{" "}
                 <i className="fas fa-clipboard-list fa-2x"></i>
-                <h5>Products</h5>
+                <h5>Overall Products</h5>
               </div>
             </Link>
             <Link to="/seller/dashboard/sales" className="col-sm-4" style={{ marginTop: "20px" }}>
@@ -117,7 +123,7 @@ class Dashboard extends Component {
                     <div className="row">
                       <div className="col-sm-6">
                         <p style={{ fontWeight: "500", marginBottom: "0px" }}>
-                          Placed Orders
+                          New Orders
                         </p>
                         <h1>{this.props.dashboardData.new}</h1>
                       </div>
@@ -186,7 +192,8 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     profileData: state.profile.data,
-    dashboardData: state.sellerDashboard.dashboardDetails
+    dashboardData: state.sellerDashboard.dashboardDetails,
+    range: state.sellerDashboard.dashboardRange
   };
 };
 

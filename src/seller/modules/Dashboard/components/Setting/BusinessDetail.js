@@ -135,7 +135,7 @@ class BusinessDetails extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col-md-12">
-                        <p className="headerlab">Registered Business Address</p>
+                        <p className="headerlab">Registered Business Address (Pickup)</p>
                       </div>
                       <div className="col-md-12">
                         <p>

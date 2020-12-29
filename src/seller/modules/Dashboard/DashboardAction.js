@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_DASHBOARD_DETAILS } from "./DashboardConstant";
+import { FETCH_DASHBOARD_DETAILS, FETCH_DASHBOARD_RANGE } from "./DashboardConstant";
 import { baseURL } from "../../../credential.json";
 
 export const getDashboardDetails = () => {
@@ -18,6 +18,10 @@ export const getDashboardDetails = () => {
           dispatch({
             type: FETCH_DASHBOARD_DETAILS,
             payload: res.data.payload,
+          });
+          dispatch({
+            type: FETCH_DASHBOARD_RANGE,
+            payload: res.data.payload.range,
           });
         }
       })

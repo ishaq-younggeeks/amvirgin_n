@@ -1,8 +1,9 @@
 import { func } from "prop-types";
-import {FETCH_DASHBOARD_DETAILS} from "./DashboardConstant";
+import {FETCH_DASHBOARD_DETAILS, FETCH_DASHBOARD_RANGE} from "./DashboardConstant";
 
 const initialState = {
-    dashboardDetails:{}
+    dashboardDetails:{},
+    dashboardRange:{}
 };
 
 export default function(state=initialState, action){
@@ -12,6 +13,11 @@ export default function(state=initialState, action){
                 ...state,
                 dashboardDetails:action.payload
             }
+        case FETCH_DASHBOARD_RANGE:
+            return{
+                ...state,
+                dashboardRange:action.payload
+            }    
         default:
             return state;    
     }

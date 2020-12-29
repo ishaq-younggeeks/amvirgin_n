@@ -296,7 +296,7 @@ export default class EditBankDetail extends Component {
           style={customStyles}
         >
           <div>
-            <h3>Bank details</h3>
+            <h3>Bank Details:</h3>
           </div>
           <hr />
           <form onSubmit={this.onSubmitHandler} autoComplete="off">
@@ -489,7 +489,9 @@ export default class EditBankDetail extends Component {
                   <option value="select">Select</option>
                   <option value="proprieter">Proprieter</option>
                   <option value="partner">Partner</option>
-                  <option value="">Corporation</option>
+                  <option value="corporation">Corporation</option>
+                  <option value="llp">LLP</option>
+                  <option value="pvtltd">Private Limited</option>
                 </select>
               </div>
             </div>

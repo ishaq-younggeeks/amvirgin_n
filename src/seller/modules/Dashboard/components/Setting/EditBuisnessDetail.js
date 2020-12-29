@@ -171,8 +171,8 @@ export default class EditBuisnessDetail extends Component {
 
     if (!this.state.gstIN.trim()) {
       gstError = "This field cannot be blank";
-    } else if (!/^[0-9]*$/.test(this.state.gstIN)) {
-      gstError = "Please Enter Numbers Only";
+    } else if (this.state.gstIN.length < 15){
+      gstError = "Length cannot be less than 15"
     }
 
     if (!this.state.rbaFirstLine.trim()) {
@@ -383,7 +383,7 @@ export default class EditBuisnessDetail extends Component {
           style={customStyles}
         >
           <div>
-            <h3>Buisness details</h3>
+            <h3>Business Details:</h3>
           </div>
           <hr />
           <form onSubmit={this.onSubmitHandler} autoComplete="off">
@@ -572,11 +572,10 @@ export default class EditBuisnessDetail extends Component {
                   onChange={this.onChangeList}
                 >
                   <option value="select">Select</option>
-                  <option value="aadhar-card">Adhaar</option>
-                  <option value="driving-license">Driving License</option>
-                  <option value="passport">Passport</option>
+                  <option value="aadhar-card">Udyog Adhaar</option>
                   <option value="electricity-bill">Electricity Bill</option>
                   <option value="phone-bill">Phone Bill</option>
+                  <option value="bank-passbook">Bank Passbook</option>
                 </select>
               </div>
             </div>

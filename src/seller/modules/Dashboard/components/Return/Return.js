@@ -8,11 +8,13 @@ import { connect } from "react-redux";
 import { Table } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import "./Return.css";
+import { data } from "jquery";
 
 class Return extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: ""
     };
   }
 
@@ -20,21 +22,52 @@ class Return extends Component {
     this.props.getAllReturnOrders();
   }
 
+  searching = (e) => {
+    e.preventDefault();
+    this.setState({
+      search:e.target.value
+    })
+  }
+
   render() {
     const { isFetching } = this.props;
+    let allReturnOrders = Array.from(this.props.returnOrders).filter((data) => {
+      if(this.state.search === "")
+      return data;
+      if(data.order.key == this.state.search){
+        return data;
+      }
+    });
     return (
       <>
-        <div style={{marginTop: "5%", width:"100%"}}>
-        <h2>Return</h2>
-        <hr/>
+        <div style={{ marginTop: "5%", width: "100%" }}>
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+          <h2 style={{marginTop:"5px"}}>Return</h2>
+          <div style={{display: "flex", alignItems:"center"}}><label htmlFor="search" className="search" style={{margin:"0 5px 0 0"}}>Search Here:</label>
+            <form onSubmit={this.onSubmit}>
+              <input
+                type="search"
+                name="search"
+                id="search"
+                onChange={this.searching}
+                placeholder="Enter Order ID"
+                style={{
+                  width: "70%",
+                  borderRadius: "5px",
+                  height: "37px",
+                  background: "#efefef",
+                  padding: "10px",
+                  margin: "5px 0",
+                  border: "none",
+                }}
+              />
+            </form>
+          </div>
         </div>
+        </div>
+        <hr />
         <div>
-          <Table
-            striped
-            bordered
-            hover
-            size="sm"
-          >
+          <Table striped bordered hover size="sm">
             <thead>
               <tr>
                 <th>Customer</th>
@@ -50,8 +83,8 @@ class Return extends Component {
             </thead>
             {!isFetching ? (
               <tbody>
-                {this.props.returnOrders &&
-                  Array.from(this.props.returnOrders).map((data, i) => (
+                {allReturnOrders &&
+                  allReturnOrders.map((data, i) => (
                     <tr key={i}>
                       <td>{data.customer.name}</td>
                       <td>{data.item.product.name}</td>
@@ -79,22 +112,20 @@ class Return extends Component {
                           ></button>
                         </td>
                       ) : (
-                        <td style={{ fontWeight: "bold" }}>
-                          N/A
-                        </td>
+                        <td style={{ fontWeight: "bold" }}>N/A</td>
                       )}
                     </tr>
                   ))}
               </tbody>
             ) : (
               <tbody className="loaderHorizontal">
-                      <Loader
-                        type="ThreeDots"
-                        color="#000"
-                        height={100}
-                        width={100}
-                        style={{marginTop:"30px"}}
-                      />
+                <Loader
+                  type="ThreeDots"
+                  color="#000"
+                  height={100}
+                  width={100}
+                  style={{ marginTop: "30px" }}
+                />
               </tbody>
             )}
           </Table>

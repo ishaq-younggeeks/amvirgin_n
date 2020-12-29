@@ -331,6 +331,7 @@ class AllProducts extends Component {
               <tr>
                 <th>IMAGE</th>
                 <th>PRODUCT</th>
+                <th>Product ID</th>
                 <th>BRAND</th>
                 <th>LISTING DATE</th>
                 <th>MRP</th>
@@ -368,6 +369,7 @@ class AllProducts extends Component {
                             >
                               {data.name}
                             </td>
+                            <td>{data.key}</td>
                             <td>HRX</td>
                             <td>{data.listingDate}</td>
                             <td>{data.originalPrice}</td>

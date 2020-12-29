@@ -164,7 +164,7 @@ export default class Filter extends Component {
             </ul>
           </div>
 
-          {/* <div className="col-auto colwidth25">
+          <div className="col-auto colwidth25">
             <form onSubmit={this.onSubmit}>
               <input
                 type="search"
@@ -198,7 +198,7 @@ export default class Filter extends Component {
                 <i className="fa fa-search" />
               </button>
             </form>
-          </div>  */}
+          </div> 
       </>
     )
   }
