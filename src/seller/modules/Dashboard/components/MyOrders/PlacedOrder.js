@@ -95,7 +95,7 @@ export default class PlacedOrder extends Component {
             <thead>
               <tr>
               <th><input type="checkbox" style={{width:'15px'}} onChange={this.selectAllOrder}></input></th>
-                <th>OrderId</th>
+                <th>Order ID</th>
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>

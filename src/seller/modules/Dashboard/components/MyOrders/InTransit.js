@@ -59,7 +59,7 @@ export default class PandingLabel extends Component {
           <table className="tablelist" style={{width:'100%'}}>            
             <thead>
               <tr>
-                <th>OrderId</th>
+                <th>Order ID</th>
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>

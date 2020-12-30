@@ -170,7 +170,7 @@ export default class Filter extends Component {
                 type="search"
                 name="search"
                 onChange={this.searchHere}
-                placeholder="search"
+                placeholder="Search by Order ID"
                 style={{
                   width: "80%",
                   borderRadius: "5px",

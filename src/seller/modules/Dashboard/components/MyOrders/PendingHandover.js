@@ -233,7 +233,7 @@ export default class PendingHandover extends Component {
                     onChange={this.selectAllOrder}
                   ></input>
                 </th> */}
-                <th>OrderId</th>
+                <th>Order ID</th>
                 <th>Quantity</th>
                 <th>Order Date</th>
                 <th>Status</th>

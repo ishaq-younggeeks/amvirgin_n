@@ -140,7 +140,7 @@ export const downloadLabel = (id) => {
   };
 };
 
-export const FilterBySearch = (currentPage, perPage, query, status) => {
+export const FilterBySearch = (currentPage, perPage, key, status) => {
   return (dispatch) => {
     let token = localStorage.getItem("token");
     let config = {
@@ -148,10 +148,11 @@ export const FilterBySearch = (currentPage, perPage, query, status) => {
       params: {
         page: currentPage,
         per_page: perPage,
-        query: query,
+        key: key,
         status: status,
       },
     };
+    console.log("Filter: ", config.params);
     axios
       .get(`${baseURL}/seller/orders`, config)
       .then((res) => {
