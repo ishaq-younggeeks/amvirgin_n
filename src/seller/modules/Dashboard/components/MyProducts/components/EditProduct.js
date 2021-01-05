@@ -768,7 +768,7 @@ class EditProduct extends Component {
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
         <div style={{ background: '#00000008', padding: '10px' }}><h4 style={{ fontWeight: '500', fontSize: '20px' }}>Edit Product</h4></div>
         <div style={{ margin: '10px 15px', paddingTop: '8px', border: '1px solid #00000030', borderRadius: '5px' }}>
-          <center><h4 style={{ fontWeight: '500', color: '#bf0000' }}>Enter the Details Properly</h4></center>
+          <center><h4 style={{ fontWeight: '500', color: '#bf0000' }}>Product Details</h4></center>
           <hr/>
           <form onSubmit={this.onSubmitHandler} style={{ padding: '2px 25px' }}>
             <div className="row spacing">

@@ -21,15 +21,13 @@ class Dashboard extends Component {
   render() {
     if (this.props.profileData) {
       let from = this.props.range.from;
-      if(from)
-      from = from.substring(0, 10);
+      if (from) from = from.substring(0, 10);
       let to = this.props.range.to;
-      if(to)
-      to = to.substring(0, 10); 
+      if (to) to = to.substring(0, 10);
       return (
         <div
           className="card allproductcard"
-          style={{ marginTop: "4%", alignItems: "center", padding: "15px 5px" }}
+          style={{ marginTop: "4%", alignItems: "center", padding: "15px 5px", width:"auto" }}
         >
           <div className="row" style={{ marginTop: "20px" }}>
             <div className="col-sm-12">
@@ -73,45 +71,67 @@ class Dashboard extends Component {
                     </p>
                   </div>
                   <div className="col-sm-2">
-                    <button
-                      style={{
-                        background: "#000",
-                        color: "#fff",
-                        float: "right",
-                        padding: "6px 10px",
-                        width: "120px",
-                        border: "none",
-                        borderRadius: "20px",
-                      }}
+                    <Link
+                      style={{ color: "#fff" }}
+                      to="/seller/dashboard/profile"
                     >
-                      <Link
-                        style={{ color: "#fff" }}
-                        to="/seller/dashboard/profile"
+                      <button
+                        style={{
+                          background: "#000",
+                          color: "#fff",
+                          float: "right",
+                          padding: "6px 10px",
+                          width: "120px",
+                          border: "none",
+                          borderRadius: "20px",
+                        }}
                       >
                         View
-                      </Link>
-                    </button>
+                      </button>
+                    </Link>
                   </div>
                 </div>
-                <h5 style={{marginTop: "15px", color: "#3399FF", fontWeight: "bolder"}}>FROM: {from} TO: {to}</h5>
-                </div>
+                <h5
+                  style={{
+                    marginTop: "15px",
+                    color: "#3399FF",
+                    fontWeight: "bolder",
+                  }}
+                >
+                  FROM: {from} TO: {to} (Last 7 days)
+                </h5>
+              </div>
             </div>
-            <Link to="/seller/dashboard/myproducts" className="col-sm-4" style={{ marginTop: "20px" }}>
+            <Link
+              to="/seller/dashboard/myproducts"
+              className="col-sm-4"
+              style={{ marginTop: "20px" }}
+            >
               <div className="pbox hov">
                 <h1>{this.props.dashboardData.products}</h1>{" "}
                 <i className="fas fa-clipboard-list fa-2x"></i>
                 <h5>Overall Products</h5>
               </div>
             </Link>
-            <Link to="/seller/dashboard/sales" className="col-sm-4" style={{ marginTop: "20px" }}>
+            <Link
+              to="/seller/dashboard/sales"
+              className="col-sm-4"
+              style={{ marginTop: "20px" }}
+            >
               <div className="pbox hov">
-                <h1>{this.props.dashboardData.sales}</h1> <i className="fas fa-dollar fa-2x"></i>
+                <h1>{this.props.dashboardData.sales}</h1>{" "}
+                <i className="fas fa-dollar fa-2x"></i>
                 <h5>Sales</h5>
               </div>
             </Link>
-            <Link to="/seller/dashboard/myorders" className="col-sm-4" style={{ marginTop: "20px" }}>
+            <Link
+              to="/seller/dashboard/myorders"
+              className="col-sm-4"
+              style={{ marginTop: "20px" }}
+            >
               <div className="pbox hov">
-                  <h1>{this.props.dashboardData.orders}</h1> <i className="fas fa-boxes fa-2x"></i>
+                <h1>{this.props.dashboardData.orders}</h1>{" "}
+                <i className="fas fa-boxes fa-2x"></i>
                 <h5>Orders</h5>
               </div>
             </Link>
@@ -162,10 +182,10 @@ class Dashboard extends Component {
             </div>
 
             <div className="col-sm-4" style={{ marginTop: "20px" }}>
-              <div className="pbox" style={{height:"193px"}}>
+              <div className="pbox" style={{ height: "193px" }}>
                 Gross Revenue
                 <br />
-                  <h1>&#8377; {this.props.dashboardData.grossRevenue}</h1>
+                <h1>&#8377; {this.props.dashboardData.grossRevenue}</h1>
                 <br />
                 {/* <button className="btn mybtn">View Full Stats</button> */}
               </div>
@@ -193,14 +213,14 @@ const mapStateToProps = (state) => {
   return {
     profileData: state.profile.data,
     dashboardData: state.sellerDashboard.dashboardDetails,
-    range: state.sellerDashboard.dashboardRange
+    range: state.sellerDashboard.dashboardRange,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     Fetchdata: () => dispatch(Fetchdata()),
-    getDashboardDetails: () => dispatch(getDashboardDetails())
+    getDashboardDetails: () => dispatch(getDashboardDetails()),
   };
 };
 

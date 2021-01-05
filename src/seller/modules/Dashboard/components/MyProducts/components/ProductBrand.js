@@ -129,7 +129,7 @@ class ProductBrand extends Component {
                   <div className="row brandrow">
                       <div className="branddiv">
                      
-                      <input type="text" name="domesticWarranty" className="form-control" placeholder="Enter brand name" onChange={this.GetBrandNames} autocomplete="off" value={this.state.searchBrand}/>
+                      <input type="text" name="domesticWarranty" className="form-control" placeholder="Enter brand name" onChange={this.GetBrandNames} autoComplete="off" value={this.state.searchBrand}/>
                       {this.state.setIsOpen?<div className="BrandSearch">{this.props.BrandData && this.props.BrandData.map((res,index)=>{
                       return(
                       <Link key={index} onClick={()=>this.selectBrand(res.id,res.name)}><p>{res.name}</p></Link>
@@ -149,7 +149,7 @@ class ProductBrand extends Component {
                       {
                         return(
                           res.status==="approved"?
-                          <li>
+                          <li key={res.key}>
                             <Link className="text-primary" onClick={(e)=>this.selectApproved(e,res.key,res.name)}> {res.name}</Link>
                           </li>:""
                          
@@ -166,24 +166,24 @@ class ProductBrand extends Component {
                 {this.state.activeListing?(
                 <div> 
                   <div style={{textAlign:"center"}}>
-                <p style={{position:"absolute",right:"30px",margin:"20px"}}>{this.state.listingBrand}</p>
+                <p style={{position:"absolute",right:"30px",margin:"20px", color:"dodgerblue"}}>{this.state.listingBrand}</p>
                   <p style={{position:"absolute",right:"30px"}}>You can start selling under this brand.</p>
                   </div>
-                  <Link class="nxtbtncat" onClick={this.createProduct} to={{pathname:this.state.listingType==='single'?`/seller/dashboard/addproduct`:`/seller/dashboard/addproduct/bulk`,search:this.queryString()} }>Create product</Link>
+                  <Link className="nxtbtncat" onClick={this.createProduct} to={{pathname:this.state.listingType==='single'?`/seller/dashboard/addproduct`:`/seller/dashboard/addproduct/bulk`,search:this.queryString()} }>Create product</Link>
                 </div>  
                   ):""}
                 {this.state.activeApproval?(
                   <div>
                       
-                  <p style={{position:"absolute",right:"30px",margin:"20px"}}>{this.state.listingBrand}</p>
+                  <p style={{position:"absolute",right:"30px",margin:"20px", color:"dodgerblue"}}>{this.state.listingBrand}</p>
                   <p style={{position:"absolute",right:"30px"}}>Please apply for an approval to sell under this brand.</p>
                 <Link class="nxtbtncat" to={{pathname:"/seller/dashboard/brand-approval",search:this.queryStringBrand()}}>Apply for Brand Approval</Link>
                 </div>
                 ):""}
                  {this.state.activePending?(
                   <div>
-                  <p style={{position:"absolute",right:"30px",margin:"20px"}}>{this.state.listingBrand}</p>
-                  <p style={{position:"absolute",right:"30px"}}>Approval pending.</p>
+                  <p style={{position:"absolute",right:"30px",margin:"20px", color:"dodgerblue"}}>{this.state.listingBrand}</p>
+                  <p style={{position:"absolute",right:"30px"}}>Approval Pending for this Brand.</p>
                 </div>
                 ):""}
                 {this.state.activePending || this.state.activeApproval || this.state.activeListing?(

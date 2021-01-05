@@ -115,9 +115,9 @@ class ProductCategory extends Component {
               </div> 
             {this._renderSubComp()}
             {this.state.available?
-              <div class="selcatbtn1"> Select the category you want to sell </div>:(
+              <div className="selcatbtn1"> Select the category you want to sell </div>:(
               <>
-                <div class="selcatbtn1">
+                <div className="selcatbtn1">
                   {/* <center>
                     <p>vertical:<span>Men</span></p>
                     </center> */}

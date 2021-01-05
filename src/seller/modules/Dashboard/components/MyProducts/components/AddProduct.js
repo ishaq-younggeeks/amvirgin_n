@@ -712,6 +712,20 @@ class AddProduct extends Component {
       }
     };
 
+    const customStyles3 = {
+      content: {
+        width:'35vw',
+        top: '40%',
+        left: '55%',
+        right: 'auto',
+        bottom: 'auto',
+        height:"auto",
+        margin: '2% 0 5% 0',
+        padding:'20px',
+        transform: 'translate(-50%, -50%)'
+      }
+    };
+
     const customStylesHsn = {
       content: {
         width:'30vw',
@@ -746,7 +760,7 @@ class AddProduct extends Component {
         <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
         <div style={{ background: '#00000008', padding: '10px' }}><h4 style={{ fontWeight: '500', fontSize: '20px' }}>Add Product</h4></div>
         <div style={{ margin: '10px 15px', paddingTop: '8px', border: '1px solid #00000030', borderRadius: '5px' }}>
-          <center><h4 style={{ fontWeight: '500', color: '#bf0000' }}>Enter the Details Properly</h4></center>
+          <center><h4 style={{ fontWeight: '500', color: '#bf0000' }}>Product Details</h4></center>
           <hr/>
           <form onSubmit={this.onSubmitHandler} style={{ padding: '2px 25px' }}>
             <div className="row spacing">
@@ -771,9 +785,11 @@ class AddProduct extends Component {
              isOpen={this.state.setIsOpenImage}
              onRequestClose={this.closeModal}
              ariaHideApp={false}
-             style={customStyles2
+             style={customStyles3
              }>
                 <center>
+                  <h3>Upload Picture(s)</h3>
+                  <hr/>
                   <img src='https://static.thenounproject.com/png/187803-200.png' onClick={this.handleAddImage} style={{ width: '100px',cursor:"pointer"}} />
                 </center>
                 {this.state.imgPreviewUrls.map((imagePreviewUrl, i) => {
@@ -787,8 +803,10 @@ class AddProduct extends Component {
                     </div>
                   );
                 })}
-               <Link className="btn btn-primary" onClick={this.saveData}>Save & close</Link>
-               <Link className="btn btn-primary" onClick={this.closeModal} style={{marginLeft:"10px"}}>close</Link>
+                <center style={{marginTop:"40px"}}>
+               <Link className="btn btn-primary" onClick={this.saveData}>Save & Close</Link>
+               <Link className="btn btn-primary" onClick={this.closeModal} style={{marginLeft:"10px"}}>Close</Link>
+               </center>
                </Modal>
               </div>
               <div className="col-auto " style={{ width: "50%" }}>
@@ -821,11 +839,13 @@ class AddProduct extends Component {
                   </div>
                   <button id="submitButton" type="submit" className="btn-block upaddattribtn" disabled={this.state.disableButton}>Add</button>
                   <br/>
+                  <div style={{display:"flex"}}>
                   {addProductError && Object.keys(addProductError).length ? (
-                  <p className={addProductError.status===201?"text-success":"text-danger"}>{addProductError.res}</p>
+                  <p style={{marginLeft:"20px"}} className={addProductError.status===201?"text-success":"text-danger"}>{addProductError.res}</p>
                 ):this.state.onSubmitactive?<><p id="uploadProgress" style={{color:"blue"}}>saving in progress....<span></span></p>
                 </>:""}
-                
+                  {addProductError.status===201?<Link to="/seller/dashboard/myproducts"> Click here for Your Product Listing.</Link>:null}
+                </div>
                 </div>
               </div>
             </div>
