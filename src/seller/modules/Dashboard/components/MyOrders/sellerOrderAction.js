@@ -90,7 +90,7 @@ export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=nul
     console.log("Dispatched Order Single: ", data);
      axios.put(`${baseURL}/seller/orders/${key}/status`, data, config)
      .then(res => {
-       console.log("Single Order Status",res)
+       console.log("Single Order Status",res,key)
        if (res.data.status === 200) {
         dispatch({
           type: AFTER_STATUS_CHANGE,
