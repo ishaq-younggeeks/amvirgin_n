@@ -131,7 +131,7 @@ export default class PlacedOrder extends Component {
                   )
                 : this.props.ordersList &&
                   Array.from(this.props.ordersList).map((data, i) =>
-                    i <= this.state.pagination - 1 ? (
+                    (
                       <tr key={data.key}>
                         <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.key)} checked={this.state.bulkArray.indexOf(data.key)===-1?false:true}></input></td>
                         <td>{data.key}</td>
@@ -176,7 +176,7 @@ export default class PlacedOrder extends Component {
                           </button>
                         </td>
                       </tr>
-                    ) : null
+                    )
                   )}
             </tbody>
           </table>
