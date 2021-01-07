@@ -9,7 +9,7 @@ const intialState = {
 };
 
 const sellerOrderReducer = (state = intialState, action) => {
-  
+  console.log("calling action",action)
   switch (action.type) {
     case GET_ALL_ORDERS:
       return {
@@ -27,7 +27,7 @@ const sellerOrderReducer = (state = intialState, action) => {
     case AFTER_STATUS_CHANGE:
       return {
         ...state,
-        orders:state.orders.filter(item => action.payload.indexOf(item.orderId)===-1)
+        orders:state.orders.filter(item => item.key!==action.payload[0])
       }
     case STATUS_CHANGE_ALERT:
       return {
