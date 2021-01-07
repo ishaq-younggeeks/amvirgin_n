@@ -327,7 +327,7 @@ class ApprovalofBrand extends Component {
         >
           <center>
             <h4 style={{ fontWeight: "500", color: "#bf0000" }}>
-              Enter the Details Propely
+              Brand Details
             </h4>
           </center>
           <hr />
@@ -830,8 +830,9 @@ class ApprovalofBrand extends Component {
                   </div>
                   <div className="col-auto colwidth25"></div>
                 </div>
-                <div>
-                    {this.props.statusapproval && <p style={{color:this.props.statusapproval.status===200?"green":"red"}}>{this.props.statusapproval.message}</p>}
+                <div style={{display:"flex"}}>
+                    {this.props.statusapproval && <p style={{color:this.props.statusapproval.status===200?"green":"red"}}>{this.props.statusapproval.message}</p> }
+                    {this.props.statusapproval && this.props.statusapproval.status===200?<Link style={{color:"dogerblue"}} to="/seller/dashboard/brandlist">Click here to Track Approval Listing</Link>:null}
                 </div>  
               </div>
             </div>

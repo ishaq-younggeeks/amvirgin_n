@@ -17,9 +17,9 @@ export default class Filter extends Component {
   }
 
   componentDidMount = () => {
-    // let query = qs.parse(this.props.location.search)
-    // console.log("parsed query",query);
-    // this.setState({activeState:query.activeState})
+  //   let query = qs.parse(this.props.location.search)
+  //   console.log("parsed query",query);
+  //   this.setState({activeState:query.activeState})
   //  this.props.myOrderList(query.activeState,1,10);
   };
 
@@ -66,7 +66,6 @@ export default class Filter extends Component {
   };
 
   render() {
-
     const {metaData} = this.props
     return (
       <>
@@ -92,34 +91,10 @@ export default class Filter extends Component {
           </div>
           
           {metaData && metaData.total ? (
-            // <div style={{ padding: "5px" }}>
-            //   <p>
-            //     {" "}
-            //     {metaData.pagination.items.totalRec?(this.state.currentPage - 1) *
-            //       metaData.pagination.items.chunk +
-            //       1:0}
-            //     -
-            //     {" "}{(this.state.currentPage - 1) *
-            //       metaData.pagination.items.chunk +
-            //       metaData.pagination.items.total}{" "}
-            //     of {metaData.pagination.items.totalRec} items |{" "}
-            //     {this.state.currentPage} of{" "}
-            //     {Math.floor(metaData.pagination.pages)} pages
-            //   </p>
-            // </div>
+            
             <div style={{ padding: "5px" }}>
               <p>
-                {" "}
-                {metaData.total?(this.state.currentPage - 1) *
-                  metaData.per_page +
-                  1:0}
-                -
-                {" "}{(this.state.currentPage - 1) *
-                  metaData.per_page +
-                  metaData.total}{" "}
-                of {metaData.total} items |{" "}
-                {this.state.currentPage} of{" "}
-                {Math.floor(metaData.last_page)} pages
+                {metaData.from}-{metaData.to} of {metaData.total} items | {this.state.currentPage} of {metaData.last_page} pages
               </p>
             </div>
           ) : null}

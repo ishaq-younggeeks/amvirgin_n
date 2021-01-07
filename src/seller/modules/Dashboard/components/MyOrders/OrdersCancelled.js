@@ -32,9 +32,7 @@ import Filter from "./Filter"
     if (prevprops.metaData !== this.props.metaData) {
       console.log("metadate in order canceller",this.props.metaData)
       this.setState({
-        maxPage: Math.floor(
-          this.props.metaData.last_page
-        ),
+        maxPage: this.props.metaData.last_page,
       });
     }
   

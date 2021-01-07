@@ -5,6 +5,7 @@ import {getOrderWiseTransaction} from './PaymentAction'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ReactExport from "react-data-export";
+import TransactionsModal from './TransactionsModal';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -55,13 +56,13 @@ class OrderTransaction extends Component {
             <p>From:</p>
           </div>
           <div className="date-select">
-            <input type="date" id="from" name="from" onChange={this.onChangeHandler}/>
+            <input type="month" id="from" name="from" onChange={this.onChangeHandler}/>
           </div>
           <div className="date-head">
             <p>To:</p>
           </div>
           <div className="date-select">
-            <input type="date" id="to" name="to" onChange={this.onChangeHandler}/>
+            <input type="month" id="to" name="to" onChange={this.onChangeHandler}/>
           </div>
           <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,this.state.from,this.state.to,null)}>
             <i className="fas fa-search"></i>
@@ -91,8 +92,9 @@ class OrderTransaction extends Component {
             <tr>
               <th>ORDER DATE</th>
               <th> ORDER ID</th>
-              <th>Transaction Id</th>
+              <th>Transaction ID</th>
               <th> AMOUNT </th>
+              <th>VIEW</th>
             </tr>
           </thead>
           <tbody>
@@ -103,11 +105,24 @@ class OrderTransaction extends Component {
             <td>{item.key}</td>
             <td>{item.transactionId}</td>
             <td>{item.amount.requested}</td>
+            <td><button
+                className="btn toolnewtip"
+                onClick={() => {
+                localStorage.setItem("orderId", item.key);
+                }}
+                >
+                <Link to="/seller/dashboard/vieworders">
+                <i className="fas fa-eye" />
+                <span className="tooltiptext">View</span>
+                </Link>
+                </button></td>
             </tr>
             )
               :null}
           </tbody>
         </table>
+        {/* <TransactionsModal 
+        /> */}
       </div>
     );
   }

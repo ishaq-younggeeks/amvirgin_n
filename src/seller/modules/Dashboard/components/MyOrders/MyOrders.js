@@ -50,7 +50,7 @@ renderComponent = () => {
 
   switch (this.state.activeState) {
     case "placed":
-      return <PlacedOrder ordersList={this.props.ordersList} changeOrderStatusBulk={this.props.changeOrderStatusBulk} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
+      return <PlacedOrder ordersList={this.props.ordersList} changeOrderStatusBulk={this.props.changeOrderStatusBulk} changeOrderStatus={this.props.changeOrderStatus} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState} status={this.props.statusMessage}{...this.props}/>
     case "ready-for-dispatch":
       return <PendingLabel ordersList={this.props.ordersList} downloadLabel={this.props.downloadLabel} metaData = {this.props.metaData} maxPage={this.state.maxPage} myOrderList={this.props.myOrderList} activeState={this.state.activeState}{...this.props}/>
     case "pending-dispatch":
@@ -111,9 +111,7 @@ renderComponent = () => {
     }
       if (prevprops.metaData !== this.props.metaData) {
         this.setState({
-          maxPage: Math.floor(
-            this.props.metaData.last_page
-          ),
+          maxPage: this.props.metaData.last_page,
         });
       }
     
@@ -213,7 +211,8 @@ const mapStateToProps = (state) => {
   console.log(state.sellerOrders)
   return ({
       ordersList:state.sellerOrders.orders,
-      metaData:state.sellerOrders.metaData
+      metaData:state.sellerOrders.metaData,
+      statusMessage:state.sellerOrders.message
   })
 }
 

@@ -15,6 +15,7 @@ export default class PlacedOrder extends Component {
       search: false,
       pagination: 10,
       bulkArray: [],
+      alertMessage: false,
     };
   }
 
@@ -46,6 +47,13 @@ export default class PlacedOrder extends Component {
     this.setState({selectAll:true,bulkArray:bulk_array})
     else
     this.setState({selectAll:true,bulkArray:[]})
+  }
+
+  statusAlertMessage = () => {
+    this.setState({
+      alertMessage:true
+    });
+    (this.state.alertMessage) && alert('Mark RTD Changed Successfully');
   }
 
 
@@ -130,7 +138,7 @@ export default class PlacedOrder extends Component {
                     ) : null
                   )
                 : this.props.ordersList &&
-                  Array.from(this.props.ordersList).map((data, i) =>
+                  this.props.ordersList.map((data, i) =>
                     i <= this.state.pagination - 1 ? (
                       <tr key={data.key}>
                         <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.key)} checked={this.state.bulkArray.indexOf(data.key)===-1?false:true}></input></td>
@@ -168,7 +176,8 @@ export default class PlacedOrder extends Component {
                               this.props.changeOrderStatus(
                                 [data.key],
                                 "ready-for-dispatch"
-                              );
+                                );
+                                // this.setState({alertMessage:true})
                             }}
                             style={{ marginLeft: "10px" }}
                           >

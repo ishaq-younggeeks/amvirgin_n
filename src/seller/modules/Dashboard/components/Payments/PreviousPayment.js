@@ -56,13 +56,13 @@ class PreviousPayment extends Component {
             <p>From:</p>
           </div>
           <div className="date-select">
-            <input type="date" id="from" name="from" onChange={this.onChangeHandler}/>
+            <input type="month" id="from" name="from" onChange={this.onChangeHandler}/>
           </div>
           <div className="date-head">
             <p>To:</p>
           </div>
           <div className="date-select">
-            <input type="date" id="to" name="to" onChange={this.onChangeHandler}/>
+            <input type="month" id="to" name="to" onChange={this.onChangeHandler}/>
           </div>
           <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,this.state.from,this.state.to,null)}>
             <i className="fas fa-search"></i>
@@ -79,10 +79,14 @@ class PreviousPayment extends Component {
           <div style={{marginLeft:"20px"}}>
           <ExcelFile filename="paymenthistory" element={<button disabled={this.props.paymentHistory.length?false:true} onClick={() => alert("Downloading Payments Report!")}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
-                    <ExcelColumn label="Payment Date" value="paidAt"/>
-                    <ExcelColumn label="BANK ACCOUNT" value="account"/>
-                    <ExcelColumn label="NEFT ID" value="transactionId"/>
-                    <ExcelColumn label="PAYMENT AMOUNT" value="amount"/>
+                    <ExcelColumn label="DATE" value="paidAt"/>
+                    <ExcelColumn label="ORDER ID" value="account"/>
+                    <ExcelColumn label="DESCRIPTION" value="transactionId"/>
+                    <ExcelColumn label="QUANTITY" value="amount"/>
+                    <ExcelColumn label="PRODUCT SALES" value="amount"/>
+                    <ExcelColumn label="SELLING FEES" value="amount"/>
+                    <ExcelColumn label="COURIER CHARGES" value="amount"/>
+                    <ExcelColumn label="TOTAL" value="amount"/>
                 </ExcelSheet>
             </ExcelFile>
             </div>
@@ -90,20 +94,26 @@ class PreviousPayment extends Component {
         <table className="Paymenttable tablelist" style={{width:"90%"}}>
           <thead>
             <tr>
-              <th>PAYMENT DATE</th>
-              <th> BANK ACCOUNT </th>
-              <th>Transaction Id</th>
-              <th> NEFT ID </th>
-              <th> PAYMENT AMOUNT </th>
+              <th>DATE</th>
+              <th>ORDER ID</th>
+              <th>DESCRIPTION</th>
+              <th>QUANTITY</th>
+              <th>PRODUCT SALES</th>
+              <th>SELLING FEES</th>
+              <th>COURIER CHARGES</th>
+              <th>TOTAL</th>
             </tr>
           </thead>
           <tbody>
-            {paymentHistory?paymentHistory.map((item,index) =>
+            {paymentHistory ? paymentHistory.map((item,index) =>
              <tr key={item.account}>
              <td>{item.paidAt}</td>
             <td>{item.account}</td>
             <td>{item.transactionId}</td>
             <td>{item.neftId}</td>
+            <td>{item.amount}</td>
+            <td>{item.amount}</td> 
+            <td>{item.amount}</td>
             <td>{item.amount}</td>
            </tr>
  

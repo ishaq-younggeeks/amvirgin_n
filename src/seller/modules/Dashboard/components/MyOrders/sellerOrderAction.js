@@ -4,9 +4,11 @@ import {
   GET_ALL_ORDERS,
   VIEW_ORDER,
   AFTER_STATUS_CHANGE,
+  STATUS_CHANGE_ALERT
 } from "./sellerOrderConstant";
 
 export const myOrderList = (activeState, current, perPage) => {
+  console.log("Pagination: ", activeState, current, perPage);
   return (dispatch) => {
     let token = localStorage.getItem("token");
     let config = {
@@ -96,6 +98,10 @@ export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=nul
           type: AFTER_STATUS_CHANGE,
           payload: key,
         });
+        dispatch({
+          type: STATUS_CHANGE_ALERT,
+          payload: true
+        })
       }
     })
     .catch(err => console.log(err));

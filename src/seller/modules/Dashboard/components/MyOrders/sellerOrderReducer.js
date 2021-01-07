@@ -1,10 +1,11 @@
-import { GET_ALL_ORDERS, VIEW_ORDER,AFTER_STATUS_CHANGE} from './sellerOrderConstant';
+import { GET_ALL_ORDERS, VIEW_ORDER,AFTER_STATUS_CHANGE, STATUS_CHANGE_ALERT} from './sellerOrderConstant';
 
 const intialState = {
   orders: [],
   viewOrder: [],
   viewAllOrder: [],
-  metaData:{}
+  metaData:{},
+  message:false
 };
 
 const sellerOrderReducer = (state = intialState, action) => {
@@ -28,6 +29,11 @@ const sellerOrderReducer = (state = intialState, action) => {
         ...state,
         orders:state.orders.filter(item => action.payload.indexOf(item.orderId)===-1)
       }
+    case STATUS_CHANGE_ALERT:
+      return {
+        ...state,
+        message:action.payload
+      };
       case "CLEAR_REDUX_STATE":
         return {
           ...state,
