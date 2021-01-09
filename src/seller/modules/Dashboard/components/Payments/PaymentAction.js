@@ -28,36 +28,6 @@ export const getPaymentOverview = () => {
   };
 };
 
-export const getPaymentHistory = (page,per_page,from,to,neftId) => {
-  return dispatch => {
-    let token = localStorage.getItem("token");
-    let config = {
-      headers: {
-        Authorization: "Bearer " + token
-      },
-      params:{
-        page,
-        per_page,
-        from,
-        to,
-        neftId
-      }
-    };
-    axios
-      .get(`${baseURL}/seller/payments/previous?neft_id=${neftId}`, config)
-      .then(res => {
-		   console.log("getting payment previous",res);
-        if (res.data.status === 200) {
-          dispatch({
-            type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload.data
-          });
-        }
-      })
-      .catch(err => console.log(err));
-  };
-}
-
 export const getPaymentHistoryInitial = () => {
   return dispatch => {
     let token = localStorage.getItem("token");
@@ -67,13 +37,75 @@ export const getPaymentHistoryInitial = () => {
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/previous`, config)
+      .get(`${baseURL}/seller/payments/overview`, config)
       .then(res => {
 		   console.log("getting payment previous",res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload.data
+            payload: res.data.payload
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+
+export const getPaymentHistoryFromTo = (page,per_page, from, to, key) => {
+  console.log("Month & Year", page, per_page, from, to, key);
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      params:{
+        // page,
+        // per_page,
+        // from,
+        // to,
+        // key
+      }
+    };
+    axios
+      .get(`${baseURL}/seller/payments/overview?start=${from}&end=${to}`, config)
+      .then(res => {
+		   console.log("getting payment previous", res);
+        if (res.data.status === 200) {
+          dispatch({
+            type: FETCH_PAYMENTHISTORY,
+            payload: res.data.payload
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+
+export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
+  console.log("Month & Year", page, per_page, from, to, key);
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      params:{
+        // page,
+        // per_page,
+        // from,
+        // to,
+        // key
+      }
+    };
+    axios
+      .get(`${baseURL}/seller/payments/overview?key=${key}`, config)
+      .then(res => {
+		   console.log("getting payment previous", res);
+        if (res.data.status === 200) {
+          dispatch({
+            type: FETCH_PAYMENTHISTORY,
+            payload: res.data.payload
           });
         }
       })
@@ -99,7 +131,7 @@ export const getOrderWiseTransaction = (page,per_page,from,to,query) => {
     axios
       .get(`${baseURL}/seller/payments/transactions?orderNumber=${query}`, config)
       .then(res => {
-		   console.log("getting order transaction",res);
+		   console.log("getting order transaction", res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_ORDERTRANSACTION,

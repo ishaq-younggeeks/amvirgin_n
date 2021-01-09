@@ -125,6 +125,7 @@ class Return extends Component {
                   height={100}
                   width={100}
                   style={{ marginTop: "30px" }}
+                  timeout={5000}
                 />
               </tbody>
             )}

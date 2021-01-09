@@ -18,10 +18,12 @@ class OrderTransaction extends Component {
       to:"",
       query:"",
       page:"",
-      per_page:""
-
+      per_page:"",
+      modalIsOpen: false,
+      transactionId:""
     }
   }
+
   componentDidMount(){
     this.props.getOrderWiseTransaction()
   }
@@ -45,6 +47,30 @@ class OrderTransaction extends Component {
     e.preventDefault()
     this.props.getOrderWiseTransaction(page,per_page,from,to,query);
   }
+
+  customStyles = {
+    content: {
+      top: "30%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  openModal = () => {
+    this.setState({
+      modalIsOpen: true,
+    });
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false,
+    });
+  }
+
 
   render() {
     console.log("home of payment");
@@ -94,35 +120,43 @@ class OrderTransaction extends Component {
               <th> ORDER ID</th>
               <th>Transaction ID</th>
               <th> AMOUNT </th>
-              <th>VIEW</th>
+              <th>VIEW DETAILS</th>
             </tr>
           </thead>
           <tbody>
-            {this.props.orderTransaction?
+            {/* {this.props.orderTransaction?
             Array.from(this.props.orderTransaction).map((item,index)=>
-            <tr key={item.key}>
-            <td>{item.date}</td>
+            <tr key={item.key}> */}
+            {/* <td>{item.date}</td>
             <td>{item.key}</td>
             <td>{item.transactionId}</td>
-            <td>{item.amount.requested}</td>
+            <td>{item.amount.requested}</td> */}
+            <tr>
+            <td>8th Jan 2021</td>
+            <td>2</td>
+            <td>9879879812111</td>
+            <td>6000</td>
             <td><button
                 className="btn toolnewtip"
                 onClick={() => {
-                localStorage.setItem("orderId", item.key);
+                // localStorage.setItem("transaction_id", item.transactionId);
+                this.setState({ transactionId: "123456789" });
+                this.openModal()
                 }}
                 >
-                <Link to="/seller/dashboard/vieworders">
                 <i className="fas fa-eye" />
                 <span className="tooltiptext">View</span>
-                </Link>
                 </button></td>
             </tr>
-            )
-              :null}
+              {/* :null} */}
           </tbody>
         </table>
-        {/* <TransactionsModal 
-        /> */}
+        <TransactionsModal 
+        isOpen={this.state.modalIsOpen}
+        onRequestClose={this.closeModal}
+        style={this.customStyles}
+        transactionId={this.state.transactionId}
+        />
       </div>
     );
   }

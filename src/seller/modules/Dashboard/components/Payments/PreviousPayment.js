@@ -4,7 +4,7 @@ import './Payment.css';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import ReactExport from "react-data-export";
-import {getPaymentHistory, getPaymentHistoryInitial} from './PaymentAction'
+import {getPaymentHistoryFromTo, getPaymentHistorySearch, getPaymentHistoryInitial} from './PaymentAction'
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -28,8 +28,8 @@ class PreviousPayment extends Component {
 
   ExcelSheet = () => {
     const {paymentHistory} = this.props
-    let result = paymentHistory.map(({paidAt,amount,account,transactionId})=>{
-      let final = {paidAt,amount,account,transactionId}
+    let result = paymentHistory.map(({date, key, description, quantity, sales, sellingFee, courierCharges, total})=>{
+      let final = {date, key, description, quantity, sales, sellingFee, courierCharges, total}
       return final
     })
     return result
@@ -37,12 +37,16 @@ class PreviousPayment extends Component {
 
   onChangeHandler = (e) => {
     this.setState({[e.target.name]:e.target.value},console.log("current state",this.state))
-    
   }
 
-  onSubmitHandler = (e,page=null,per_page=null,from=null,to=null,query=null) => {
+  onSubmitHandler1 = (e,page=null,per_page=null,from=null,to=null,query=null) => {
     e.preventDefault()
-    this.props.getPaymentHistory(page,per_page,from,to,query);
+    this.props.getPaymentHistoryFromTo(page,per_page,from,to,query);
+  }
+
+  onSubmitHandler2 = (e,page=null,per_page=null,from=null,to=null,query=null) => {
+    e.preventDefault()
+    this.props.getPaymentHistorySearch(page,per_page,from,to,query);
   }
 
   render() {
@@ -56,15 +60,15 @@ class PreviousPayment extends Component {
             <p>From:</p>
           </div>
           <div className="date-select">
-            <input type="month" id="from" name="from" onChange={this.onChangeHandler}/>
+            <input type="date" id="from" name="from" onChange={this.onChangeHandler}/>
           </div>
           <div className="date-head">
             <p>To:</p>
           </div>
           <div className="date-select">
-            <input type="month" id="to" name="to" onChange={this.onChangeHandler}/>
+            <input type="date" id="to" name="to" onChange={this.onChangeHandler}/>
           </div>
-          <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,this.state.from,this.state.to,null)}>
+          <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler1(e,null,null,this.state.from,this.state.to,null)}>
             <i className="fas fa-search"></i>
           </div>
           <div className="date-head" style={{marginLeft:"20px",marginRight:"20px"}}>
@@ -73,20 +77,20 @@ class PreviousPayment extends Component {
           <div className="form-group has-search">
           <input type="text" className="form-control" name="query" placeholder="Search by Order ID" onChange={this.onChangeHandler} minLength="2"/>
         </div>
-        <div className="search-submit" disabled={this.state.query ? false : true} onClick={(e)=>this.onSubmitHandler(e,null,null,null,null,this.state.query)}>
+        <div className="search-submit" disabled={this.state.query ? false : true} onClick={(e)=>this.onSubmitHandler2(e,null,null,null,null,this.state.query)}>
             <i className="fas fa-search"></i>
           </div>
           <div style={{marginLeft:"20px"}}>
           <ExcelFile filename="paymenthistory" element={<button disabled={this.props.paymentHistory.length?false:true} onClick={() => alert("Downloading Payments Report!")}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
-                    <ExcelColumn label="DATE" value="paidAt"/>
-                    <ExcelColumn label="ORDER ID" value="account"/>
-                    <ExcelColumn label="DESCRIPTION" value="transactionId"/>
-                    <ExcelColumn label="QUANTITY" value="amount"/>
-                    <ExcelColumn label="PRODUCT SALES" value="amount"/>
-                    <ExcelColumn label="SELLING FEES" value="amount"/>
-                    <ExcelColumn label="COURIER CHARGES" value="amount"/>
-                    <ExcelColumn label="TOTAL" value="amount"/>
+                    <ExcelColumn label="DATE" value="date"/>
+                    <ExcelColumn label="ORDER ID" value="key"/>
+                    <ExcelColumn label="DESCRIPTION" value="description"/>
+                    <ExcelColumn label="QUANTITY" value="quantity"/>
+                    <ExcelColumn label="PRODUCT SALES" value="sales"/>
+                    <ExcelColumn label="SELLING FEES" value="sellingFee"/>
+                    <ExcelColumn label="COURIER CHARGES" value="courierCharges"/>
+                    <ExcelColumn label="TOTAL" value="total"/>
                 </ExcelSheet>
             </ExcelFile>
             </div>
@@ -106,15 +110,15 @@ class PreviousPayment extends Component {
           </thead>
           <tbody>
             {paymentHistory ? paymentHistory.map((item,index) =>
-             <tr key={item.account}>
-             <td>{item.paidAt}</td>
-            <td>{item.account}</td>
-            <td>{item.transactionId}</td>
-            <td>{item.neftId}</td>
-            <td>{item.amount}</td>
-            <td>{item.amount}</td> 
-            <td>{item.amount}</td>
-            <td>{item.amount}</td>
+             <tr key={item.key}>
+             <td>{item.date}</td>
+            <td>{item.key}</td>
+            <td>{item.description ? item.description : "N/A"}</td>
+            <td>{item.quantity}</td>
+            <td>{item.sales}</td>
+            <td>{item.sellingFee}</td> 
+            <td>{item.courierCharges}</td>
+            <td>{item.total}</td>
            </tr>
  
             ):null
@@ -137,8 +141,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPaymentHistory : (page,per_page,from,to,query) => dispatch(getPaymentHistory(page,per_page,from,to,query)),
-    getPaymentHistoryInitial: () => dispatch(getPaymentHistoryInitial())
+    getPaymentHistoryInitial: () => dispatch(getPaymentHistoryInitial()),
+    getPaymentHistoryFromTo : (page,per_page,from,to,query) => dispatch(getPaymentHistoryFromTo(page,per_page,from,to,query)),
+    getPaymentHistorySearch : (page,per_page,from,to,query) => dispatch(getPaymentHistorySearch(page,per_page,from,to,query)),
   }
 }
 

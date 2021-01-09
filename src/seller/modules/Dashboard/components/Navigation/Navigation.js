@@ -26,7 +26,9 @@ const Navigation = (props) => {
     activeIndex:0,
     logout:false,
     display:'15vw',
-    dropdownProfile:false
+    mainDisplay:"col-lg-10 col-md-10",
+    hide: false,
+    dropdownProfile:false,
    })
 
   
@@ -86,7 +88,11 @@ const Navigation = (props) => {
   }
 
   const hidenavebar = () => {
-    //this.setState({display:"3vw"});
+    // setState({
+    //   hide: true,
+    //   display:"0vw",
+    //  mainDisplay:""
+    // });
   }
 
   const handleShow = (e) => {
@@ -218,7 +224,7 @@ const Navigation = (props) => {
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                           <span className="sr-only">(current)</span>
-                          <i className="fas fa-bars" onClick={hidenavebar}></i>
+                          {/* <i className="fas fa-bars" onClick={hidenavebar}></i> */}
                         </li>
                     </ul>
                     <ul className="nav navbar-nav navbar-right">
