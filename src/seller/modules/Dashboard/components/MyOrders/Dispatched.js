@@ -64,7 +64,7 @@ export default class PandingLabel extends Component {
             )
             :            
             (Array.from(this.props.ordersList).map((data,i)=>
-              i<=this.state.pagination-1 ? 
+              
               <tr key={data.key}>
                 <td>{data.key}</td>
                 <td>{data.quantity}</td>  
@@ -81,8 +81,6 @@ export default class PandingLabel extends Component {
                             
                 </td>
               </tr>
-              :
-              null 
             ))
             }             
             </tbody>

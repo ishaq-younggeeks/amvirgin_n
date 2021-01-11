@@ -95,14 +95,17 @@ renderComponent = () => {
       pagination:e.target.value
     })
   }
+
   componentDidMount = () => {
     let query = qs.parse(this.props.location.search)
-    console.log("parsed query",query);
+    console.log("Parsed query :", query);
     this.setState({activeState:query.activeState})
+    console.log("My Orders ComponentDidMount calling.....");
     this.props.myOrderList(query.activeState,1,10);
   };
 
   componentDidUpdate(prevprops,prevstate){
+    console.log("My Orders ComponentDidUpdate calling.....");
     if(prevprops.location.search!==this.props.location.search)
     {
       let query = qs.parse(this.props.location.search)
@@ -114,8 +117,6 @@ renderComponent = () => {
           maxPage: this.props.metaData.last_page,
         });
       }
-    
-
   }
 
   render() {
@@ -208,7 +209,7 @@ renderComponent = () => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.sellerOrders)
+  console.log("My Orders + MetaData :", state.sellerOrders);
   return ({
       ordersList:state.sellerOrders.orders,
       metaData:state.sellerOrders.metaData,

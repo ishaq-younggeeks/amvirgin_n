@@ -98,10 +98,10 @@ export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=nul
           type: AFTER_STATUS_CHANGE,
           payload: key,
         });
-        dispatch({
-          type: STATUS_CHANGE_ALERT,
-          payload: true
-        })
+        // dispatch({
+        //   type: STATUS_CHANGE_ALERT,
+        //   payload: true
+        // })
       }
     })
     .catch(err => console.log(err));

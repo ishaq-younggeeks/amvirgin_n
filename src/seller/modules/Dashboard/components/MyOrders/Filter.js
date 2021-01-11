@@ -20,7 +20,8 @@ export default class Filter extends Component {
   //   let query = qs.parse(this.props.location.search)
   //   console.log("parsed query",query);
   //   this.setState({activeState:query.activeState})
-  //  this.props.myOrderList(query.activeState,1,10);
+  //   this.props.myOrderList(query.activeState,1,10);
+       console.log("Filter ComponentDidMount calling.....")
   };
 
   searchHere = (e) => {
@@ -35,6 +36,7 @@ export default class Filter extends Component {
 
   paginationnum = (e) => {
     e.preventDefault();
+    console.log("Filter Paginationnum Method calling.....")
     let perPage = parseInt(e.target.value);
           this.props.clearState("orders", []);
 
@@ -67,6 +69,9 @@ export default class Filter extends Component {
 
   render() {
     const {metaData} = this.props
+    console.log("MetaData: ", metaData);
+    console.log("Current Page: ", this.state.currentPage);
+    console.log("Pagination: ", this.state.pagination); 
     return (
       <>
        <div className="col-sm-2">
@@ -94,6 +99,16 @@ export default class Filter extends Component {
             
             <div style={{ padding: "5px" }}>
               <p>
+              {/* {(this.state.currentPage - 1) *
+                  metaData.per_page +
+                  1}
+                -
+                {(this.state.currentPage - 1) *
+                  metaData.per_page +
+                  metaData.to}{" "}
+                of {metaData.total} items |{" "}
+                {this.state.currentPage} of{" "}
+                {metaData.last_page} pages */}
                 {metaData.from}-{metaData.to} of {metaData.total} items | {this.state.currentPage} of {metaData.last_page} pages
               </p>
             </div>

@@ -9,7 +9,7 @@ const intialState = {
 };
 
 const sellerOrderReducer = (state = intialState, action) => {
-  console.log("calling action",action)
+  console.log("Calling Action :", action.type);
   switch (action.type) {
     case GET_ALL_ORDERS:
       return {

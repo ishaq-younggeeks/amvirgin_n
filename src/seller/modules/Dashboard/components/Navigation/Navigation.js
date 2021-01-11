@@ -69,7 +69,7 @@ const Navigation = (props) => {
     setState({
       activeIndex: index
     });
-    console.log("ddd",state)
+    console.log("Active Module :", state)
   }
 
   const handleLogout = event => {

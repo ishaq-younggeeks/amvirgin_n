@@ -243,8 +243,7 @@ export default class PendingHandover extends Component {
 
             <tbody>
               {this.props.ordersList &&
-                Array.from(this.props.ordersList).map((data, i) =>
-                  i <= this.state.pagination - 1 ? (
+                Array.from(this.props.ordersList).map((data, i) => (
                     <tr key={data.key}>
                       {/* <td className="checkbox">
                         <input
@@ -302,7 +301,7 @@ export default class PendingHandover extends Component {
                         </button>
                       </td>
                     </tr>
-                  ) : null
+                  )
                 )}
             </tbody>
           </table>

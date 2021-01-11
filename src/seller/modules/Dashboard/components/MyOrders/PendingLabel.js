@@ -86,8 +86,7 @@ downloadLabel(this.state.bulkArray,1);
             <tbody>
              
             {            
-            (this.props.ordersList.length ? this.props.ordersList.map((data,i)=>
-              i<=this.state.pagination-1 ? 
+            (this.props.ordersList.length ? this.props.ordersList.map((data,i)=> 
               <tr key={data.key}>
                 <td className="checkbox" ><input type="checkbox" style={{width:'15px'}} onChange={(e)=>this.onchangeBulkHandler(e,data.key)} checked={this.state.bulkArray.indexOf(data.key)===-1?false:true}></input></td>
                 <td>{data.key}</td>
@@ -106,9 +105,6 @@ downloadLabel(this.state.bulkArray,1);
                   </button>              
                 </td>
               </tr>
-              :
-              null
-              
             ):null)
             }             
             </tbody>
