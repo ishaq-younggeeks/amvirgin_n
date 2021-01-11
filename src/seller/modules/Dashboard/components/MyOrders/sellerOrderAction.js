@@ -19,6 +19,8 @@ export const myOrderList = (activeState, current, perPage) => {
       },
     };
 
+
+    console.log("request",config)
     axios
       .get(`${baseURL}/seller/orders?status=${activeState}`, config)
       .then((res) => {
@@ -37,6 +39,7 @@ export const myOrderList = (activeState, current, perPage) => {
 
 export const changeOrderStatusBulk = (key=null, status) => {
   return (dispatch) => {
+    console.log("changeOrderStatusBulk keys length",key.toString())
     let allKey = key.toString();
     let token = localStorage.getItem("token");
     let config = {
@@ -54,7 +57,7 @@ export const changeOrderStatusBulk = (key=null, status) => {
        if (res.data.status === 200) {
         dispatch({
           type: AFTER_STATUS_CHANGE,
-          payload: allKey,
+          payload: key,
         });
       }
     })

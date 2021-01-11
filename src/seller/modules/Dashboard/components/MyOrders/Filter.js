@@ -99,16 +99,13 @@ export default class Filter extends Component {
             
             <div style={{ padding: "5px" }}>
               <p>
-              {/* {(this.state.currentPage - 1) *
-                  metaData.per_page +
-                  1}
+                {/* {" "}
+                {metaData.total?metaData.from:0}
                 -
-                {(this.state.currentPage - 1) *
-                  metaData.per_page +
-                  metaData.to}{" "}
+                {" "}{metaData.to}{" "}
                 of {metaData.total} items |{" "}
                 {this.state.currentPage} of{" "}
-                {metaData.last_page} pages */}
+                {metaData.last_page} pages  */}
                 {metaData.from}-{metaData.to} of {metaData.total} items | {this.state.currentPage} of {metaData.last_page} pages
               </p>
             </div>

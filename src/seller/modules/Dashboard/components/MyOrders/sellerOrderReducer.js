@@ -9,7 +9,7 @@ const intialState = {
 };
 
 const sellerOrderReducer = (state = intialState, action) => {
-  console.log("Calling Action :", action.type);
+ 
   switch (action.type) {
     case GET_ALL_ORDERS:
       return {
@@ -25,15 +25,12 @@ const sellerOrderReducer = (state = intialState, action) => {
         viewOrder:action.payload,
        }
     case AFTER_STATUS_CHANGE:
+      console.log("calling action",action.payload.length)
       return {
         ...state,
-        orders:state.orders.filter(item => item.key!==action.payload[0])
-      }
-    case STATUS_CHANGE_ALERT:
-      return {
-        ...state,
-        message:action.payload
-      };
+        orders:state.orders.filter(item => !action.payload.includes(item.key)),
+        metaData:{...state.metaData,total:state.metaData.total-action.payload.length}
+      }  
       case "CLEAR_REDUX_STATE":
         return {
           ...state,
