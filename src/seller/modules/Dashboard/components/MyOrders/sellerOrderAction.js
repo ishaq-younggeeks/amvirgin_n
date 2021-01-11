@@ -17,6 +17,8 @@ export const myOrderList = (activeState, current, perPage) => {
       },
     };
 
+
+    console.log("request",config)
     axios
       .get(`${baseURL}/seller/orders?status=${activeState}`, config)
       .then((res) => {

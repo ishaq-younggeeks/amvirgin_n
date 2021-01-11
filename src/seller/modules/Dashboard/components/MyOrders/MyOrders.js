@@ -42,7 +42,7 @@ class MyOrders extends Component {
 
 setActive = (type) => {
   this.setState({activeState:type})
-  this.props.myOrderList(type);
+  this.props.myOrderList(type,1,10);
 }
 
 renderComponent = () => {
@@ -107,7 +107,7 @@ renderComponent = () => {
     {
       let query = qs.parse(this.props.location.search)
       this.setState({activeState:query.activeState})
-      this.props.myOrderList(query.activeState);
+      // this.props.myOrderList(query.activeState);
     }
       if (prevprops.metaData !== this.props.metaData) {
         this.setState({
