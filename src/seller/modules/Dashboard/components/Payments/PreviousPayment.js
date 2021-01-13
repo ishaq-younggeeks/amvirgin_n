@@ -17,8 +17,9 @@ class PreviousPayment extends Component {
       to:"",
       query:"",
       page:"",
-      per_page:""
-
+      per_page:"",
+      paymentError: "",
+      maxDate: new Date().toISOString().slice(0, 10)
     }
   }
 
@@ -39,6 +40,19 @@ class PreviousPayment extends Component {
     this.setState({[e.target.name]:e.target.value},console.log("current state",this.state))
   }
 
+  validate = () => {
+    let paymentError = "";
+    if(!this.state.query.trim()){
+      paymentError = "Field cannot be blank!"
+    }
+
+    if(paymentError){
+      this.setState({paymentError})
+      return false
+    }
+    return true;
+  }
+
   onSubmitHandler1 = (e,page=null,per_page=null,from=null,to=null,query=null) => {
     e.preventDefault()
     this.props.getPaymentHistoryFromTo(page,per_page,from,to,query);
@@ -46,42 +60,48 @@ class PreviousPayment extends Component {
 
   onSubmitHandler2 = (e,page=null,per_page=null,from=null,to=null,query=null) => {
     e.preventDefault()
-    this.props.getPaymentHistorySearch(page,per_page,from,to,query);
+    let isValid = this.validate();
+    if(isValid){
+      this.props.getPaymentHistorySearch(page,per_page,from,to,query);
+      this.setState({
+        paymentError : ""
+      })
+    }
   }
 
   render() {
-    const {paymentHistory} = this.props
-    console.log("home of payment");
+    const {paymentHistory} = this.props;
     return (
       <div className="container-fliud" style={{ marginTop: "5%" }}>
         <PaymentNavigation activeTab2="true" />
         <div className="datepicker row">
           <div className="date-head">
-            <p>From:</p>
+            <h5>From :</h5>
           </div>
           <div className="date-select">
-            <input type="date" id="from" name="from" onChange={this.onChangeHandler}/>
+            <input type="date" id="from" name="from" max={this.state.maxDate} onChange={this.onChangeHandler}/>
           </div>
           <div className="date-head">
-            <p>To:</p>
+            <h5>To :</h5>
           </div>
           <div className="date-select">
-            <input type="date" id="to" name="to" onChange={this.onChangeHandler}/>
+            <input type="date" id="to" name="to" max={this.state.maxDate} onChange={this.onChangeHandler}/>
           </div>
           <div className="search-submit" disabled={this.state.from && this.state.to ? false : true} onClick={(e)=>this.onSubmitHandler1(e,null,null,this.state.from,this.state.to,null)}>
             <i className="fas fa-search"></i>
           </div>
           <div className="date-head" style={{marginLeft:"20px",marginRight:"20px"}}>
-            <p>or</p>
+            <h5>OR</h5>
           </div>
           <div className="form-group has-search">
           <input type="text" className="form-control" name="query" placeholder="Search by Order ID" onChange={this.onChangeHandler} minLength="2"/>
+          <p style={{color:"red"}}>{this.state.paymentError}</p>
         </div>
         <div className="search-submit" disabled={this.state.query ? false : true} onClick={(e)=>this.onSubmitHandler2(e,null,null,null,null,this.state.query)}>
             <i className="fas fa-search"></i>
           </div>
           <div style={{marginLeft:"20px"}}>
-          <ExcelFile filename="paymenthistory" element={<button disabled={this.props.paymentHistory.length?false:true} onClick={() => alert("Downloading Payments Report!")}>Download <i className="fas fa-download"></i></button>}>
+          <ExcelFile filename="Payment_History" element={<button style={{fontSize:"18px", padding:"5px", borderRadius:"5px" }} disabled={this.props.paymentHistory.length?false:true} onClick={() => alert("Downloading Payments Report!")}>Download <i className="fas fa-download"></i></button>}>
                 <ExcelSheet data={this.ExcelSheet} name="Payment">
                     <ExcelColumn label="DATE" value="date"/>
                     <ExcelColumn label="ORDER ID" value="key"/>
@@ -109,7 +129,7 @@ class PreviousPayment extends Component {
             </tr>
           </thead>
           <tbody>
-            {paymentHistory ? paymentHistory.map((item,index) =>
+            {paymentHistory && paymentHistory.length > 0 ? Array.from(paymentHistory).map((item,index) =>
              <tr key={item.key}>
              <td>{item.date}</td>
             <td>{item.key}</td>
@@ -120,10 +140,7 @@ class PreviousPayment extends Component {
             <td>{item.courierCharges}</td>
             <td>{item.total}</td>
            </tr>
- 
-            ):null
-           
-  }
+            ):<tr><td colSpan="8" align="center"><h3>No Data to Display :(</h3></td></tr>}    
           </tbody>
         </table>
       </div>

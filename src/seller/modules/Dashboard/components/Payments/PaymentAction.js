@@ -16,7 +16,7 @@ export const getPaymentOverview = () => {
     axios
       .get(`${baseURL}/seller/payments/overview`, config)
       .then(res => {
-		   console.log("getting payment overview",res);
+		   console.log("Payments Overview :", res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTOVERVIEW,
@@ -39,11 +39,11 @@ export const getPaymentHistoryInitial = () => {
     axios
       .get(`${baseURL}/seller/payments/overview`, config)
       .then(res => {
-		   console.log("getting payment previous",res);
+		   console.log("Payments History Overview :", res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload
+            payload: res.data.payload.data
           });
         }
       })
@@ -60,21 +60,21 @@ export const getPaymentHistoryFromTo = (page,per_page, from, to, key) => {
         Authorization: "Bearer " + token
       },
       params:{
-        // page,
-        // per_page,
-        // from,
-        // to,
-        // key
+        page,
+        per_page,
+        from,
+        to,
+        key
       }
     };
     axios
       .get(`${baseURL}/seller/payments/overview?start=${from}&end=${to}`, config)
       .then(res => {
-		   console.log("getting payment previous", res);
+		   console.log("Payments History Search FromTo :", res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload
+            payload: res.data.payload.data
           });
         }
       })
@@ -83,7 +83,7 @@ export const getPaymentHistoryFromTo = (page,per_page, from, to, key) => {
 }
 
 export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
-  console.log("Month & Year", page, per_page, from, to, key);
+  console.log("Key :", key)
   return dispatch => {
     let token = localStorage.getItem("token");
     let config = {
@@ -101,11 +101,11 @@ export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
     axios
       .get(`${baseURL}/seller/payments/overview?key=${key}`, config)
       .then(res => {
-		   console.log("getting payment previous", res);
+		   console.log("Payments History Search Key:", res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload
+            payload: res.data.payload.data
           });
         }
       })
@@ -113,7 +113,30 @@ export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
   };
 }
 
-export const getOrderWiseTransaction = (page,per_page,from,to,query) => {
+export const getTransactionsOverview = () => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    };
+    axios
+      .get(`${baseURL}/seller/payments/transactions`, config)
+      .then(res => {
+		   console.log("Transactions Overview :", res);
+        if (res.data.status === 200) {
+          dispatch({
+            type: FETCH_ORDERTRANSACTION,
+            payload: res.data.payload.data
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+
+export const getTransactionsFromTo = (page,per_page,from,to,key) => {
   return dispatch => {
     let token = localStorage.getItem("token");
     let config = {
@@ -121,17 +144,47 @@ export const getOrderWiseTransaction = (page,per_page,from,to,query) => {
         Authorization: "Bearer " + token
       },
       params:{
-        page,
-        per_page,
-        from,
-        to,
-        query
+        // page,
+        // per_page,
+        // from,
+        // to,
+        // key
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/transactions?orderNumber=${query}`, config)
+      .get(`${baseURL}/seller/payments/transactions?start=${from}&end=${to}`, config)
       .then(res => {
-		   console.log("getting order transaction", res);
+		   console.log("Transactions Search FromTo: ", res);
+        if (res.data.status === 200) {
+          dispatch({
+            type: FETCH_ORDERTRANSACTION,
+            payload: res.data.payload.data
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  };
+}
+
+export const getTransactionsSearch = (page,per_page,from,to,key) => {
+  return dispatch => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      },
+      params:{
+        // page,
+        // per_page,
+        // from,
+        // to,
+        // key
+      }
+    };
+    axios
+      .get(`${baseURL}/seller/payments/transactions?referenceId=${key}`, config)
+      .then(res => {
+		   console.log("Transactions Search Key: ", res);
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_ORDERTRANSACTION,

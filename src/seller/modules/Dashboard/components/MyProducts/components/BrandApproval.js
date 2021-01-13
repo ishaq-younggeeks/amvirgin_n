@@ -50,6 +50,7 @@ class ApprovalofBrand extends Component {
       activeApproval:false,
       activePending:false,
       activeapproved:false,
+      maxDate: new Date().toISOString().slice(0, 10)
       
 
     };
@@ -630,6 +631,7 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="statusason"
                           className="form-control"
+                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>
@@ -664,6 +666,7 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="TmAppliedon"
                           className="form-control"
+                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>
@@ -681,6 +684,7 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="TmExpireon"
                           className="form-control"
+                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>
@@ -725,6 +729,7 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="BalExpiryDate"
                           className="form-control"
+                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>
@@ -748,6 +753,7 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="InvoiceDate"
                           className="form-control"
+                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>
@@ -831,8 +837,8 @@ class ApprovalofBrand extends Component {
                   <div className="col-auto colwidth25"></div>
                 </div>
                 <div style={{display:"flex"}}>
-                    {this.props.statusapproval && <p style={{color:this.props.statusapproval.status===200?"green":"red"}}>{this.props.statusapproval.message}</p> }
-                    {this.props.statusapproval && this.props.statusapproval.status===200?<Link style={{color:"dogerblue"}} to="/seller/dashboard/brandlist">Click here to Track Approval Listing</Link>:null}
+                    {this.props.statusapproval && <h3 style={{color:this.props.statusapproval.status===200?"green":"red"}}>{this.props.statusapproval.message}</h3> }
+                    {this.props.statusapproval && this.props.statusapproval.status===200?<Link to="/seller/dashboard/brandlist"><h3 style={{color:"dogerblue"}}>Click here to Track Approval Listing</h3></Link>:null}
                 </div>  
               </div>
             </div>
