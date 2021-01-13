@@ -112,7 +112,7 @@ class Return extends Component {
                           ></button>
                         </td>
                       ) : (
-                        <td style={{ fontWeight: "bold" }}>N/A</td>
+                        <td style={{ fontWeight: "bold" }}>{data.status}</td>
                       )}
                     </tr>
                   ))}

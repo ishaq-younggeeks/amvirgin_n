@@ -17,27 +17,22 @@ import Filter from "./Filter"
     search:false,
     pagination:10,
     maxPage:1
-
     }
-
   };
+  
   componentDidMount = () => {
-
-    this.props.myOrderList("cancelled");
-    console.log("metadate in order canceller",this.props.metaData)
+    this.props.myOrderList("cancelled", 1, 10);
   };
 
   componentDidUpdate(prevprops,prevstate){
-  
     if (prevprops.metaData !== this.props.metaData) {
-      console.log("metadate in order canceller",this.props.metaData)
+      console.log("MetaDate in Order Canceller", this.props.metaData)
       this.setState({
         maxPage: this.props.metaData.last_page,
       });
     }
-  
-
   }
+
   render() {
     console.log("every",this.props.activeState)
     return (
@@ -92,7 +87,6 @@ import Filter from "./Filter"
             )
             :            
             (Array.from(this.props.ordersList).map((data,i)=>
-              i<=this.state.pagination-1 ? 
               <tr key={data.key}>
                 <td>{data.key}</td>
                 <td>{data.quantity}</td>  
@@ -108,11 +102,8 @@ import Filter from "./Filter"
                         <span className="tooltiptext">View</span>
                     </Link>
                   </button>
-                                
                 </td>
               </tr>
-              :
-              null 
             ))
             }             
             </tbody>
@@ -135,7 +126,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-      myOrderList: (type) => dispatch(myOrderList(type)),
+      myOrderList: (type, current, perPage) => dispatch(myOrderList(type, current, perPage)),
       FilterBySearch:(currentPage,perPage,query,status) => dispatch(FilterBySearch(currentPage,perPage,query,status)),
       clearState:(state,type) => dispatch(clearState(state,type))
 
