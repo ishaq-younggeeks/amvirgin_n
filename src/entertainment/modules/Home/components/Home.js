@@ -33,6 +33,7 @@ class Home extends Component {
   };
   render() {
     const { dashboardDetail } = this.props;
+    console.log("DashboardDetails :", dashboardDetail)
     return (
       <>
         <Helmet>
@@ -100,7 +101,7 @@ class Home extends Component {
                     );
                   })
                 : ""}
-              {dashboardDetail.trendingNow.length ? (
+              {dashboardDetail.payload.length ? (
                 <Trending
                   dots={false}
                   arrows={true}
@@ -108,7 +109,7 @@ class Home extends Component {
                   speed={500}
                   slidesToShow={2.2}
                   slidesToScroll={1}
-                  trendingData={dashboardDetail.trendingNow}
+                  trendingData={dashboardDetail.payload}
                   {...this.props}
                 />
               ) : (

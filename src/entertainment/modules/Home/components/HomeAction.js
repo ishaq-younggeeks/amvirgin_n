@@ -7,7 +7,8 @@ export const dashboardData = () => {
   return (dispatch) => {
     let url = `${baseURL}/customer/entertainment/homepage` 
     axios.get(`${url}`).then(res => {
-     let  Data = res.data.data;
+     let  Data = res.data.payload;
+     console.log("Data :", Data)
       dispatch(myData(Data))
     }).catch(error => {
       console.log(error)

@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ReactExport from "react-data-export";
 import TransactionsModal from './TransactionsModal';
+import PaymentFilter from "./PaymentFilter";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -23,13 +24,23 @@ class OrderTransaction extends Component {
       paymentsDetails: [],
       transactionId: "",
       transactionError: "",
+      pagination: 10,
+      maxPage: 1,
       maxDate: new Date().toISOString().slice(0, 10)
     }
   }
 
   componentDidMount(){
-    this.props.getTransactionsOverview()
+    this.props.getTransactionsOverview(1, 10)
   }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.metaData !== this.props.metaData){
+      this.setState({
+        maxPage: this.props.metaData.last_page
+      });
+    };
+  };
 
   ExcelSheet = () => {
     const {orderTransaction} = this.props
@@ -103,11 +114,13 @@ class OrderTransaction extends Component {
 
   render() {
     console.log("home of payment");
+    console.log("metaData Transactions :", this.props.metaData)
     return (
       <div className="container-fliud" style={{ marginTop: "5%" }}>
         <PaymentNavigation activeTab3="true" />
         <div className="datepicker row">
-          <div className="date-head">
+        <PaymentFilter metaData={this.props.metaData} maxPage = {this.state.maxPage} myOrderList={this.props.getTransactionsOverview} {...this.props}/>
+          <div style={{marginLeft:"45px"}} className="date-head">
             <h5>From :</h5>
           </div>
           <div className="date-select">
@@ -193,13 +206,14 @@ class OrderTransaction extends Component {
 const mapStateToProps = (state) => {
   console.log("order transaction ",state.sellerPayment.orderTransaction)
   return {
-    orderTransaction:state.sellerPayment.orderTransaction
+    orderTransaction:state.sellerPayment.orderTransaction,
+    metaData:state.sellerPayment.transactionsMeta
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getTransactionsOverview : () => dispatch(getTransactionsOverview()),
+    getTransactionsOverview : (current, perPage) => dispatch(getTransactionsOverview(current, perPage)),
     getTransactionsFromTo: (page,per_page,from,to,query) => dispatch(getTransactionsFromTo(page,per_page,from,to,query)),
     getTransactionsSearch: (page,per_page,from,to,query) => dispatch(getTransactionsSearch(page,per_page,from,to,query))
   }

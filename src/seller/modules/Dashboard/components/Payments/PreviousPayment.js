@@ -4,7 +4,8 @@ import './Payment.css';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import ReactExport from "react-data-export";
-import {getPaymentHistoryFromTo, getPaymentHistorySearch, getPaymentHistoryInitial} from './PaymentAction'
+import {getPaymentHistoryFromTo, getPaymentHistorySearch, getPaymentHistoryInitial} from './PaymentAction';
+import PaymentFilter from "./PaymentFilter";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -19,13 +20,23 @@ class PreviousPayment extends Component {
       page:"",
       per_page:"",
       paymentError: "",
+      pagination: 10,
+      maxPage: 1,
       maxDate: new Date().toISOString().slice(0, 10)
     }
   }
 
   componentDidMount(){
-    this.props.getPaymentHistoryInitial();
+    this.props.getPaymentHistoryInitial(1, 10);
   }
+
+  componentDidUpdate(prevProps, prevState){
+    if(prevProps.metaData !== this.props.metaData){
+      this.setState({
+        maxPage: this.props.metaData.last_page
+      });
+    };
+  };
 
   ExcelSheet = () => {
     const {paymentHistory} = this.props
@@ -70,12 +81,14 @@ class PreviousPayment extends Component {
   }
 
   render() {
-    const {paymentHistory} = this.props;
+    const {paymentHistory, metaData} = this.props;
+    console.log("MetaData :", metaData);
     return (
       <div className="container-fliud" style={{ marginTop: "5%" }}>
         <PaymentNavigation activeTab2="true" />
         <div className="datepicker row">
-          <div className="date-head">
+        <PaymentFilter metaData={this.props.metaData} maxPage = {this.state.maxPage} myOrderList={this.props.getPaymentHistoryInitial} {...this.props}/>
+          <div style={{marginLeft:"45px"}} className="date-head">
             <h5>From :</h5>
           </div>
           <div className="date-select">
@@ -152,13 +165,14 @@ class PreviousPayment extends Component {
 const mapStateToProps = (state) => {
   console.log("previous payment ",state.sellerPayment.paymentHistory)
   return {
-    paymentHistory:state.sellerPayment.paymentHistory
+    paymentHistory:state.sellerPayment.paymentHistory,
+    metaData:state.sellerPayment.paymentsMeta
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPaymentHistoryInitial: () => dispatch(getPaymentHistoryInitial()),
+    getPaymentHistoryInitial: (current, perPage) => dispatch(getPaymentHistoryInitial(current, perPage)),
     getPaymentHistoryFromTo : (page,per_page,from,to,query) => dispatch(getPaymentHistoryFromTo(page,per_page,from,to,query)),
     getPaymentHistorySearch : (page,per_page,from,to,query) => dispatch(getPaymentHistorySearch(page,per_page,from,to,query)),
   }

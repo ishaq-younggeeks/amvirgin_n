@@ -36,7 +36,7 @@ export const newsListData = () => {
     dispatch(fetchingData(true))
     axios.get(`${baseURL}/customer/entertainment/homepage`)
       .then(res => {
-        let data = res.data.data;
+        let data = res.data.payload;
         dispatch(product(data))
       }) .catch(error => {
         console.log(error)

@@ -5,37 +5,42 @@ import React from 'react';
 import $ from 'jquery'
 
 
-export const getPaymentOverview = () => {
-  return dispatch => {
-    let token = localStorage.getItem("token");
-    let config = {
-      headers: {
-        Authorization: "Bearer " + token
-      }
-    };
-    axios
-      .get(`${baseURL}/seller/payments/overview`, config)
-      .then(res => {
-		   console.log("Payments Overview :", res);
-        if (res.data.status === 200) {
-          dispatch({
-            type: FETCH_PAYMENTOVERVIEW,
-            payload: res.data.payload
-          });
-        }
-      })
-      .catch(err => console.log(err));
-  };
-};
+// export const getPaymentOverview = () => {
+//   return dispatch => {
+//     let token = localStorage.getItem("token");
+//     let config = {
+//       headers: {
+//         Authorization: "Bearer " + token
+//       }
+//     };
+//     axios
+//       .get(`${baseURL}/seller/payments/overview`, config)
+//       .then(res => {
+// 		   console.log("Payments Overview :", res);
+//         if (res.data.status === 200) {
+//           dispatch({
+//             type: FETCH_PAYMENTOVERVIEW,
+//             payload: res.data.payload
+//           });
+//         }
+//       })
+//       .catch(err => console.log(err));
+//   };
+// };
 
-export const getPaymentHistoryInitial = () => {
+export const getPaymentHistoryInitial = (current, perPage) => {
   return dispatch => {
     let token = localStorage.getItem("token");
     let config = {
       headers: {
         Authorization: "Bearer " + token
+      },
+      params: {
+        page: current,
+        per_page: perPage
       }
     };
+
     axios
       .get(`${baseURL}/seller/payments/overview`, config)
       .then(res => {
@@ -43,7 +48,8 @@ export const getPaymentHistoryInitial = () => {
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload.data
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta
           });
         }
       })
@@ -74,7 +80,8 @@ export const getPaymentHistoryFromTo = (page,per_page, from, to, key) => {
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload.data
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta
           });
         }
       })
@@ -91,8 +98,8 @@ export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
         Authorization: "Bearer " + token
       },
       params:{
-        // page,
-        // per_page,
+        page,
+        per_page,
         // from,
         // to,
         // key
@@ -105,7 +112,8 @@ export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_PAYMENTHISTORY,
-            payload: res.data.payload.data
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta
           });
         }
       })
@@ -113,12 +121,16 @@ export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
   };
 }
 
-export const getTransactionsOverview = () => {
+export const getTransactionsOverview = (current, perPage) => {
   return dispatch => {
     let token = localStorage.getItem("token");
     let config = {
       headers: {
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
+        params: {
+          page: current,
+          per_page: perPage
+        }
       }
     };
     axios
@@ -128,7 +140,8 @@ export const getTransactionsOverview = () => {
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_ORDERTRANSACTION,
-            payload: res.data.payload.data
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta
           });
         }
       })
@@ -144,8 +157,8 @@ export const getTransactionsFromTo = (page,per_page,from,to,key) => {
         Authorization: "Bearer " + token
       },
       params:{
-        // page,
-        // per_page,
+        page,
+        per_page,
         // from,
         // to,
         // key
@@ -158,7 +171,8 @@ export const getTransactionsFromTo = (page,per_page,from,to,key) => {
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_ORDERTRANSACTION,
-            payload: res.data.payload.data
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta
           });
         }
       })
@@ -166,7 +180,7 @@ export const getTransactionsFromTo = (page,per_page,from,to,key) => {
   };
 }
 
-export const getTransactionsSearch = (page,per_page,from,to,key) => {
+export const getTransactionsSearch = (current, perPage,from,to,key) => {
   return dispatch => {
     let token = localStorage.getItem("token");
     let config = {
@@ -174,10 +188,8 @@ export const getTransactionsSearch = (page,per_page,from,to,key) => {
         Authorization: "Bearer " + token
       },
       params:{
-        // page,
-        // per_page,
-        // from,
-        // to,
+        page: current,
+        per_page: perPage,
         // key
       }
     };
@@ -188,7 +200,8 @@ export const getTransactionsSearch = (page,per_page,from,to,key) => {
         if (res.data.status === 200) {
           dispatch({
             type: FETCH_ORDERTRANSACTION,
-            payload: res.data.payload.data
+            payload: res.data.payload.data,
+            payload2: res.data.payload.meta
           });
         }
       })

@@ -5,7 +5,9 @@ const initialState = {
   paymentHistory:[],
   savedStatus:{},
   orderTransaction:[],
-  agreementStatus:{}
+  agreementStatus:{},
+  paymentsMeta: {},
+  transactionsMeta: {}
 };
 
 export default function (state = initialState, action) {
@@ -19,12 +21,14 @@ export default function (state = initialState, action) {
       case FETCH_PAYMENTHISTORY:
         return {
           ...state,
-          paymentHistory:action.payload
+          paymentHistory:action.payload,
+          paymentsMeta:action.payload2
         }
       case FETCH_ORDERTRANSACTION:
         return {
             ...state,
-            orderTransaction:action.payload
+            orderTransaction:action.payload,
+            transactionsMeta: action.payload2
         }     
          
       default:
