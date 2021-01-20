@@ -108,6 +108,8 @@ class ProductMainContent extends React.Component {
 
    render() {
     const { productList } = this.props;
+    console.log("Product List :", productList);
+
     if(this.state.red===true){
       return <Redirect to='/login'/>
     }
@@ -127,8 +129,7 @@ class ProductMainContent extends React.Component {
       <div className="col-lg-9 content">
         <div className="shop-topbar-wrapper">
           <div className="shop-topbar-left">
-            
-            <p>Showing 1 - 50 of {productList.meta?productList.meta.pagination.items.total:""} results </p>
+            <p>{productList && productList.meta ? <p>Showing {productList.meta.from} - {productList.meta.to} of {productList.meta.total} results</p> : <p>Showing 0 Results</p>}</p>
           </div>
           <div className="product-sorting-wrapper">
             <div className="product-shorting shorting-style">
@@ -156,7 +157,7 @@ class ProductMainContent extends React.Component {
             <div id="shop-1" className="tab-pane active">
               <div className="row">
               
-                {productList.payload && productList.payload.length?productList.payload.map((item, index) => {
+                {productList.data && productList.data.length?productList.data.map((item, index) => {
                    
                   return (
                     <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
@@ -190,7 +191,7 @@ class ProductMainContent extends React.Component {
                                 <div class="sizesection" id={item.key} key={item.key}>
                                   <h4 class="ssize">Select Size</h4>
                                     <div class="custom-radios">
-                                    {item.options.length?item.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
+                                    {/* {item.options.length?item.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
                                       console.log("print spm",Array.isArray(value),value)
                                       	return	value.map((values,index)=>{
                                           return (
@@ -202,7 +203,6 @@ class ProductMainContent extends React.Component {
                                       </label>
                                       </div>
                                       	):(
-                                    
                                       <div>
                                       <input key={index} type="radio"  name="size" id={`size-${item.key}-${index}`} onClick={(e)=>this.Addtocart(e,item.key,value.value)} value={value.value}/>
                                       <label  for={`size-${item.key}-${index}`}>
@@ -213,7 +213,7 @@ class ProductMainContent extends React.Component {
                                         )}
                                        )
                                       }
-                                        ):""}
+                                        ):""} */}
                                     </div>                                 
 
                                   <button id="hidesizesection" onClick={() =>this.handleCloseSize(item.key)} >x</button>

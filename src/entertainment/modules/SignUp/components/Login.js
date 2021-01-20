@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { userActions } from "../../../actions";
 import LoginWithSocial from './LoginWithSocial';
+import Modal from 'react-modal';
 
 class Login extends Component {
   constructor(props) {
@@ -11,8 +12,10 @@ class Login extends Component {
     this.state = {
         username: '',
         password: '',
+        otp: '',
         submitted: false,
         loginBtn:false,
+        modalIsOpen: false
     };
 }
 
@@ -34,18 +37,48 @@ class Login extends Component {
     this.setState({loginBtn:!this.state.loginBtn})
   }
 
-
   handleChange = e => {
     const { name, value } = e.target;
   this.setState({ [name]: value });
   };
 
+  customStyles = {
+    content: {
+      top: "40%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  openModal = () => {
+    this.setState({
+      modalIsOpen: true,
+    });
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false,
+    });
+  }
+
+  handleOTPChange = event => {
+    this.setState({
+        otp: event.target.value
+    })
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.setState({ submitted: true });
     const { username, password, otp } = this.state;
+    console.log("state :", username, password, otp);
     if(username && password || otp){
       if(this.state.loginBtn===false){
+        console.log("Logging Button False!")
         if(!isNaN(username)){ 
           localStorage.setItem("username", username.trim())
           this.props.login({ type:2, mobile: username.trim(), password:password.trim() })
@@ -54,13 +87,32 @@ class Login extends Component {
       }
     }
     else if(this.state.loginBtn===true){
+      console.log("Logging Button True!")
+      console.log(isNaN(username))
       if(!isNaN(username)){
+          console.log("Inside Logging Button True Username", username)
           localStorage.setItem("username", username.trim())
-          this.props.login({ type:3, mobile: username.trim(), otp:otp.trim() })
+          this.props.sendOtp(username.trim())
+          this.setState({modalIsOpen: true})
       }
     }
     }
   };
+
+  handleOtpSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ submitted: true });
+    const { username, otp } = this.state;
+    if(this.state.loginBtn===true){
+      console.log("Logging Button True!")
+      console.log(isNaN(username))
+      if(!isNaN(username)){
+          console.log("Inside Logging Button True Username", username)
+          localStorage.setItem("username", username.trim())
+          this.props.login({ type:3, mobile: username.trim(), otp:otp.trim() })
+      }
+    }
+  }
 
   componentDidUpdate(prevProps,prevState){
     if(prevProps.loggedIn!==this.props.loggedIn){
@@ -101,7 +153,7 @@ class Login extends Component {
                     <input type="text" name="username" value={this.state.username} id="emailorname" onChange={this.handleChange} required/>
                     <label htmlFor="emailorname">{this.state.loginBtn ? "Mobile Number" : "Email or Mobile Number"} *</label>
                     {submitted && !username &&
-                      <div className="alert error alert-danger">Email or Mobile is required</div>
+                      <div className="alert error alert-danger">{this.state.loginBtn ? "Mobile is required" : "Email or Mobile is required"} *</div>
                   }
                 </div>
                 
@@ -113,11 +165,24 @@ class Login extends Component {
                         <div className="alert error alert-danger">Password is required</div>
                     }
                 </div>
+                <Modal
+                isOpen={this.state.modalIsOpen}
+                onRequestClose={this.closeModal}
+                style={this.customStyles}
+                ariaHideApp={false}
+                >
+                <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
+                <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
+                <form onSubmit={this.handleOtpSubmit}>    
+                <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required/>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"10px"}} type="submit">Submit</button>
+                </form>
+                </Modal>
             
-                <div className="input-field" style={{display: this.state.loginBtn ? 'block' : 'none' }}>
+                {/* <div className="input-field" style={{display: this.state.loginBtn ? 'block' : 'none' }}>
                     <input type="text" ref="otp" id="otp-field"  />
                     <label htmlFor="otp-field">OTP *</label>
-                </div>
+                </div> */}
                 
                 {/* <input type="checkbox" className="checkcheck" name="termscondition" value=""/>
                     <span className="agreeinput"> I understand and agree to the 
@@ -129,7 +194,7 @@ class Login extends Component {
                 {loggingIn &&
                     <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 }
-                {notRegister ? notRegister : null}
+                {notRegister ? <p style={{color:"white"}}>{notRegister}</p> : null}
             </form>
         </div>
         ); 
@@ -146,7 +211,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    login: creds => dispatch(userActions.login(creds))
+    login: creds => dispatch(userActions.login(creds)),
+    sendOtp: num => dispatch(userActions.sendOtp(num)),
   };
 };
 

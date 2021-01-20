@@ -24,20 +24,21 @@ export const fetchData = () => {
   }
 }
 
-export const productData = (category,sortKey="relevance",page="1",history) => {
-  console.log("category id, calling product data ",category);
+export const productData = (category,sortBy="relevance",page="1",history) => {
+  console.log(`calling category ${category}, calling history ${history}`);
   return (dispatch) => {
     dispatch(fetchingData(true))
-    let url = `${baseURL}/customer/products`
+    let url = `${baseURL}/customer/categories/${category}/products`
+    // let url = `${baseURL}/customer/products/${category}`
     axios.get(url,{
       params: {
-        category,
-        sortKey
+        // category,
+        // sortBy
       }
     }).then(res => {
       console.log("fetching list",res);
       let productList= {}
-      productList = res.data
+      productList = res.data.payload
      
       dispatch(product(productList))
       if(res.data.status === 200) {
@@ -47,7 +48,7 @@ export const productData = (category,sortKey="relevance",page="1",history) => {
         "productHistory":history
       }
        localStorage.setItem("productData",JSON.stringify(productData));
-        history.push({pathname:`/shop/${category}`,state: {categoryId:category,page:page,sortKey:sortKey}})
+        history.push({pathname:`/shop/${category}`,state: {categoryId:category,page:page,sortBy:sortBy}})
        // window.location.reload();
       }
     }).catch(error => {

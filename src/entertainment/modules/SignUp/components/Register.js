@@ -5,6 +5,7 @@ import LoginWithSocial from './LoginWithSocial';
 import cookie from 'react-cookies';
 import { connect } from "react-redux";
 import { userActions } from "../../../actions";
+import Modal from 'react-modal';
 class Register extends Component {
     constructor(props){
         super(props);
@@ -17,6 +18,7 @@ class Register extends Component {
                 mobile: "",
                 otp:'',
                 checkbox: false,
+                modalIsOpen: false
             },
             submitted: false
         }
@@ -54,6 +56,7 @@ class Register extends Component {
             otp: event.target.value
         })
     }
+
     handleBlur = (e) => {
         const num = e.target.value;
        // this.setState({ mobile: `${num}` })
@@ -72,7 +75,31 @@ class Register extends Component {
             this.setState({mobile:`${value}`})
         }
     }
-    handleSubmit = (e) => {
+
+    customStyles = {
+        content: {
+          top: "40%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+        },
+    };
+    
+    openModal = () => {
+        this.setState({
+          modalIsOpen: true,
+        });
+    }
+    
+    closeModal = () => {
+        this.setState({
+          modalIsOpen: false,
+        });
+    }
+
+    handleRegisterSubmit = (e) => {
         e.preventDefault();
         this.setState({submitted: !this.state.submitted});
         const user = { 
@@ -80,10 +107,30 @@ class Register extends Component {
             email:this.state.user.email,
             password:this.state.user.password,
             password_confirmation:this.state.user.password_confirmation,
-           mobile:this.state.mobile,
-           // otp:parseInt(this.state.otp),
-           // mobile:'9567896756',
-            otp:6453,
+            mobile:this.state.mobile,
+            otp:parseInt(this.state.otp),
+            checkbox:this.state.checkbox
+        };
+        if(user.password === user.password_confirmation && this.state.checkbox === true){
+            if(user.name && user.password && user.email && user.checkbox && user.mobile){
+                let num = this.state.mobile
+                this.props.sendOtp(num)
+                this.setState({modalIsOpen: true})
+            }
+        }
+
+    }
+
+    handleOtpSubmit = (e) => {
+        e.preventDefault();
+        this.setState({submitted: !this.state.submitted});
+        const user = { 
+            name:this.state.user.name,
+            email:this.state.user.email,
+            password:this.state.user.password,
+            password_confirmation:this.state.user.password_confirmation,
+            mobile:this.state.mobile,
+            otp:parseInt(this.state.otp),
             checkbox:this.state.checkbox
         };
         if(user.password === user.password_confirmation && this.state.checkbox === true){
@@ -127,7 +174,8 @@ class Register extends Component {
                         }
                     </div>
                     <div className="input-field">
-                        <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} onBlur={this.handleBlur} id="number" required/>
+                        {/* <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} onBlur={this.handleBlur} id="number" required/> */}
+                        <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} id="number" required/>
                         <label htmlFor="number">Mobile Number *</label>
                         {submitted && !user.mobile &&
                             <div className="alert error alert-danger">Mobile is required</div>
@@ -152,15 +200,15 @@ class Register extends Component {
                         }
                     </div>
                     <input type="checkbox" name="checkbox" className="checkcheck" onClick={() => this.toggle()} value={this.state.checkbox}/>
-                    {submitted && !user.checkbox &&
-                        <div className="alert error alert-danger">Checkbox is required</div>
-                    }
                     <span className="agreeinput"> I understand and agree to the 
                         <Link to="!#"> Terms & Conditions</Link> and 
                         <Link to="!#"> Private Policy</Link>
+                    {submitted && !user.checkbox &&
+                        <div style={{color:"#ce3838"}}>Checkbox is required</div>
+                    }
                     </span><br />
                     <div style={{ clear: 'both' }}></div>
-                    <input type="button" onClick={(e) => this.handleSubmit(e)} value="Register"/>
+                    <input type="button" onClick={(e) => this.handleRegisterSubmit(e)} value="Register"/>
                     {registering && 
                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     }
@@ -212,6 +260,25 @@ class Register extends Component {
 
                     </div>
                 </div>
+                <Modal
+                isOpen={this.state.modalIsOpen}
+                onRequestClose={this.closeModal}
+                style={this.customStyles}
+                ariaHideApp={false}
+                >
+                <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
+                <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
+                <form onSubmit={this.handleOtpSubmit}>    
+                <input type="text" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required/>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"10px"}} type="submit">Submit</button>
+                {registering && 
+                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                }
+                { success ? success : null}
+                {failure ? failure : ''}               
+                </form>
+                </Modal>
+
 
                 {/* <!-- End otp Popup--> */}
                             </div>

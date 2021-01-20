@@ -1,11 +1,20 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import "../../../style.css";
+import {fetchData,productData} from '../shoppingHomeReducer';
 
 class FocusBrand extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount = () => {
+    this.props.fetchData();
+  }
+  
   render() {
+    console.log("Brands in Focus :", this.props.brandInFocus)
     return (
       <div className="shopFocus specific">
         <h3 className="bfocus">Brands in Focus</h3>
@@ -15,6 +24,7 @@ class FocusBrand extends Component {
                 return (
                   <React.Fragment key={i}>
                     <div className="imgbrand" style={{marginBottom:"60px"}}>
+                    <Link key={i} onClick={() => this.props.productData(brandData.key, null, null, this.props.history)}>
                       <img
                         src={
                           brandData.poster
@@ -29,6 +39,7 @@ class FocusBrand extends Component {
                           <h5>Upto 50% off </h5>
                         </div>
                       </div>
+                    </Link>
                     </div>
                   </React.Fragment>
                 );
@@ -40,4 +51,13 @@ class FocusBrand extends Component {
   }
 }
 
-export default FocusBrand;
+const mapStateToProps = () => {};
+
+const mapDispatchToProps = (dispatch) => {
+  return({
+    fetchData:() => dispatch(fetchData()),
+    productData:(id,sortKey,currentPage,history) => dispatch(productData(id,sortKey,currentPage,history)),
+  })
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(FocusBrand);
