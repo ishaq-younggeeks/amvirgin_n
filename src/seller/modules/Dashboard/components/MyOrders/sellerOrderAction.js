@@ -4,7 +4,7 @@ import {
   GET_ALL_ORDERS,
   VIEW_ORDER,
   AFTER_STATUS_CHANGE,
-  STATUS_CHANGE_ALERT
+  STATUS_CHANGE_ALERT,
 } from "./sellerOrderConstant";
 
 export const myOrderList = (activeState, current, perPage) => {
@@ -19,8 +19,7 @@ export const myOrderList = (activeState, current, perPage) => {
       },
     };
 
-
-    console.log("request",config)
+    console.log("request", config);
     axios
       .get(`${baseURL}/seller/orders?status=${activeState}`, config)
       .then((res) => {
@@ -37,9 +36,9 @@ export const myOrderList = (activeState, current, perPage) => {
   };
 };
 
-export const changeOrderStatusBulk = (key=null, status) => {
+export const changeOrderStatusBulk = (key = null, status) => {
   return (dispatch) => {
-    console.log("changeOrderStatusBulk keys length",key.toString())
+    console.log("changeOrderStatusBulk keys length", key.toString());
     let allKey = key.toString();
     let token = localStorage.getItem("token");
     let config = {
@@ -51,21 +50,33 @@ export const changeOrderStatusBulk = (key=null, status) => {
       },
     };
     console.log("Dispatched Order Bulk: ", allKey);
-     axios.put(`${baseURL}/seller/orders/status?key=${allKey}&status=${status}`, {}, config)
-     .then(res => {
-       console.log("Bulk Order Status",res)
-       if (res.data.status === 200) {
-        dispatch({
-          type: AFTER_STATUS_CHANGE,
-          payload: key,
-        });
-      }
-    })
-    .catch(err => console.log(err));
+    axios
+      .put(
+        `${baseURL}/seller/orders/status?key=${allKey}&status=${status}`,
+        {},
+        config
+      )
+      .then((res) => {
+        console.log("Bulk Order Status", res);
+        if (res.data.status === 200) {
+          dispatch({
+            type: AFTER_STATUS_CHANGE,
+            payload: key,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
   };
 };
 
-export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=null, airwayBillNumber=null, dispatchedOn=null) => {
+export const changeOrderStatus = (
+  key,
+  status,
+  fulfilledBy = null,
+  courierName = null,
+  airwayBillNumber = null,
+  dispatchedOn = null
+) => {
   return (dispatch) => {
     let token = localStorage.getItem("token");
     let config = {
@@ -77,37 +88,37 @@ export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=nul
       },
     };
     let data = {};
-    if(status !== null && fulfilledBy !== null && courierName === null){
+    if (status !== null && fulfilledBy !== null && courierName === null) {
       data = {
         status,
         fulfilledBy,
-      };  
-    }
-    else data = {
-      status,
-      fulfilledBy,
-      courierName,
-      airwayBillNumber,
-      dispatchedOn,
-    }
-   
+      };
+    } else
+      data = {
+        status,
+        fulfilledBy,
+        courierName,
+        airwayBillNumber,
+        dispatchedOn,
+      };
 
     console.log("Dispatched Order Single: ", data);
-     axios.put(`${baseURL}/seller/orders/${key}/status`, data, config)
-     .then(res => {
-       console.log("Single Order Status",res,key)
-       if (res.data.status === 200) {
-        dispatch({
-          type: AFTER_STATUS_CHANGE,
-          payload: key,
-        });
-        // dispatch({
-        //   type: STATUS_CHANGE_ALERT,
-        //   payload: true
-        // })
-      }
-    })
-    .catch(err => console.log(err));
+    axios
+      .put(`${baseURL}/seller/orders/${key}/status`, data, config)
+      .then((res) => {
+        console.log("Single Order Status", res, key);
+        if (res.data.status === 200) {
+          dispatch({
+            type: AFTER_STATUS_CHANGE,
+            payload: key,
+          });
+          // dispatch({
+          //   type: STATUS_CHANGE_ALERT,
+          //   payload: true
+          // })
+        }
+      })
+      .catch((err) => console.log(err));
   };
 };
 
@@ -140,7 +151,50 @@ export const changeOrderStatus = (key, status, fulfilledBy=null, courierName=nul
 //   };
 // };
 
+export const downloadLabelId = (key, status) => {
+  console.log("Calling Download Label :", key);
+  return (dispatch) => {
+    let token = localStorage.getItem("token");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+      params: {
+        key,
+      },
+    };
+    let data = status;
+    // if(status !== null && fulfilledBy !== null && courierName === null){
+    //   data = {
+    //     status,
+    //     fulfilledBy,
+    //   };
+    // }
+    // else data = {
+    //   status,
+    //   fulfilledBy,
+    //   courierName,
+    //   airwayBillNumber,
+    //   dispatchedOn,
+    // }
+
+    console.log("Dispatched Order Single: ", data);
+    axios
+      .put(`${baseURL}/seller/orders/${key}/status`, data, config)
+      .then((res) => {
+        console.log("Single Order Status", res, key);
+        if (res.data.status === 200) {
+          dispatch({
+            type: AFTER_STATUS_CHANGE,
+            payload: key,
+          });
+        }
+      });
+  };
+};
+
 export const downloadLabel = (id) => {
+  console.log("Calling Download Label :", id);
   return (dispatch) => {
     dispatch({
       type: AFTER_STATUS_CHANGE,
@@ -169,8 +223,8 @@ export const FilterBySearch = (currentPage, perPage, key, status) => {
         if (res.data.status === 200) {
           dispatch({
             type: GET_ALL_ORDERS,
-            payload: res.data.payload.data,  //res.data.data,
-            payload2: res.data.payload.meta  //res.data.meta,
+            payload: res.data.payload.data, //res.data.data,
+            payload2: res.data.payload.meta, //res.data.meta,
           });
         }
       })

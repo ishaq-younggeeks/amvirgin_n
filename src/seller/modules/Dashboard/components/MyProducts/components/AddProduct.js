@@ -863,13 +863,13 @@ class AddProduct extends Component {
                     <label className="mr-sm-2" htmlFor="domesticWarranty" style={{ color: "#000" }} >
                       Domestic Warranty
                     </label>
-                    <input type="number" pattern="\d+" name="domesticWarranty" className="form-control" onChange={this.onChangeHandler} value={this.state.domesticWarranty} min="0"/>
+                    <input type="number" min="0" pattern="\d+" name="domesticWarranty" className="form-control" onChange={this.onChangeHandler} value={this.state.domesticWarranty} min="0"/>
                   </div>
                   <div className="col-auto colwidth50">
                     <label className="mr-sm-2" htmlFor="internationalWarranty" style={{ color: "#000" }} >
                       International  Warranty
                     </label>
-                    <input type="number" name="internationalWarranty" className="form-control" onChange={this.onChangeHandler} value={this.state.internationalWarranty}/>
+                    <input type="number" min="0" name="internationalWarranty" className="form-control" onChange={this.onChangeHandler} value={this.state.internationalWarranty}/>
                   </div>
                   <div className="col-auto colwidth50">
                     <label className="mr-sm-2" htmlFor="warrantySummary" style={{ color: "#000" }} >
@@ -1079,14 +1079,14 @@ class AddProduct extends Component {
                     <label className="mr-sm-2" htmlFor="originalPrice" style={{ color: "#000" }}>
                       MRP<span style={{ color: '#ff0000' }}>*</span>
                     </label>
-                    <input type="number" name="originalPrice" className="form-control" onChange={this.onChangeHandler} value={this.state.originalPrice} />
+                    <input type="number" min="0" name="originalPrice" className="form-control" onChange={this.onChangeHandler} value={this.state.originalPrice} />
                     {errors.originalPrice && <div className="alert alert-danger">{errors.originalPrice}</div>}
                   </div>
                   <div className="col-auto colwidth50">
                     <label className="mr-sm-2" htmlFor="sellingPrice" style={{ color: "#000" }}>
                       Your Selling Price<span style={{ color: '#ff0000' }}>*</span>
                     </label>
-                    <input type="number" name="sellingPrice" className="form-control" onChange={this.onChangeHandler} value={this.state.sellingPrice}/>
+                    <input type="number" min="0" name="sellingPrice" className="form-control" onChange={this.onChangeHandler} value={this.state.sellingPrice}/>
                     {errors.sellingPrice && <div className="alert alert-danger">{errors.sellingPrice}</div>}
                   </div>
                 </div>
@@ -1096,7 +1096,7 @@ class AddProduct extends Component {
                     <label className="mr-sm-2" htmlFor="hsn" style={{ color: "#000" }}>
                       HSN<span style={{ color: '#ff0000' }}>*</span>
                     </label>
-                    <input type="number" name="hsn" className="form-control" onChange={this.onChangeHandler} value={this.state.hsn}/>
+                    <input type="number" min="0" name="hsn" className="form-control" onChange={this.onChangeHandler} value={this.state.hsn}/>
                     {errors.hsn && <div className="alert alert-danger">{errors.hsn}</div>}
                     <Link className="text-info" onClick={(e)=>this.openModalSection(e,"setOpenHSN")}>Please find Relavant Hsn Code</Link>
                   </div>
@@ -1134,7 +1134,7 @@ class AddProduct extends Component {
                     <label className="mr-sm-2" htmlFor="lowStockThreshold" style={{ color: "#000" }}>
                       Low Stock Threshold
                     </label>
-                    <input type="number" name="lowStockThreshold" className="form-control" onChange={this.onChangeHandler} value={this.state.lowStockThreshold}/>
+                    <input type="number" min="0" name="lowStockThreshold" className="form-control" onChange={this.onChangeHandler} value={this.state.lowStockThreshold}/>
                     {errors.lowStockThreshold && <div className="alert alert-danger">{errors.lowStockThreshold}</div>}
                   </div>
                 </div>
@@ -1162,21 +1162,21 @@ class AddProduct extends Component {
                     <label className="mr-sm-2" htmlFor="stock" style={{ color: "#000" }}>
                       Stock<span style={{ color: '#ff0000' }}>*</span>
                     </label>
-                    <input type="number" name="stock" className="form-control" onChange={this.onChangeHandler} value={this.state.stock}/>
+                    <input type="number" min="0" name="stock" className="form-control" onChange={this.onChangeHandler} value={this.state.stock}/>
                     {errors.stock && <div className="alert alert-danger">{errors.stock}</div>}
                   </div>
                   <div className="col-auto colwidth25">
                     <label className="mr-sm-2" htmlFor="procurementsla" style={{ color: "#000" }}>
                       Procurement SLA<span style={{ color: '#ff0000' }}>*</span>
                     </label>
-                    <input type="number" name="procurementSla" className="form-control" placeholder="Dispatch in Days" onChange={this.onChangeHandler} value={this.state.procurementSla}/>
+                    <input type="number" min="0" name="procurementSla" className="form-control" placeholder="Dispatch in Days" onChange={this.onChangeHandler} value={this.state.procurementSla}/>
                     {errors.procurementSla && <div className="alert alert-danger">{errors.procurementSla}</div>}
                   </div>
                   <div className="col-auto colwidth50">
                     <label className="mr-sm-2" htmlFor="maxQuantityPerOrder" style={{ color: "#000" }}>
                       Maximum Quantity per order
                     </label>
-                    <input type="number" name="maxQuantityPerOrder" className="form-control" onChange={this.onChangeHandler} value={this.state.maxQuantityPerOrder}/>
+                    <input type="number" min="0" name="maxQuantityPerOrder" className="form-control" onChange={this.onChangeHandler} value={this.state.maxQuantityPerOrder}/>
                     {errors.maxQuantityPerOrder && <div className="alert alert-danger">{errors.maxQuantityPerOrder}</div>}
                   </div>
                 </div>
@@ -1188,7 +1188,7 @@ class AddProduct extends Component {
                   </label>
                   <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="localShippingCost" className="form-control" onChange={this.onChangeHandler} value={this.state.localShippingCost}/>
+                    <input type="number" min="0" name="localShippingCost" className="form-control" onChange={this.onChangeHandler} value={this.state.localShippingCost}/>
                     </div>
                     <span className="" style={{ color: '#000000' }}>INR</span>
                   </div>
@@ -1200,7 +1200,7 @@ class AddProduct extends Component {
                   </label>
                   <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="zonalShippingCost" className="form-control" onChange={this.onChangeHandler} value={this.state.zonalShippingCost}/>
+                    <input type="number" min="0" name="zonalShippingCost" className="form-control" onChange={this.onChangeHandler} value={this.state.zonalShippingCost}/>
                   </div>
                   <span style={{ color: '#000000' }}>INR</span>
                   </div>
@@ -1212,7 +1212,7 @@ class AddProduct extends Component {
                   </label>
                   <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="internationalShippingCost" className="form-control" onChange={this.onChangeHandler} value={this.state.internationalShippingCost}/>
+                    <input type="number" min="0" name="internationalShippingCost" className="form-control" onChange={this.onChangeHandler} value={this.state.internationalShippingCost}/>
                     </div>
                   <span style={{ color: '#000000' }}>INR</span>
                   </div>
@@ -1227,7 +1227,7 @@ class AddProduct extends Component {
                     </label>
                     <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="packageWeight" className="form-control" onChange={this.onChangeHandler} value={this.state.packageWeight}/>
+                    <input type="number" min="0" name="packageWeight" className="form-control" onChange={this.onChangeHandler} value={this.state.packageWeight}/>
                     </div>
                   <span style={{ color: '#000000' }}>Kg</span>
                   </div>
@@ -1239,7 +1239,7 @@ class AddProduct extends Component {
                     </label>
                     <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="packageLength" className="form-control" onChange={this.onChangeHandler} value={this.state.packageLength}/>
+                    <input type="number" min="0" name="packageLength" className="form-control" onChange={this.onChangeHandler} value={this.state.packageLength}/>
                     </div>
                   <span style={{ color: '#000000' }}>cm</span>
                   </div>
@@ -1251,7 +1251,7 @@ class AddProduct extends Component {
                     </label>
                     <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="packageBreadth" className="form-control" onChange={this.onChangeHandler} value={this.state.packageBreadth} pattern="\d*" min="0"/>
+                    <input type="number" min="0" name="packageBreadth" className="form-control" onChange={this.onChangeHandler} value={this.state.packageBreadth} pattern="\d*" min="0"/>
                     </div>
                   <span style={{ color: '#000000' }}>cm</span>
                   </div>
@@ -1263,7 +1263,7 @@ class AddProduct extends Component {
                     </label>
                     <div className="row">
                   <div className="col-auto colwidth98">
-                    <input type="number" name="packageHeight" className="form-control" onChange={this.onChangeHandler} value={this.state.packageHeight}/>
+                    <input type="number" min="0" name="packageHeight" className="form-control" onChange={this.onChangeHandler} value={this.state.packageHeight}/>
                     </div>
                   <span style={{ color: '#000000' }}>cm</span>
                   </div>

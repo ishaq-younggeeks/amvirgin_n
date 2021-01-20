@@ -14,7 +14,7 @@ class FocusBrand extends Component {
             ? this.props.brandInFocus.map((brandData, i) => {
                 return (
                   <React.Fragment key={i}>
-                    <div className="imgbrand">
+                    <div className="imgbrand" style={{marginBottom:"60px"}}>
                       <img
                         src={
                           brandData.poster

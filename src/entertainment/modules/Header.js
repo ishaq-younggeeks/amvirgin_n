@@ -120,7 +120,7 @@ closeNav = () => {
               />
             </Link>
                         
-            <div  className="logout" style={{zIndex:"99999"}}>
+            <div className="logout" style={{zIndex:"99999", marginRight:"290px"}}>
               <ul>
               <Link to="/myprofile/edit"><li><i className=""></i>Edit Profile</li></Link>
               <Link onClick={this.logout}><li><i className="fa fa-sign-out"></i>Logout</li></Link>

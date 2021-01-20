@@ -85,7 +85,7 @@ function sendOtp(num) {
   };
   return (dispatch, getState) => {
     axios
-      .get(`${baseURL}/customer?mobile=${num}&type=2`, headers)
+      .get(`${baseURL}/customer?mobile=${num}&type=3`, headers)
       .then((response) => {
         console.log("submission mobile",response);
         if (response.data.status === 404) {
