@@ -13,7 +13,8 @@ export const userActions = {
   OtpVerify,
   getuserbyid,
   Recieveuserbyid,
-  signoutUser
+  signoutUser,
+  forgotPwd
 };
 
 //Consumer Login function
@@ -86,6 +87,27 @@ function sendOtp(num) {
   return (dispatch, getState) => {
     axios
       .get(`${baseURL}/customer?mobile=${num}&type=3`, headers)
+      .then((response) => {
+        console.log("submission mobile",response);
+        if (response.data.status === 404) {
+          dispatch({ type: userConstants.OTP_MODEL_SHOW });
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
+}
+
+// Forgot Password
+function forgotPwd(type, value) {
+  console.log("calling forgot pwd :", type, value);
+  var headers = {
+    "Content-Type": "application/json"
+  };
+  return (dispatch, getState) => {
+    axios
+      .get(`${baseURL}/customer/password/reset?${type}=${value}&type=${type}`, headers)
       .then((response) => {
         console.log("submission mobile",response);
         if (response.data.status === 404) {

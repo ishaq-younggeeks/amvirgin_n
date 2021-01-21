@@ -15,7 +15,9 @@ class Login extends Component {
         otp: '',
         submitted: false,
         loginBtn:false,
-        modalIsOpen: false
+        modalIsOpen: false,
+        modalIsOpen1: false,
+        changePassword: '',
     };
 }
 
@@ -65,9 +67,27 @@ class Login extends Component {
     });
   }
 
+  openModal1 = () => {
+    this.setState({
+      modalIsOpen1: true,
+    });
+  }
+
+  closeModal1 = () => {
+    this.setState({
+      modalIsOpen1: false,
+    });
+  }
+
   handleOTPChange = event => {
     this.setState({
         otp: event.target.value
+    })
+  }
+
+  handlePasswordChange = (e) => {
+    this.setState({
+      changePassword: e.target.value
     })
   }
 
@@ -112,6 +132,17 @@ class Login extends Component {
           this.props.login({ type:3, mobile: username.trim(), otp:otp.trim() })
       }
     }
+  }
+
+  handlePasswordChangeSubmit = (e) => {
+    e.preventDefault();
+    let registered = this.state.changePassword;
+    console.log(registered);
+    if(!isNaN(registered)){ 
+    this.props.forgotPwd("mobile", this.state.changePassword);
+    }
+    else 
+    this.props.forgotPwd("email", this.state.changePassword);
   }
 
   componentDidUpdate(prevProps,prevState){
@@ -175,7 +206,21 @@ class Login extends Component {
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handleOtpSubmit}>    
                 <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required/>
-                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"10px"}} type="submit">Submit</button>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
+                </form>
+                </Modal>
+
+                <Modal
+                isOpen={this.state.modalIsOpen1}
+                onRequestClose={this.closeModal1}
+                style={this.customStyles}
+                ariaHideApp={false}
+                >
+                <h4 style={{color:"#ce3838"}}>Please Enter Registered Mobile / Email :</h4>
+                <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
+                <form onSubmit={this.handlePasswordChangeSubmit}>    
+                <input type="text" placeholder="Registered Mobile / Email" autoFocus onChange={this.handlePasswordChange} value={this.state.changePassword} required/>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
                 </form>
                 </Modal>
             
@@ -189,7 +234,8 @@ class Login extends Component {
                         <Link to="!#">Terms & Conditions</Link> and 
                         <Link to="!#">Private Policy</Link>
                     </span><br /> */}
-                    <Link to="!#" className="forgotpwd">Forgot Password? </Link>
+                    {/* <Link to="!#" className="forgotpwd">Forgot Password? </Link> */}
+                    <a href="#" onClick={this.openModal1}><p className="forgotpwd">Forgot Password?</p></a>
                 <input type="button" className="signinbtn" value="Sign in" onClick={this.handleSubmit}/>
                 {loggingIn &&
                     <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
@@ -213,6 +259,7 @@ const mapDispatchToProps = dispatch => {
   return {
     login: creds => dispatch(userActions.login(creds)),
     sendOtp: num => dispatch(userActions.sendOtp(num)),
+    forgotPwd: (type, reg) => dispatch(userActions.forgotPwd(type, reg))
   };
 };
 

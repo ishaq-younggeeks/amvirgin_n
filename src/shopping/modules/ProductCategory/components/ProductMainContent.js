@@ -129,7 +129,7 @@ class ProductMainContent extends React.Component {
       <div className="col-lg-9 content">
         <div className="shop-topbar-wrapper">
           <div className="shop-topbar-left">
-            <p>{productList && productList.meta ? <p>Showing {productList.meta.from} - {productList.meta.to} of {productList.meta.total} results</p> : <p>Showing 0 Results</p>}</p>
+            <p>{productList && productList.meta ? <p>Showing {productList.meta.from ? productList.meta.from : 0} - {productList.meta.to ? productList.meta.to : 0} of {productList.meta.total} results</p> : <p>Showing 0 Results</p>}</p>
           </div>
           <div className="product-sorting-wrapper">
             <div className="product-shorting shorting-style">
@@ -244,7 +244,7 @@ class ProductMainContent extends React.Component {
                       </div>
                     </div>
                   )
-                }):""}
+                }):<div><h3 style={{color:"#c00", marginLeft:"22px"}}>No Products Available :(</h3></div>}
               </div>
             </div>
           </div>
