@@ -18,7 +18,7 @@ export default class PaymentFilter extends Component {
     e.preventDefault();
     console.log("Filter Paginationnum Method calling.....")
     let perPage = parseInt(e.target.value);
-          this.props.clearState("orders", []);
+    //       this.props.clearState("orders", []);
 
     this.setState({
       pagination: perPage,
@@ -30,13 +30,13 @@ export default class PaymentFilter extends Component {
   paginate = (e, direction, current) => {
     e.preventDefault();
     if (direction === "inc") {
-     this.props.clearState("orders", []);
+    //  this.props.clearState("orders", []);
       this.props.myOrderList(current + 1, this.state.pagination);
       this.setState((prevState) => {
         return { currentPage: prevState.currentPage + 1 };
       });
     } else {
-     this.props.clearState("orders", []);
+    //  this.props.clearState("orders", []);
 
       this.setState({ currentPage: this.state.currentPage - 1 });
       this.props.myOrderList(this.state.currentPage - 1, this.state.pagination);
