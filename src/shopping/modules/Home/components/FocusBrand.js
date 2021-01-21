@@ -13,7 +13,7 @@ class FocusBrand extends Component {
     console.log("Brands in Focus :", this.props.brandInFocus)
     return (
       <div className="shopFocus specific">
-        <h3 className="bfocus">Brands in Focus</h3>
+        <h3 className="bfocus" style={{color:"#c00"}}>Brands in Focus</h3>
         <div className="brandsinfocus row">
           {this.props.brandInFocus
             ? this.props.brandInFocus.map((brandData, i) => {
