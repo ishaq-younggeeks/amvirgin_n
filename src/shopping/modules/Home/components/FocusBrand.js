@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "../../../style.css";
-import {fetchData,productData} from '../shoppingHomeReducer';
+import {productData} from '../shoppingHomeReducer';
 
 class FocusBrand extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount = () => {
-    this.props.fetchData();
   }
   
   render() {
@@ -51,11 +47,12 @@ class FocusBrand extends Component {
   }
 }
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => {
+  return ({})
+};
 
 const mapDispatchToProps = (dispatch) => {
   return({
-    fetchData:() => dispatch(fetchData()),
     productData:(id,sortKey,currentPage,history) => dispatch(productData(id,sortKey,currentPage,history)),
   })
 }

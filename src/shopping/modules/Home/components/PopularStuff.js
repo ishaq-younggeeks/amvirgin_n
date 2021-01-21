@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../style.css';
+import {productData} from '../shoppingHomeReducer';
+import {connect} from "react-redux";
 
 class PopularStuff extends Component {
     constructor(props) {
@@ -19,7 +21,7 @@ class PopularStuff extends Component {
                                         <h3 style={{ color: '#fff' }}>{data.name} </h3>
                                         <h5 style={{ color: '#fff' }}> Upto 30% off </h5>
                                     </div>
-                                    <Link to="/" >
+                                    <Link onClick={() => this.props.productData(data.key, null, null, this.props.history)}>
                                         <div className="mainimg4">
                                             <img className="image majorimg" src={data.poster?data.poster:process.env.PUBLIC_URL+'/img/default.png'} alt="" style={{ objectFit: 'cover', objectPosition: 'center center' }} />
                                         </div>
@@ -53,7 +55,7 @@ class PopularStuff extends Component {
                                 null
                                 :
                                 <div className="imgsmall containerimg4">
-                                    <Link to="/">
+                                    <Link onClick={() => this.props.productData(data.key, null, null, this.props.history)}>
                                         <div className="fivedetails" >
                                             <h3 >{data.name} </h3>
                                             <h5 > Upto 30% off </h5>
@@ -78,4 +80,14 @@ class PopularStuff extends Component {
     }
 }
 
-export default PopularStuff;
+const mapStateToProps = () => {
+    return ({})
+};
+  
+const mapDispatchToProps = (dispatch) => {
+    return({
+      productData:(id,sortKey,currentPage,history) => dispatch(productData(id,sortKey,currentPage,history)),
+    })
+};
+  
+export default connect (mapStateToProps, mapDispatchToProps)(PopularStuff);

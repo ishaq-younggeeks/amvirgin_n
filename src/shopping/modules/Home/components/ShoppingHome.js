@@ -78,7 +78,7 @@ class ShoppingHome extends React.Component {
             ):''} */}
             {/* </div> */}
           </div>
-          {homeData.brandInFocus && <FocusBrand brandInFocus={homeData.brandInFocus}/>}
+          {homeData.brandInFocus && <FocusBrand brandInFocus={homeData.brandInFocus} {...this.props}/>}
           {/*Slider*/}
           <div className="topdeals shopToday specific">
                 <div className="row titlesec titledeal">
@@ -134,7 +134,7 @@ class ShoppingHome extends React.Component {
             slidesToScroll={1}
             trendingDeals={homeData.trendingDeals}
           /> */}
-        { homeData.popularStuff && <PopularStuff popularStuff={homeData.popularStuff}/>}
+        { homeData.popularStuff && <PopularStuff popularStuff={homeData.popularStuff} {...this.props}/>}
         {homeData.trendingNow && <Trends trendingNow={homeData.trendingNow}/>}
           <Footer />
       </div>
