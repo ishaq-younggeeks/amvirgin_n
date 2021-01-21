@@ -5,8 +5,7 @@ import Axios from 'axios';
 import { Link } from 'react-router-dom'
 import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 import  { Redirect } from 'react-router-dom';
-
-
+import { baseURL } from "../../../../credential.json";
 
 class ProductMainContent extends React.Component {
   constructor(props) {
@@ -23,8 +22,8 @@ class ProductMainContent extends React.Component {
   }
    async componentDidMount() {
     this.props.productData(this.props.match.params.pat1, "relevance", "1", this.props.history)
-    const res = await Axios.get('http://amvirgin-app.zobofy.com/api/customer/products/sorts')
-     this.setState({ sortby: res.data.data })
+    const res = await Axios.get(`${baseURL}/customer/products/sorts`)
+     this.setState({ sortby: res.data.data },console.log("sortBy state",res.data.data))
     let data = JSON.parse(localStorage.getItem("productData"))
     this.setState({ categoryId: data["categoryId"], hist: data["productHistory"] })
     this.state.refresh = true
@@ -145,7 +144,7 @@ class ProductMainContent extends React.Component {
               <select onChange={this.handleChange}>
                 {this.state.sortby.map((sortby) => {
                   return (
-                    <option key={sortby.key} value={sortby.key}>{sortby.name}</option>
+                    <option key={sortby.key} value={sortby.key}>{sortby.label}</option>
                   )
                 })}
               </select>
@@ -162,9 +161,10 @@ class ProductMainContent extends React.Component {
                   return (
                     <div className="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                       <div className="product-wrap mb-35">
+                      <Link onClick={() => 
+                            this.props.productDetail(item.key, this.props.history)
+                            }>
                         <div className="product-img">
-                          
-                          <Link onClick={() => this.props.productDetail(item.key, this.props.history)}>
                             <div className="shopImg">
                               <div className="swiper-container" >
                                 <div className="swiper-wrapper">
@@ -178,9 +178,9 @@ class ProductMainContent extends React.Component {
                                 <div className="swiper-button-next"></div>
                                 <div className="swiper-button-prev"></div>
                               </div>
-                            </div>
-                          </Link>
+                            </div> 
                         </div>
+                        </Link>
                         <div className="product-content">
                           <div className="hoverbtn">
                             <div className="row">

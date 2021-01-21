@@ -44,7 +44,7 @@ const EntertainmentSection = (props) => {
             items.map((pics, i) => {
               return (
                 // <Link to={{pathname: `/show`, query: `${pics.id}`}}>
-                <Link onClick={(e) => onClickHandler(e, props, pics.id)}>
+                <Link key={pics.id} onClick={(e) => onClickHandler(e, props, pics.id)}>
                   <div key={i}>
                     <div className="container1">
                       <img src={pics.poster} className="image" alt="" />
