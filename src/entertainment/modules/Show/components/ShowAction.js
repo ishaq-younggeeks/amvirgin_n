@@ -6,7 +6,7 @@ export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),hist
   return  (dispatch) => {
     let url = `${baseURL}/customer/videos/${videoId}` 
     axios.get(`${url}`).then(res => {
-     let  Data = res.data.data;
+     let  Data = res.data.payload;
      console.log("data---------------------",Data);
       dispatch(myData(Data))
       localStorage.setItem("videoId",videoId)

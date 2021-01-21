@@ -11,6 +11,7 @@ import {GetData} from '../../../../db.js';
 import $ from 'jquery'
 import {connect} from 'react-redux';
 import {videoData,clearVideoData,trendingDetail} from './ShowAction'
+import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
 
 class Show extends Component {
@@ -34,7 +35,8 @@ class Show extends Component {
     componentDidMount(){
 
        // this.props.videoData( this.props.location.query)
-        this.props.trendingDetail();
+        // this.props.trendingDetail();
+        this.props.dashboardData()
         this.setState({refresh:true})
         
     
@@ -79,7 +81,7 @@ class Show extends Component {
         console.log("videoId",videoId)
      props.videoData(videoId,props.history)
     } 
-
+   
     render(){
         var settings = {
             dots: false,
@@ -91,6 +93,7 @@ class Show extends Component {
           };
 
           window.scrollTo(0, 0)
+          console.log("this props video detail",this.props.videoDetail)
         return(
             <>
                 <Helmet>
@@ -256,15 +259,15 @@ class Show extends Component {
                         
                     </div>
                     }
-                    {this.props.trendingData.trendingNow && this.props.trendingData.trendingNow.length &&
+                    {this.props.trendingData && this.props.trendingData.payload && this.props.trendingData.payload.length &&
                     <Trending 
                         dots={false} 
                         arrows={true} 
                         infinite={false} 
-                        speed={500} 
+                        speed={500}
                         slidesToShow={2.2} 
                         slidesToScroll={1}
-                        trendingData={this.props.trendingData.trendingNow}
+                        trendingData={this.props.trendingData.payload}
                     />
                     }
                 </div>
@@ -278,7 +281,7 @@ const mapStateToProps = (state) => {
     console.log("state Video data",state.ShowVideos.videoData)
     return  {
         videoDetail : state.ShowVideos.videoData,
-        trendingData : state.ShowVideos.trendingData
+        trendingData : state.Home.dashboardData
     }
   }
   const mapDispatchToProps = (dispatch) => {
@@ -287,9 +290,8 @@ const mapStateToProps = (state) => {
       //  getproduct:(id,hist) => dispatch(productDetail(id,hist)),
       videoData:(videoId) => dispatch(videoData(videoId)),
       clearVideoData:() => dispatch(clearVideoData()),
-      trendingDetail:() => dispatch(trendingDetail())
-          
-  
+      trendingDetail:() => dispatch(trendingDetail()),
+      dashboardData: () => dispatch(dashboardData()),
   });
   };
   
