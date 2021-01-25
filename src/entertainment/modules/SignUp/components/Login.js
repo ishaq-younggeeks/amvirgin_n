@@ -119,7 +119,7 @@ class Login extends Component {
     }
   };
 
-  handleOtpSubmit = (e) => {
+  handleOtpSubmitLogin = (e) => {
     e.preventDefault();
     this.setState({ submitted: true });
     const { username, otp } = this.state;
@@ -152,7 +152,7 @@ class Login extends Component {
   }
 
   render() {
-    const { notRegister, loggingIn } = this.props;
+    const { notRegister, loggingIn, otpmodel } = this.props;
     const { username, password, submitted } = this.state;
     const loginWithOtp = (
       <div>
@@ -204,7 +204,7 @@ class Login extends Component {
                 >
                 <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
-                <form onSubmit={this.handleOtpSubmit}>    
+                <form onSubmit={this.handleOtpSubmitLogin}>    
                 <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required/>
                 <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
                 </form>

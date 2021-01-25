@@ -83,7 +83,7 @@ class ShoppingHome extends React.Component {
           <div className="topdeals shopToday specific">
                 <div className="row titlesec titledeal">
                     <div className="col-md-9 col6"><h6 className=" tdtitle">Today's Deals</h6></div>
-                    <div className="col-md-3 col6"><Link className="shopbtn" to="">See All Deals</Link></div>
+                    <div className="col-md-3 col6"><Link className="shopbtn" onClick={()=>this.props.productDetail(5, this.props.history)}>See All Deals</Link></div>
                 </div>
                 <div className="slidervideo">
                 

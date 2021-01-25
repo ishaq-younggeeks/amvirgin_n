@@ -1,4 +1,4 @@
-import {DATA_RECEIVED, HOME_DATA} from './shoppingHomeConstant';
+import {DATA_RECEIVED, HOME_DATA, ALL_DEALS} from './shoppingHomeConstant';
 import {FETCHING , PRODUCT_DATA} from './shoppingHomeConstant';
 import axios  from "axios";
 import { baseURL } from "../../../credential.json";
@@ -35,6 +35,17 @@ export const fetchHomeData=()=> dispatch =>{
   })
 }
 
+export const allDeals = () => dispatch =>{
+  axios.get(`${baseURL}/customer/shop/deals`)
+  .then(res => {
+    console.log("Shopping All Deals :", res)
+    dispatch({
+      type:ALL_DEALS,
+      payload:res.data.data
+    })
+  })
+}
+
 
 export function fetchingData(status) {
   return {
@@ -49,4 +60,5 @@ export default {
   fetchingData,
   product,
   fetchHomeData,
+  allDeals
 }
