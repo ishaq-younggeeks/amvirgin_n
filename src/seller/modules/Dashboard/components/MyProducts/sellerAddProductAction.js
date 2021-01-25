@@ -420,7 +420,7 @@ export const BrandApproval = (data) =>{
     })
   }
 }
-export const ApprovedBrands =(category)=>{
+export const ApprovedBrands = (category) => {
   return dispatch=>{
     let token =localStorage.getItem('token')
     axios.get(`${baseURL}/seller/brands/approved`,{ headers: { "Authorization": `Bearer ${token}` },params:{category:parseInt(category)} })
