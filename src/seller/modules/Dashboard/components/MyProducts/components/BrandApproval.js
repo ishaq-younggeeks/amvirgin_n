@@ -285,7 +285,7 @@ class ApprovalofBrand extends Component {
     };
 
     objectToFormData(data);
-    
+    console.log("data sending",data)
     this.props.BrandApproval(fd)
     
 
