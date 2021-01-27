@@ -152,8 +152,9 @@ class Login extends Component {
   }
 
   render() {
-    const { notRegister, loggingIn, otpmodel } = this.props;
+    const { notRegister, loggingIn, otpmodel, wrongOTP, forgotPwdRes } = this.props;
     const { username, password, submitted } = this.state;
+    console.log("Forgot Password Res :", forgotPwdRes)
     const loginWithOtp = (
       <div>
           <button type="button" className="changeBtn" size="large">Login With OTP</button>
@@ -205,9 +206,10 @@ class Login extends Component {
                 <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handleOtpSubmitLogin}>    
-                <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required/>
+                <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required maxLength="4"/>
                 <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
                 </form>
+                {wrongOTP ? <p style={{color:"#ce3838"}}>{wrongOTP}</p> : null}
                 </Modal>
 
                 <Modal
@@ -222,6 +224,8 @@ class Login extends Component {
                 <input type="text" placeholder="Registered Mobile / Email" autoFocus onChange={this.handlePasswordChange} value={this.state.changePassword} required/>
                 <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
                 </form>
+                {notRegister ? <p style={{color:"#ce3838"}}>{notRegister}</p> : null}
+                {forgotPwdRes ? <p style={{color: "#ce3838"}}>{forgotPwdRes}</p> : null}
                 </Modal>
             
                 {/* <div className="input-field" style={{display: this.state.loginBtn ? 'block' : 'none' }}>
@@ -252,8 +256,8 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  const { notRegister,loggingIn,loggedIn  } = state.LoginReducer;
-  return { notRegister,loggingIn,loggedIn };
+  const { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes  } = state.LoginReducer;
+  return { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes };
 }
 const mapDispatchToProps = dispatch => {
   return {

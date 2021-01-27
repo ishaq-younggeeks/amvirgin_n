@@ -1,5 +1,5 @@
 import {myData,fetchingData,product,release} from './shoppingHomeAction';
-import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA} from './shoppingHomeConstant';
+import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA, ALL_DEALS} from './shoppingHomeConstant';
 import axios from 'axios';
 import { baseURL } from "../../../credential.json";
 import { browserHistory, Redirect } from 'react-router';
@@ -58,6 +58,26 @@ export const productData = (category,sortBy="relevance",page="1",history) => {
   }
 }
 
+// export const viewAllDeals = () => {
+//   return (dispatch) => {
+//     dispatch(fetchingData(true))
+//     let url = `${baseURL}/customer/shop/deals`
+//     axios.get(url).then(res => {
+//       console.log("fetching deals list", res);
+//       let allDealsList = {}
+//       allDealsList  = res.data.payload
+     
+//       dispatch(product(allDealsList))
+//       if(res.data.status === 200) {
+//         console.log("All Deals res :", res);
+//       }
+//     }).catch(error => {
+//       console.log(error)
+//       dispatch(fetchingData(false))
+//     })
+//   }
+// }
+
 
 const ACTION_HANDLERS = {
   [DATA_RECEIVED]: (state, action) => {
@@ -85,6 +105,13 @@ const ACTION_HANDLERS = {
       shoppinghomedata:action.payload,
     }
   },
+  [ALL_DEALS]: (state, action) => {
+    
+    return {
+      ...state,
+      allDealsProducts:action.payload,
+    }
+  },
 };
 
 const initialState = {
@@ -98,7 +125,8 @@ const initialState = {
   brandInFocus:[],
   trendingDeals:[],
   popularStuff:[],
-  trendingNow:[]
+  trendingNow:[],
+  allDealsProducts:[]
 };
 
 export default function shoppingHomeReducer(state = initialState, action) {

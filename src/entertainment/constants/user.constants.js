@@ -15,5 +15,8 @@ export const userConstants = {
 
     OTP_MODEL_SHOW: 'OTP_MODEL_SHOW',
     OTP_MODEL_HIDE:'OTP_MODEL_HIDE',
+    WRONG_OTP: 'WRONG_OTP',
+
+    FORGOT_PASSWORD: 'FORGOT_PASSWORD',
     
 }

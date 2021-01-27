@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
         offset:state.shopping.offset,
         limit:state.shopping.limit,
         homeData : state.shopping.shoppinghomedata,
-        allDeals: state.shopping.allDeals
+        allDealsProducts: state.shopping.allDealsProducts
     }
 }
 const mapDispatchToProps = (dispatch) => {

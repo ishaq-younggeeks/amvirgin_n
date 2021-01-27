@@ -11,6 +11,7 @@ import ViewShopProductDetails from "./shopping/modules/ProductDetail"
 import ShopPlaceOrder from "./shopping/modules/Order"
 import ShopPayment from "./shopping/modules/Order/components/ShopPayment"
 import ShopEditProfile from "./shopping/modules/Profile/EditProfile";
+import ViewAllDeals from "./shopping/modules/Home/components/ViewAllDeals";
 
 // Entertainment Routes
 import Home from "./entertainment/modules/Home/components/Home";
@@ -97,6 +98,7 @@ class App extends Component {
           {/* <Route exact path="/" component={ShoppingHomeContainer} /> */}
           <Route exact path="/shop" component={ShoppingHomeContainer} />
           <Route exact path="/shop/cart" component={ShoppingCartContainer} />
+          <Route exact path="/shop/trendingDeals" component={ViewAllDeals} />
           <Route
 
             path="/shop/:pat1"

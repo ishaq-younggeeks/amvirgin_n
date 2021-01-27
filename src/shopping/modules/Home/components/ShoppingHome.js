@@ -80,7 +80,7 @@ class ShoppingHome extends React.Component {
           </div>
           {homeData.brandInFocus && <FocusBrand brandInFocus={homeData.brandInFocus} {...this.props}/>}
           {/*Slider*/}
-          <div className="topdeals shopToday specific">
+          {/* <div className="topdeals shopToday specific">
                 <div className="row titlesec titledeal">
                     <div className="col-md-9 col6"><h6 className=" tdtitle">Today's Deals</h6></div>
                     <div className="col-md-3 col6"><Link className="shopbtn" onClick={()=>this.props.productDetail(5, this.props.history)}>See All Deals</Link></div>
@@ -124,8 +124,8 @@ class ShoppingHome extends React.Component {
                     }                   
                 
                 </div>
-            </div>
-          {/* <TodayDeal 
+            </div> */}
+          {homeData.trendingDeals ? <TodayDeal 
             dots={true} 
             arrows={true} 
             infinite={false} 
@@ -133,7 +133,9 @@ class ShoppingHome extends React.Component {
             slidesToShow={6} 
             slidesToScroll={1}
             trendingDeals={homeData.trendingDeals}
-          /> */}
+            productDetail={this.props.productDetail}
+            {...this.props}
+          /> : <center><h1>No Trending Products</h1></center>} 
         { homeData.popularStuff && <PopularStuff popularStuff={homeData.popularStuff} {...this.props}/>}
         {homeData.trendingNow && <Trends trendingNow={homeData.trendingNow} {...this.props}/>}
           <Footer />
