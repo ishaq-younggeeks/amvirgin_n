@@ -12,10 +12,35 @@ export default class EditProfile extends Component {
       modalIsOpen1: false,
       modalIsOpen2: false,
       username: "",
+      usernameError: "",
       oldpwd: "",
       newpwd: "",
-      cnewpwd: ""
+      cnewpwd: "",
+      oldpwdError: "",
+      newpwdError: "",
+      cnewpwdError: "",
+      hiddenPassword1: false,
+      hiddenPassword2: false,
+      hiddenPassword3: false
     };
+  }
+
+  hiddenPasswordHandler1 = () => {
+    this.setState({
+      hiddenPassword1: !this.state.hiddenPassword1
+    })
+  }
+
+  hiddenPasswordHandler2 = () => {
+    this.setState({
+      hiddenPassword2: !this.state.hiddenPassword2
+    })
+  }
+
+  hiddenPasswordHandler3 = () => {
+    this.setState({
+      hiddenPassword3: !this.state.hiddenPassword3
+    })
   }
 
   openModal1 = () => {
@@ -67,14 +92,78 @@ export default class EditProfile extends Component {
     })
   }
 
+  validateUsernameForm = () => {
+    let usernameError = "";
+    if(!this.state.username.trim()){
+      usernameError = "Field cannot be blank!"
+    }
+  
+    if(usernameError){
+      this.setState({
+        usernameError
+      })
+      return false;
+    }
+    return true;
+  }
+
   handleNewUsernameSubmit = (e) => {
     e.preventDefault();
-    console.log("Hello")
+    let isValid = this.validateUsernameForm();
+    if(isValid){
+      console.log("Hello")
+      this.setState({
+        username: "",
+        usernameError: ""
+      })
+    }
+  }
+
+  validatePasswordForm = () => {
+    let oldpwdError = "";
+    let newpwdError = "";
+    let cnewpwdError = "";
+    if(!this.state.oldpwd.trim()){
+      oldpwdError = "Field cannot be blank!"
+    }
+
+    if(!this.state.newpwd.trim()){
+      newpwdError = "Field cannot be blank!"
+    }
+
+    if(!this.state.cnewpwd.trim()){
+      cnewpwdError = "Field cannot be blank!"
+    }
+    else if(this.state.newpwd != this.state.cnewpwd){
+      cnewpwdError = "Passwords do not match!"
+    }
+
+    if(oldpwdError || newpwdError || cnewpwdError){
+      this.setState({
+        oldpwdError,
+        newpwdError,
+        cnewpwdError
+      });
+      return false;
+    }
+    return true;
   }
 
   handlePasswordChangeSubmit = (e) => {
     e.preventDefault();
-    console.log("Hello");
+    let isValid = this.validatePasswordForm();
+    if(isValid){
+      console.log("Hello");
+      this.setState({
+        username: "",
+        oldpwd: "",
+        newpwd: "",
+        cnewpwd: "",
+        oldpwdError: "",
+        newpwdError: "",
+        cnewpwdError: "",
+      });
+    }
   }
 
   render() {
@@ -131,7 +220,7 @@ export default class EditProfile extends Component {
         >
           <h4 style={{ color: "#ce3838" }}>Please Enter New Username :</h4>
           <hr style={{ color: "#ce3838", borderColor: "#ce3838" }} />
-          <form onSubmit={this.handleNewUsernameSubmit}>
+          <form noValidate onSubmit={this.handleNewUsernameSubmit}>
             <lable htmlFor="username" className="username">New Username: </lable>
             <input
               type="text"
@@ -142,6 +231,7 @@ export default class EditProfile extends Component {
               value={this.state.username}
               required
             />
+            <p style={{color:"red"}}>{this.state.usernameError}</p>
             <button
               style={{
                 padding: "5px 25px 5px 25px",
@@ -169,51 +259,80 @@ export default class EditProfile extends Component {
             Change Password :
           </h4>
           <hr style={{ color: "#ce3838", borderColor: "#ce3838" }} />
-          <form onSubmit={this.handlePasswordChangeSubmit}>
+          <form noValidate onSubmit={this.handlePasswordChangeSubmit}>
           <div className="mb-3">
             <label htmlFor="oldpwd" className="oldpwd">Old Password: </label>
             <div className="input-group">
             <input
-              type="password"
+              className="form-control"
+              type={this.state.hiddenPassword1 ? "text" : "password"}
               id="oldpwd"
               placeholder="Old Password"
               autoFocus
               name="oldpwd"
               onChange={this.handlePasswordChange}
               value={this.state.oldpwd}
-              required
             />
-            {this.state.hiddenPassword ? (
-                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler}>
-               <i className="fa fa-eye" aria-hidden style={{fontSize:"17px"}}></i>
+            {this.state.hiddenPassword1 ? (
+                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler1}>
+               <span className="fa fa-eye" aria-hidden style={{fontSize:"17px"}}></span>
                 </span>
               ) : (
-                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler}>
-                <i className="fa fa-eye" aria-hidden style={{fontSize:"17px"}}></i>
+                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler1}>
+                <i className="fa fa-eye-slash" aria-hidden style={{fontSize:"17px"}}></i>
                 </span>
             )}
             </div>
+            <p style={{color:"red"}}>{this.state.oldpwdError}</p>
             </div>
+            <div className="mb-3">
             <label htmlFor="oldpwd" className="newpwd">New Password: </label>
+            <div className="input-group">
             <input
-              type="password"
+              type={this.state.hiddenPassword2 ? "text" : "password"}
               id="newpwd"
+              className="form-control"
               placeholder="New Password"
               name="newpwd"
               onChange={this.handlePasswordChange}
               value={this.state.newpwd}
-              required
             />
+            {this.state.hiddenPassword2 ? (
+                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler2}>
+               <span className="fa fa-eye" aria-hidden style={{fontSize:"17px"}}></span>
+                </span>
+              ) : (
+                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler2}>
+                <i className="fa fa-eye-slash" aria-hidden style={{fontSize:"17px"}}></i>
+                </span>
+            )}
+             </div>
+             <p style={{color:"red"}}>{this.state.newpwdError}</p>
+            </div>
+            <div className="mb-3">
             <label htmlFor="cnewpwd" className="cnewpwd">Confirm New Password: </label>
+            <div className="input-group">
             <input
-              type="password"
+              type={this.state.hiddenPassword3 ? "text" : "password"}
               id="cnewpwd"
+              className="form-control"
               placeholder="Confirm New Password"
               name="cnewpwd"
               onChange={this.handlePasswordChange}
               value={this.state.cnewpwd}
-              required
             />
+            {this.state.hiddenPassword3 ? (
+                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler3}>
+               <span className="fa fa-eye" aria-hidden style={{fontSize:"17px"}}></span>
+                </span>
+              ) : (
+                <span className="input-group-text eye" onClick={this.hiddenPasswordHandler3}>
+                <i className="fa fa-eye-slash" aria-hidden style={{fontSize:"17px"}}></i>
+                </span>
+            )}
+            </div>
+            <p style={{color:"red"}}>{this.state.cnewpwdError}</p>
+            </div>
             <button
               style={{
                 padding: "5px 25px 5px 25px",
