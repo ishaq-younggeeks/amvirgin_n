@@ -12,6 +12,7 @@ import ShopPlaceOrder from "./shopping/modules/Order"
 import ShopPayment from "./shopping/modules/Order/components/ShopPayment"
 import ShopEditProfile from "./shopping/modules/Profile/EditProfile";
 import ViewAllDeals from "./shopping/modules/Home/components/ViewAllDeals";
+import ViewMyOrders from "./shopping/modules/ViewMyOrders/ViewMyOrders";
 
 // Entertainment Routes
 import Home from "./entertainment/modules/Home/components/Home";
@@ -28,10 +29,10 @@ import Profile from "./seller/modules/Dashboard/components/Profile";
 import Sellersales from "./seller/modules/Dashboard/components/Sales/Sales";
 import SellerNotification from "./seller/modules/Dashboard/components/Notification/Notification";
 import Navigation from "./seller/modules/Dashboard/components/Navigation/Navigation";
+import ViewOrders from "./seller/modules/Dashboard/components/MyOrders/ViewOrder";
 import MyOrders from "./seller/modules/Dashboard/components/MyOrders/MyOrders";
 import MyOrdersCancelled from "./seller/modules/Dashboard/components/MyOrders/OrdersCancelled";
 import MyOrdersReturns from "./seller/modules/Dashboard/components/MyOrders/OrdersReturn";
-import ViewOrders from "./seller/modules/Dashboard/components/MyOrders/ViewOrder";
 import MyProducts from "./seller/modules/Dashboard/components/MyProducts/components/MyProducts";
 import MyBrands from "./seller/modules/Dashboard/components/MyProducts/components/Brandlist"
 import EditProduct from "./seller/modules/Dashboard/components/MyProducts/components/EditProduct"
@@ -109,6 +110,7 @@ class App extends Component {
           <Route exact path="/placeOrder" component={ShopPlaceOrder} />
           <Route exact path="/ShopPayment" component={ShopPayment} />
           <Route exact path="/myprofile/edit" component={ShopEditProfile} />
+          <Route exact path="/myprofile/myOrders" component={ViewMyOrders} />
 
           {/* Entertainment Routes */}
           <Route exact path="/" component={Home}></Route>

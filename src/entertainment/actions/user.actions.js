@@ -27,6 +27,9 @@ function login(body) {
         if (response.data.status === 200) {
           dispatch({ type: userConstants.LOGIN_SUCCESS });
           localStorage.setItem('UserToken',response.data.data.token)
+          localStorage.setItem("name", response.data.data.name);
+          localStorage.setItem("email", response.data.data.email);
+          localStorage.setItem("mobile", response.data.data.mobile);
           cookie.save("token", response.data.data.token, {
             path: "/",
             maxAge: 60 * 60 * 24,

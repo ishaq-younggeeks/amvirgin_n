@@ -4,8 +4,10 @@ import SubMenu from "../Home/components/SubMenu";
 import Footer from "../Home/components/FooterWhite";
 import "./Profile.css";
 import Modal from "react-modal";
+import { connect } from "react-redux";
+import { editPassword, editUsername } from "./ProfileAction";
 
-export default class EditProfile extends Component {
+class EditProfile extends Component {
   constructor() {
     super();
     this.state = {
@@ -111,7 +113,8 @@ export default class EditProfile extends Component {
     e.preventDefault();
     let isValid = this.validateUsernameForm();
     if(isValid){
-      console.log("Hello")
+      let username = this.state.username
+      this.props.editUsername(username);
       this.setState({
         username: "",
         usernameError: ""
@@ -153,7 +156,10 @@ export default class EditProfile extends Component {
     e.preventDefault();
     let isValid = this.validatePasswordForm();
     if(isValid){
-      console.log("Hello");
+      let pass1 = this.state.oldpwd;
+      let pass2 = this.state.newpwd
+      let pass3 = this.state.cnewpwd
+      this.props.editPassword(pass1, pass2, pass3);
       this.setState({
         username: "",
         oldpwd: "",
@@ -167,6 +173,10 @@ export default class EditProfile extends Component {
   }
 
   render() {
+    let email = localStorage.getItem("email");
+    let mobile = localStorage.getItem("mobile");
+    let username = localStorage.getItem("name");
+    const {usernameChangeRes, passwordChangeRes} = this.props;
     return (
       <div className="shopMain">
         <Header />
@@ -177,16 +187,16 @@ export default class EditProfile extends Component {
             <label htmlFor="" className="email">
               Email:{" "}
             </label>
-            <p>jaskaran09.ja@gmail.com</p>
+            <p>{email}</p>
             <label htmlFor="" className="mobile">
               Mobile:{" "}
             </label>
-            <p>8360573379</p>
+            <p>{mobile}</p>
             <label htmlFor="" className="username">
               Username:{" "}
             </label>
             <p>
-              Jaskaran Singh{" "}
+              {username}
               <a
                 href="#"
                 style={{ marginLeft: "15px", color: "red" }}
@@ -246,7 +256,7 @@ export default class EditProfile extends Component {
               Submit
             </button>
           </form>
-          {/* {wrongOTP ? <p style={{ color: "#ce3838" }}>{wrongOTP}</p> : null} */}
+          {usernameChangeRes ? <p style={{ color: "#ce3838" }}>{usernameChangeRes}</p> : null}
         </Modal>
 
         <Modal
@@ -347,14 +357,28 @@ export default class EditProfile extends Component {
               Submit
             </button>
           </form>
-          {/* {notRegister ? (
-            <p style={{ color: "#ce3838" }}>{notRegister}</p>
+         
+          {passwordChangeRes ? (
+            <p style={{ color: "#ce3838" }}>{passwordChangeRes}</p>
           ) : null}
-          {forgotPwdRes ? (
-            <p style={{ color: "#ce3838" }}>{forgotPwdRes}</p>
-          ) : null} */}
         </Modal>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    usernameChangeRes: state.EditProfile.usernameChange,
+    passwordChangeRes: state.EditProfile.passwordChange
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    editUsername: (name) => dispatch(editUsername(name)),
+    editPassword: (currentpwd, newpwd, confirmpwd) => dispatch(editPassword(currentpwd, newpwd, confirmpwd))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
