@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { baseURL } from "../../../../credential.json";
+import { baseURL,baseURL2 } from "../../../../credential.json";
 import {VIDEO_DATA,TRENDING_DATA} from './ShowConstant'
 
 export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),history="") => {
   return  (dispatch) => {
-    let url = `${baseURL}/customer/videos/${videoId}` 
+    let url = `${baseURL2}/customer/videos/${videoId}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.payload;
      console.log("data---------------------",Data);

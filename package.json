@@ -8,6 +8,8 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@popperjs/core": "^2.6.0",
     "@react-pdf/renderer": "^2.0.0-beta.6",
     "axios": "^0.21.1",
@@ -52,6 +54,7 @@
     "react-loader-spinner": "^3.1.14",
     "react-minimal-pie-chart": "^6.0.1",
     "react-modal": "^3.11.2",
+    "react-player": "^2.8.1",
     "react-popper": "^2.2.4",
     "react-redux": "^7.2.0",
     "react-router": "^5.2.0",
@@ -68,6 +71,7 @@
     "redux-form": "^8.3.6",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "screenfull": "^5.1.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^5.4.5",
     "tempa-xlsx": "^0.8.20",

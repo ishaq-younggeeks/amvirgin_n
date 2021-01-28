@@ -54,6 +54,10 @@ class Show extends Component {
             this.props.videoData()
             window.scrollTo(0, 0)
         }
+
+        if(prevState.playVideo!==this.state.playVideo){
+
+        }
     }
 
     componentWillUnmount(){
@@ -69,6 +73,13 @@ class Show extends Component {
     play = () => {
         this.refs.video.play();
         this.setState({playVideo:!this.state.playVideo})
+    }
+
+    playProp = () => {
+        console.log("clicked dfggf")
+        this.setState((state,props) => {return {
+            playVideo:!state.playVideo
+        }})
     }
     pause = () => {
         this.refs.video.pause();
@@ -107,13 +118,10 @@ class Show extends Component {
                             <div className="col-md-6">
                                 <div>
                                     {/* <img src="img/main1.jpg" alt="play" className="videoimage" /> */}
-                                    {this.props.videoDetail && this.props.videoDetail.trailer?
+                                    {this.props.videoDetail && this.props.videoDetail.sources?
                                     <Video
                                         ref="video"
-                                        src={this.props.videoDetail.trailer}
-                                        poster={this.props.videoDetail.poster}
-                                        res={this.state.vResponse}
-                                        resCallBack={this.resCallBack}
+                                        src={this.props.videoDetail.sources.video[0].url}
                                     />
                                     :""}
                                 </div>
