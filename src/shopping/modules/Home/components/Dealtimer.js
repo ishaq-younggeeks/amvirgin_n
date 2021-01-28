@@ -56,9 +56,9 @@ class DealTimer extends Component {
                   </div>
                 )}
               </div>
-              <div>
+              {/* <div>
                 <button class="btn btn-primary">view all Deals</button>
-              </div>
+              </div> */}
             </>
           ) : (
             <div className="dealover">
