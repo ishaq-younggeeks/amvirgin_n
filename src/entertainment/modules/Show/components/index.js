@@ -1,4 +1,4 @@
-import React, { Component, useContext  } from 'react';
+import React, { Component, useContext,useRef  } from 'react';
 import { Helmet } from "react-helmet";
 import Header from '../../Header';
 import Footer from '../../Footer';  
@@ -13,13 +13,14 @@ import {connect} from 'react-redux';
 import {videoData,clearVideoData,trendingDetail} from './ShowAction'
 import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
-
+// import ReactPlayer from './CreatePlayer'
+import ReactPlayer from 'react-player'
+import Controls from './Controls'
 class Show extends Component {
     constructor(props){
         super(props);
         this.state = {
             isOpen: false,
-            playVideo: false,
             trending:[],
             vResponse:'360p',
             movieName:'',
@@ -30,7 +31,7 @@ class Show extends Component {
             pip: false,
             playing: true,
             controls: false,
-            light: false,
+            light: true,
             volume: 0.8,
             muted: false,
             played: 0,
@@ -40,6 +41,8 @@ class Show extends Component {
            loop: false
         }
         this.episodeCredit = this.episodeCredit.bind(this);
+        this.controlsRef = React.createRef();
+
     }
     resCallBack = (dd) => {
         this.setState({vResponse:dd});
@@ -58,6 +61,20 @@ class Show extends Component {
         //     this.setState({trending: res.data.data.trendingPicks});
         // }).catch(err=>console.log("error occur",err));
     }
+
+    handlePlayPause = () => {
+        this.setState({ playing: !this.state.playing })
+      }
+
+      handlePlay = () => {
+        console.log('onPlay')
+        this.setState({ playing: true })
+      }
+
+      handlePause = () => {
+        console.log('onPause')
+        this.setState({ playing: false })
+      }
 
     componentDidUpdate(prevProps, prevState) {
         
@@ -82,21 +99,18 @@ class Show extends Component {
             isOpen: !prevState.isOpen
           }));
     }
-    play = () => {
-        this.refs.video.play();
-        this.setState({playVideo:!this.state.playVideo})
-    }
 
-    playProp = () => {
-        console.log("clicked dfggf")
-        this.setState((state,props) => {return {
-            playVideo:!state.playVideo
-        }})
-    }
-    pause = () => {
-        this.refs.video.pause();
-        this.setState({playVideo:!this.state.playVideo})
-    }
+     handleMouseMove = () => {
+        console.log("mousemove");
+        this.controlsRef.current.style.visibility = "visible";
+        // count = 0;
+      };
+
+       hanldeMouseLeave = () => {
+        this.controlsRef.current.style.visibility = "hidden";
+        // count = 0;
+      };
+    
 
     onClickHandler =async (e,props,videoId) =>{
         console.log("event",e);
@@ -104,6 +118,10 @@ class Show extends Component {
         console.log("videoId",videoId)
      props.videoData(videoId,props.history)
     } 
+
+    ref = player => {
+        this.player = player
+      }
    
     render(){
         var settings = {
@@ -116,7 +134,8 @@ class Show extends Component {
           };
 
           window.scrollTo(0, 0)
-          console.log("this props video detail",this.props.videoDetail)
+        //   console.log("this props video detail",this.props.videoDetail)
+        const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
         return(
             <>
                 <Helmet>
@@ -130,12 +149,54 @@ class Show extends Component {
                             <div className="col-md-6">
                                 <div>
                                     {/* <img src="img/main1.jpg" alt="play" className="videoimage" /> */}
-                                    {this.props.videoDetail && this.props.videoDetail.sources?
-                                    <Video
-                                        ref="video"
-                                        src={this.props.videoDetail.sources.video[0].url}
-                                    />
-                                    :""}
+                                    {/* {this.props.videoDetail && this.props.videoDetail.sources? */}
+                                        {/* // src={this.props.videoDetail.sources.video[0].url} */}
+                                    <div
+                                     className='player-wrapper'
+                                     onMouseMove={this.handleMouseMove}
+                                     onMouseLeave = {this.hanldeMouseLeave}
+                                     style = {{
+                                         position:"relative",
+                                         width:"100%"
+                                     }}
+                                     >
+                                    {/* <ReactPlayer
+                                      ref={this.ref}
+                                      className='react-player'
+                                      width='100%'
+                                      height='100%'
+                                      url={"https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8"}
+                                      pip={pip}
+                                      playing={playing}
+                                      controls={controls}
+                                      light={light}
+                                      loop={loop}
+                                      playbackRate={playbackRate}
+                                      volume={volume}
+                                      muted={muted}
+                                      onReady={() => console.log('onReady')}
+                                      onStart={() => console.log('onStart')}
+                                      onPlay={this.handlePlay}
+                                      onEnablePIP={this.handleEnablePIP}
+                                      onDisablePIP={this.handleDisablePIP}
+                                      onPause={this.handlePause}
+                                      onBuffer={() => console.log('onBuffer')}
+                                      onSeek={e => console.log('onSeek', e)}
+                                      onEnded={this.handleEnded}
+                                      onError={e => console.log('onError', e)}
+                                      onProgress={this.handleProgress}
+                                      onDuration={this.handleDuration}
+                                    /> */}
+                                    <ReactPlayer url="https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8"/>
+                                
+                                    <Controls
+            ref={this.controlsRef}
+            onPlay={this.handlePlay}
+            playing={playing}
+            onPause={this.handlePause}
+          />
+                                  </div>
+                                    {/* :""} */}
                                 </div>
                                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
                                 <button className="watchlist"><i className="fa fa-share"></i>Share</button>
@@ -159,15 +220,9 @@ class Show extends Component {
                                         <button className="trailerbtn">
                                             <img src="img/playred.png" alt="play" className="play" />Trailer
                                         </button>
-                                        { this.state.playVideo===false ? 
-                                            <button className="playbtn" onClick={()=>this.play()}>
-                                                <i className="fa fa-play-circle"></i>Play
-                                            </button> :
-                                            <button className="playbtn" onClick={()=>this.pause()}>
-                                                <i className="fa fa-pause-circle"></i>Pause
-                                            </button>
-                                        }
-                                        
+                                            <button className="playbtn" onClick={()=>this.handlePlayPause()}>
+                                                <i className={playing?"fa fa-pause-circle":"fa fa-play-circle"}></i>{playing?"Pause":"Play"}
+                                            </button>   
                                     </div>
                                     <hr className="videohr" />
                                     <div className="details row">
