@@ -10,6 +10,7 @@ class TodayDeal extends Component {
     }
 
     render(){
+        console.log("Trending Deals :", this.props.trendingDeals)
 
         var settings = {
             dots: this.props.dots,
@@ -25,8 +26,8 @@ class TodayDeal extends Component {
         return(
             <div className="topdeals shopToday specific">
                 <div className="row titlesec titledeal">
-                    <div className="col-md-9 col6"><h6 className=" tdtitle">Today's Deals</h6></div>
-                    <div className="col-md-3 col6"><Link className="shopbtn" to="">See All Deals</Link></div>
+                    <div className="col-md-9 col6"><h6 className=" tdtitle">Trending Deals</h6></div>
+                    <div className="col-md-3 col6"><Link to="/shop/trendingDeals" className="shopbtn">See All Deals</Link></div>
                 </div>
                 <div className="slidervideo">
                 

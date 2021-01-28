@@ -51,17 +51,17 @@ class Register extends Component {
         this.props.OtpVerify(otp );
     }
     
-    handleOTPChange = event => {
+    handleOTPChangeRegister = event => {
         this.setState({
             otp: event.target.value
         })
     }
 
-    handleBlur = (e) => {
-        const num = e.target.value;
-       // this.setState({ mobile: `${num}` })
-        this.props.sendOtp(num);
-    }
+    // handleBlur = (e) => {
+    //     const num = e.target.value;
+    //    // this.setState({ mobile: `${num}` })
+    //     this.props.sendOtp(num);
+    // }
     onChange = (e) => {
         const { name, value } = e.target;
         const { user } = this.state;
@@ -147,7 +147,7 @@ class Register extends Component {
     }
 
     render(){
-        const { success, registering,failure,otpmodel } = this.props;
+        const { success, registering, failure, otpmodel } = this.props;
         const { user, submitted } = this.state;
         return(
             <div className="back">
@@ -226,11 +226,11 @@ class Register extends Component {
                     </div>
                 </div>
                 {/* <!--otp Popup--> */}
-                <div className="modal" role="dialog" style={{ display: this.props.otpmodel ? "block" : "none",top:'170px' }}>
-                    <div className="modal-dialog otp_confirm">
+                {/* <div className="modal" role="dialog" style={{ display: this.props.otpmodel ? "block" : "none",top:'170px' }}>
+                    <div className="modal-dialog otp_confirm"> */}
 
                         {/* <!-- Modal content--> */}
-                        <div className="modal-content model-box">
+                        {/* <div className="modal-content model-box">
                             <div className="modal-body otpmodel text-center">
                                 <i className="fa fa-times" onClick={this.removeotp} style={{ position: "absolute", right: "12px", top: "12px" }}></i>
                                 <form className="form-signin otp" onSubmit={this.otpverify}>
@@ -249,19 +249,19 @@ class Register extends Component {
                                     <div className="form-group col-xs-12 col-sm-5 col-md-5 col-lg-5  ">
                                         <button className=" verify-button " type="submit">Verify </button>
                                     </div>
-                                </form>
+                                </form> */}
                                 {/* <div className="footer-pay">
                                     <a onClick={this.resendotp} href="javascript:void(0)">Resend OTP</a>
                                 </div> */}
 
-                            </div>
+                            {/* </div>
 
                         </div>
 
                     </div>
-                </div>
+                </div> */}
                 <Modal
-                isOpen={this.state.modalIsOpen}
+                isOpen={this.props.otpmodel ? true : this.state.modalIsOpen}
                 onRequestClose={this.closeModal}
                 style={this.customStyles}
                 ariaHideApp={false}
@@ -269,8 +269,8 @@ class Register extends Component {
                 <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handleOtpSubmit}>    
-                <input type="text" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required/>
-                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"10px"}} type="submit">Submit</button>
+                <input type="text" placeholder="OTP" autoFocus onChange={this.handleOTPChangeRegister} value={this.state.otp} required/>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
                 {registering && 
                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 }

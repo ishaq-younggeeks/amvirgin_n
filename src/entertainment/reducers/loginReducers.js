@@ -4,7 +4,9 @@ import { userConstants } from '../constants';
 const initialState = {
   notRegister: null,
   loggedIn: false,
-  loggingIn: false
+  loggingIn: false,
+  wrongOTP: null,
+  forgotPwdRes: null
 }
 
 export const LoginReducer = (state = initialState, action) => {
@@ -24,6 +26,16 @@ export const LoginReducer = (state = initialState, action) => {
             ...state,
             notRegister: "You are not Registered. Please Register."
           };
+        case userConstants.WRONG_OTP:
+          return {
+            ...state,
+            wrongOTP: "Invalid OTP."
+          };  
+        case userConstants.FORGOT_PASSWORD:
+          return {
+            ...state,
+            forgotPwdRes: "Please check your email/mobile to reset password."
+          };    
         case userConstants.LOGIN_FAILURE:
           return {};
         case userConstants.LOGOUT:

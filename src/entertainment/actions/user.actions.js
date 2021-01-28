@@ -27,6 +27,9 @@ function login(body) {
         if (response.data.status === 200) {
           dispatch({ type: userConstants.LOGIN_SUCCESS });
           localStorage.setItem('UserToken',response.data.data.token)
+          localStorage.setItem("name", response.data.data.name);
+          localStorage.setItem("email", response.data.data.email);
+          localStorage.setItem("mobile", response.data.data.mobile);
           cookie.save("token", response.data.data.token, {
             path: "/",
             maxAge: 60 * 60 * 24,
@@ -36,6 +39,8 @@ function login(body) {
           dispatch({ type: userConstants.AUTH_USER });
         } else if (response.data.status === 404) {
           dispatch({ type: userConstants.NOT_REGISTERED });
+        } else if (response.data.status === 401 || 400 ) {
+          dispatch({ type: userConstants.WRONG_OTP});
         }
       })
       .catch(function(err) {
@@ -110,12 +115,13 @@ function forgotPwd(type, value) {
       .get(`${baseURL}/customer/password/reset?${type}=${value}&type=${type}`, headers)
       .then((response) => {
         console.log("submission mobile",response);
-        if (response.data.status === 404) {
-          dispatch({ type: userConstants.OTP_MODEL_SHOW });
+        if (response.data.status === 200) {
+          dispatch({ type: userConstants.FORGOT_PASSWORD, });
         }
       })
       .catch(function(err) {
         console.log(err);
+        dispatch({ type: userConstants.NOT_REGISTERED })
       });
   };
 }

@@ -191,8 +191,9 @@ class ProductMainContent extends React.Component {
                                 <div class="sizesection" id={item.key} key={item.key}>
                                   <h4 class="ssize">Select Size</h4>
                                     <div class="custom-radios">
-                                    {/* {item.options.length?item.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
+                                    {item.options.length?item.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
                                       console.log("print spm",Array.isArray(value),value)
+                                      if(Array.isArray(value))
                                       	return	value.map((values,index)=>{
                                           return (
                                             index===0?(
@@ -213,7 +214,7 @@ class ProductMainContent extends React.Component {
                                         )}
                                        )
                                       }
-                                        ):""} */}
+                                        ):""}
                                     </div>                                 
 
                                   <button id="hidesizesection" onClick={() =>this.handleCloseSize(item.key)} >x</button>
