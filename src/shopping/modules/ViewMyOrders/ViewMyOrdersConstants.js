@@ -1,1 +1,2 @@
 export const GET_ALL_MY_ORDERS = "GET_ALL_MY_ORDERS";
+export const ORDER_DETAILS = "ORDER_DETAILS";

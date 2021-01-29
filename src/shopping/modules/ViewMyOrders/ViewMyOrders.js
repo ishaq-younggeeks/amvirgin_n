@@ -1,58 +1,166 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import Header from '../../../entertainment/modules/Header'
-import SubMenu from '../Home/components/SubMenu'
-import {getAllMyOrders} from "./ViewMyOrdersAction";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Header from "../../../entertainment/modules/Header";
+import SubMenu from "../Home/components/SubMenu";
+import { getAllMyOrders } from "./ViewMyOrdersAction";
+import ViewMyOrderDetails from "./ViewMyOrderDetails"
 
 class ViewMyOrders extends Component {
-    constructor(){
-        super();
-        this.state = {};
-    }
+  constructor() {
+    super();
+    this.state = {};
+  }
 
-    componentDidMount = () => {
-        this.props.getAllMyOrders("1");
-    }
+  componentDidMount = () => {
+    this.props.getAllMyOrders("1");
+  };
 
-    render() {
-        const {allMyOrders} = this.props;
-        console.log("My Orders :", allMyOrders);
-        return (
-            <>
-             <Header />
-             <SubMenu {...this.props} />
-             <div style={{marginTop:"80px"}}>
-             {allMyOrders && allMyOrders.length ? allMyOrders.map((item1, i) => 
-                <div className="card" style={{width: "18rem"}}>
-                <img className="card-img-top" src="..." alt="Card image cap" />
-                <div className="card-body">
-                {/* {item1.subOrders ? item1.subOrders.map((item2) => 
-                    {item2.items ? item2.items.map((item3) => (
-                        <h5 className="card-title">{item3.product.name}</h5>
-                    )):null}  
-                ):null}      */}
-                  <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" className="btn btn-primary">Track Order</a>
+  render() {
+    const { allMyOrders } = this.props;
+    console.log("My Orders :", allMyOrders);
+    return (
+      <>
+        <Header />
+        <SubMenu {...this.props} />
+        <div style={{ margin: "2rem 2rem 0 2rem" }}>
+          <h3 style={{ color: "#ce3838" }}>My Orders <span style={{color:"black"}}>{">"}</span></h3>
+          <hr
+            style={{
+              color: "red",
+              backgroundColor: "#ce3838",
+              height: 1,
+              borderColor: "#ce3838",
+            }}
+          />
+        </div>
+        {allMyOrders && allMyOrders.length
+          ? allMyOrders.map((item1, i) => (
+              <div
+                className="col-sm-12"
+                style={{ margin: "0 0 2rem 3rem", width: "95%" }}
+              >
+                <div className="whitepbox">
+                  <div
+                    className="row"
+                    style={{ height: "170px", alignItem: "center" }}
+                  >
+                    <div className="col-sm-1">
+                      {item1.details.image ? (
+                        <img
+                          src={item1.details.image}
+                          style={{
+                            width: "9rem",
+                            objectFit: "cover",
+                            height: "150px",
+                            margin: "2px 0 0 3rem",
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={process.env.PUBLIC_URL + "/img/default.png"}
+                          style={{
+                            width: "9rem",
+                            objectFit: "cover",
+                            height: "150px",
+                            margin: "2px 0 0 3rem",
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div className="col-sm-4">
+                      {item1.subOrders
+                        ? item1.subOrders.map((item2) =>
+                            item2.items
+                              ? item2.items.map((item3) => (
+                                  <p
+                                    style={{
+                                      fontSize: "18px",
+                                      padding: "10px 0",
+                                      fontWeight: "400px",
+                                      marginLeft: "6rem",
+                                    }}
+                                  >
+                                    {item3.product.name}
+                                  </p>
+                                ))
+                              : null
+                          )
+                        : null}
+                      <p
+                        style={{
+                          fontSize: "15px",
+                          padding: "10px 0",
+                          fontWeight: "400px",
+                          marginLeft: "6rem",
+                        }}
+                      >
+                        Quantity : {item1.details.quantity}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "15px",
+                          padding: "10px 0",
+                          fontWeight: "400px",
+                          marginLeft: "6rem",
+                        }}
+                      >
+                        Total : ₹ {item1.details.total}
+                      </p>
+                    </div>
+                    <div className="col-sm-5">
+                      <p
+                        style={{
+                          fontSize: "17px",
+                          padding: "10px 0",
+                          fontWeight: "400px",
+                        }}
+                      >
+                        Order # : {item1.details.number}
+                      </p>
+                        <a
+                          href="#"
+                          style={{
+                            color: "#ce3838",
+                            fontWeight: "bold",
+                            fontSize: "17px",
+                            marginLeft: "4px",
+                          }}
+                          onClick={() => {
+                                 localStorage.setItem("OrderNumber", item1.key);
+                          }}
+                        ><Link style={{ color: "#ce3838"}} to="/myprofile/myOrders/orderDetails">
+                          Order Details
+                      </Link>
+                        </a>
+                    </div>
+                    <div className="col-sm-2">
+                      <Link to="/myprofile/myOrders/trackOrder">
+                        <a href="#" className="btn btn-primary">
+                          Track Order
+                        </a>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-             ): null}
-             </div>
-            </>
-        )
-    }
+            ))
+          : null}
+      </>
+    );
+  }
 }
 
-const  mapStateToProps = (state) => {
-    return {
-        allMyOrders : state.MyOrders.myOrders
-    }
-}
+const mapStateToProps = (state) => {
+  return {
+    allMyOrders: state.MyOrders.myOrders,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getAllMyOrders: (page) => dispatch(getAllMyOrders(page)), 
-    }
-}
+  return {
+    getAllMyOrders: (page) => dispatch(getAllMyOrders(page)),
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewMyOrders)
-
+export default connect(mapStateToProps, mapDispatchToProps)(ViewMyOrders);

@@ -1,7 +1,8 @@
-import {GET_ALL_MY_ORDERS} from "./ViewMyOrdersConstants";
+import {GET_ALL_MY_ORDERS, ORDER_DETAILS} from "./ViewMyOrdersConstants";
 
 const initialState = {
-    myOrders : []
+    myOrders : [],
+    myOrderDetails: [],
 }
 
 export default function (state = initialState, action){
@@ -11,6 +12,11 @@ export default function (state = initialState, action){
                 ...state,
                 myOrders : action.payload
             }
+        case ORDER_DETAILS:
+            return{
+                ...state,
+                myOrderDetails: action.payload
+            }   
         default:
             return state    
     }
