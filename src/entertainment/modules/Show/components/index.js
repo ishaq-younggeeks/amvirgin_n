@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom';
 // import ReactPlayer from './CreatePlayer'
 import ReactPlayer from 'react-player'
 import Controls from './Controls'
+import screenfull from 'screenfull'
+import { findDOMNode } from 'react-dom' 
 class Show extends Component {
     constructor(props){
         super(props);
@@ -38,10 +40,12 @@ class Show extends Component {
            loaded: 0,
            duration: 0,
            playbackRate: 1.0,
-           loop: false
+           loop: false,
+           timeDisplayFormat:"normal"
         }
         this.episodeCredit = this.episodeCredit.bind(this);
         this.controlsRef = React.createRef();
+        this.playerContainerRef = React.createRef();
 
     }
     resCallBack = (dd) => {
@@ -62,18 +66,134 @@ class Show extends Component {
         // }).catch(err=>console.log("error occur",err));
     }
 
-    handlePlayPause = () => {
+    load = url => {
+        this.setState({
+          url,
+          played: 0,
+          loaded: 0,
+          pip: false
+        },console.log("current state",this.state))
+      }
+    
+      handlePlayPause = () => {
         this.setState({ playing: !this.state.playing })
       }
+    
+      handleStop = () => {
+        this.setState({ url: null, playing: false })
+      }
+    
+      handleToggleControls = () => {
+        const url = this.state.url
+        this.setState({
+          controls: !this.state.controls,
+          url: null
+        }, () => this.load(url))
+      }
+    
+      handleToggleLight = () => {
+        this.setState({ light: !this.state.light })
+      }
+    
+      handleToggleLoop = () => {
+        this.setState({ loop: !this.state.loop })
+      }
+    
+      handleVolumeChange = (e, newValue) => {
+        this.setState({ volume: parseFloat(newValue / 100), muted: newValue === 0 ? true : false, })
+      }
 
+       handleVolumeSeekDown = (e, newValue) => {
+        this.setState({seeking: false, volume: parseFloat(newValue / 100) });
+      };
+
+       hanldeMute = () => {
+        this.setState((prevState) => ({ muted: !prevState.muted }));
+      };
+    
+      handleToggleMuted = () => {
+        this.setState({ muted: !this.state.muted })
+      }
+    
+      handleSetPlaybackRate = e => {
+        this.setState({ playbackRate: parseFloat(e.target.value) })
+      }
+    
+      handleTogglePIP = () => {
+        this.setState({ pip: !this.state.pip })
+      }
+    
       handlePlay = () => {
         console.log('onPlay')
         this.setState({ playing: true })
       }
-
+    
+      handleEnablePIP = () => {
+        console.log('onEnablePIP')
+        this.setState({ pip: true })
+      }
+    
+      handleDisablePIP = () => {
+        console.log('onDisablePIP')
+        this.setState({ pip: false })
+      }
+    
       handlePause = () => {
         console.log('onPause')
         this.setState({ playing: false })
+      }
+    
+      handleSeekMouseDown = e => {
+        this.setState({ seeking: true })
+      }
+    
+      handleSeekChange = (e,newValue) => {
+          console.log("value",newValue)
+        this.setState({ played: parseFloat(newValue / 100) })
+      }
+    
+      handleSeekMouseUp = (e, newValue) => {
+        this.setState({ seeking: false })
+        this.player.seekTo(newValue / 100, "fraction")
+      }
+
+    
+      handleProgress = state => {
+        // console.log('onProgress', state)
+       const currentTime =
+        this.player && this.player.current
+         ? this.player.current.getCurrentTime()
+         : "00:00";
+        // We only want to update time slider if we are not currently seeking
+        if (!this.state.seeking) {
+          this.setState(state)
+        }
+      }
+    
+      handleEnded = () => {
+        console.log('onEnded')
+        this.setState({ playing: this.state.loop })
+      }
+    
+      handleDuration = (duration) => {
+        console.log('onDuration', duration)
+        this.setState({ duration })
+      }
+    
+      handleClickFullscreen = () => {
+        screenfull.request(findDOMNode(this.player))
+      }
+
+       toggleFullScreen = () => {
+        screenfull.toggle(this.playerContainerRef.current);
+      };
+    
+      renderLoadButton = (url, label) => {
+        return (
+          <button onClick={() => this.load(url)}>
+            {label}
+          </button>
+        )
       }
 
     componentDidUpdate(prevProps, prevState) {
@@ -101,13 +221,14 @@ class Show extends Component {
     }
 
      handleMouseMove = () => {
-        console.log("mousemove");
+        console.log("mousemove",this.controlsRef.current.style);
         this.controlsRef.current.style.visibility = "visible";
         // count = 0;
       };
 
        hanldeMouseLeave = () => {
         this.controlsRef.current.style.visibility = "hidden";
+        this.controlsRef.current.style.opacity = 0;
         // count = 0;
       };
     
@@ -118,6 +239,33 @@ class Show extends Component {
         console.log("videoId",videoId)
      props.videoData(videoId,props.history)
     } 
+
+    format = (seconds) => {
+        if (isNaN(seconds)) {
+          return `00:00`;
+        }
+        const date = new Date(seconds * 1000);
+        const hh = date.getUTCHours();
+        const mm = date.getUTCMinutes();
+        const ss = date.getUTCSeconds().toString().padStart(2, "0");
+        if (hh) {
+          return `${hh}:${mm.toString().padStart(2, "0")}:${ss}`;
+        }
+        return `${mm}:${ss}`;
+      };
+
+     currentTime =
+     this.player && this.player.current
+      ? this.player.current.getCurrentTime()
+      : "00:00";
+
+//    duration = () => this.player && this.player.current ? this.player.current.getDuration() : "00:00";
+//    elapsedTime =
+//     this.state.timeDisplayFormat == "normal"
+//       ? this.format(this.currentTime)
+//       : `-${this.format(this.duration - this.currentTime)}`;
+
+//    totalDuration = this.format(this.duration);
 
     ref = player => {
         this.player = player
@@ -133,7 +281,7 @@ class Show extends Component {
             slidesToScroll: 1
           };
 
-          window.scrollTo(0, 0)
+        //   window.scrollTo(0, 0)
         //   console.log("this props video detail",this.props.videoDetail)
         const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
         return(
@@ -152,15 +300,16 @@ class Show extends Component {
                                     {/* {this.props.videoDetail && this.props.videoDetail.sources? */}
                                         {/* // src={this.props.videoDetail.sources.video[0].url} */}
                                     <div
-                                     className='player-wrapper'
+                                     className='VideoPlayer'
                                      onMouseMove={this.handleMouseMove}
                                      onMouseLeave = {this.hanldeMouseLeave}
                                      style = {{
                                          position:"relative",
                                          width:"100%"
                                      }}
+                                    ref={this.playerContainerRef}
                                      >
-                                    {/* <ReactPlayer
+                                    <ReactPlayer
                                       ref={this.ref}
                                       className='react-player'
                                       width='100%'
@@ -169,9 +318,9 @@ class Show extends Component {
                                       pip={pip}
                                       playing={playing}
                                       controls={controls}
-                                      light={light}
+                                    //   light={light}
                                       loop={loop}
-                                      playbackRate={playbackRate}
+                                       playbackRate={playbackRate}
                                       volume={volume}
                                       muted={muted}
                                       onReady={() => console.log('onReady')}
@@ -181,19 +330,72 @@ class Show extends Component {
                                       onDisablePIP={this.handleDisablePIP}
                                       onPause={this.handlePause}
                                       onBuffer={() => console.log('onBuffer')}
-                                      onSeek={e => console.log('onSeek', e)}
+                                    //   onSeek={e => console.log('onSeek', e)}
                                       onEnded={this.handleEnded}
                                       onError={e => console.log('onError', e)}
                                       onProgress={this.handleProgress}
                                       onDuration={this.handleDuration}
+                                    />
+                                    {/* <ReactPlayer
+                                    className="react-player"
+                                    width="100%"
+                                    height="100%"
+                                    url={"https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8"}
+                                    
+                                    playbackRate ="1"
+                                    config = {{
+                                        file:{
+                                            tracks: [
+                                                {kind: 'subtitles', src: 'subs/subtitles.en.vtt', srcLang: 'en', default: true},
+                                                {kind: 'subtitles', src: 'subs/subtitles.ja.vtt', srcLang: 'ja'},
+                                                {kind: 'subtitles', src: 'subs/subtitles.de.vtt', srcLang: 'de'}
+                                              ]
+                                        }
+                                    }}
                                     /> */}
-                                    <ReactPlayer url="https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8"/>
-                                
-                                    <Controls
+                                     
+                                     {/* <div ref={this.controlsRef} style={{visibility:this.controlsRef.current}} class="grid-container">
+  <div class="grid-item"><button>dgdgd</button></div>
+  <div class="grid-item">2</div>
+  <div class="grid-item">3</div>  
+  <div class="grid-item">4</div>
+  <div class="grid-item">5</div>
+  <div class="grid-item">6</div>  
+  <div class="grid-item">7</div>
+  <div class="grid-item">8</div>
+  <div class="grid-item">9</div>  
+</div> */}
+                                     {/* <Controls 
             ref={this.controlsRef}
             onPlay={this.handlePlay}
             playing={playing}
             onPause={this.handlePause}
+          />  */}
+           <Controls
+            ref={this.controlsRef}
+            onPlay={this.handlePlay}
+            onPause={this.handlePause}
+            onSeek={this.handleSeekChange}
+            onSeekMouseDown={this.handleSeekMouseDown}
+            onSeekMouseUp={this.handleSeekMouseUp}
+            onDuration={this.handleDuration}
+            // onRewind={this.handleRewind}
+            onPlayPause={this.handlePlayPause}
+            // onFastForward={this.handleFastForward}
+            playing={playing}
+            played={played}
+            // elapsedTime={elapsedTime}
+            totalDuration={this.totalDuration}
+            onMute={this.hanldeMute}
+            muted={muted}
+            onVolumeChange={this.handleVolumeChange}
+            onVolumeSeekDown={this.handleVolumeSeekDown}
+            // onChangeDispayFormat={handleDisplayFormat}
+            // playbackRate={playbackRate}
+            // onPlaybackRateChange={handlePlaybackRate}
+            onToggleFullScreen={this.toggleFullScreen}
+            volume={volume}
+            // onBookmark={addBookmark}
           />
                                   </div>
                                     {/* :""} */}
