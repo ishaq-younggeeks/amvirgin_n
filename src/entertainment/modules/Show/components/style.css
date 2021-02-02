@@ -139,7 +139,7 @@
     transition: all .25s ease-out;
   } */
   
-  .VideoPlayer:hover>.controls {
+  /* .VideoPlayer:hover>.controls {
     visibility: visible;
     opacity: 1;
     animation: glimpse 2s linear;
@@ -151,7 +151,7 @@
     0% { opacity: 1; }
     99% { opacity: 1; }
     100% { visibility: hidden;opacity: 0; }
-}
+} */
   
   
   

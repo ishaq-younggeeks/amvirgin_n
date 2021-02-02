@@ -17,6 +17,7 @@ import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeMute from "@material-ui/icons/VolumeOff";
 import FullScreen from "@material-ui/icons/Fullscreen";
 import Popover from "@material-ui/core/Popover";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
   controlsWrapper: {
@@ -115,6 +116,7 @@ const Controls = forwardRef(
       played,
       elapsedTime,
       totalDuration,
+      title,
       onMute,
       muted,
       onVolumeSeekDown,
@@ -142,8 +144,8 @@ const Controls = forwardRef(
     const id = open ? "simple-popover" : undefined;
 
     return (
-      // <div ref={ref} className={classes.controlsWrapper}>
-      <div ref={ref} className={'controls' + ' ' + classes.controlsWrapper}>
+      <div ref={ref} className={classes.controlsWrapper}>
+       {/* <div ref={ref} className={'controls' + ' ' + classes.controlsWrapper}> */}
         <Grid
           container
           direction="column"
@@ -160,7 +162,7 @@ const Controls = forwardRef(
           >
             <Grid item>
               <Typography variant="h5" style={{ color: "#fff" }}>
-                Video Title
+                {title}
               </Typography>
             </Grid>
            
@@ -276,6 +278,8 @@ const Controls = forwardRef(
               </Grid>
             </Grid>
 
+           
+
         <Grid item>
               <Button
                 onClick={handleClick}
@@ -318,6 +322,14 @@ const Controls = forwardRef(
                   ))}
                 </Grid>
               </Popover>
+             <IconButton
+                onClick={handleClick}
+                aria-describedby={id}
+                className={classes.bottomIcons}
+                variant="text"
+              >
+               <SettingsIcon/>
+              </IconButton>
               <IconButton
                 onClick={onToggleFullScreen}
                 className={classes.bottomIcons}
@@ -381,6 +393,7 @@ Controls.propTypes = {
   played: PropTypes.number,
   elapsedTime: PropTypes.string,
   totalDuration: PropTypes.string,
+  title:PropTypes.string,
   muted: PropTypes.bool,
   playbackRate: PropTypes.number,
 };

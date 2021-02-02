@@ -18,7 +18,7 @@ import VolumeMute from "@material-ui/icons/VolumeOff";
 import FullScreen from "@material-ui/icons/Fullscreen";
 import Popover from "@material-ui/core/Popover";
 import screenful from "screenfull";
-import Controls from "./Controls";
+import Controls from "./Controls_old";
 
 const useStyles = makeStyles((theme) => ({
   playerWrapper: {
