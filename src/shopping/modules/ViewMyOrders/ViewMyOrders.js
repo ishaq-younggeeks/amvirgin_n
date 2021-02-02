@@ -118,29 +118,32 @@ class ViewMyOrders extends Component {
                       >
                         Order # : {item1.details.number}
                       </p>
-                        <a
-                          href="#"
-                          style={{
-                            color: "#ce3838",
-                            fontWeight: "bold",
-                            fontSize: "17px",
-                            marginLeft: "4px",
-                          }}
-                          onClick={() => {
-                                 localStorage.setItem("OrderNumber", item1.key);
-                          }}
-                        ><Link style={{ color: "#ce3838"}} to="/myprofile/myOrders/orderDetails">
-                          Order Details
-                      </Link>
-                        </a>
+                      <p
+                        style={{
+                          fontSize: "17px",
+                          padding: "10px 0",
+                          fontWeight: "400px",
+                        }}
+                      >
+                        Date : {item1.details.placed}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "17px",
+                          padding: "10px 0",
+                          fontWeight: "400px",
+                        }}
+                      >
+                        Status : <span style={{ color:item1.details.status === "cancelled" ? "#ce3838" : "green" }}>{item1.details.status}</span>
+                      </p>
                     </div>
-                    <div className="col-sm-2">
-                      <Link to="/myprofile/myOrders/trackOrder">
+                    <a className="col-sm-2" href="#" onClick={() => localStorage.setItem("OrderNumber", item1.key + item1.details.status)}>
+                      <Link to="/myprofile/myOrders/orderDetails">
                         <a href="#" className="btn btn-primary">
-                          Track Order
+                          Order Details
                         </a>
                       </Link>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>

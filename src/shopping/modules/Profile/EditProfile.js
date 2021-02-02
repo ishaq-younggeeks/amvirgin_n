@@ -271,13 +271,13 @@ class EditProfile extends Component {
           <hr style={{ color: "#ce3838", borderColor: "#ce3838" }} />
           <form noValidate onSubmit={this.handlePasswordChangeSubmit}>
           <div className="mb-3">
-            <label htmlFor="oldpwd" className="oldpwd">Old Password: </label>
+            <label htmlFor="oldpwd" className="oldpwd">Current Password: </label>
             <div className="input-group">
             <input
               className="form-control"
               type={this.state.hiddenPassword1 ? "text" : "password"}
               id="oldpwd"
-              placeholder="Old Password"
+              placeholder="Type Current Password"
               autoFocus
               name="oldpwd"
               onChange={this.handlePasswordChange}
@@ -302,7 +302,7 @@ class EditProfile extends Component {
               type={this.state.hiddenPassword2 ? "text" : "password"}
               id="newpwd"
               className="form-control"
-              placeholder="New Password"
+              placeholder="Type New Password"
               name="newpwd"
               onChange={this.handlePasswordChange}
               value={this.state.newpwd}
