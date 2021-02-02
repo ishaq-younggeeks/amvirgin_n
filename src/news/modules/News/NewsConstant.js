@@ -1,0 +1,2 @@
+export const NEWS_CATEGORY = "NEWS_CATEGORY";
+export const NEWS_LISTING = "NEWS_LISTING";
