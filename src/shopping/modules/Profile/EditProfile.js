@@ -182,19 +182,19 @@ class EditProfile extends Component {
         <Header />
         <SubMenu {...this.props} />
         <div>
-          <div style={{ margin: "20px 0 0 30px" }}>
+          <div style={{ margin: "20px 0 0 3%" }}>
             <h3>Account Details: </h3>
-            <label htmlFor="" className="email">
-              Email:{" "}
-            </label>
+            <li><label htmlFor="" className="email">
+            <ul>Email:</ul>
+            </label></li>
             <p>{email}</p>
-            <label htmlFor="" className="mobile">
-              Mobile:{" "}
-            </label>
+            <li><label htmlFor="" className="mobile">
+            <ul>Mobile:</ul>
+            </label></li>
             <p>{mobile}</p>
-            <label htmlFor="" className="username">
-              Username:{" "}
-            </label>
+            <li><label htmlFor="" className="username">
+            <ul>Username:</ul>
+            </label></li>
             <p>
               {username}
               <a
@@ -205,11 +205,11 @@ class EditProfile extends Component {
                 Change Username?
               </a>
             </p>
-            <label htmlFor="" className="password">
-              Password:{" "}
-            </label>
+            <li><label htmlFor="" className="password">
+            <ul>Password:</ul>
+            </label></li>
             <p>
-              ***********{" "}
+              ***********
               <a
                 href="#"
                 style={{ marginLeft: "15px", color: "red" }}
@@ -271,13 +271,13 @@ class EditProfile extends Component {
           <hr style={{ color: "#ce3838", borderColor: "#ce3838" }} />
           <form noValidate onSubmit={this.handlePasswordChangeSubmit}>
           <div className="mb-3">
-            <label htmlFor="oldpwd" className="oldpwd">Old Password: </label>
+            <label htmlFor="oldpwd" className="oldpwd">Current Password: </label>
             <div className="input-group">
             <input
               className="form-control"
               type={this.state.hiddenPassword1 ? "text" : "password"}
               id="oldpwd"
-              placeholder="Old Password"
+              placeholder="Type Current Password"
               autoFocus
               name="oldpwd"
               onChange={this.handlePasswordChange}
@@ -302,7 +302,7 @@ class EditProfile extends Component {
               type={this.state.hiddenPassword2 ? "text" : "password"}
               id="newpwd"
               className="form-control"
-              placeholder="New Password"
+              placeholder="Type New Password"
               name="newpwd"
               onChange={this.handlePasswordChange}
               value={this.state.newpwd}

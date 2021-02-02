@@ -26,6 +26,7 @@ import WishlistReducer from "../shopping/modules/Wishlist/WishlistReducer";
 import productCategoryReducer from "../shopping/modules/ProductCategory/productCategoryReducer";
 import shoppingOrderReducer from "../shopping/modules/Order/OrderReducer";
 import EditProfileReducer from "../shopping/modules/Profile/ProfileReducer";
+import ViewMyOrdersReducer from "../shopping/modules/ViewMyOrders/ViewMyOrdersReducer";
 
 
 /*----------------------SELLER IMPORT FILES-----------------------*/
@@ -70,6 +71,7 @@ const rootReducer = combineReducers({
   productDetail:shoppingProductDetailReducer,
   addressDetail:shoppingOrderReducer,
   EditProfile:EditProfileReducer,
+  MyOrders: ViewMyOrdersReducer,
 
   /*--------------SELLER REDUCER---------------*/
   sellerAuth: sellerAuthReducer,

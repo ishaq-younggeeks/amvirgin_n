@@ -12,6 +12,8 @@ import ShopPayment from "./shopping/modules/Order/components/ShopPayment"
 import ShopEditProfile from "./shopping/modules/Profile/EditProfile";
 import ViewAllDeals from "./shopping/modules/Home/components/ViewAllDeals";
 import ViewMyOrders from "./shopping/modules/ViewMyOrders/ViewMyOrders";
+import ViewMyOrderDetails from "./shopping/modules/ViewMyOrders/ViewMyOrderDetails";
+import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
 
 
 // Seller Routes
@@ -112,6 +114,8 @@ class App extends Component {
           <Route exact path="/ShopPayment" component={ShopPayment} />
           <Route exact path="/myprofile/edit" component={ShopEditProfile} />
           <Route exact path="/myprofile/myOrders" component={ViewMyOrders} />
+          <Route exact path="/myprofile/myOrders/orderDetails" component={ViewMyOrderDetails} />
+          <Route exact path="/myprofile/myOrders/trackOrder" component={TrackOrder} />
 
           {/* Entertainment Routes */}
           <Route exact path="/" component={Home}></Route>
