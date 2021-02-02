@@ -6,9 +6,11 @@ import SubMenu from '../Home/components/SubMenu'
 import $ from 'jquery'
 import ReactImageMagnify from 'react-image-magnify';
 import Axios from 'axios';
+import { connect } from 'react-redux';
+import {productDetailSimilar} from "./ProductDetailAction"
 
 
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
 
 constructor(props) {
 	super(props)
@@ -52,6 +54,7 @@ zoomImage = (e,index) => {
 render() {
 	
 	const { productDetail } = this.props;
+	console.log("Product Details :", productDetail);
 
 		const imageProps = {
 			smallImage: {
@@ -386,106 +389,17 @@ render() {
 			<div className="similarproducts">
 				<h4 className="simpro">Similar Products</h4>
 				<div className="row detailrow">
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img4.jpg"} />
+					{productDetail.payload ? productDetail.payload.similar.map((item) => 
+					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12" style={{marginBottom:"30px"}}>
+			            <Link onClick={()=>this.props.productDetailSimilar(item.key,this.props.history)}>
+						<img className="relimg" src={item.image? item.image : process.env.PUBLIC_URL + "/img/default.png"} />
+						</Link>
 						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
+							<h3>{item.brand}</h3>
+							<h5>{item.name}</h5>
+							<p className="offprice">Rs. {item.price.selling} <strike> Rs. {item.price.original}</strike> <span>50% off</span></p>
 						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img1.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/imgsmall6.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img3.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-				</div>
-				<div className="row detailrow">
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/imgsmall7.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/imgsmall8.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/imgsmall9.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img5.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-				</div>
-				<div className="row detailrow">
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img11.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img12.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img13.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
-					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<img className="relimg" src={process.env.PUBLIC_URL + "/shopimg/img14.jpg"} />
-						<div className="reldetails">
-							<h3>Roadster</h3>
-							<h5>Men Tailored Jacket</h5>
-							<p className="offprice">Rs. 1200 <strike> Rs. 2400</strike> <span>50% off</span></p>
-						</div>
-					</div>
+				    </div>): null}
 				</div>
 			</div>
 		</div>
@@ -495,3 +409,16 @@ render() {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+    return  {}
+}
+const mapDispatchToProps = (dispatch) => {
+	return({
+        productDetailSimilar:(id,history)=> dispatch(productDetailSimilar(id,history))
+	});
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
+
+
