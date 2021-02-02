@@ -1,72 +1,69 @@
 import React, { Component,Suspense,lazy } from "react";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-//Shopping Routes
-import ShoppingHomeContainer from "./shopping/modules/Home";
-import ShoppingCartContainer from "./shopping/modules/Cart";
-import ShoppingWishlistContainer from "./shopping/modules/Wishlist/";
-import ShoppingProductContainer from "./shopping/modules/ProductCategory";
-import ViewShopProductDetails from "./shopping/modules/ProductDetail"
-import ShopPlaceOrder from "./shopping/modules/Order"
-import ShopPayment from "./shopping/modules/Order/components/ShopPayment"
-import ShopEditProfile from "./shopping/modules/Profile/EditProfile";
-import ViewAllDeals from "./shopping/modules/Home/components/ViewAllDeals";
-import ViewMyOrders from "./shopping/modules/ViewMyOrders/ViewMyOrders";
-import ViewMyOrderDetails from "./shopping/modules/ViewMyOrders/ViewMyOrderDetails";
-import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
-
+import { Loader } from "./seller/modules/assets/loader.gif";
+import { getSellerProfile }    from "./seller/modules/Authentication/sellerAuthAction"
+import {getSessionProfile}     from './globalComponents/sessionprofileAction.js'
+//Shopping Routes));
+const ShoppingHomeContainer        = lazy(() => import( "./shopping/modules/Home"));
+const ShoppingCartContainer        = lazy(() => import( "./shopping/modules/Cart"));
+const ShoppingWishlistContainer    = lazy(() => import( "./shopping/modules/Wishlist/"));
+const ShoppingProductContainer     = lazy(() => import( "./shopping/modules/ProductCategory"));
+const ViewShopProductDetails       = lazy(() => import( "./shopping/modules/ProductDetail"));
+const ShopPlaceOrder               = lazy(() => import( "./shopping/modules/Order"));
+const ShopPayment                  = lazy(() => import( "./shopping/modules/Order/components/ShopPayment"));
+const ShopEditProfile              = lazy(() => import( "./shopping/modules/Profile/EditProfile"));
+const ViewAllDeals                 = lazy(() => import( "./shopping/modules/Home/components/ViewAllDeals"));
+const ViewMyOrders                 = lazy(() => import( "./shopping/modules/ViewMyOrders/ViewMyOrders"));
 
 // Seller Routes
-import SellerLogin from "./seller/modules/Authentication/components/Login";
-import SellerRegistration from "./seller/modules/Authentication/components/Registration";
-import Dashboard from "./seller/modules/Dashboard/Dashboard";
-import Profile from "./seller/modules/Dashboard/components/Profile";
-import Sellersales from "./seller/modules/Dashboard/components/Sales/Sales";
-import SellerNotification from "./seller/modules/Dashboard/components/Notification/Notification";
-import Navigation from "./seller/modules/Dashboard/components/Navigation/Navigation";
-import ViewOrders from "./seller/modules/Dashboard/components/MyOrders/ViewOrder";
-import MyOrders from "./seller/modules/Dashboard/components/MyOrders/MyOrders";
-import MyOrdersCancelled from "./seller/modules/Dashboard/components/MyOrders/OrdersCancelled";
-import MyOrdersReturns from "./seller/modules/Dashboard/components/MyOrders/OrdersReturn";
-import MyProducts from "./seller/modules/Dashboard/components/MyProducts/components/MyProducts";
-import MyBrands from "./seller/modules/Dashboard/components/MyProducts/components/Brandlist"
-import EditProduct from "./seller/modules/Dashboard/components/MyProducts/components/EditProduct"
-import ProductBrand from "./seller/modules/Dashboard/components/MyProducts/components/ProductBrand";
-import BrandApproval from "./seller/modules/Dashboard/components/MyProducts/components/BrandApproval";
-import ListingType from "./seller/modules/Dashboard/components/MyProducts/components/ListingType"
-import ProductCategory from "./seller/modules/Dashboard/components/MyProducts/components/ProductCategory";
-import SellerAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
-import SellerBulkAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/BulkAddProduct";
-import Setting from "./seller/modules/Dashboard/components/Setting/Setting";
-import SellerPayments from "./seller/modules/Dashboard/components/Payments";
-import SellerAdvertisement from "./seller/modules/Dashboard/components/Advertisement";
-import SellerCreateAdvts from "./seller/modules/Dashboard/components/Advertisement/CreateAdvt"
-import SellerPreviousPayments from "./seller/modules/Dashboard/components/Payments/PreviousPayment";
-import SellerOrderTransactions from "./seller/modules/Dashboard/components/Payments/Transaction"
-import SellerSupport from "./seller/modules/Dashboard/components/SellerSupport/SellerSupport";
-import SellerMou from "./seller/modules/Dashboard/components/Setting/Mou"
-import SellerSupportTicket from "./seller/modules/Dashboard/components/SellerSupport/MyTicket"
-import BusinessDetail from "./seller/modules/Dashboard/components/Setting/BusinessDetail";
-import ViewProductDetails from "./seller/modules/Dashboard/components/MyProducts/components/ViewProductDetails";
-import { getSellerProfile } from "./seller/modules/Authentication/sellerAuthAction";
-import {getSessionProfile} from './globalComponents/sessionprofileAction.js'
-import Return from "./seller/modules/Dashboard/components/Return/Return";
-import { Loader } from "./seller/modules/assets/loader.gif";
-import AddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
+const SellerLogin        = lazy(() => import( "./seller/modules/Authentication/components/Login"));
+const SellerRegistration = lazy(() => import( "./seller/modules/Authentication/components/Registration"));
+const Dashboard          = lazy(() => import( "./seller/modules/Dashboard/Dashboard"));
+const Profile            = lazy(() => import( "./seller/modules/Dashboard/components/Profile"));
+const Sellersales        = lazy(() => import( "./seller/modules/Dashboard/components/Sales/Sales"));
+const SellerNotification = lazy(() => import( "./seller/modules/Dashboard/components/Notification/Notification"));
+const Navigation         = lazy(() => import( "./seller/modules/Dashboard/components/Navigation/Navigation"));
+const ViewOrders         = lazy(() => import( "./seller/modules/Dashboard/components/MyOrders/ViewOrder"));
+const MyOrders           = lazy(() => import( "./seller/modules/Dashboard/components/MyOrders/MyOrders"));
+const MyOrdersCancelled  = lazy(() => import( "./seller/modules/Dashboard/components/MyOrders/OrdersCancelled"));
+const MyOrdersReturns    = lazy(() => import( "./seller/modules/Dashboard/components/MyOrders/OrdersReturn"));
+const MyProducts         = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/MyProducts"));
+const MyBrands           = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/Brandlist"));
+const EditProduct        = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/EditProduct"));
+const ProductBrand       = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/ProductBrand"));
+const BrandApproval      = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/BrandApproval"));
+const ListingType        = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/ListingType"));
+const ProductCategory    = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/ProductCategory"));
+const SellerAddProduct   = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/AddProduct"));
+const SellerBulkAddProduct = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/BulkAddProduct"));
+const Setting              = lazy(() => import( "./seller/modules/Dashboard/components/Setting/Setting"));
+const SellerPayments       = lazy(() => import( "./seller/modules/Dashboard/components/Payments"));
+const SellerAdvertisement  = lazy(() => import( "./seller/modules/Dashboard/components/Advertisement"));
+const SellerCreateAdvts    = lazy(() => import( "./seller/modules/Dashboard/components/Advertisement/CreateAdvt"));
+const SellerPreviousPayments  = lazy(() => import( "./seller/modules/Dashboard/components/Payments/PreviousPayment"));
+const SellerOrderTransactions = lazy(() => import( "./seller/modules/Dashboard/components/Payments/Transaction"));
+const SellerSupport           = lazy(() => import( "./seller/modules/Dashboard/components/SellerSupport/SellerSupport"));
+const SellerMou               = lazy(() => import( "./seller/modules/Dashboard/components/Setting/Mou"));
+const SellerSupportTicket     = lazy(() => import( "./seller/modules/Dashboard/components/SellerSupport/MyTicket"));
+const BusinessDetail          = lazy(() => import( "./seller/modules/Dashboard/components/Setting/BusinessDetail"));
+const ViewProductDetails      = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/ViewProductDetails"));
+const Return                  = lazy(() => import( "./seller/modules/Dashboard/components/Return/Return"));
+const AddProduct              = lazy(() => import( "./seller/modules/Dashboard/components/MyProducts/components/AddProduct"));
 
 // News Routes
-import NewsContainer from "./news/modules/News"
-import NewsDetailContainer from "./news/modules/NewsDetails"
+const NewsContainer       = lazy(() => import("./news/modules/News"));
+const NewsDetailContainer = lazy(() => import("./news/modules/NewsDetails"));
 
 // Footer Routes
-import PrivacyPolicy from "./footer/components/PrivacyPolicy"
-import RefundPolicy from "./footer/components/RefundPolicy"
-import TermsCondition from "./footer/components/TermsCondition"
+const PrivacyPolicy  = lazy(() => import("./footer/components/PrivacyPolicy"));
+const RefundPolicy  = lazy(() => import("./footer/components/RefundPolicy"));
+const TermsCondition = lazy(() => import( "./footer/components/TermsCondition"));
 
 // Entertainment Routes
 const Home = lazy(() => import('./entertainment/modules/Home/components/Home'));
 const Login = lazy(() => import('./entertainment/modules/SignUp/components'));
-const Show = lazy(() => import('./entertainment/modules/Show/components/index'));
+const Show = lazy(() => import('./entertainment/modules/Show/components/indexdd'));
 const Collection = lazy(() => import('./entertainment/modules/Collection'));
 const Subscritption = lazy(() => import('./entertainment/modules/subscription'));
 
@@ -114,8 +111,6 @@ class App extends Component {
           <Route exact path="/ShopPayment" component={ShopPayment} />
           <Route exact path="/myprofile/edit" component={ShopEditProfile} />
           <Route exact path="/myprofile/myOrders" component={ViewMyOrders} />
-          <Route exact path="/myprofile/myOrders/orderDetails" component={ViewMyOrderDetails} />
-          <Route exact path="/myprofile/myOrders/trackOrder" component={TrackOrder} />
 
           {/* Entertainment Routes */}
           <Route exact path="/" component={Home}></Route>

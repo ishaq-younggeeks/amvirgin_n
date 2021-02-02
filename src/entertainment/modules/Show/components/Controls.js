@@ -17,6 +17,7 @@ import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeMute from "@material-ui/icons/VolumeOff";
 import FullScreen from "@material-ui/icons/Fullscreen";
 import Popover from "@material-ui/core/Popover";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles((theme) => ({
   controlsWrapper: {
@@ -27,10 +28,13 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     height: "100%",
+    width: "100%",
     background: "rgba(0,0,0,0.6)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    // opacity: 0,
+    // transition: "all .25s ease-out"
   },
 
   button: {
@@ -112,6 +116,7 @@ const Controls = forwardRef(
       played,
       elapsedTime,
       totalDuration,
+      title,
       onMute,
       muted,
       onVolumeSeekDown,
@@ -140,6 +145,7 @@ const Controls = forwardRef(
 
     return (
       <div ref={ref} className={classes.controlsWrapper}>
+       {/* <div ref={ref} className={'controls' + ' ' + classes.controlsWrapper}> */}
         <Grid
           container
           direction="column"
@@ -156,19 +162,10 @@ const Controls = forwardRef(
           >
             <Grid item>
               <Typography variant="h5" style={{ color: "#fff" }}>
-                Video Title
+                {title}
               </Typography>
             </Grid>
-            <Grid item>
-              <Button
-                onClick={onBookmark}
-                variant="contained"
-                color="primary"
-                startIcon={<BookmarkIcon />}
-              >
-                Bookmark
-              </Button>
-            </Grid>
+           
           </Grid>
           <Grid container direction="row" alignItems="center" justify="center">
             <IconButton
@@ -201,7 +198,7 @@ const Controls = forwardRef(
             </IconButton>
           </Grid>
           {/* bottom controls */}
-          <Grid
+        <Grid
             container
             direction="row"
             justify="space-between"
@@ -212,9 +209,9 @@ const Controls = forwardRef(
               <PrettoSlider
                 min={0}
                 max={100}
-                ValueLabelComponent={(props) => (
-                  <ValueLabelComponent {...props} value={elapsedTime} />
-                )}
+                // ValueLabelComponent={(props) => (
+                //   <ValueLabelComponent {...props} value={elapsedTime} />
+                // )}
                 aria-label="custom thumb label"
                 value={played * 100}
                 onChange={onSeek}
@@ -281,7 +278,9 @@ const Controls = forwardRef(
               </Grid>
             </Grid>
 
-            <Grid item>
+           
+
+        <Grid item>
               <Button
                 onClick={handleClick}
                 aria-describedby={id}
@@ -323,6 +322,14 @@ const Controls = forwardRef(
                   ))}
                 </Grid>
               </Popover>
+             <IconButton
+                onClick={handleClick}
+                aria-describedby={id}
+                className={classes.bottomIcons}
+                variant="text"
+              >
+               <SettingsIcon/>
+              </IconButton>
               <IconButton
                 onClick={onToggleFullScreen}
                 className={classes.bottomIcons}
@@ -332,6 +339,38 @@ const Controls = forwardRef(
             </Grid>
           </Grid>
         </Grid>
+        {/* <div className="playerControl-container">
+          <div className="playerControl-header"><div>vedio title</div></div>
+          <div className="playerControl-left"></div>
+          <div className="playerControl-center">
+            <div className="backward">
+              <button onClick={onRewind} style={{ border: "none", background: "transparent" }} ><i class="fa fa-backward" style={{ color: "grey" }} aria-hidden="true"></i></button>
+            </div>
+            <div>
+              <button onClick={onPlayPause} style={{ border: "none", background: "transparent" }}><i className={playing ? "fa fa-pause" : "fa fa-play"} style={{ color: "grey" }} aria-hidden="true"></i></button>
+            </div>
+            <div>
+              <button onClick={onFastForward} style={{ border: "none", background: "transparent" }}><i className="fa fa-forward" style={{ color: "grey" }} aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div className="playerControl-right"></div>
+          <div className="playerControl-footer">
+            <div>
+              <input
+                type="range"
+                className="time_range"
+                value={played * 100}
+                onChange={onSeek}
+                onMouseDown={onSeekMouseDown}
+                onChangeCommitted={onSeekMouseUp}
+                onDuration={onDuration}
+                step={0.1}
+                min={0}
+                max={100}
+              />
+            </div>
+          </div>
+        </div> */}
       </div>
     );
   }
@@ -354,6 +393,7 @@ Controls.propTypes = {
   played: PropTypes.number,
   elapsedTime: PropTypes.string,
   totalDuration: PropTypes.string,
+  title:PropTypes.string,
   muted: PropTypes.bool,
   playbackRate: PropTypes.number,
 };
