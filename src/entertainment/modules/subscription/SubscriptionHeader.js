@@ -22,19 +22,20 @@ class SubscriptionHeader extends React.Component{
     render() {
         return (
             <>
-                {/* <div className="stepwizard col-md-offset-3">
+                <div className="stepwizard col-md-offset-3">
                     <div className="stepwizard-row setup-panel"></div>
                     {this.props.arr.map((item,index) => {
                         return (
                             <div className="stepwizard-step">
-                                <button key={index}  type="button" onClick={(e) => this.props.clickMe(index)} className={item.isActive === true ? "btn btn-circle btn-default":"btn btn-circle btn-default btn-primary"}>{item.id}</button>
+                                <button key={index}  type="button" className={item.isActive === true ? "btn btn-circle btn-default":"btn btn-circle btn-default btn-primary"}>{item.id}</button>
+                                {/* <button key={index}  type="button" onClick={(e) => this.props.clickMe(index)} className={item.isActive === true ? "btn btn-circle btn-default":"btn btn-circle btn-default btn-primary"}>{item.id}</button> */}
                                 <p>{item.name}</p>
                             </div>
 
                         )
                     })}
-                </div> */}
-              <div className="stepwizard col-md-offset-3">  
+                </div>
+              {/* <div className="stepwizard col-md-offset-3">  
                     <div className="stepwizard-row setup-panel">
                         <div className="stepwizard-step">
                             <button  type="button" onClick={(e) => this.props.handleClick('Step1',e)} className={this.props.activeClass==='Step1'?activeClass():defaultClass()}>1</button>
@@ -53,7 +54,7 @@ class SubscriptionHeader extends React.Component{
                             <p>Pay</p>
                         </div>
                     </div>
-                </div>  
+                </div>   */}
             </>
           )
     }

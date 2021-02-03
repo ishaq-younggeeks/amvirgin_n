@@ -125,6 +125,7 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(mapStateToProps,mapDispatchToProps)(Subscription);
 
+
 class Step1 extends React.Component{
     constructor(props) {
         super(props);
@@ -132,10 +133,11 @@ class Step1 extends React.Component{
 
     seeAllPlans = () => {
         this.props.toggle()
-        // this.props.clickMe()
+        this.props.clickMe("1")
     }
 
     render() {
+      console.log("Step 1");
         return (
             <>
                 {this.props.isToggleOn === false ? <div className="row setup-content" id="step-1">
@@ -153,6 +155,7 @@ class Step1 extends React.Component{
                 </div>:
                 <Step2
                     listingSubscriptionData={this.props.listingSubscriptionData}
+                    clickMe={this.props.clickMe}
                 />
                 }
             </>
@@ -164,18 +167,23 @@ class Step2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isToggleOn:false
+            isToggleOn:false,
+            selectedPack: "",
+            duration: "",
+            price: "",
+            activePack: "",
         }
     }
 
     next = () => {
-        this.setState(prevState => ({
-            isToggleOn:!prevState.isToggleOn
-        }))
+      this.setState(prevState => ({
+        isToggleOn:!prevState.isToggleOn
+      }));
+      this.props.clickMe("2")
     }
 
     render() {
-      console.log("Step 2 :", this.props.listingSubscriptionData)
+      console.log("Step 2");
         return (
             <>
                 {this.state.isToggleOn === false ? 
@@ -186,8 +194,8 @@ class Step2 extends React.Component {
                                     {this.props.listingSubscriptionData!== undefined && this.props.listingSubscriptionData.map((item,index) => {
                                         return (
                                             <React.Fragment key={index}>
-                                                <input type="radio" name="size" id="size_1" value="200" />
-                                                <label for="size_1" className="pricelabel">
+                                                {/* <input type="radio" name="size" id="size_1" value="200" /> */}
+                                                <label for="size_1" className={`pricelabel + ${index === this.state.activePack ? "active-pack" : ""}`} onClick={(e) => this.setState({ selectedPack: item.key, duration: item.duration, price: item.originalPrice, activePack: index})}>
                                                     <h2 className="price">₹{item.originalPrice}</h2>
                                                     <h4 className="month">{item.duration} Days</h4>
                                                     <h6 className="rate">{item.name}</h6>
@@ -196,11 +204,16 @@ class Step2 extends React.Component {
                                         )
                                     })}
                                 </div>
-                                <button className="btn nextBtn btn-lg pull-right " type="button" onClick={() => this.next()}>Continue</button>
+                                <button className="btn nextBtn btn-lg pull-right " type="button" disabled={!this.state.selectedPack && "true"} onClick={() => this.next()}>Continue</button>
                             </div>
                         </div>
                     </div>
-                :<Step3/>}
+                :<Step3 
+                price={this.state.price}
+                selectedPack={this.state.selectedPack}
+                duration={this.state.duration}
+                clickMe={this.props.clickMe}
+                />}
             </>
         )
     }
@@ -218,9 +231,11 @@ class Step3 extends Component {
         this.setState(prevState => ({
             isToggleOn:!prevState.isToggleOn
         }))
+        this.props.clickMe("3");
     }
 
     render(){
+      console.log("Step 3");
         return (
             <>
                 {this.state.isToggleOn === false ? 
@@ -231,8 +246,8 @@ class Step3 extends Component {
                                     <div className="dataselect">
                                         <h1>Selected Pack</h1>
                                     </div>
-                                    <h3>3 Months</h3>
-                                    <h3 className="bggolden">Total ₹ 300</h3>
+                                    <h3>{this.props.duration} Days</h3>
+                                    <h3 className="bggolden">Total ₹ {this.props.price}</h3>
                                 </div>
                                 <div className="form-group dataformat">
                                     <input maxlength="200" type="text" required="required" className="form-control" placeholder="Please Enter Mobile/Email address" />
@@ -260,6 +275,7 @@ class Step3 extends Component {
                                         </button>
                                     </div>
                                 </div>
+                                {/* <button className="btn nextBtn btn-lg pull-left" type="button" onClick={() => this.step3Toggle()}>Next</button> */}
                                 <button className="btn nextBtn btn-lg pull-right" type="button" onClick={() => this.step3Toggle()}>Next</button>
                             </div>
                         </div>
@@ -294,6 +310,7 @@ _renderPaymentComp(){
 }
 
   render(){
+    console.log("Step 4");
       return (<>
            <div className="row setup-content" id="step-4">
       <div className="stepsection">
