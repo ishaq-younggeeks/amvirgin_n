@@ -18,6 +18,7 @@ import VolumeMute from "@material-ui/icons/VolumeOff";
 import FullScreen from "@material-ui/icons/Fullscreen";
 import Popover from "@material-ui/core/Popover";
 import SettingsIcon from '@material-ui/icons/Settings';
+import PictureInPictureAltIcon from '@material-ui/icons/PictureInPictureAlt';
 
 const useStyles = makeStyles((theme) => ({
   controlsWrapper: {
@@ -127,6 +128,7 @@ const Controls = forwardRef(
       volume,
       onVolumeChange,
       onBookmark,
+      onEnablePIP
     },
     ref
   ) => {
@@ -304,9 +306,10 @@ const Controls = forwardRef(
                   vertical: "bottom",
                   horizontal: "left",
                 }}
+                position
               >
                 <Grid container direction="column-reverse">
-                  {[0.5, 1, 1.5, 2].map((rate) => (
+                  {/* {[0.5, 1, 1.5, 2].map((rate) => (
                     <Button
                       key={rate}
                       //   onClick={() => setState({ ...state, playbackRate: rate })}
@@ -319,7 +322,16 @@ const Controls = forwardRef(
                         {rate}X
                       </Typography>
                     </Button>
-                  ))}
+                  ))} */}
+                  <Button>
+                    Quality
+                  </Button>
+                  <Button>
+                    Playback Speed
+                  </Button>
+                  <Button>
+                    Subtitle
+                  </Button>
                 </Grid>
               </Popover>
              <IconButton
@@ -336,6 +348,12 @@ const Controls = forwardRef(
               >
                 <FullScreen fontSize="large" />
               </IconButton>
+              {/* <IconButton
+              onClick={onEnablePIP}
+              className={classes.bottomIcons}
+              >
+              <PictureInPictureAltIcon fontSize="large"/>
+              </IconButton> */}
             </Grid>
           </Grid>
         </Grid>
@@ -396,5 +414,6 @@ Controls.propTypes = {
   title:PropTypes.string,
   muted: PropTypes.bool,
   playbackRate: PropTypes.number,
+  onEnablePIP:PropTypes.func
 };
 export default Controls;
