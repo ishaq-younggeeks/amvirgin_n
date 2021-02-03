@@ -14,7 +14,7 @@ export const subscribeListData = () => {
     axios.get(`${baseURL}/customer/subscriptions`)
     .then((res) => {
       let dataList = []
-      dataList = res.data.data
+      dataList = res.data.payload
       dispatch(subscribeList(dataList))
     }) .catch((error => {
       console.log(error)

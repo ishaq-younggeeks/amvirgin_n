@@ -71,7 +71,7 @@ class Subscription extends Component {
         }
     }
 
-    UNSAFE_componentWillMount() {
+    componentDidMount() {
         this.props.subscribeListData()
     }
 
@@ -175,6 +175,7 @@ class Step2 extends React.Component {
     }
 
     render() {
+      console.log("Step 2 :", this.props.listingSubscriptionData)
         return (
             <>
                 {this.state.isToggleOn === false ? 
@@ -188,8 +189,8 @@ class Step2 extends React.Component {
                                                 <input type="radio" name="size" id="size_1" value="200" />
                                                 <label for="size_1" className="pricelabel">
                                                     <h2 className="price">₹{item.originalPrice}</h2>
-                                                    <h4 className="month">1 month</h4>
-                                                    <h6 className="rate">@{item.duration}</h6>
+                                                    <h4 className="month">{item.duration} Days</h4>
+                                                    <h6 className="rate">{item.name}</h6>
                                                 </label>
                                             </React.Fragment>
                                         )
