@@ -1,23 +1,29 @@
-import {NEWS_CATEGORY, NEWS_LISTING} from "./NewsConstant";
+import {NEWS_CATEGORY, NEWS_LISTING, ARTICLE_DETAILS} from "./NewsConstant";
 
 const initialState = {
   newsList:[],
   fetchingData:false,
   newsCategory: [],
-  newsListing: []
+  newsListing: [],
+  detailsOfArticle: ""
 };
 
 export default function(state = initialState, action) {
   switch(action.type){
     case NEWS_CATEGORY:
-      return{
+      return {
         ...state,
         newsCategory: action.payload
       }
     case NEWS_LISTING:
-      return{
+      return {
         ...state,
         newsListing: action.payload
+      }  
+    case ARTICLE_DETAILS:
+      return {
+        ...state,
+        detailsOfArticle: action.payload
       }  
     default:
       return state;  

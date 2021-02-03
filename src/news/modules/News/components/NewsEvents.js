@@ -1,25 +1,27 @@
 import React from "react";
 import "../../../style.css";
-import { newsListingFnc } from "../NewsAction";
+import { newsListingFnc, articleDetailsFnc } from "../NewsAction";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class NewsEvents extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       category_id: 1,
+      active_class: ""
     };
+  }
+
+  activeClass = () => {
+    this.setState({
+      active_class:"active" 
+    });
   }
 
   componentDidMount = () => {
     this.props.newsListingFnc(this.state.category_id, "1");
   };
-
-  // componentDidUpdate = (prevState) => {
-  //   if(prevState !== this.state.category_id){
-  //     this.props.newsListingFnc(this.state.category_id, "1");
-  //   }
-  // }
 
   render() {
     console.log("Category :", this.props.category);
@@ -34,13 +36,13 @@ class NewsEvents extends React.Component {
             <ul className="navbar-nav m-auto">
               {this.props.category && this.props.category.categories
                 ? this.props.category.categories.map((item, i) => (
-                    <li className="nav-item active ">
+                    <li className="nav-item">
                       <a
                         className={
                           "nav-link " +
                           (i % 2 === 0 ? "colororange" : "coloryellow")
                         }
-                        href="#"
+                        href="#" onClick={() => this.props.newsListingFnc(item.key, "1")}
                       >
                         {" "}
                         {item.name} <span className="sr-only">(current)</span>
@@ -56,16 +58,22 @@ class NewsEvents extends React.Component {
             {" "}
             News
           </h3>
-          <hr className="redhr" />
+          <hr style={{
+              color: "red",
+              backgroundColor: "#ce3838",
+              height: 3,
+              borderColor: "#ce3838",
+            }}/>
           <div className="flexsection">
             {this.props.newsListing && this.props.newsListing.data
               ? this.props.newsListing.data.map((item) => {
                   if (item.type !== "video") {
                     return (
-                      <div className="blogpart">
-                        <a href="#">
-                          <div className="imgsection">
-                            <img src={item.thumbnail} alt="news1"/>
+                      <div className="blogpart" style={{width:"100%"}}>
+                        <Link to="/news/details">
+                        <a href="#" onClick={() => localStorage.setItem("newsId", item.key)}>
+                          <div>
+                            <img src={item.thumbnail} alt="news1" style={{width:"76.3%"}}/>
                           </div>
                           <div className="details">
                             <h3>
@@ -79,6 +87,7 @@ class NewsEvents extends React.Component {
                             </h6>
                           </div>
                         </a>
+                        </Link>
                       </div>
                     );
                   }
@@ -86,7 +95,7 @@ class NewsEvents extends React.Component {
                     <div className="blogpart">
                       <a href="#">
                         <div>
-                          <video src={item.video} alt="news1" controls="controls" />
+                          <video src={item.video} alt="news1" controls="controls" onContextMenu={(e)=>  {e.preventDefault(); return false;}} onClick={() => this.props.articleDetailsFnc(item.key)}/>
                         </div>
                         <div className="details">
                           <h3>
@@ -121,6 +130,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     newsListingFnc: (category, page) =>
       dispatch(newsListingFnc(category, page)),
+      articleDetailsFnc: (id) => dispatch(articleDetailsFnc(id))  
   };
 };
 

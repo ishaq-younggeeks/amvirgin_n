@@ -57,6 +57,7 @@ import AddProduct from "./seller/modules/Dashboard/components/MyProducts/compone
 // News Routes
 import NewsContainer from "./news/modules/News"
 import NewsDetailContainer from "./news/modules/NewsDetails"
+import NewsArticleDetails from "./news/modules/News/components/NewsArticleDetails";
 
 // Footer Routes
 import PrivacyPolicy from "./footer/components/PrivacyPolicy"
@@ -92,6 +93,7 @@ class App extends Component {
           {/* News Routes */}
           <Route exact path="/news" component={NewsContainer}/>
           <Route exact path="/news/newsDetails" component={NewsDetailContainer}/>
+          <Route exact path="/news/details" component={NewsArticleDetails}/>
 
           {/* Footer Routes */}
           <Route exact path="/privacypolicy" component={PrivacyPolicy}/>
