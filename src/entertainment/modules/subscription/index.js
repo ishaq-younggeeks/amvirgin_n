@@ -7,6 +7,7 @@ import {Helmet} from "react-helmet";
 import SubscriptionHeader from "./SubscriptionHeader"
 import { connect } from 'react-redux';
 import {subscribeListData} from "../../reducers/subscriptionReducer"
+import { Link } from 'react-router-dom';
 
 class Subscription extends Component {
     constructor(props) {
@@ -62,6 +63,7 @@ class Subscription extends Component {
             case 'Step3' : return <Step3/>
             case 'Step4': return <Step4/>
             default : return <Step1
+                loggedIn={this.props.loggedIn}
                 clickMe={this.clickMe}
                 toggle={this.toggle}
                 isToggleOn={this.state.isToggleOn}
@@ -111,8 +113,9 @@ class Subscription extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return  {
-        listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
+    return  { 
+      loggedIn: state.authReducer.loggedIn,
+      listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
     }
 }
 
@@ -156,6 +159,7 @@ class Step1 extends React.Component{
                 <Step2
                     listingSubscriptionData={this.props.listingSubscriptionData}
                     clickMe={this.props.clickMe}
+                    loggedIn={this.props.loggedIn}
                 />
                 }
             </>
@@ -213,6 +217,7 @@ class Step2 extends React.Component {
                 selectedPack={this.state.selectedPack}
                 duration={this.state.duration}
                 clickMe={this.props.clickMe}
+                loggedIn={this.props.loggedIn}
                 />}
             </>
         )
@@ -236,20 +241,23 @@ class Step3 extends Component {
 
     render(){
       console.log("Step 3");
+      console.log("Logged In :", this.props.loggedIn)
         return (
             <>
                 {this.state.isToggleOn === false ? 
                     <div className="row setup-content" id="step-3">
                         <div className="stepsection">
                             <div className="">
-                                <div className="selectpack">
+                                <div className="selectpack" style={{  marginLeft: this.props.loggedIn ? "40%" : ""}}>
                                     <div className="dataselect">
                                         <h1>Selected Pack</h1>
                                     </div>
                                     <h3>{this.props.duration} Days</h3>
                                     <h3 className="bggolden">Total ₹ {this.props.price}</h3>
                                 </div>
-                                <div className="form-group dataformat">
+                                {!this.props.loggedIn ?
+                                <>
+                                {/* <div className="form-group dataformat">
                                     <input maxlength="200" type="text" required="required" className="form-control" placeholder="Please Enter Mobile/Email address" />
                                 </div>
                                 <div className="form-group dataformat">
@@ -274,9 +282,13 @@ class Step3 extends Component {
                                         <button className="gbtn"><img src="img/google.png" /><span>Google</span>
                                         </button>
                                     </div>
+                                </div> */}
+                                <div className="form-group dataformat" style={{marginTop:"3rem"}}>
+                                <Link to="/login"><h2 className="hoverlogin" style={{color:"darkgoldenrod", fontWeight:"bold"}}>Please Login / Register to continue.</h2></Link>
                                 </div>
+                                </> : null}
                                 {/* <button className="btn nextBtn btn-lg pull-left" type="button" onClick={() => this.step3Toggle()}>Next</button> */}
-                                <button className="btn nextBtn btn-lg pull-right" type="button" onClick={() => this.step3Toggle()}>Next</button>
+                                {this.props.loggedIn ? <button className="btn nextBtn btn-lg pull-right" type="button" onClick={() => this.step3Toggle()}>Next</button> : null}
                             </div>
                         </div>
                     </div>
@@ -287,6 +299,7 @@ class Step3 extends Component {
         )
     }
 }
+
 
 class Step4 extends Component {
   constructor(props){

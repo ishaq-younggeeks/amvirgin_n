@@ -350,6 +350,10 @@ font-size: 16px;
   margin-bottom: 20px;
 }
 
+.hoverlogin:hover{
+  color: #c00!important;
+}
+
 .selectpack h3{
   width: 100%;
   float: left;
