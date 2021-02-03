@@ -14,7 +14,7 @@ import { videoData, clearVideoData, trendingDetail } from './ShowAction'
 import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
 // import ReactPlayer from './CreatePlayer'
-import ReactPlayer from 'react-player'
+import ReactPlayer from 'react-player/lazy'
 import Controls from './Controls'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
@@ -361,6 +361,7 @@ class Show extends Component {
                         onPlaybackRateChange={this.handlePlaybackRate}
                         onToggleFullScreen={this.toggleFullScreen}
                         volume={volume}
+                        onEnablePIP={this.handleEnablePIP}
                       // onBookmark={addBookmark}
                       />
                     </div>) : ""}
