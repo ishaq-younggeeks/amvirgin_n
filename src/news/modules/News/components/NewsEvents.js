@@ -9,14 +9,8 @@ class NewsEvents extends React.Component {
     super(props);
     this.state = {
       category_id: 1,
-      active_class: ""
+      active_class: 0
     };
-  }
-
-  activeClass = () => {
-    this.setState({
-      active_class:"active" 
-    });
   }
 
   componentDidMount = () => {
@@ -24,8 +18,6 @@ class NewsEvents extends React.Component {
   };
 
   render() {
-    console.log("Category :", this.props.category);
-    console.log("Listing :", this.props.newsListing);
     return (
       <>
         <nav
@@ -36,13 +28,13 @@ class NewsEvents extends React.Component {
             <ul className="navbar-nav m-auto">
               {this.props.category && this.props.category.categories
                 ? this.props.category.categories.map((item, i) => (
-                    <li className="nav-item">
+                    <li className={`nav-item + ${i === this.state.active_class ? "active-news" : ""}`}>
                       <a
                         className={
                           "nav-link " +
                           (i % 2 === 0 ? "colororange" : "coloryellow")
                         }
-                        href="#" onClick={() => this.props.newsListingFnc(item.key, "1")}
+                        href="#" onClick={() => (this.props.newsListingFnc(item.key, "1"), this.setState({active_class: i}))}
                       >
                         {" "}
                         {item.name} <span className="sr-only">(current)</span>
@@ -69,7 +61,7 @@ class NewsEvents extends React.Component {
               ? this.props.newsListing.data.map((item) => {
                   if (item.type !== "video") {
                     return (
-                      <div className="blogpart" style={{width:"100%"}}>
+                      <div className="blogpart">
                         <Link to="/news/details">
                         <a href="#" onClick={() => localStorage.setItem("newsId", item.key)}>
                           <div>

@@ -334,9 +334,9 @@ _renderPaymentComp(){
               <div className="leftsection">
                 <div className="body-style paymentsection">
                   <div className="tab">
-                    <button className="tablinks tab-one" onClick={(e) => this.selectPayment( 'Card',e)} id="defaultOpen" >CREDIT/ DEBIT CARD </button>
+                    <button className="tablinks tab-one" onClick={(e) => this.selectPayment( 'Card',e)} id="defaultOpen" >CREDIT / DEBIT CARD </button>
                     <button className="tablinks" onClick={(e) => this.selectPayment('NetBank',e)}> NET BANKING </button>
-                    <button className="tablinks" onClick={(e) => this.selectPayment('BhimUpi',e)}> PHONEPAY/GOOGLEPAY/BHIM UPI </button>
+                    <button className="tablinks" onClick={(e) => this.selectPayment('BhimUpi',e)}> PHONEPAY / GOOGLEPAY / BHIM UPI </button>
                     <button className="tablinks" onClick={(e) => this.selectPayment('Wallet',e)}> WALLETS </button>
                 
                   </div>
@@ -476,7 +476,6 @@ class NetBank extends Component {
                     <div className="input-group">
                     <button type="submit" form="form1" value="Submit" className=" btn btn-raised btn-red"> PAY NOW </button>
                     </div>
-
                   </div>
       </>
     )
@@ -489,8 +488,8 @@ class BhimUpi extends Component {
     return (
       <>
          <div id="BHIM" className="tabcontent walletradio">
-                    <h3 className="credit-card">PHONEPE/GOOGLE PAY/BHIM UPI</h3>
-                    <label className="container"><img src="img/gpay.png" className="walletimg"/> Google pay 
+                    <h3 className="credit-card">PHONEPE / GOOGLE PAY / BHIM UPI</h3>
+                    <label className="container"><img src="img/gpay.png" className="walletimg"/> Google Pay 
                       <input type="radio" checked="checked" name="upi" value="googlepay" />
                       <span className="checkmark"></span>
                     </label>
