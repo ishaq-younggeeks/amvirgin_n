@@ -14,13 +14,14 @@ import { videoData, clearVideoData, trendingDetail } from './ShowAction'
 import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
 // import ReactPlayer from './CreatePlayer'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player'
 import Controls from './Controls'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
 import { IconButton } from '@material-ui/core';
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import Duration from './Duration'
+import {LivePlayer} from './videoPlayer'
 class Show extends Component {
   constructor(props) {
     super(props);
@@ -70,6 +71,17 @@ class Show extends Component {
     //     this.setState({trending: res.data.data.trendingPicks});
     // }).catch(err=>console.log("error occur",err));
   }
+  videoJsOptions = {
+    autoplay: false,
+    playbackRates: [0.5, 1, 1.25, 1.5, 2],
+    controls: true,
+    sources: [
+      {
+        src: 'https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8',
+        type: 'application/x-mpegURL',
+      },
+    ],
+  };
 
   load = url => {
     this.setState({
@@ -297,18 +309,21 @@ class Show extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div>
+                  {/* <VideoPlayer {...this.videoJsOptions }/> */}
+                  <LivePlayer {...videoDetail}/>
                 {videoDetail && videoDetail.sources?
                  (<div
                       className='VideoPlayer'
-                      onMouseMove={this.handleMouseMove}
-                      onMouseLeave={this.hanldeMouseLeave}
+                      // onMouseMove={this.handleMouseMove}
+                      // onMouseLeave={this.hanldeMouseLeave}
                       style={{
                         position: "relative",
                         width: "100%"
                       }}
                       ref={this.playerContainerRef}
                     >
-                      <ReactPlayer
+                      
+                      {/* <ReactPlayer
                         ref={this.ref}
                         className='react-player'
                         width='100%'
@@ -335,8 +350,8 @@ class Show extends Component {
                         onError={e => console.log('onError', e)}
                         onProgress={this.handleProgress}
                         onDuration={this.handleDuration}
-                      />
-                      <Controls
+                      /> */}
+                      {/* <Controls
                         ref={this.controlsRef}
                         onPlay={this.handlePlay}
                         onPause={this.handlePause}
@@ -361,9 +376,8 @@ class Show extends Component {
                         onPlaybackRateChange={this.handlePlaybackRate}
                         onToggleFullScreen={this.toggleFullScreen}
                         volume={volume}
-                        onEnablePIP={this.handleEnablePIP}
                       // onBookmark={addBookmark}
-                      />
+                      /> */}
                     </div>) : ""}
                   {/* :""} */}
                 </div>
