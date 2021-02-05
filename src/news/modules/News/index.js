@@ -1,18 +1,18 @@
 import {connect} from 'react-redux';
 
-import News from './components/news';
-import {newsListData} from "./NewsReducer";
+import News from './components/News';
+import {newsCategoryFnc, newsListingFnc} from "./NewsAction";
 
 const mapStateToProps = (state) => {
   return  {
-    newsList: state.news.newsList,
-    fetchingData: state.news.fetchingData
+    newsCategory: state.News.newsCategory
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return({
-    newsListData:() => dispatch(newsListData()),
+    newsCategoryFnc:() => dispatch(newsCategoryFnc()),
+    newsListingFnc: (category, page) => dispatch(newsListingFnc(category, page))
 	});
 };
 

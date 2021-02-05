@@ -332,6 +332,12 @@ font-size: 16px;
   border-radius: 10px;
 }
 
+.active-pack{
+  border: 3px solid red!important;
+  width: 230px!important;
+  height: 140px!important;
+}
+
 .dataselect{
   color: darkgoldenrod;
   border-radius: 5px;
@@ -342,6 +348,10 @@ font-size: 16px;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 20px;
+}
+
+.hoverlogin:hover{
+  color: #c00!important;
 }
 
 .selectpack h3{

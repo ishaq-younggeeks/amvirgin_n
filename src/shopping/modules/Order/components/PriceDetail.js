@@ -13,7 +13,6 @@ class PriceDetail extends Component {
 
 componentDidMount(){
   this.props.fetchCart()
-
   console.log("price Detail",this.props.priceDetail)
 }
  
@@ -28,11 +27,11 @@ componentDidMount(){
 
           <div className="priceproduct">
           <span>Order Total</span>
-            <span className="desc">{priceDetail.subTotal}</span>
+            <span className="desc"> ₹ {priceDetail.subTotal}</span>
           </div>
           <div className="priceproduct">
           <span>Tax</span>
-           <span className="desc">{priceDetail.tax}</span>
+           <span className="desc"> ₹ {priceDetail.tax}</span>
           </div>
           <div className="priceproduct">
           <span>Delivery Charges</span>
@@ -40,10 +39,9 @@ componentDidMount(){
           </div>
           <hr/>
           <div className="priceproduct totalprice">
-          <span>Total</span><span className="desc">{priceDetail.total}</span>
+          <span>Total</span><span className="desc"> ₹ {priceDetail.total}</span>
           </div>
-          {this.props.displayButton?<Link to="/ShopPayment" type="button" className="btn btn-red">Continue</Link>:""}
-
+          {this.props.AddressId ? <Link to={{pathname:"/ShopPayment",addressId:this.props.AddressId}} type="button" className="btn btn-red">Continue</Link>:""}
         </div>
       </>
     )

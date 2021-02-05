@@ -6,7 +6,8 @@ import Footer from "../Footer";
 import {Helmet} from "react-helmet";
 import SubscriptionHeader from "./SubscriptionHeader"
 import { connect } from 'react-redux';
-import {subscribeListData} from "../../reducers/subscriptionReducer"
+import {subscribeListData, susbcriptionCheckout} from "../../reducers/subscriptionReducer"
+import { Link } from 'react-router-dom';
 
 class Subscription extends Component {
     constructor(props) {
@@ -62,16 +63,18 @@ class Subscription extends Component {
             case 'Step3' : return <Step3/>
             case 'Step4': return <Step4/>
             default : return <Step1
+                loggedIn={this.props.loggedIn}
                 clickMe={this.clickMe}
                 toggle={this.toggle}
                 isToggleOn={this.state.isToggleOn}
                 listingSubscriptionData={this.props.listingSubscriptionData}
                 arr={this.state.arr}
+                susbcriptionCheckout={this.props.susbcriptionCheckout}
             />
         }
     }
 
-    UNSAFE_componentWillMount() {
+    componentDidMount() {
         this.props.subscribeListData()
     }
 
@@ -111,19 +114,21 @@ class Subscription extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return  {
-        listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
+    return  { 
+      loggedIn: state.authReducer.loggedIn,
+      listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return({
-        subscribeListData:()=>dispatch(subscribeListData())
-
+        subscribeListData: () => dispatch(subscribeListData()),
+        susbcriptionCheckout: (id) => dispatch(susbcriptionCheckout(id))
 	});
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Subscription);
+
 
 class Step1 extends React.Component{
     constructor(props) {
@@ -132,10 +137,11 @@ class Step1 extends React.Component{
 
     seeAllPlans = () => {
         this.props.toggle()
-        // this.props.clickMe()
+        this.props.clickMe("1")
     }
 
     render() {
+      console.log("Step 1");
         return (
             <>
                 {this.props.isToggleOn === false ? <div className="row setup-content" id="step-1">
@@ -153,6 +159,9 @@ class Step1 extends React.Component{
                 </div>:
                 <Step2
                     listingSubscriptionData={this.props.listingSubscriptionData}
+                    clickMe={this.props.clickMe}
+                    loggedIn={this.props.loggedIn}
+                    susbcriptionCheckout={this.props.susbcriptionCheckout}
                 />
                 }
             </>
@@ -164,17 +173,23 @@ class Step2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isToggleOn:false
+            isToggleOn:false,
+            selectedPack: "",
+            duration: "",
+            price: "",
+            activePack: "",
         }
     }
 
     next = () => {
-        this.setState(prevState => ({
-            isToggleOn:!prevState.isToggleOn
-        }))
+      this.setState(prevState => ({
+        isToggleOn:!prevState.isToggleOn
+      }));
+      this.props.clickMe("2")
     }
 
     render() {
+      console.log("Step 2");
         return (
             <>
                 {this.state.isToggleOn === false ? 
@@ -185,21 +200,28 @@ class Step2 extends React.Component {
                                     {this.props.listingSubscriptionData!== undefined && this.props.listingSubscriptionData.map((item,index) => {
                                         return (
                                             <React.Fragment key={index}>
-                                                <input type="radio" name="size" id="size_1" value="200" />
-                                                <label for="size_1" className="pricelabel">
+                                                {/* <input type="radio" name="size" id="size_1" value="200" /> */}
+                                                <label for="size_1" className={`pricelabel + ${index === this.state.activePack ? "active-pack" : ""}`} onClick={(e) => this.setState({ selectedPack: item.key, duration: item.duration, price: item.originalPrice, activePack: index})}>
                                                     <h2 className="price">₹{item.originalPrice}</h2>
-                                                    <h4 className="month">1 month</h4>
-                                                    <h6 className="rate">@{item.duration}</h6>
+                                                    <h4 className="month">{item.duration} Days</h4>
+                                                    <h6 className="rate">{item.name}</h6>
                                                 </label>
                                             </React.Fragment>
                                         )
                                     })}
                                 </div>
-                                <button className="btn nextBtn btn-lg pull-right " type="button" onClick={() => this.next()}>Continue</button>
+                                <button className="btn nextBtn btn-lg pull-right " type="button" disabled={!this.state.selectedPack && "true"} onClick={() => this.next()}>Continue</button>
                             </div>
                         </div>
                     </div>
-                :<Step3/>}
+                :<Step3 
+                price={this.state.price}
+                selectedPack={this.state.selectedPack}
+                duration={this.state.duration}
+                clickMe={this.props.clickMe}
+                loggedIn={this.props.loggedIn}
+                susbcriptionCheckout={this.props.susbcriptionCheckout}
+                />}
             </>
         )
     }
@@ -217,23 +239,29 @@ class Step3 extends Component {
         this.setState(prevState => ({
             isToggleOn:!prevState.isToggleOn
         }))
+        this.props.clickMe("3");
+        this.props.susbcriptionCheckout(this.props.selectedPack)
     }
 
     render(){
+      console.log("Step 3");
+      console.log("Logged In :", this.props.loggedIn)
         return (
             <>
                 {this.state.isToggleOn === false ? 
                     <div className="row setup-content" id="step-3">
                         <div className="stepsection">
                             <div className="">
-                                <div className="selectpack">
+                                <div className="selectpack" style={{  marginLeft: this.props.loggedIn ? "40%" : ""}}>
                                     <div className="dataselect">
                                         <h1>Selected Pack</h1>
                                     </div>
-                                    <h3>3 Months</h3>
-                                    <h3 className="bggolden">Total ₹ 300</h3>
+                                    <h3>{this.props.duration} Days</h3>
+                                    <h3 className="bggolden">Total ₹ {this.props.price}</h3>
                                 </div>
-                                <div className="form-group dataformat">
+                                {!this.props.loggedIn ?
+                                <>
+                                {/* <div className="form-group dataformat">
                                     <input maxlength="200" type="text" required="required" className="form-control" placeholder="Please Enter Mobile/Email address" />
                                 </div>
                                 <div className="form-group dataformat">
@@ -258,8 +286,13 @@ class Step3 extends Component {
                                         <button className="gbtn"><img src="img/google.png" /><span>Google</span>
                                         </button>
                                     </div>
+                                </div> */}
+                                <div className="form-group dataformat" style={{marginTop:"3rem"}}>
+                                <Link to="/login"><h2 className="hoverlogin" style={{color:"darkgoldenrod", fontWeight:"bold"}}>Please Login / Register to continue.</h2></Link>
                                 </div>
-                                <button className="btn nextBtn btn-lg pull-right" type="button" onClick={() => this.step3Toggle()}>Next</button>
+                                </> : null}
+                                {/* <button className="btn nextBtn btn-lg pull-left" type="button" onClick={() => this.step3Toggle()}>Next</button> */}
+                                {this.props.loggedIn ? <button className="btn nextBtn btn-lg pull-right" type="button" onClick={() => this.step3Toggle()}>Next</button> : null}
                             </div>
                         </div>
                     </div>
@@ -270,6 +303,7 @@ class Step3 extends Component {
         )
     }
 }
+
 
 class Step4 extends Component {
   constructor(props){
@@ -293,6 +327,7 @@ _renderPaymentComp(){
 }
 
   render(){
+    console.log("Step 4");
       return (<>
            <div className="row setup-content" id="step-4">
       <div className="stepsection">
@@ -303,9 +338,9 @@ _renderPaymentComp(){
               <div className="leftsection">
                 <div className="body-style paymentsection">
                   <div className="tab">
-                    <button className="tablinks tab-one" onClick={(e) => this.selectPayment( 'Card',e)} id="defaultOpen" >CREDIT/ DEBIT CARD </button>
+                    <button className="tablinks tab-one" onClick={(e) => this.selectPayment( 'Card',e)} id="defaultOpen" >CREDIT / DEBIT CARD </button>
                     <button className="tablinks" onClick={(e) => this.selectPayment('NetBank',e)}> NET BANKING </button>
-                    <button className="tablinks" onClick={(e) => this.selectPayment('BhimUpi',e)}> PHONEPAY/GOOGLEPAY/BHIM UPI </button>
+                    <button className="tablinks" onClick={(e) => this.selectPayment('BhimUpi',e)}> PHONEPAY / GOOGLEPAY / BHIM UPI </button>
                     <button className="tablinks" onClick={(e) => this.selectPayment('Wallet',e)}> WALLETS </button>
                 
                   </div>
@@ -445,7 +480,6 @@ class NetBank extends Component {
                     <div className="input-group">
                     <button type="submit" form="form1" value="Submit" className=" btn btn-raised btn-red"> PAY NOW </button>
                     </div>
-
                   </div>
       </>
     )
@@ -458,8 +492,8 @@ class BhimUpi extends Component {
     return (
       <>
          <div id="BHIM" className="tabcontent walletradio">
-                    <h3 className="credit-card">PHONEPE/GOOGLE PAY/BHIM UPI</h3>
-                    <label className="container"><img src="img/gpay.png" className="walletimg"/> Google pay 
+                    <h3 className="credit-card">PHONEPE / GOOGLE PAY / BHIM UPI</h3>
+                    <label className="container"><img src="img/gpay.png" className="walletimg"/> Google Pay 
                       <input type="radio" checked="checked" name="upi" value="googlepay" />
                       <span className="checkmark"></span>
                     </label>

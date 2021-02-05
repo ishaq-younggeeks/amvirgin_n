@@ -1,4 +1,4 @@
-
 export const ADDRESS_DETAIL = 'ADDRESS_DETAIL';
-
+export const GET_RAZORPAY = "GET_RAZORPAY";
+export const PLACE_ORDER = "PLACE_ORDER";
 

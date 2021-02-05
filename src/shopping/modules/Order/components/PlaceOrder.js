@@ -13,7 +13,8 @@ export default class PlaceOrder extends Component {
     this.state = {
       editAddress:[],
       isOpen:false,
-      selectedAddress:""
+      selectedAddress:"",
+      addressId: ""
     }
   }
 
@@ -50,6 +51,7 @@ export default class PlaceOrder extends Component {
 
   render() {
       console.log("address data", this.props.addressdata)
+      console.log("Selected Address :", this.state.addressId)
     return (
       <>
         <Header />
@@ -63,7 +65,6 @@ export default class PlaceOrder extends Component {
               {this.props.addressdata && this.props.addressdata.length?
                         (
                           this.props.addressdata.map((address,index) => {
-                            console.log("address id",address.key)
                         return (
                           <React.Fragment key={address.key}>  
                             <div className="address">
@@ -74,6 +75,7 @@ export default class PlaceOrder extends Component {
                                    name="radio"
                                    value={address.key}
                                    onChange={this.onselectAddress}
+                                   onClick={() => this.setState({addressId : address.key})}
                                 />
                                 <span className="checkmark"></span>
                               </label>
@@ -84,8 +86,8 @@ export default class PlaceOrder extends Component {
                                 <div className="address-address">
                                 <div className="address-field">{address.address}</div>
                                   <div>{address.locality}</div>
-                                  <span>{address.city.name}</span>
-                                  <span>{address.pinCode}</span>
+                                  <span>{address.city.name},</span>
+                                  <span> {address.pinCode}</span>
                                   <div>{address.state.name}</div>
                                   <div className="address-mobile">
                                     <span>Mobile: </span>
@@ -137,7 +139,7 @@ export default class PlaceOrder extends Component {
               </div>
             </div>
             <hr/> */}
-         <PriceDetail displayButton={true}/>
+         <PriceDetail AddressId={this.state.addressId}/>
             </div>
           </div>
         </div>

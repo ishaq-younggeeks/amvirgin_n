@@ -27,7 +27,8 @@ class SubscriptionHeader extends React.Component{
                     {this.props.arr.map((item,index) => {
                         return (
                             <div className="stepwizard-step">
-                                <button key={index}  type="button" onClick={(e) => this.props.clickMe(index)} className={item.isActive === true ? "btn btn-circle btn-default":"btn btn-circle btn-default btn-primary"}>{item.id}</button>
+                                <button key={index}  type="button" className={item.isActive === true ? "btn btn-circle btn-default":"btn btn-circle btn-default btn-primary"}>{item.id}</button>
+                                {/* <button key={index}  type="button" onClick={(e) => this.props.clickMe(index)} className={item.isActive === true ? "btn btn-circle btn-default":"btn btn-circle btn-default btn-primary"}>{item.id}</button> */}
                                 <p>{item.name}</p>
                             </div>
 

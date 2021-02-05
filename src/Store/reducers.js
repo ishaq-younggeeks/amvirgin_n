@@ -44,8 +44,7 @@ import sellerDashboardReducer from "../seller/modules/Dashboard/DashboardReducer
 import sellerReturnReducer from "../seller/modules/Dashboard/components/Return/ReturnReducer";
 
 /*--------------------------NEWS------------------------------------*/
-import newsReducer from "../news/modules/News/NewsReducer"
-import newsDetailReducer from "../news/modules/NewsDetails/newsDetailReducer"
+import NewsReducer from "../news/modules/News/NewsReducer"
 
 const rootReducer = combineReducers({
   router: connectRouter(history),
@@ -87,8 +86,7 @@ const rootReducer = combineReducers({
   sellerReturn:sellerReturnReducer,
 
   /*-----------------NEWS REDUCER--------------*/
-  news:newsReducer,
-  newsDetail:newsDetailReducer,
+  News:NewsReducer,
 
 });
 export default rootReducer;
