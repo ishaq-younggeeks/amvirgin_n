@@ -1,11 +1,12 @@
-import {RECEIVED_SUBSCRIPTION_DATA} from '../constants/subscription.constant'
+import {RECEIVED_SUBSCRIPTION_DATA, SUBSCRIPTION_CHECKOUT} from '../constants/subscription.constant'
 import {subscribeList} from "../actions/subscription.actions"
 import { baseURL } from "../../credential.json";
 import axios from 'axios';
 
 
 const initialState = {
-  listingSubscriptionData: []
+  listingSubscriptionData: [],
+  subscriptionCheckout: ""
 }
 
 
@@ -22,11 +23,41 @@ export const subscribeListData = () => {
   }
 }
 
+export const susbcriptionCheckout = (id) => {
+  return (dispatch) => {
+    let token = localStorage.getItem("UserToken");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+
+    axios
+    .get(`${baseURL}/customer/subscriptions/checkout/${id}`)
+    .then((res) => {
+      console.log(res);
+      if(res.data.status === 200){
+        dispatch({
+          type: SUBSCRIPTION_CHECKOUT,
+          payload: res.data
+        })
+      }
+    })
+    .catch((err) => console.log(err));
+  }
+}
+
 const ACTION_HANDLERS = {
   [RECEIVED_SUBSCRIPTION_DATA]: (state, action) => {
     return {
       ...state,
       listingSubscriptionData: action.data
+    };
+  },
+  [SUBSCRIPTION_CHECKOUT]: (state, action) => {
+    return {
+      ...state,
+      subscriptionCheckout: action.payload
     };
   },
 };

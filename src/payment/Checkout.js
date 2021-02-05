@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 //import Razorpay from 'razorpay'
 
 class Checkout extends Component {
@@ -52,7 +53,7 @@ componentDidMount() {
       <>
      <div id="Card" className=" ">
         <div> <p> We will redirect you to your Razorpay's website to authorize the payment. </p> </div>
-        <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red" onClick={this.openCheckout}> PAY NOW </button>
+        {this.props.addressId ?<button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red" onClick={this.openCheckout}> PAY NOW </button> : <Link to="/placeOrder" type="button" className="btn btn-red">Select Address Again</Link>}
       </div>
     </>
     );

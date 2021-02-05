@@ -61,7 +61,7 @@ class NewsEvents extends React.Component {
               ? this.props.newsListing.data.map((item) => {
                   if (item.type !== "video") {
                     return (
-                      <div className="blogpart">
+                      <div className="blogpart" style={{width:"76.3%"}}>
                         <Link to="/news/details">
                         <a href="#" onClick={() => localStorage.setItem("newsId", item.key)}>
                           <div>
@@ -84,7 +84,7 @@ class NewsEvents extends React.Component {
                     );
                   }
                   return (
-                    <div className="blogpart">
+                    <div className="blogpart" style={{width:"76.3%"}}>
                       <a href="#">
                         <div>
                           <video src={item.video} alt="news1" controls="controls" onContextMenu={(e)=>  {e.preventDefault(); return false;}} onClick={() => this.props.articleDetailsFnc(item.key)}/>

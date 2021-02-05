@@ -6,7 +6,7 @@ import Footer from "../Footer";
 import {Helmet} from "react-helmet";
 import SubscriptionHeader from "./SubscriptionHeader"
 import { connect } from 'react-redux';
-import {subscribeListData} from "../../reducers/subscriptionReducer"
+import {subscribeListData, susbcriptionCheckout} from "../../reducers/subscriptionReducer"
 import { Link } from 'react-router-dom';
 
 class Subscription extends Component {
@@ -121,8 +121,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return({
-        subscribeListData:()=>dispatch(subscribeListData())
-
+        subscribeListData: () => dispatch(subscribeListData()),
+        susbcriptionCheckout: (id) => dispatch(susbcriptionCheckout(id))
 	});
 }
 

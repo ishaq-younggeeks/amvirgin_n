@@ -1,5 +1,9 @@
+import axios from "axios";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Checkout from "./Checkout";
+import {getRazorPayId, placeOrderFinal} from "../shopping/modules/Order/OrderAction";
 
 class Payment extends Component {
   constructor(props) {
@@ -17,24 +21,28 @@ class Payment extends Component {
   _renderPaymentComp() {
     switch (this.state.render) {
       case "NetBank":
-        return <Checkout />;
+        return <Checkout addressId={this.props.addressId}/>;
       case "Cash":
-        return <Cash />;
+        return <Cash 
+        addressId={this.props.addressId} 
+        getRazorPayId={this.props.getRazorPayId} 
+        razorPay={this.props.razorPay}
+        placeOrderFinal={this.props.placeOrderFinal}  
+        placedMessage={this.props.placedMessage}/>;
       case "BhimUpi":
-        return <Checkout />;
+        return <Checkout addressId={this.props.addressId}/>;
       case "Wallet":
-        return <Checkout />;
+        return <Checkout addressId={this.props.addressId}/>;
       case "Gift":
-        return <Gift />;
+        return <Gift addressId={this.props.addressId}/>;
       case "RazorPay":
-        return <Checkout />;
+        return <Checkout addressId={this.props.addressId}/>;
       default:
-        return <Checkout />;
+        return <Checkout addressId={this.props.addressId}/>;
     }
   }
 
   activeClass = () => {
-    console.log("class called");
     let cl = "tablinks active";
     return cl;
   };
@@ -59,7 +67,7 @@ class Payment extends Component {
                 onClick={(e) => this.selectPayment("Card", e)}
                 id="defaultOpen"
               >
-                CREDIT/ DEBIT CARD{" "}
+                CREDIT / DEBIT CARD{" "}
               </button>
               <button
                 className={
@@ -81,7 +89,7 @@ class Payment extends Component {
                 onClick={(e) => this.selectPayment("Cash", e)}
               >
                 {" "}
-                CASH/CARD ON DELIVERY{" "}
+                CASH / CARD ON DELIVERY{" "}
               </button>
               <button
                 className={
@@ -92,7 +100,7 @@ class Payment extends Component {
                 onClick={(e) => this.selectPayment("BhimUpi", e)}
               >
                 {" "}
-                PHONEPAY/GOOGLEPAY/BHIM UPI{" "}
+                PHONEPAY / GOOGLEPAY / BHIM UPI{" "}
               </button>
               <button
                 className={
@@ -136,7 +144,21 @@ class Payment extends Component {
   }
 }
 
-export default Payment;
+const mapStateToProps = (state) => {
+  return {
+    razorPay : state.addressDetail.razorpayId,
+    placedMessage: state.addressDetail.placedMessage
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getRazorPayId: () => dispatch(getRazorPayId()),
+    placeOrderFinal: (addressId, paymentMode, razorPayId) => dispatch(placeOrderFinal(addressId, paymentMode, razorPayId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);
 
 // class Card extends Component {
 
@@ -257,13 +279,18 @@ export default Payment;
 // }
 
 class Cash extends Component {
+  componentDidMount = () => {
+    this.props.getRazorPayId();
+  }
+
   render() {
+    const {razorPay} = this.props;
     return (
       <>
         <div id="CashD" className="">
-          <h3 className="credit-card">CASH/ CARD ON DELIVERY</h3>
-          <p>Pay with Cash or Card when your order is delivered</p>
-          <label for="cardNumber" className="txt-clr">
+          <h3 className="credit-card">CASH / CARD ON DELIVERY</h3>
+          <p style={{marginLeft:"35px"}}>Pay with Cash or Card when your order is delivered.</p>
+          {/* <label for="cardNumber" className="txt-clr">
             Enter text as shown in above image
           </label>
           <div className="input-group">
@@ -276,16 +303,17 @@ class Cash extends Component {
               required
               autofocus
             />
-          </div>
-          <button
+          </div> */}
+          {this.props.addressId && razorPay ? <button
             type="submit"
             form="form1"
             value="Submit"
-            className="submit btn btn-raised btn-red"
+            className="btn btn-red"
+            onClick={() => this.props.placeOrderFinal(this.props.addressId, "cash-on-delivery", razorPay)}
           >
             {" "}
             PAY ON DELIVERY{" "}
-          </button>
+          </button> : <Link to="/placeOrder" type="button" className="btn btn-red">Select Address Again</Link>}     
         </div>
       </>
     );
@@ -374,7 +402,7 @@ class Gift extends Component {
             type="submit"
             form="form1"
             value="Submit"
-            className="submit btn btn-raised btn-red"
+            className="btn btn-red"
           >
             {" "}
             ADD TO CREDIT{" "}
@@ -384,3 +412,4 @@ class Gift extends Component {
     );
   }
 }
+
