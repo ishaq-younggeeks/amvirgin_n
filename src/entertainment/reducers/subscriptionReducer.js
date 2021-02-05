@@ -33,13 +33,13 @@ export const susbcriptionCheckout = (id) => {
     }
 
     axios
-    .get(`${baseURL}/customer/subscriptions/checkout/${id}`)
+    .get(`${baseURL}/customer/subscriptions/checkout/${id}`, config)
     .then((res) => {
       console.log(res);
-      if(res.data.status === 200){
+      if(res.data.status === 200 || 201){
         dispatch({
           type: SUBSCRIPTION_CHECKOUT,
-          payload: res.data
+          payload: res.data.payload.rzpOrderId
         })
       }
     })

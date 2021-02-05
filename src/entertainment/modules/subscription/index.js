@@ -69,6 +69,7 @@ class Subscription extends Component {
                 isToggleOn={this.state.isToggleOn}
                 listingSubscriptionData={this.props.listingSubscriptionData}
                 arr={this.state.arr}
+                susbcriptionCheckout={this.props.susbcriptionCheckout}
             />
         }
     }
@@ -160,6 +161,7 @@ class Step1 extends React.Component{
                     listingSubscriptionData={this.props.listingSubscriptionData}
                     clickMe={this.props.clickMe}
                     loggedIn={this.props.loggedIn}
+                    susbcriptionCheckout={this.props.susbcriptionCheckout}
                 />
                 }
             </>
@@ -218,6 +220,7 @@ class Step2 extends React.Component {
                 duration={this.state.duration}
                 clickMe={this.props.clickMe}
                 loggedIn={this.props.loggedIn}
+                susbcriptionCheckout={this.props.susbcriptionCheckout}
                 />}
             </>
         )
@@ -237,6 +240,7 @@ class Step3 extends Component {
             isToggleOn:!prevState.isToggleOn
         }))
         this.props.clickMe("3");
+        this.props.susbcriptionCheckout(this.props.selectedPack)
     }
 
     render(){

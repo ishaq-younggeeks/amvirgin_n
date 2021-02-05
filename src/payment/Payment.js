@@ -28,7 +28,8 @@ class Payment extends Component {
         getRazorPayId={this.props.getRazorPayId} 
         razorPay={this.props.razorPay}
         placeOrderFinal={this.props.placeOrderFinal}  
-        placedMessage={this.props.placedMessage}/>;
+        placedMessage={this.props.placedMessage}
+        history={this.props.history}/>;
       case "BhimUpi":
         return <Checkout addressId={this.props.addressId}/>;
       case "Wallet":
@@ -154,7 +155,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getRazorPayId: () => dispatch(getRazorPayId()),
-    placeOrderFinal: (addressId, paymentMode, razorPayId) => dispatch(placeOrderFinal(addressId, paymentMode, razorPayId))
+    placeOrderFinal: (addressId, paymentMode, razorPayId, history) => dispatch(placeOrderFinal(addressId, paymentMode, razorPayId, history))
   }
 }
 
@@ -309,7 +310,7 @@ class Cash extends Component {
             form="form1"
             value="Submit"
             className="btn btn-red"
-            onClick={() => this.props.placeOrderFinal(this.props.addressId, "cash-on-delivery", razorPay)}
+            onClick={() => this.props.placeOrderFinal(this.props.addressId, "cash-on-delivery", razorPay, this.props.history)}
           >
             {" "}
             PAY ON DELIVERY{" "}

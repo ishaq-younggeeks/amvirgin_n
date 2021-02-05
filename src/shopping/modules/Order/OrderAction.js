@@ -129,7 +129,7 @@ export const getRazorPayId = () => {
   };
 };
 
-export const placeOrderFinal = (addressId, paymentMode, razorPayId) => {
+export const placeOrderFinal = (addressId, paymentMode, razorPayId, history) => {
   return (dispatch) => {
     let token = localStorage.getItem("UserToken");
     let config = {
@@ -150,11 +150,12 @@ export const placeOrderFinal = (addressId, paymentMode, razorPayId) => {
     .post(`${baseURL}/customer/cart/submit`, params, config)
     .then((res) => {
       console.log(res);
-      if(res.data.status === 201){
+      if(res.data.status === 201 || 403){
         dispatch({
           type: PLACE_ORDER,
           payload: res.data
         })
+        history.push({pathname:`/success`});
       }
     })
     .catch((err) => console.log(err));

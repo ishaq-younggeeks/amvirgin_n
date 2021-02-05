@@ -86,8 +86,8 @@ export default class PlaceOrder extends Component {
                                 <div className="address-address">
                                 <div className="address-field">{address.address}</div>
                                   <div>{address.locality}</div>
-                                  <span>{address.city.name}</span>
-                                  <span>{address.pinCode}</span>
+                                  <span>{address.city.name},</span>
+                                  <span> {address.pinCode}</span>
                                   <div>{address.state.name}</div>
                                   <div className="address-mobile">
                                     <span>Mobile: </span>
