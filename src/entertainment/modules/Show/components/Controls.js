@@ -18,11 +18,10 @@ import VolumeMute from "@material-ui/icons/VolumeOff";
 import FullScreen from "@material-ui/icons/Fullscreen";
 import Popover from "@material-ui/core/Popover";
 import SettingsIcon from '@material-ui/icons/Settings';
-import PictureInPictureAltIcon from '@material-ui/icons/PictureInPictureAlt';
 
 const useStyles = makeStyles((theme) => ({
   controlsWrapper: {
-    visibility: "hidden",
+    visibility: "visible",
     position: "absolute",
     top: 0,
     left: 0,
@@ -34,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    // position: "relative",
+    // overflow: "hidden",
     // opacity: 0,
     // transition: "all .25s ease-out"
   },
@@ -128,7 +129,6 @@ const Controls = forwardRef(
       volume,
       onVolumeChange,
       onBookmark,
-      onEnablePIP
     },
     ref
   ) => {
@@ -291,7 +291,7 @@ const Controls = forwardRef(
               >
                 <Typography>{playbackRate}X</Typography>
               </Button>
-
+              <div className="popoverWrap">
               <Popover
                 container={ref.current}
                 open={open}
@@ -306,10 +306,11 @@ const Controls = forwardRef(
                   vertical: "bottom",
                   horizontal: "left",
                 }}
-                position
+                className="povr"
+                // position
               >
                 <Grid container direction="column-reverse">
-                  {/* {[0.5, 1, 1.5, 2].map((rate) => (
+                  {[0.5, 1, 1.5, 2,3,5,7,8,19,67,7,78,78,78].map((rate) => (
                     <Button
                       key={rate}
                       //   onClick={() => setState({ ...state, playbackRate: rate })}
@@ -319,21 +320,13 @@ const Controls = forwardRef(
                       <Typography
                         color={rate === playbackRate ? "secondary" : "inherit"}
                       >
-                        {rate}X
+                        {rate}Xdfgddddddddddd
                       </Typography>
                     </Button>
-                  ))} */}
-                  <Button>
-                    Quality
-                  </Button>
-                  <Button>
-                    Playback Speed
-                  </Button>
-                  <Button>
-                    Subtitle
-                  </Button>
+                  ))}
                 </Grid>
               </Popover>
+              </div>
              <IconButton
                 onClick={handleClick}
                 aria-describedby={id}
@@ -348,12 +341,6 @@ const Controls = forwardRef(
               >
                 <FullScreen fontSize="large" />
               </IconButton>
-              {/* <IconButton
-              onClick={onEnablePIP}
-              className={classes.bottomIcons}
-              >
-              <PictureInPictureAltIcon fontSize="large"/>
-              </IconButton> */}
             </Grid>
           </Grid>
         </Grid>
@@ -414,6 +401,5 @@ Controls.propTypes = {
   title:PropTypes.string,
   muted: PropTypes.bool,
   playbackRate: PropTypes.number,
-  onEnablePIP:PropTypes.func
 };
 export default Controls;

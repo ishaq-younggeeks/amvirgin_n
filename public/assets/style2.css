@@ -1528,6 +1528,11 @@ hr {
   transition: width 0.2s;
   -webkit-appearance: none; /* Autoprefixer doesn't catch this */
   margin-bottom: 0px;
+  background: red;
+}
+
+.longmenu .menu  li h5:hover{
+border-bottom: 2px solid red;
 }
 
 .product {

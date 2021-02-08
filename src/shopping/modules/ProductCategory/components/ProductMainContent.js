@@ -25,7 +25,7 @@ class ProductMainContent extends React.Component {
     const res = await Axios.get(`${baseURL}/customer/products/sorts`)
      this.setState({ sortby: res.data.data },console.log("sortBy state",res.data.data))
     let data = JSON.parse(localStorage.getItem("productData"))
-    this.setState({ categoryId: data["categoryId"], hist: data["productHistory"] })
+    this.setState({ categoryId: data["categoryId"], hist: data["productHistory"] },console.log("categoryId",data["categoryId"]))
     this.state.refresh = true
   }
 

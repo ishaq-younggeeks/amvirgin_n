@@ -53,7 +53,7 @@ class SubMenu extends Component {
 							<ul className="menu" key={index}>
 								{/* <li><Link to={{pathname:`/shop/${category.name}`,data:`${category.id}`}} onMouseEnter={() => this.hoverOn(category)} onMouseLeave={() => this.hoverOff()} isOpen={this.state.dropdownOpen} toggle={() => this.toggle()}>{category.name}</Link></li>{category.name === this.state.ProductName &&  */}
 								{/* <li><Link>  <h5 onClick={() => this.props.productData(category.id,this.props.history)}onMouseEnter={() => this.hoverOn(category)} onMouseLeave={() => this.hoverOff()} isOpen={this.state.dropdownOpen} toggle={() => this.toggle()}>{category.name}</h5></Link></li> */}
-								<li><Link>  <h5 onMouseEnter={() => this.hoverOn(category)} onMouseLeave={() => this.hoverOff()} isOpen={this.state.dropdownOpen} toggle={() => this.toggle()}>{category.name}</h5></Link></li>
+								<li><Link onClick={() => this.props.productData(category.key,this.props.sortKey,this.props.page,this.props.history)}>  <h5 onMouseEnter={() => this.hoverOn(category)} onMouseLeave={() => this.hoverOff()} isOpen={this.state.dropdownOpen} toggle={() => this.toggle()}>{category.name}</h5></Link></li>
 								{category.name === this.state.ProductName &&  
                    			 <ul className="subone">
         				          <li key={index}>

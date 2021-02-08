@@ -25,15 +25,14 @@ export const fetchData = () => {
 }
 
 export const productData = (category,sortBy="relevance",page="1",history) => {
-  console.log(`calling category ${category}, calling history ${history}`);
+  console.log(`calling category ${category}, calling history ${history},calling query,${sortBy}`);
   return (dispatch) => {
     dispatch(fetchingData(true))
     let url = `${baseURL}/customer/categories/${category}/products`
     // let url = `${baseURL}/customer/products/${category}`
     axios.get(url,{
       params: {
-        // category,
-        // sortBy
+        sortBy
       }
     }).then(res => {
       console.log("fetching list",res);
