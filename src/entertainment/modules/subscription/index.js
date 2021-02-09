@@ -1,267 +1,323 @@
-import React, { Component } from 'react'
-import './subscription.css'
-import Header from '../Header'
-import $ from 'jquery'
+import React, { Component } from "react";
+import "./subscription.css";
+import Header from "../Header";
+import $ from "jquery";
 import Footer from "../Footer";
-import {Helmet} from "react-helmet";
-import SubscriptionHeader from "./SubscriptionHeader"
-import { connect } from 'react-redux';
-import {subscribeListData, susbcriptionCheckout} from "../../reducers/subscriptionReducer"
-import { Link } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import SubscriptionHeader from "./SubscriptionHeader";
+import { connect } from "react-redux";
+import {
+  subscribeListData,
+  susbcriptionCheckout,
+} from "../../reducers/subscriptionReducer";
+import { Link } from "react-router-dom";
+import SubscriptionCheckout from "./SubscriptionCheckout";
 
 class Subscription extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            AVSubscription:false,
-            SelectPack:false,
-            EnterDetails:false,     
-            Pay:false,
-            render:'',
-            isToggleOn:false,
-            arr: [
-                {id:1, name: "AmVirgin Subscription", isActive: false },
-                {id:2, name: "Select Pack", isActive: true },
-                {id:3, name: "Enter Details", isActive: true },
-                {id:4, name: "Pay", isActive: true }
-            ]
-        }
-    }   
-    
-    clickMe = (index) => {
-        let tmp = this.state.arr;
-        tmp[index].isActive = !tmp[index].isActive;
-        this.setState({ arr: tmp });
-    }   
+  constructor(props) {
+    super(props);
+    this.state = {
+      AVSubscription: false,
+      SelectPack: false,
+      EnterDetails: false,
+      Pay: false,
+      render: "",
+      isToggleOn: false,
+      arr: [
+        { id: 1, name: "AmVirgin Subscription", isActive: false },
+        { id: 2, name: "Select Pack", isActive: true },
+        { id: 3, name: "Enter Details", isActive: true },
+        { id: 4, name: "Pay", isActive: true },
+      ],
+    };
+  }
 
-    toggle = () => {
-        this.setState(prevState => ({
-            isToggleOn:!prevState.isToggleOn
-        }))
+  clickMe = (index) => {
+    let tmp = this.state.arr;
+    tmp[index].isActive = !tmp[index].isActive;
+    this.setState({ arr: tmp });
+  };
+
+  toggle = () => {
+    this.setState((prevState) => ({
+      isToggleOn: !prevState.isToggleOn,
+    }));
+  };
+
+  activeClass = () => {
+    switch (this.state.render) {
+      case "Step2":
+        return "Step2";
+      case "Step3":
+        return "Step3";
+      case "Step4":
+        return "Step4";
+      default:
+        return "Step1";
     }
+  };
 
-    activeClass = () => {
-        switch(this.state.render){
-        case 'Step2': return 'Step2'
-        case 'Step3' : return 'Step3'
-        case 'Step4': return 'Step4'
-        default : return 'Step1'
-        }
-    }
+  handleClick = (compName, e) => {
+    this.setState({ render: compName });
+    //this.activeClass()
+  };
 
-    handleClick = (compName, e) => {
-        this.setState({render:compName});
-        //this.activeClass()        
-    }
-
-    _renderSubComp(){
-        switch(this.state.render){
-            case 'Step2': return <Step2 
-                listingSubscriptionData={this.props.listingSubscriptionData}
-                clickMe={this.clickMe}
-                />
-            case 'Step3' : return <Step3/>
-            case 'Step4': return <Step4/>
-            default : return <Step1
-                loggedIn={this.props.loggedIn}
-                clickMe={this.clickMe}
-                toggle={this.toggle}
-                isToggleOn={this.state.isToggleOn}
-                listingSubscriptionData={this.props.listingSubscriptionData}
-                arr={this.state.arr}
-                susbcriptionCheckout={this.props.susbcriptionCheckout}
-            />
-        }
-    }
-
-    componentDidMount() {
-        this.props.subscribeListData()
-    }
-
-    render() {
-      console.log(this.props)
+  _renderSubComp() {
+    switch (this.state.render) {
+      case "Step2":
         return (
-            <>  
-                <Helmet>
-                    <meta charSet="utf-8" />
-                    <title>Amvirgin | Subscription</title>
-                </Helmet>
-        <Header/>
-        <div className="loginbody subscribesection">     
-          <div className="container">
-                <Header/>
-                <div className="">     
-                    <div className="container">
-                        <SubscriptionHeader 
-                            handleClick={this.handleClick} 
-                            activeClass={this.activeClass()}
-                            clickMe={this.clickMe}
-                            arr={this.state.arr}
-                        />
-                        <form role="form" action="" method="post" className="formpart">
-                            <h3 className="titlebinge">Binge Watch</h3>
-                            <p className="parabinge">All episodes without any limits</p>
-                            {this._renderSubComp()}
-                        </form>
-                    </div>
-                </div>
-          </div>  
-          </div>    
-                <Footer />
-            </>
-        )
+          <Step2
+            listingSubscriptionData={this.props.listingSubscriptionData}
+            clickMe={this.clickMe}
+          />
+        );
+      case "Step3":
+        return <Step3 />;
+      case "Step4":
+        return <Step4 />;
+      default:
+        return (
+          <Step1
+            loggedIn={this.props.loggedIn}
+            clickMe={this.clickMe}
+            toggle={this.toggle}
+            isToggleOn={this.state.isToggleOn}
+            listingSubscriptionData={this.props.listingSubscriptionData}
+            arr={this.state.arr}
+            susbcriptionCheckout={this.props.susbcriptionCheckout}
+          />
+        );
     }
+  }
+
+  componentDidMount() {
+    this.props.subscribeListData();
+  }
+
+  render() {
+    console.log(this.props);
+    return (
+      <>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Amvirgin | Subscription</title>
+        </Helmet>
+        <Header />
+        <div className="loginbody subscribesection">
+          <div className="container">
+            <Header />
+            <div className="">
+              <div className="container">
+                <SubscriptionHeader
+                  handleClick={this.handleClick}
+                  activeClass={this.activeClass()}
+                  clickMe={this.clickMe}
+                  arr={this.state.arr}
+                />
+                <form role="form" action="" method="post" className="formpart">
+                  <h3 className="titlebinge">Binge Watch</h3>
+                  <p className="parabinge">All episodes without any limits</p>
+                  {this._renderSubComp()}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
-    return  { 
-      loggedIn: state.authReducer.loggedIn,
-      listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
-    }
-}
+  return {
+    loggedIn: state.authReducer.loggedIn,
+    listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
-	return({
-        subscribeListData: () => dispatch(subscribeListData()),
-        susbcriptionCheckout: (id) => dispatch(susbcriptionCheckout(id))
-	});
-}
+  return {
+    subscribeListData: () => dispatch(subscribeListData()),
+    susbcriptionCheckout: (id) => dispatch(susbcriptionCheckout(id)),
+  };
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(Subscription);
+export default connect(mapStateToProps, mapDispatchToProps)(Subscription);
 
+class Step1 extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-class Step1 extends React.Component{
-    constructor(props) {
-        super(props);
-    }
+  seeAllPlans = () => {
+    this.props.toggle();
+    this.props.clickMe("1");
+  };
 
-    seeAllPlans = () => {
-        this.props.toggle()
-        this.props.clickMe("1")
-    }
-
-    render() {
-      console.log("Step 1");
-        return (
-            <>
-                {this.props.isToggleOn === false ? <div className="row setup-content" id="step-1">
-                    <div className="stepsection">
-                        <div className="">
-                            <h1 className="step1">STEP 1 OF 4</h1>
-                            <h2  className="step2">Choose your plan.</h2>
-                            <ul className="steponelist">
-                                <li><img src="img/tick.png"/> No commitments, cancel anytime.</li>
-                                <li><img src="img/tick.png"/>Everything on AmVirgin for one low price.</li>
-                            </ul>
-                            <button className="seeplanbtn btn nextBtn btn-lg " type="button" onClick={(arr) => this.seeAllPlans()}>See all plans</button>
-                        </div>
-                    </div>
-                </div>:
-                <Step2
-                    listingSubscriptionData={this.props.listingSubscriptionData}
-                    clickMe={this.props.clickMe}
-                    loggedIn={this.props.loggedIn}
-                    susbcriptionCheckout={this.props.susbcriptionCheckout}
-                />
-                }
-            </>
-        )
-    }
+  render() {
+    console.log("Step 1");
+    return (
+      <>
+        {this.props.isToggleOn === false ? (
+          <div className="row setup-content" id="step-1">
+            <div className="stepsection">
+              <div className="">
+                <h1 className="step1">STEP 1 OF 4</h1>
+                <h2 className="step2">Choose your plan.</h2>
+                <ul className="steponelist">
+                  <li>
+                    <img src="img/tick.png" /> No commitments, cancel anytime.
+                  </li>
+                  <li>
+                    <img src="img/tick.png" />
+                    Everything on AmVirgin for one low price.
+                  </li>
+                </ul>
+                <button
+                  className="seeplanbtn btn nextBtn btn-lg "
+                  type="button"
+                  onClick={(arr) => this.seeAllPlans()}
+                >
+                  See all plans
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Step2
+            listingSubscriptionData={this.props.listingSubscriptionData}
+            clickMe={this.props.clickMe}
+            loggedIn={this.props.loggedIn}
+            susbcriptionCheckout={this.props.susbcriptionCheckout}
+          />
+        )}
+      </>
+    );
+  }
 }
 
 class Step2 extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isToggleOn:false,
-            selectedPack: "",
-            duration: "",
-            price: "",
-            activePack: "",
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isToggleOn: false,
+      selectedPack: "",
+      duration: "",
+      price: "",
+      activePack: "",
+    };
+  }
 
-    next = () => {
-      this.setState(prevState => ({
-        isToggleOn:!prevState.isToggleOn
-      }));
-      this.props.clickMe("2")
-    }
+  next = () => {
+    this.setState((prevState) => ({
+      isToggleOn: !prevState.isToggleOn,
+    }));
+    this.props.clickMe("2");
+  };
 
-    render() {
-      console.log("Step 2");
-        return (
-            <>
-                {this.state.isToggleOn === false ? 
-                    <div className="row setup-content" id="step-2">
-                        <div className="stepsection">
-                            <div className="">
-                                <div className=""> 
-                                    {this.props.listingSubscriptionData!== undefined && this.props.listingSubscriptionData.map((item,index) => {
-                                        return (
-                                            <React.Fragment key={index}>
-                                                {/* <input type="radio" name="size" id="size_1" value="200" /> */}
-                                                <label for="size_1" className={`pricelabel + ${index === this.state.activePack ? "active-pack" : ""}`} onClick={(e) => this.setState({ selectedPack: item.key, duration: item.duration, price: item.originalPrice, activePack: index})}>
-                                                    <h2 className="price">₹{item.originalPrice}</h2>
-                                                    <h4 className="month">{item.duration} Days</h4>
-                                                    <h6 className="rate">{item.name}</h6>
-                                                </label>
-                                            </React.Fragment>
-                                        )
-                                    })}
-                                </div>
-                                <button className="btn nextBtn btn-lg pull-right " type="button" disabled={!this.state.selectedPack && "true"} onClick={() => this.next()}>Continue</button>
-                            </div>
-                        </div>
-                    </div>
-                :<Step3 
-                price={this.state.price}
-                selectedPack={this.state.selectedPack}
-                duration={this.state.duration}
-                clickMe={this.props.clickMe}
-                loggedIn={this.props.loggedIn}
-                susbcriptionCheckout={this.props.susbcriptionCheckout}
-                />}
-            </>
-        )
-    }
+  render() {
+    console.log("Step 2");
+    return (
+      <>
+        {this.state.isToggleOn === false ? (
+          <div className="row setup-content" id="step-2">
+            <div className="stepsection">
+              <div className="">
+                <div className="">
+                  {this.props.listingSubscriptionData !== undefined &&
+                    this.props.listingSubscriptionData.map((item, index) => {
+                      return (
+                        <React.Fragment key={index}>
+                          {/* <input type="radio" name="size" id="size_1" value="200" /> */}
+                          <label
+                            for="size_1"
+                            className={`pricelabel + ${
+                              index === this.state.activePack
+                                ? "active-pack"
+                                : ""
+                            }`}
+                            onClick={(e) =>
+                              this.setState({
+                                selectedPack: item.key,
+                                duration: item.duration,
+                                price: item.originalPrice,
+                                activePack: index,
+                              })
+                            }
+                          >
+                            <h2 className="price">₹{item.originalPrice}</h2>
+                            <h4 className="month">{item.duration} Days</h4>
+                            <h6 className="rate">{item.name}</h6>
+                          </label>
+                        </React.Fragment>
+                      );
+                    })}
+                </div>
+                <button
+                  className="btn nextBtn btn-lg pull-right "
+                  type="button"
+                  disabled={!this.state.selectedPack && "true"}
+                  onClick={() => this.next()}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Step3
+            price={this.state.price}
+            selectedPack={this.state.selectedPack}
+            duration={this.state.duration}
+            clickMe={this.props.clickMe}
+            loggedIn={this.props.loggedIn}
+            susbcriptionCheckout={this.props.susbcriptionCheckout}
+          />
+        )}
+      </>
+    );
+  }
 }
 
 class Step3 extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isToggleOn:false
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isToggleOn: false,
+    };
+  }
 
-    step3Toggle = () => {
-        this.setState(prevState => ({
-            isToggleOn:!prevState.isToggleOn
-        }))
-        this.props.clickMe("3");
-        this.props.susbcriptionCheckout(this.props.selectedPack)
-    }
+  step3Toggle = () => {
+    this.setState((prevState) => ({
+      isToggleOn: !prevState.isToggleOn,
+    }));
+    this.props.clickMe("3");
+    this.props.susbcriptionCheckout(this.props.selectedPack);
+  };
 
-    render(){
-      console.log("Step 3");
-      console.log("Logged In :", this.props.loggedIn)
-        return (
-            <>
-                {this.state.isToggleOn === false ? 
-                    <div className="row setup-content" id="step-3">
-                        <div className="stepsection">
-                            <div className="">
-                                <div className="selectpack" style={{  marginLeft: this.props.loggedIn ? "40%" : ""}}>
-                                    <div className="dataselect">
-                                        <h1>Selected Pack</h1>
-                                    </div>
-                                    <h3>{this.props.duration} Days</h3>
-                                    <h3 className="bggolden">Total ₹ {this.props.price}</h3>
-                                </div>
-                                {!this.props.loggedIn ?
-                                <>
-                                {/* <div className="form-group dataformat">
+  render() {
+    console.log("Step 3");
+    console.log("Logged In :", this.props.loggedIn);
+    return (
+      <>
+        {this.state.isToggleOn === false ? (
+          <div className="row setup-content" id="step-3">
+            <div className="stepsection">
+              <div className="">
+                <div
+                  className="selectpack"
+                  style={{ marginLeft: this.props.loggedIn ? "40%" : "" }}
+                >
+                  <div className="dataselect">
+                    <h1>Selected Pack</h1>
+                  </div>
+                  <h3>{this.props.duration} Days</h3>
+                  <h3 className="bggolden">Total ₹ {this.props.price}</h3>
+                </div>
+                {!this.props.loggedIn ? (
+                  <>
+                    {/* <div className="form-group dataformat">
                                     <input maxlength="200" type="text" required="required" className="form-control" placeholder="Please Enter Mobile/Email address" />
                                 </div>
                                 <div className="form-group dataformat">
@@ -287,94 +343,129 @@ class Step3 extends Component {
                                         </button>
                                     </div>
                                 </div> */}
-                                <div className="form-group dataformat" style={{marginTop:"3rem"}}>
-                                <Link to="/login"><h2 className="hoverlogin" style={{color:"darkgoldenrod", fontWeight:"bold"}}>Please Login / Register to continue.</h2></Link>
-                                </div>
-                                </> : null}
-                                {/* <button className="btn nextBtn btn-lg pull-left" type="button" onClick={() => this.step3Toggle()}>Next</button> */}
-                                {this.props.loggedIn ? <button className="btn nextBtn btn-lg pull-right" type="button" onClick={() => this.step3Toggle()}>Next</button> : null}
-                            </div>
-                        </div>
+                    <div
+                      className="form-group dataformat"
+                      style={{ marginTop: "3rem" }}
+                    >
+                      <Link to="/login">
+                        <h2
+                          className="hoverlogin"
+                          style={{ color: "darkgoldenrod", fontWeight: "bold" }}
+                        >
+                          Please Login / Register to continue.
+                        </h2>
+                      </Link>
                     </div>
-                :<Step4/>
-                }
-                 
-            </>
-        )
-    }
+                  </>
+                ) : null}
+                {/* <button className="btn nextBtn btn-lg pull-left" type="button" onClick={() => this.step3Toggle()}>Next</button> */}
+                {this.props.loggedIn ? (
+                  <button
+                    className="btn nextBtn btn-lg pull-right"
+                    type="button"
+                    onClick={() => this.step3Toggle()}
+                  >
+                    Next
+                  </button>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <Step4 total={this.props.price}/>
+        )}
+      </>
+    );
+  }
 }
 
-
 class Step4 extends Component {
-  constructor(props){
-    super(props)
-    this.state={
-      render:''
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      render: "",
+    };
   }
 
   selectPayment = (compName, e) => {
     e.preventDefault();
-    this.setState({render:compName});        
-}
-_renderPaymentComp(){
-    switch(this.state.render){
-        case 'NetBank': return <NetBank/>
-        case 'BhimUpi' : return <BhimUpi/>
-        case 'Wallet': return <Wallet/>
-        default : return <Card/>
+    this.setState({ render: compName });
+  };
+  _renderPaymentComp() {
+    switch (this.state.render) {
+      case "NetBank":
+        return <NetBank total={this.props.total}/>;
+      case "BhimUpi":
+        return <BhimUpi total={this.props.total}/>;
+      case "Wallet":
+        return <Wallet total={this.props.total}/>;
+      default:
+        return <Card total={this.props.total}/>;
     }
-}
+  }
 
-  render(){
+  render() {
     console.log("Step 4");
-      return (<>
-           <div className="row setup-content" id="step-4">
-      <div className="stepsection">
-        <div className="">
-            
-          <div className="container">
-            <div className="addresspart">
-              <div className="leftsection">
-                <div className="body-style paymentsection">
-                  <div className="tab">
-                    <button className="tablinks tab-one" onClick={(e) => this.selectPayment( 'Card',e)} id="defaultOpen" >CREDIT / DEBIT CARD </button>
-                    <button className="tablinks" onClick={(e) => this.selectPayment('NetBank',e)}> NET BANKING </button>
-                    <button className="tablinks" onClick={(e) => this.selectPayment('BhimUpi',e)}> PHONEPAY / GOOGLEPAY / BHIM UPI </button>
-                    <button className="tablinks" onClick={(e) => this.selectPayment('Wallet',e)}> WALLETS </button>
-                
-                  </div>
-              
-                  
-                  {this._renderPaymentComp()}
+    return (
+      <>
+        <div className="row setup-content" id="step-4">
+          <div className="stepsection">
+            <div className="">
+              <div className="container">
+                <div className="addresspart">
+                  <div className="leftsection">
+                    <div className="body-style paymentsection">
+                      <div className="tab">
+                        <button
+                          className="tablinks tab-one"
+                          onClick={(e) => this.selectPayment("Card", e)}
+                          id="defaultOpen"
+                        >
+                          CREDIT / DEBIT CARD{" "}
+                        </button>
+                        <button
+                          className="tablinks"
+                          onClick={(e) => this.selectPayment("NetBank", e)}
+                        >
+                          {" "}
+                          NET BANKING{" "}
+                        </button>
+                        <button
+                          className="tablinks"
+                          onClick={(e) => this.selectPayment("BhimUpi", e)}
+                        >
+                          {" "}
+                          PHONEPAY / GOOGLEPAY / BHIM UPI{" "}
+                        </button>
+                        <button
+                          className="tablinks"
+                          onClick={(e) => this.selectPayment("Wallet", e)}
+                        >
+                          {" "}
+                          WALLETS{" "}
+                        </button>
+                      </div>
 
-              
-                 
-                 
-
+                      {this._renderPaymentComp()}
+                    </div>
                   </div>
                 </div>
-            
-                
+              </div>
+            </div>
           </div>
-
-          </div>
-       
         </div>
-      </div>
-    </div>
-        </>)
+      </>
+    );
   }
 }
 
 class Card extends Component {
-
-  render(){
+  render() {
     return (
       <>
-      <div id="Card" className="tabcontent">
-                    <h3 className="credit-card">CREDIT/DEBIT CARD</h3>
-                    <label for="cardNumber" className="txt-clr">Card Number*</label>
+        <div id="Card" className="tabcontent">
+          <h3 className="credit-card">CREDIT / DEBIT CARD</h3>
+          {/* <label for="cardNumber" className="txt-clr">Card Number*</label>
                     <div className="input-group">
                       <input type="tel" className="form-control form-width" name="cardNumber" placeholder="" />
                       <span className="input-group-addon"><i className="fa fa-credit-card card-inp"></i></span>
@@ -440,13 +531,22 @@ class Card extends Component {
                     <br/>
                     <div className="input-group">
                     <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red"> PAY NOW </button>
-                    </div>
-                  </div>
+                    </div>*/}
+          <SubscriptionCheckout
+            addressId={this.props.addressId}
+            total={this.props.total}
+            razorPay={this.props.razorPay}
+            prefillMethod={"card"}
+            paymentMethod={"2"}
+            placeOrderFinal={this.props.placeOrderFinal}
+            {...this.props}
+          />
+          ;
+        </div>
       </>
-    )
+    );
   }
 }
-
 
 // class PaymentNetBank extends Components {
 //   render(){
@@ -457,15 +557,13 @@ class Card extends Component {
 //   }
 // }
 
-
 class NetBank extends Component {
-  render(){
+  render() {
     return (
       <>
-        
         <div id="Netb" className="tabcontent">
-                    <h3 className="credit-card">NET BANKING</h3>
-                    <div className="input-group">
+          <h3 className="credit-card">NET BANKING</h3>
+          {/*<div className="input-group">
                       <select className="selct">
                         <option disabled>Choose Bank</option>
                         <option value="saab">Airtel payments bank</option>
@@ -479,21 +577,30 @@ class NetBank extends Component {
                     </div>
                     <div className="input-group">
                     <button type="submit" form="form1" value="Submit" className=" btn btn-raised btn-red"> PAY NOW </button>
-                    </div>
-                  </div>
+                    </div> */}
+          <SubscriptionCheckout
+            addressId={this.props.addressId}
+            total={this.props.total}
+            razorPay={this.props.razorPay}
+            prefillMethod={"net-banking"}
+            paymentMethod={"2"}
+            placeOrderFinal={this.props.placeOrderFinal}
+            {...this.props}
+          />
+          ;
+        </div>
       </>
-    )
+    );
   }
 }
 
-
 class BhimUpi extends Component {
-  render(){
+  render() {
     return (
       <>
-         <div id="BHIM" className="tabcontent walletradio">
-                    <h3 className="credit-card">PHONEPE / GOOGLE PAY / BHIM UPI</h3>
-                    <label className="container"><img src="img/gpay.png" className="walletimg"/> Google Pay 
+        <div id="BHIM" className="tabcontent walletradio">
+          <h3 className="credit-card">PHONEPE / GOOGLE PAY / BHIM UPI</h3>
+          {/*<label className="container"><img src="img/gpay.png" className="walletimg"/> Google Pay 
                       <input type="radio" checked="checked" name="upi" value="googlepay" />
                       <span className="checkmark"></span>
                     </label>
@@ -507,28 +614,47 @@ class BhimUpi extends Component {
                       <input type="radio" name="upi" value="upi" />
                       <span className="checkmark"></span>
                     </label>
-                    <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red"> PAY NOW </button>
-                  </div>
+                    <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red"> PAY NOW </button> */}
+          <SubscriptionCheckout
+            addressId={this.props.addressId}
+            total={this.props.total}
+            razorPay={this.props.razorPay}
+            prefillMethod={"upi"}
+            paymentMethod={"2"}
+            placeOrderFinal={this.props.placeOrderFinal}
+            {...this.props}
+          />
+          ;
+        </div>
       </>
-    )
+    );
   }
 }
 
 class Wallet extends Component {
-  render(){
+  render() {
     return (
       <>
-         <div id="WALLET" className="tabcontent walletradio">
-                    <h3 className="credit-card">Select Wallet to pay</h3>
-                    <label className="container"><img src="img/razorpay.png" className="razorimg"/> 
+        <div id="WALLET" className="tabcontent walletradio">
+          <h3 className="credit-card">Select Wallet to pay</h3>
+          {/*   <label className="container"><img src="img/razorpay.png" className="razorimg"/> 
                       <input type="radio" checked="checked" name="upi" value="razorpay"/>
                       <span className="checkmark"></span>
                     </label>
                     <div> <p> We will redirect you to your wallet's website to authorize the payment. </p> </div>
-                    <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red"> PAY NOW </button>
-                  </div>
+                    <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red"> PAY NOW </button> */}
+          <SubscriptionCheckout
+            addressId={this.props.addressId}
+            total={this.props.total}
+            razorPay={this.props.razorPay}
+            prefillMethod={"wallet"}
+            paymentMethod={"2"}
+            placeOrderFinal={this.props.placeOrderFinal}
+            {...this.props}
+          />
+          ;
+        </div>
       </>
-    )
+    );
   }
 }
-

@@ -32,7 +32,7 @@ class ShopPayment extends Component {
         <div class="container addressbody">
           <h4>Choose Payment Mode</h4>
           <div class="addresspart">
-            <Payment addressId={this.props.location.addressId}{...this.props}/>
+            <Payment addressId={this.props.location.addressId} total={this.props.location.total}{...this.props}/>
             <Address
               addressdata={addressdata}
               addressId={this.props.location.addressId}

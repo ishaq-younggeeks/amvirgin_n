@@ -10,36 +10,49 @@ class Payment extends Component {
     super(props);
     this.state = {
       render: "Card",
+      paymentMethodNum: 0
     };
   }
 
-  selectPayment = (compName, e) => {
+  selectPayment = (compName, e, num) => {
     e.preventDefault();
     console.log("called component", compName);
-    this.setState({ render: compName });
+    this.setState({ render: compName});
+    num && this.props.getRazorPayId(num);
+    console.log("calling 1");
   };
+
+  
+
+  componentDidMount = () => {
+    console.log("calling 2");
+    this.props.getRazorPayId("1");
+  }
+
   _renderPaymentComp() {
     switch (this.state.render) {
       case "NetBank":
-        return <Checkout addressId={this.props.addressId}/>;
+        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"net-banking"} paymentMethod={"2"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       case "Cash":
         return <Cash 
         addressId={this.props.addressId} 
         getRazorPayId={this.props.getRazorPayId} 
+        paymentMethod={"3"}
         razorPay={this.props.razorPay}
         placeOrderFinal={this.props.placeOrderFinal}  
         placedMessage={this.props.placedMessage}
-        history={this.props.history}/>;
+        history={this.props.history}
+        total={this.props.total}/>;
       case "BhimUpi":
-        return <Checkout addressId={this.props.addressId}/>;
+        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"upi"} paymentMethod={"4"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       case "Wallet":
-        return <Checkout addressId={this.props.addressId}/>;
+        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"wallet"} paymentMethod={"5"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       case "Gift":
-        return <Gift addressId={this.props.addressId}/>;
+        return <Gift addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={""} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       case "RazorPay":
-        return <Checkout addressId={this.props.addressId}/>;
+        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={""} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       default:
-        return <Checkout addressId={this.props.addressId}/>;
+        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"card"} paymentMethod={"1"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
     }
   }
 
@@ -54,6 +67,7 @@ class Payment extends Component {
   };
 
   render() {
+    console.log("Razorpay ID :", this.props.razorPay);
     return (
       <>
         <div className="leftsection">
@@ -65,7 +79,7 @@ class Payment extends Component {
                     ? this.activeClass()
                     : this.defaultClass()
                 }
-                onClick={(e) => this.selectPayment("Card", e)}
+                onClick={(e) => this.selectPayment("Card", e, "1")}
                 id="defaultOpen"
               >
                 CREDIT / DEBIT CARD{" "}
@@ -76,7 +90,7 @@ class Payment extends Component {
                     ? this.activeClass()
                     : this.defaultClass()
                 }
-                onClick={(e) => this.selectPayment("NetBank", e)}
+                onClick={(e) => this.selectPayment("NetBank", e, "2")}
               >
                 {" "}
                 NET BANKING{" "}
@@ -98,7 +112,7 @@ class Payment extends Component {
                     ? this.activeClass()
                     : this.defaultClass()
                 }
-                onClick={(e) => this.selectPayment("BhimUpi", e)}
+                onClick={(e) => this.selectPayment("BhimUpi", e, "4")}
               >
                 {" "}
                 PHONEPAY / GOOGLEPAY / BHIM UPI{" "}
@@ -109,7 +123,7 @@ class Payment extends Component {
                     ? this.activeClass()
                     : this.defaultClass()
                 }
-                onClick={(e) => this.selectPayment("Wallet", e)}
+                onClick={(e) => this.selectPayment("Wallet", e, "5")}
               >
                 {" "}
                 WALLETS{" "}
@@ -154,8 +168,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getRazorPayId: () => dispatch(getRazorPayId()),
-    placeOrderFinal: (addressId, paymentMode, razorPayId, history) => dispatch(placeOrderFinal(addressId, paymentMode, razorPayId, history))
+    getRazorPayId: (selection) => dispatch(getRazorPayId(selection)),
+    placeOrderFinal: (addressId, selection, razorPayId, razorpay_payment_id, razorpay_signature, history) => dispatch(placeOrderFinal(addressId, selection, razorPayId, razorpay_payment_id, razorpay_signature, history))
   }
 }
 
@@ -281,11 +295,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Payment);
 
 class Cash extends Component {
   componentDidMount = () => {
-    this.props.getRazorPayId();
+    this.props.getRazorPayId("3");
   }
 
   render() {
     const {razorPay} = this.props;
+    console.log({razorPay});
     return (
       <>
         <div id="CashD" className="">
@@ -310,7 +325,7 @@ class Cash extends Component {
             form="form1"
             value="Submit"
             className="btn btn-red"
-            onClick={() => this.props.placeOrderFinal(this.props.addressId, "cash-on-delivery", razorPay, this.props.history)}
+            onClick={() => this.props.placeOrderFinal(this.props.addressId, "3", razorPay, "", "", this.props.history)}
           >
             {" "}
             PAY ON DELIVERY{" "}

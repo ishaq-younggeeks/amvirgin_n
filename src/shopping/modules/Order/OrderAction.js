@@ -101,7 +101,7 @@ export const updateSavedAddress = (addressId, data) => {
   };
 };
 
-export const getRazorPayId = () => {
+export const getRazorPayId = (selection) => {
   return (dispatch) => {
     let token = localStorage.getItem("UserToken");
     let config = {
@@ -109,10 +109,25 @@ export const getRazorPayId = () => {
         Authorization: "Bearer " + token,
       },
     };
+
+    console.log({selection});
+    let paymentMethod = "";
+    if (selection === "1")
+    paymentMethod = "card";
+    if(selection === "2")
+    paymentMethod = "net-banking";
+    if(selection === "3")
+    paymentMethod = "cash-on-delivery";
+    if(selection === "4")
+    paymentMethod = "upi";
+    if(selection === "5")
+    paymentMethod = "wallet";
+
+
     let params = {
       sessionId: localStorage.getItem("session"),
-      paymentMode: "cash-on-delivery",
-    };
+      paymentMode: paymentMethod
+    }
 
     axios
       .post(`${baseURL}/customer/cart/checkout`, params, config)
@@ -129,7 +144,7 @@ export const getRazorPayId = () => {
   };
 };
 
-export const placeOrderFinal = (addressId, paymentMode, razorPayId, history) => {
+export const placeOrderFinal = (addressId, selection, razorPayId, razorpay_payment_id="", razorpay_signature="", history) => {
   return (dispatch) => {
     let token = localStorage.getItem("UserToken");
     let config = {
@@ -138,12 +153,41 @@ export const placeOrderFinal = (addressId, paymentMode, razorPayId, history) => 
       }
     }
 
-    let params = {
+    let paymentMethod = "1";
+    if (selection === "1")
+    paymentMethod = "card";
+    if(selection === "2")
+    paymentMethod = "net-banking";
+    if(selection === "3")
+    paymentMethod = "cash-on-delivery";
+    if(selection === "4")
+    paymentMethod = "upi";
+    if(selection === "5")
+    paymentMethod = "wallet";
+
+    console.log("Response :", addressId, paymentMethod, razorPayId, typeof(razorpay_payment_id), razorpay_signature);
+    let data ={}
+    let params ={}
+    data = {
       sessionId: localStorage.getItem("session"),
       addressId: addressId,
       billingAddressId: addressId,
-      paymentMode: paymentMode,
-      orderId: razorPayId
+      orderId: razorPayId,
+      paymentMode: paymentMethod,
+
+    }
+
+    if(paymentMethod=="cash-on-delivery"){
+      console.log("calling cod")
+      params = data
+    }
+    else {
+      console.log("callin not cod")
+      params = {
+        ...data,
+        paymentId: razorpay_payment_id,
+        transactionId: razorpay_payment_id,
+        signature: razorpay_signature}
     }
 
     axios
@@ -155,6 +199,7 @@ export const placeOrderFinal = (addressId, paymentMode, razorPayId, history) => 
           type: PLACE_ORDER,
           payload: res.data
         })
+
         history.push({pathname:`/success`});
       }
     })
