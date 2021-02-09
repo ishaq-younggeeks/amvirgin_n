@@ -23,6 +23,7 @@ class ProductMainContent extends React.Component {
    async componentDidMount() {
     this.props.productData(this.props.match.params.pat1, "relevance", "1", this.props.history)
     const res = await Axios.get(`${baseURL}/customer/products/sorts`)
+    this.props.applicableFilter(this.props.match.params.pat1)
      this.setState({ sortby: res.data.data },console.log("sortBy state",res.data.data))
     let data = JSON.parse(localStorage.getItem("productData"))
     this.setState({ categoryId: data["categoryId"], hist: data["productHistory"] },console.log("categoryId",data["categoryId"]))

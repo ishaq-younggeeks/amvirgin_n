@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 
 import ProductCategories from './components/ProductCategories';
-import {fetchData,productData} from '../Home/shoppingHomeReducer';
+import {fetchData,productData,applicableFilter} from '../Home/shoppingHomeReducer';
 import {addtoCart} from "../Cart/shoppingCartAction";
 import {productDetail} from '../ProductDetail/ProductDetailAction'
 import { AddWishlist } from '../Wishlist/WishlistAction';
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
         productList : state.shopping.productList,
         offset:state.shopping.offset,
         limit:state.shopping.limit,
-        toggle:state.product.toggle
+        toggle:state.product.toggle,
+        filters:state.shopping.filterList
     }
 }
 
@@ -24,7 +25,8 @@ const mapDispatchToProps = (dispatch) => {
         productData:(id,offset,limit,history) => dispatch(productData(id,offset,limit,history)),
         addtoCart:(id,size) => dispatch(addtoCart(id,size)),
         productDetail:(id,history) => dispatch(productDetail(id,history)),
-        AddWishlist:(id)=>dispatch(AddWishlist(id))
+        AddWishlist:(id)=>dispatch(AddWishlist(id)),
+        applicableFilter:(id) => dispatch(applicableFilter(id))
 	});
 };
 

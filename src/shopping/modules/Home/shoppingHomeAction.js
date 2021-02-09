@@ -1,5 +1,5 @@
 import {DATA_RECEIVED, HOME_DATA, ALL_DEALS} from './shoppingHomeConstant';
-import {FETCHING , PRODUCT_DATA} from './shoppingHomeConstant';
+import {FETCHING , PRODUCT_DATA,FILTER_DATA} from './shoppingHomeConstant';
 import axios  from "axios";
 import { baseURL } from "../../../credential.json";
 import { connect } from 'react-redux';
@@ -47,12 +47,23 @@ export const allDeals = () => dispatch =>{
 }
 
 
+export function fetchApplicableFilter(filterList) {
+  console.log(filterList,"fhhfhfh")
+  return {
+      type:FILTER_DATA,
+      payload:filterList
+  }
+}
+
+
 export function fetchingData(status) {
   return {
     type:FETCHING,
     fetching:status
   }
 }
+
+
 
 
 export default {
