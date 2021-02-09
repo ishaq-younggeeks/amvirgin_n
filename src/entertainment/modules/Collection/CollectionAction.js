@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { baseURL } from "../../../credential.json";
+import { baseURL,baseURL2 } from "../../../credential.json";
 import {COLLECTION_DATA,CLEAR_COLLECTION_DATA} from './CollectionConstant'
 
 export const collectionData = (collectionId=parseInt(localStorage.getItem("collectionId"))) => {
 
   return  (dispatch) => {
-    let url = `${baseURL}/customer/entertainment/section/${collectionId}` 
+    let url = `${baseURL2}/customer/entertainment/section/${collectionId}` 
     axios.get(`${url}`).then(res => {
-     let  Data = res.data.data;
+     let  Data = res.data.payload;
       dispatch(myData(Data))
       localStorage.setItem("collectionId",collectionId)
      console.log("hitting collection data",Data)

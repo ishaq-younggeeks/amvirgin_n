@@ -3,11 +3,8 @@
     color: rgb(20, 19, 19)!important;
     display: none;
     top: 50px;
-    width:100px;
-    right:0;
-    padding:6px;
+    right:20px;
     position: fixed;
-    background:rgb(250, 249, 250);
 }
 .logP06:hover .logout{
     display: block;
@@ -15,4 +12,18 @@
 }
 ul {
     list-style: none;
+}
+
+.nav-hover{
+    border-radius: 5px;
+    margin-top:20px;
+    padding:10px;
+    /* background:rgb(250, 249, 250); */
+    background: black;
+
+}
+
+
+.nav-hover-item:hover{
+    color:red!important;
 }

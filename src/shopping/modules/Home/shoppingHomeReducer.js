@@ -1,5 +1,5 @@
-import {myData,fetchingData,product,release} from './shoppingHomeAction';
-import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA, ALL_DEALS} from './shoppingHomeConstant';
+import {myData,fetchingData,product,release,fetchApplicableFilter} from './shoppingHomeAction';
+import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA, ALL_DEALS,FILTER_DATA} from './shoppingHomeConstant';
 import axios from 'axios';
 import { baseURL } from "../../../credential.json";
 import { browserHistory, Redirect } from 'react-router';
@@ -53,6 +53,26 @@ export const productData = (category,sortBy="relevance",page="1",history) => {
     }).catch(error => {
       console.log(error)
       dispatch(fetchingData(false))
+    })
+  }
+}
+
+
+export const applicableFilter = (category) => {
+  return (dispatch) =>{
+    let url = `${baseURL}/customer/categories/${category}/filters`
+
+    axios.get(url)
+    .then (res =>{
+      
+      if(res.data.status === 200){
+        console.log("calling dispatch filter")
+        dispatch(fetchApplicableFilter(res.data.payload))
+      }
+
+    })
+    .catch(error =>{
+      console.log(error)
     })
   }
 }
@@ -111,6 +131,14 @@ const ACTION_HANDLERS = {
       allDealsProducts:action.payload,
     }
   },
+  [FILTER_DATA]:(state,action) => {
+
+    return {
+      ...state,
+      filterList:action.payload
+    }
+    
+  }
 };
 
 const initialState = {
@@ -125,7 +153,8 @@ const initialState = {
   trendingDeals:[],
   popularStuff:[],
   trendingNow:[],
-  allDealsProducts:[]
+  allDealsProducts:[],
+  filterList:[]
 };
 
 export default function shoppingHomeReducer(state = initialState, action) {

@@ -123,7 +123,7 @@ class App extends Component {
           {/* Entertainment Routes */}
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/show" component={Show}></Route>
+          <Route exact path="/video/:videoId" component={Show}></Route>
           <Route exact path="/collection" component={Collection}></Route>
           <Route exact path="/subscription" component={Subscritption}></Route>
           

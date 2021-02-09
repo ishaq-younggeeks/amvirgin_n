@@ -7,7 +7,8 @@ class ProductSideBarCategories extends React.Component {
   constructor(props) {
     super(props);
         this.state = {
-          elementStyle:{position:'relaitve'}
+          elementStyle:{position:'relaitve'},
+          priceRange:1
         }
   }
 
@@ -164,8 +165,10 @@ class ProductSideBarCategories extends React.Component {
                           <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
                             <div className="rangeslidecontainer">
                               <h4 className="sidebar-title">Price Range </h4>
-                              <input type="range" min="1" max="5000" value="50" className="rangeslider" id="myRange"/>
-                              <p className="maxprice">Max: Rs.<span id="demo"></span></p>
+                              <input type="range" min="1" max="5000" value={this.state.priceRange} className="rangeslider" id="myRange" onChange={(e)=>{
+                                this.setState({priceRange:e.target.value})
+                              }}/>
+                              <p className="maxprice">Max: Rs. 2000<span id="demo"></span></p>
                             </div>
                           </div>
                           <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">

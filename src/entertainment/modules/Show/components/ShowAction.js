@@ -11,7 +11,7 @@ export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),hist
       dispatch(myData(Data))
       localStorage.setItem("videoId",videoId)
      if(history){
-     history.push({pathname:`/show`})
+     history.push({pathname:`/video/${videoId}`})
      }
     }).catch(error => {
       console.log(error)

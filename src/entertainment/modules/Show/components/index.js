@@ -6,7 +6,6 @@ import './style.css';
 import Trending from '../../Home/components/Trending';
 import Slider from "react-slick";
 import ReadMoreReact from 'read-more-react';
-import Video from './Video';
 import { GetData } from '../../../../db.js';
 import $ from 'jquery'
 import { connect } from 'react-redux';
@@ -15,12 +14,9 @@ import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
 // import ReactPlayer from './CreatePlayer'
 import ReactPlayer from 'react-player'
-import Controls from './Controls'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
-import { IconButton } from '@material-ui/core';
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import Duration from './Duration'
+
 import {LivePlayer} from './videoPlayer'
 class Show extends Component {
   constructor(props) {
@@ -35,7 +31,7 @@ class Show extends Component {
       videoId: '',
       url: null,
       pip: false,
-      playing: true,
+      playing: false,
       controls: false,
       light: true,
       volume: 0.8,
@@ -50,7 +46,7 @@ class Show extends Component {
     }
     this.episodeCredit = this.episodeCredit.bind(this);
     this.controlsRef = React.createRef();
-    this.playerContainerRef = React.createRef();
+    this.playerRef = React.createRef();
     this.count = 0
  
   }
@@ -92,7 +88,12 @@ class Show extends Component {
     }, console.log("current state", this.state))
   }
 
-  handlePlayPause = () => {
+  handlePlayPause = (bigPlay) => {
+    console.log("bigplay",bigPlay)
+    if(bigPlay===undefined){
+      this.playerRef.current.playPause()
+    }
+
     this.setState({ playing: !this.state.playing })
   }
 
@@ -309,77 +310,7 @@ class Show extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div>
-                  {/* <VideoPlayer {...this.videoJsOptions }/> */}
-                  <LivePlayer {...videoDetail}/>
-                {videoDetail && videoDetail.sources?
-                 (<div
-                      className='VideoPlayer'
-                      // onMouseMove={this.handleMouseMove}
-                      // onMouseLeave={this.hanldeMouseLeave}
-                      style={{
-                        position: "relative",
-                        width: "100%"
-                      }}
-                      ref={this.playerContainerRef}
-                    >
-                      
-                      {/* <ReactPlayer
-                        ref={this.ref}
-                        className='react-player'
-                        width='100%'
-                        height='100%'
-                        url={videoDetail.sources.video[0].url}
-                        pip={pip}
-                        playing={playing}
-                        controls={controls}
-                        light={videoDetail.poster }
-                        playIcon={<IconButton onClick={()=>{this.setState((prevState)=>({playIcon:!prevState.playIcon}))}}><PlayArrowIcon fontSize="inherit" /></IconButton>}
-                        loop={loop}
-                        playbackRate={playbackRate}
-                        volume={volume}
-                        muted={muted}
-                        onReady={() => console.log('onReady')}
-                        onStart={() => console.log('onStart')}
-                        onPlay={this.handlePlay}
-                        onEnablePIP={this.handleEnablePIP}
-                        onDisablePIP={this.handleDisablePIP}
-                        onPause={this.handlePause}
-                        onBuffer={() => console.log('onBuffer')}
-                        //   onSeek={e => console.log('onSeek', e)}
-                        onEnded={this.handleEnded}
-                        onError={e => console.log('onError', e)}
-                        onProgress={this.handleProgress}
-                        onDuration={this.handleDuration}
-                      /> */}
-                      {/* <Controls
-                        ref={this.controlsRef}
-                        onPlay={this.handlePlay}
-                        onPause={this.handlePause}
-                        onSeek={this.handleSeekChange}
-                        onSeekMouseDown={this.handleSeekMouseDown}
-                        onSeekMouseUp={this.handleSeekMouseUp}
-                        onDuration={this.handleDuration}
-                        // onRewind={this.handleRewind}
-                        onPlayPause={this.handlePlayPause}
-                        // onFastForward={this.handleFastForward}
-                        playing={playing}
-                        played={played}
-                        elapsedTime={<Duration seconds={duration * played} />}
-                        totalDuration={<Duration seconds={duration} />}
-                        title={videoDetail.title}
-                        onMute={this.hanldeMute}
-                        muted={muted}
-                        onVolumeChange={this.handleVolumeChange}
-                        onVolumeSeekDown={this.handleVolumeSeekDown}
-                        // onChangeDispayFormat={handleDisplayFormat}
-                        playbackRate={playbackRate}
-                        onPlaybackRateChange={this.handlePlaybackRate}
-                        onToggleFullScreen={this.toggleFullScreen}
-                        volume={volume}
-                      // onBookmark={addBookmark}
-                      /> */}
-                    </div>) : ""}
-                  {/* :""} */}
+                  <LivePlayer {...videoDetail} ref={this.playerRef} handlePlayPause={this.handlePlayPause}/>
                 </div>
                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
                 <button className="watchlist"><i className="fa fa-share"></i>Share</button>
@@ -401,7 +332,7 @@ class Show extends Component {
                       ) : ""}
 
                     <button className="trailerbtn">
-                      <img src="img/playred.png" alt="play" className="play" />Trailer
+                      <img src={process.env.PUBLIC_URL+`/img/playred.png`} alt="play" className="play" />Trailer
                                         </button>
                     <button className="playbtn" onClick={() => this.handlePlayPause()}>
                       <i className={playing ? "fa fa-pause-circle" : "fa fa-play-circle"}></i>{playing ? "Pause" : "Play"}

@@ -143,25 +143,25 @@ render() {
 							</label>
 						</div> */}
 						
-						{/* {productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
+						{productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
 							return	value.map((values,index)=>{
 							return (
 								index===0?(
 									<div>
-									<input type="radio" id={`size-${value.key}`} name="size" value={value.value} defaultChecked />
+									<input type="radio" id={`size-${value.key}`} name="size" value={values} defaultChecked />
 									<label for={`size-${value.key}`}>
-								<span>{values.value}</span>
+								<span>{values}</span>
 									</label>
 								</div>
 							):(
 								<div>
-								<input type="radio" id={`size-${value.key}`} name="size" value={value.value} />
+								<input type="radio" id={`size-${value.key}`} name="size" value={values} />
 								<label for={`size-${value.key}`}>
-							<span>{values.value}</span>
+							<span>{values}</span>
 								</label>
 							</div>
 								)
-							)})}):""} */}
+							)})}):""}
 						{/* <div>
 							<input type="radio" id="size-2" name="size" value="medium" />
 							<label for="size-2">
@@ -183,7 +183,7 @@ render() {
 					</div>
 					<h4 className="ssize">Color Availabile</h4>
 					<div className="custom-radios coloravailable">
-					{/* {productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Color").map((data)=>data.value).map((value,index) => {
+					{productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Color").map((data)=>data.value).map((value,index) => {
 							return	value.map((values,index)=>{
 								console.log("color value",value)
 							return (
@@ -191,18 +191,18 @@ render() {
 									<div>
 									<input type="radio" id="color-1" name="color" value="color-1" defaultChecked />
 									<label for="color-1">
-										<span style={{backgroundColor:`${values.value}`}}></span>
+										<span style={{backgroundColor:`${values}`}}></span>
 									</label>
 								</div>
 							):(
 								<div>
 								<input type="radio" id="color-2" name="color" value="color-2" />
 								<label for="color-2">
-									<span style={{backgroundColor:`${values.value}`}}></span>
+									<span style={{backgroundColor:`${values}`}}></span>
 								</label>
 							</div>
 								)
-							)})}):""} */}
+							)})}):""}
 						{/* <div>
 							<input type="radio" id="color-1" name="color" value="color-1" defaultChecked />
 							<label for="color-1">
