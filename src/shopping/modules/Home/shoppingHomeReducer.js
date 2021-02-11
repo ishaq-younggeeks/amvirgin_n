@@ -24,17 +24,46 @@ export const fetchData = () => {
   }
 }
 
-export const productData = (category,sortBy="relevance",page="1",history) => {
-  console.log(`calling category ${category}, calling history ${history},calling query,${sortBy}`);
+export const productData = (category,params="",history) => {
   return (dispatch) => {
     dispatch(fetchingData(true))
     let url = `${baseURL}/customer/categories/${category}/products`
     // let url = `${baseURL}/customer/products/${category}`
-    axios.get(url,{
-      params: {
-        sortBy
+    let data={}
+    if(params===""){
+      data.params =
+        {
+          sortBy:"relevance",
+          page:"1"
+        }
       }
-    }).then(res => {
+
+      else{ 
+        data=params.params
+      }
+    
+    let fd = ""
+
+    function otf(data){
+      console.log("calling it",data,params)
+      for(const prop in data){
+
+        if(Array.isArray(data[prop]) && data[prop].length){
+          let value=""
+          value = data[prop].map((item)=>`${prop}[]=${item}&`).join('')
+          fd = fd+value
+        }
+        else if(data[prop]!==null && !Array.isArray(data[prop])){
+          fd = fd+`${prop}=${data[prop]}&`
+        }
+      }
+    }
+
+    
+  otf(data)
+console.log("fd are",fd)
+
+    axios.get(  `${url}?${fd}`).then(res => {
       console.log("fetching list",res);
       let productList= {}
       productList = res.data.payload
@@ -47,7 +76,7 @@ export const productData = (category,sortBy="relevance",page="1",history) => {
         "productHistory":history
       }
        localStorage.setItem("productData",JSON.stringify(productData));
-        history.push({pathname:`/shop/${category}`,state: {categoryId:category,page:page,sortBy:sortBy}})
+        history.push({pathname:`/shop/${category}`,state: {categoryId:category,page:params.page,sortBy:params.sortBy}})
        // window.location.reload();
       }
     }).catch(error => {

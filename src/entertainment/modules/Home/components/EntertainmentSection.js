@@ -30,7 +30,7 @@ const EntertainmentSection = (props) => {
           <Link
             className="seeallbtn"
             to={{
-              pathname: `/collection`,
+              pathname: `/collection/${props.sectionData.title}`,
               sectionData: `${props.sectionData.id}`,
             }}
           >

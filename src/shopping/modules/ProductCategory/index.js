@@ -7,7 +7,7 @@ import {productDetail} from '../ProductDetail/ProductDetailAction'
 import { AddWishlist } from '../Wishlist/WishlistAction';
 
 const mapStateToProps = (state) => {
-    console.log("state.shopping.productList",state.shopping.productList)
+    console.log("state.shopping.productList",state.shopping.filterList)
     return  {
         // data: state.shopping.data,
         fetching: state.shopping.fetching,
