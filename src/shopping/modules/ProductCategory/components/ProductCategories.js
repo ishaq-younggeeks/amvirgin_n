@@ -19,26 +19,17 @@ class ProductCategories extends React.Component {
       hist: '',
       red: false,
       selectedSize: '',
-      query:{
+      query: {
         page: 1,
-        // sortBy:"",
-        // page: 1,
-        // color: [],
-        // price: {},
-        // discount: "",
-        // brand: [],
+        sortBy: "relevance",
       }
-      
+
 
     }
   }
 
   async componentDidMount() {
-    let params = {
-      sortBy: "relevance",
-      page: "1"
-    }
-    this.props.productData(this.props.match.params.pat1, params, this.props.history)
+    this.props.productData(this.props.match.params.pat1, this.state.query, this.props.history)
     const res = await Axios.get(`${baseURL}/customer/products/sorts`)
     this.props.applicableFilter(this.props.match.params.pat1)
     this.setState({ sortby: res.data.data }, console.log("sortBy state", res.data.data))
@@ -49,49 +40,77 @@ class ProductCategories extends React.Component {
 
   handleChange = (e) => {
 
-    const name=e.target.name
-    const mode=e.target.getAttribute("mode")
-    let data = {
-      params: {
-        a: null,
-        b: [1, 2, 3, 4],
-        c: {
-          a: null,
-          b: [1, 2, 3],
-          c: ["q", "e", "r", "t", "y"]
-        },
-        sortBy: "relevance",
-        page: "1"
-      }
-    }
+    const name = e.target.name
+    const mode = e.target.getAttribute("mode")
 
-    if(mode==="multiple_price"){
+    if (mode === "multiple_price") {
       let high = e.target.value.split("_")[0]
       let low = e.target.value.split("_")[1]
-      this.setState((prevState, props) => ({
-        query: {...prevState.query,[name]:{high,low}}
-      }),()=>console.log("current state",this.state.query));
+      console.log("id", this.state.query[name])
+      let id = e.target.id
+      let checked = e.target.checked
+      if (!this.state.query[name]) {
+        this.setState((prevState, props) => ({
+          query: { ...prevState.query, [name]: [{ id, high, low, checked }] }
+        }), () => callbackFunction());
+      }
+      else {
+        let findItem = this.state.query[name].findIndex((item) => item.id === id)
+        console.log("find item", findItem)
+        if (findItem === -1) {
+          this.setState((prevState, props) => ({
+            query: { ...prevState.query, [name]: [...prevState.query[name], { id, high, low, checked }] }
+          }), () => callbackFunction());
+        }
+        else {
+          let items = this.state.query[name].filter((item) => item.id != id)
+          this.setState((prevState, props) => ({
+            query: { ...prevState.query, [name]: items }
+          }), () => callbackFunction());
+        }
+
+      }
+
     }
-    else if(mode==="multiple")
-    {
+    else if (mode === "multiple") {
       let value = e.target.value
-      this.setState((prevState, props) => ({
-        query: {...prevState.query,[name]:[value]}
-      }),()=>console.log("current state",this.state.query));
+      if (!this.state.query[name]) {
+        this.setState((prevState, props) => ({
+          query: { ...prevState.query, [name]: [value] }
+        }), () => callbackFunction());
+      }
+      else {
+        let findItem = this.state.query[name].findIndex((item) => item === value)
+        if (findItem === -1) {
+          this.setState((prevState, props) => ({
+            query: { ...prevState.query, [name]: [...prevState.query[name], value] }
+          }), () => callbackFunction());
+        }
+        else {
+          let items = this.state.query[name].filter((item) => item !== value)
+          this.setState((prevState, props) => ({
+            query: { ...prevState.query, [name]: items }
+          }), () => callbackFunction());
+        }
+
+      }
+
     }
     else {
       let value = e.target.value
       this.setState((prevState, props) => ({
-        query: {...prevState.query,[name]:value}
-      }),()=>console.log("current state",this.state.query));
+        query: { ...prevState.query, [name]: value }
+      }), () => callbackFunction());
 
     }
-    
 
 
-    console.log("calling handle change", data)
 
-    // this.props.productData(this.props.match.params.pat1, data, this.props.location.state.history)
+    const callbackFunction = () => {
+      console.log("calling callback")
+      this.props.productData(this.props.match.params.pat1, this.state.query, this.props.location.state.history)
+    }
+
   }
 
   render() {

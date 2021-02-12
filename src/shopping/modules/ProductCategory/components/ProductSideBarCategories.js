@@ -174,7 +174,7 @@ class Multiple extends Component {
             </li>
             <li>
               <div className="sidebar-widget-list-left">
-                <input type="checkbox" value="" /> <a href="#">Black <span>3</span> </a>
+                <input type="checkbox" mode="multiple" name={items.type} onClick={this.props.handleChange} value={"black"}  /> <a href="#">Black <span>3</span> </a>
                 <span className="checkmark"></span>
               </div>
             </li>

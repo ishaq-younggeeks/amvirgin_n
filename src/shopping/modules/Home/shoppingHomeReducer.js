@@ -24,23 +24,24 @@ export const fetchData = () => {
   }
 }
 
-export const productData = (category,params="",history) => {
+export const productData = (category,params={page:1},history) => {
   return (dispatch) => {
     dispatch(fetchingData(true))
     let url = `${baseURL}/customer/categories/${category}/products`
     // let url = `${baseURL}/customer/products/${category}`
     let data={}
-    if(params===""){
-      data.params =
-        {
-          sortBy:"relevance",
-          page:"1"
-        }
-      }
+    console.log("sending params",params)
+    // if(params===""){
+    //   data.params =
+    //     {
+    //       sortBy:"relevance",
+    //       page:"1"
+    //     }
+    //   }
 
-      else{ 
-        data=params.params
-      }
+    //   else{ 
+    //     data=params.params
+    //   }
     
     let fd = ""
 
@@ -50,8 +51,23 @@ export const productData = (category,params="",history) => {
 
         if(Array.isArray(data[prop]) && data[prop].length){
           let value=""
-          value = data[prop].map((item)=>`${prop}[]=${item}&`).join('')
-          fd = fd+value
+          if(prop==="price")
+          {
+            let item = data[prop].map(
+              ({low,high})=>
+              {
+                return {low,high}
+              }).sort((a,b)=>a.low>b.low?1:a.low<b.low?-1:0)
+
+              value = `${prop}[high]=${item.high[0]}&${prop}[low]=${item.low[item.length-1]}&`
+            fd = fd+value
+          }
+
+          else {
+            value = data[prop].map((item)=>`${prop}[]=${item}&`).join('')
+            fd = fd+value
+          }
+          
         }
         else if(data[prop]!==null && !Array.isArray(data[prop])){
           fd = fd+`${prop}=${data[prop]}&`
@@ -60,10 +76,10 @@ export const productData = (category,params="",history) => {
     }
 
     
-  otf(data)
+  otf(params)
 console.log("fd are",fd)
-
-    axios.get(  `${url}?${fd}`).then(res => {
+    let query = fd.slice(0,-1)
+    axios.get(  `${url}?${query}`).then(res => {
       console.log("fetching list",res);
       let productList= {}
       productList = res.data.payload
