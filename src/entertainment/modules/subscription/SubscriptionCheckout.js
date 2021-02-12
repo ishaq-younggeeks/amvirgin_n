@@ -33,10 +33,10 @@ componentDidMount() {
       "key_secret": 'Hb1DIYDKOL54Gyfbj7sMsJVf',
       "amount": this.props.total * 100, // 2000 paise = INR 20, amount in paisa
       "name": "AmVirgin",
-      "order_id": this.props.razorPay,
+      "order_id": this.props.razorPay.rzpOrderId,
       "image": process.env.PUBLIC_URL + "/img/default.png",
       "handler": (response) => {
-        this.props.subscriptionFinalFnc(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, this.props.razorPay, this.props.history);
+        this.props.subscriptionFinalFnc(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, this.props.razorPay.transactionId, this.props.history);
       },
       "prefill": {
         "name": this.state.name,
@@ -60,7 +60,7 @@ componentDidMount() {
       <>
      <div>
         <div> <p> We will redirect you to your Razorpay's website to authorize the payment. </p> </div>
-        {this.props.razorPay ? <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red" onClick={this.openCheckout}> PAY NOW </button>: null}
+        {this.props.razorPay && this.props.razorPay.rzpOrderId ? <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red" onClick={this.openCheckout}> PAY NOW </button>: null}
       </div>
     </>
     );
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        subscriptionFinalFnc :(transactionId, paymentId, signature, orderId) => dispatch(subscriptionFinalFnc(transactionId, paymentId, signature, orderId))
+        subscriptionFinalFnc :(orderId, paymentId, signature, transactionId,history) => dispatch(subscriptionFinalFnc(orderId, paymentId, signature, transactionId,history))
     }
 }
 

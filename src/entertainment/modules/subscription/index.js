@@ -59,7 +59,6 @@ class Subscription extends Component {
 
   handleClick = (compName, e) => {
     this.setState({ render: compName });
-    //this.activeClass()
   };
 
   _renderSubComp() {
@@ -69,12 +68,13 @@ class Subscription extends Component {
           <Step2
             listingSubscriptionData={this.props.listingSubscriptionData}
             clickMe={this.clickMe}
+            {...this.props}
           />
         );
       case "Step3":
-        return <Step3 />;
+        return <Step3 {...this.props}/>;
       case "Step4":
-        return <Step4 />;
+        return <Step4 {...this.props}/>;
       default:
         return (
           <Step1
@@ -85,6 +85,8 @@ class Subscription extends Component {
             listingSubscriptionData={this.props.listingSubscriptionData}
             arr={this.state.arr}
             susbcriptionCheckout={this.props.susbcriptionCheckout}
+            user={this.props.user}
+            {...this.props}
           />
         );
     }
@@ -131,6 +133,7 @@ class Subscription extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    user: state.authReducer.user,
     loggedIn: state.authReducer.loggedIn,
     listingSubscriptionData: state.subscriptionReducer.listingSubscriptionData,
   };
@@ -190,6 +193,8 @@ class Step1 extends React.Component {
             clickMe={this.props.clickMe}
             loggedIn={this.props.loggedIn}
             susbcriptionCheckout={this.props.susbcriptionCheckout}
+            user={this.props.user}
+            {...this.props}
           />
         )}
       </>
@@ -205,8 +210,22 @@ class Step2 extends React.Component {
       selectedPack: "",
       duration: "",
       price: "",
-      activePack: "",
+      selectedPackIndex: "",
+      activeIndex: "",
+      activeExpiration: ""
     };
+  }
+
+  componentDidMount = () => {
+    console.log("componentDidMount Calling!");
+    const {user} = this.props;
+    if(user && user.subscription && user.subscription.active){
+      this.setState({
+        selectedPackIndex: user.subscription ? user.subscription.plan.key - 1 : null,
+        activeIndex: user.subscription ? user.subscription.plan.key - 1 : null,
+        activeExpiration: user.subscription ? user.subscription.plan.duration.expires.slice(0,10).split('-').reverse().join('-') : null
+      })
+    }
   }
 
   next = () => {
@@ -229,11 +248,10 @@ class Step2 extends React.Component {
                     this.props.listingSubscriptionData.map((item, index) => {
                       return (
                         <React.Fragment key={index}>
-                          {/* <input type="radio" name="size" id="size_1" value="200" /> */}
                           <label
                             for="size_1"
                             className={`pricelabel + ${
-                              index === this.state.activePack
+                              index === this.state.selectedPackIndex
                                 ? "active-pack"
                                 : ""
                             }`}
@@ -242,13 +260,15 @@ class Step2 extends React.Component {
                                 selectedPack: item.key,
                                 duration: item.duration,
                                 price: item.originalPrice,
-                                activePack: index,
+                                selectedPackIndex: index,
                               })
                             }
                           >
                             <h2 className="price">₹{item.originalPrice}</h2>
                             <h4 className="month">{item.duration} Days</h4>
                             <h6 className="rate">{item.name}</h6>
+                            {index === this.state.activeIndex ? <div className="label-hello"><span className="text-danger font-weight-bold">Valid till : </span>{this.state.activeExpiration}</div> : null}
+                            <i className={`${index === this.state.activeIndex ? "fa fa-check-circle  text-success hello-check" : ""}`}></i>
                           </label>
                         </React.Fragment>
                       );
@@ -257,7 +277,7 @@ class Step2 extends React.Component {
                 <button
                   className="btn nextBtn btn-lg pull-right "
                   type="button"
-                  disabled={!this.state.selectedPack && "true"}
+                  disabled={this.state.selectedPackIndex === this.state.activeIndex}
                   onClick={() => this.next()}
                 >
                   Continue
@@ -273,6 +293,7 @@ class Step2 extends React.Component {
             clickMe={this.props.clickMe}
             loggedIn={this.props.loggedIn}
             susbcriptionCheckout={this.props.susbcriptionCheckout}
+            {...this.props}
           />
         )}
       </>
@@ -372,7 +393,7 @@ class Step3 extends Component {
             </div>
           </div>
         ) : (
-          <Step4 total={this.props.price}/>
+          <Step4 total={this.props.price}{...this.props}/>
         )}
       </>
     );
@@ -394,13 +415,13 @@ class Step4 extends Component {
   _renderPaymentComp() {
     switch (this.state.render) {
       case "NetBank":
-        return <NetBank total={this.props.total}/>;
+        return <NetBank total={this.props.total}{...this.props}/>;
       case "BhimUpi":
-        return <BhimUpi total={this.props.total}/>;
+        return <BhimUpi total={this.props.total}{...this.props}/>;
       case "Wallet":
-        return <Wallet total={this.props.total}/>;
+        return <Wallet total={this.props.total}{...this.props}/>;
       default:
-        return <Card total={this.props.total}/>;
+        return <Card total={this.props.total}{...this.props}/>;
     }
   }
 
@@ -435,7 +456,7 @@ class Step4 extends Component {
                           onClick={(e) => this.selectPayment("BhimUpi", e)}
                         >
                           {" "}
-                          PHONEPAY / GOOGLEPAY / BHIM UPI{" "}
+                          PHONE PE / GOOGLE PAY / BHIM UPI{" "}
                         </button>
                         <button
                           className="tablinks"
@@ -582,7 +603,7 @@ class NetBank extends Component {
             addressId={this.props.addressId}
             total={this.props.total}
             razorPay={this.props.razorPay}
-            prefillMethod={"net-banking"}
+            prefillMethod={"netbanking"}
             paymentMethod={"2"}
             placeOrderFinal={this.props.placeOrderFinal}
             {...this.props}

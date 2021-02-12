@@ -15,6 +15,7 @@ import ViewMyOrders from "./shopping/modules/ViewMyOrders/ViewMyOrders";
 import ViewMyOrderDetails from "./shopping/modules/ViewMyOrders/ViewMyOrderDetails";
 import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
 import OrderSuccessful from "./shopping/modules/Order/components/OrderSuccessful";
+import SubscriptionSuccessful from "./entertainment/modules/subscription/SubscriptionSuccessful";
 
 // Seller Routes
 import SellerLogin from "./seller/modules/Authentication/components/Login";
@@ -126,6 +127,7 @@ class App extends Component {
           <Route exact path="/video/:videoId" component={Show}></Route>
           <Route exact path="/collection" component={Collection}></Route>
           <Route exact path="/subscription" component={Subscritption}></Route>
+          <Route exact path="/subscription/checkout" component={SubscriptionSuccessful}></Route> 
           
           {/* Seller Routes */}
           <Route path="/seller/login" exact component={SellerLogin} />

@@ -1,7 +1,7 @@
 import {myData,fetchingData,product,release,fetchApplicableFilter} from './shoppingHomeAction';
 import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA, ALL_DEALS,FILTER_DATA} from './shoppingHomeConstant';
 import axios from 'axios';
-import { baseURL } from "../../../credential.json";
+import { baseURL, baseURL2 } from "../../../credential.json";
 import { browserHistory, Redirect } from 'react-router';
 import history from '../../../Store/history'
 import { push } from 'react-router-redux'
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export const fetchData = () => {
   return (dispatch) => {
     dispatch(fetchingData(true))
-    axios.get(`${baseURL}/customer/categories`)
+    axios.get(`${baseURL2}/customer/categories`)
     .then(res => {
       let dataList = [];
       dataList = res.data;
@@ -28,8 +28,8 @@ export const productData = (category,sortBy="relevance",page="1",history) => {
   console.log(`calling category ${category}, calling history ${history},calling query,${sortBy}`);
   return (dispatch) => {
     dispatch(fetchingData(true))
-    let url = `${baseURL}/customer/categories/${category}/products`
-    // let url = `${baseURL}/customer/products/${category}`
+    let url = `${baseURL2}/customer/categories/${category}/products`
+    // let url = `${baseURL2}/customer/products/${category}`
     axios.get(url,{
       params: {
         sortBy
@@ -60,7 +60,7 @@ export const productData = (category,sortBy="relevance",page="1",history) => {
 
 export const applicableFilter = (category) => {
   return (dispatch) =>{
-    let url = `${baseURL}/customer/categories/${category}/filters`
+    let url = `${baseURL2}/customer/categories/${category}/filters`
 
     axios.get(url)
     .then (res =>{
@@ -80,7 +80,7 @@ export const applicableFilter = (category) => {
 // export const viewAllDeals = () => {
 //   return (dispatch) => {
 //     dispatch(fetchingData(true))
-//     let url = `${baseURL}/customer/shop/deals`
+//     let url = `${baseURL2}/customer/shop/deals`
 //     axios.get(url).then(res => {
 //       console.log("fetching deals list", res);
 //       let allDealsList = {}

@@ -32,7 +32,7 @@ class Payment extends Component {
   _renderPaymentComp() {
     switch (this.state.render) {
       case "NetBank":
-        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"net-banking"} paymentMethod={"2"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
+        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"netbanking"} paymentMethod={"2"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       case "Cash":
         return <Cash 
         addressId={this.props.addressId} 
@@ -169,7 +169,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getRazorPayId: (selection) => dispatch(getRazorPayId(selection)),
-    placeOrderFinal: (addressId, selection, razorPayId, razorpay_payment_id, razorpay_signature, history) => dispatch(placeOrderFinal(addressId, selection, razorPayId, razorpay_payment_id, razorpay_signature, history))
+    placeOrderFinal: (addressId, selection, razorPayId, razorpay_payment_id, razorpay_signature, history) => dispatch(placeOrderFinal(addressId, selection, razorPayId, razorpay_payment_id, razorpay_signature, history)),
   }
 }
 
