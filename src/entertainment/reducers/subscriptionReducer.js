@@ -1,12 +1,14 @@
-import {RECEIVED_SUBSCRIPTION_DATA, SUBSCRIPTION_CHECKOUT} from '../constants/subscription.constant'
+import {RECEIVED_SUBSCRIPTION_DATA, SUBSCRIPTION_CHECKOUT, SUBSCRIPTION_FINAL} from '../constants/subscription.constant'
 import {subscribeList} from "../actions/subscription.actions"
 import { baseURL } from "../../credential.json";
 import axios from 'axios';
+import { param } from 'jquery';
 
 
 const initialState = {
   listingSubscriptionData: [],
-  subscriptionCheckout: ""
+  subscriptionCheckout: "",
+  subscriptionFinal: {}
 }
 
 
@@ -47,6 +49,34 @@ export const susbcriptionCheckout = (id) => {
   }
 }
 
+export const subscriptionFinalFnc = (transactionId, paymentId, signature, orderId, history) => {
+  return(dispatch) => {
+    let token = localStorage.getItem("UserToken");
+    let config = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }
+
+    let params = {
+      transactionId, paymentId, signature, orderId
+    }
+
+    axios
+    .get(`${baseURL}/customer/subscriptions/checkout`, params, config)
+    .then((res) => {
+      console.log(res);
+      if(res.data.status === 200 || 201){
+        dispatch({
+          type: SUBSCRIPTION_FINAL,
+          payload: res.data
+        })
+      }
+    })
+    .catch((err) => console.log(err));
+  }
+}
+
 const ACTION_HANDLERS = {
   [RECEIVED_SUBSCRIPTION_DATA]: (state, action) => {
     return {
@@ -58,6 +88,12 @@ const ACTION_HANDLERS = {
     return {
       ...state,
       subscriptionCheckout: action.payload
+    };
+  },
+  [SUBSCRIPTION_FINAL]: (state, action) => {
+    return {
+      ...state,
+      subscriptionFinal: action.payload
     };
   },
 };

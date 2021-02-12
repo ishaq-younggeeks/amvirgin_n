@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-//import Razorpay from 'razorpay'
+import { connect } from 'react-redux';
+import {subscriptionFinalFnc} from "../../reducers/subscriptionReducer";
 
-class Checkout extends Component {
+class SubscriptionCheckout extends Component {
   constructor(props) {
     super(props)
     this.state ={
@@ -36,7 +36,7 @@ componentDidMount() {
       "order_id": this.props.razorPay,
       "image": process.env.PUBLIC_URL + "/img/default.png",
       "handler": (response) => {
-        this.props.placeOrderFinal(this.props.addressId, this.props.paymentMethod, response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, this.props.history);
+        this.props.subscriptionFinalFnc(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, this.props.razorPay, this.props.history);
       },
       "prefill": {
         "name": this.state.name,
@@ -44,27 +44,39 @@ componentDidMount() {
         "method": this.props.prefillMethod,
       },
       "notes": {
-        "address": "Hello World"
+        "address": "NA"
       },
       "theme": {
         "color": "#F37254"
       }
     };
-
     var rzp1 = new window.Razorpay(options);
         rzp1.open();
   }
   render() {
+
     console.log("Razorpay Order ID :", this.props.razorPay);
     return (
       <>
-     <div id="Card" className=" ">
+     <div>
         <div> <p> We will redirect you to your Razorpay's website to authorize the payment. </p> </div>
-        {this.props.addressId ?<button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red" onClick={this.openCheckout}> PAY NOW </button> : <Link to="/placeOrder" type="button" className="btn btn-red">Select Address Again</Link>}
+        {this.props.razorPay ? <button type="submit" form="form1" value="Submit" className="btn btn-raised btn-red" onClick={this.openCheckout}> PAY NOW </button>: null}
       </div>
     </>
     );
   }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+    return {
+        razorPay: state.subscriptionReducer.subscriptionCheckout
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        subscriptionFinalFnc :(transactionId, paymentId, signature, orderId) => dispatch(subscriptionFinalFnc(transactionId, paymentId, signature, orderId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionCheckout);
