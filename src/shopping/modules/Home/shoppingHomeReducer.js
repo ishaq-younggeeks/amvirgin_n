@@ -1,7 +1,7 @@
 import {myData,fetchingData,product,release,fetchApplicableFilter} from './shoppingHomeAction';
 import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA, ALL_DEALS,FILTER_DATA} from './shoppingHomeConstant';
 import axios from 'axios';
-import { baseURL } from "../../../credential.json";
+import { baseURL, baseURL2 } from "../../../credential.json";
 import { browserHistory, Redirect } from 'react-router';
 import history from '../../../Store/history'
 import { push } from 'react-router-redux'
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export const fetchData = () => {
   return (dispatch) => {
     dispatch(fetchingData(true))
-    axios.get(`${baseURL}/customer/categories`)
+    axios.get(`${baseURL2}/customer/categories`)
     .then(res => {
       let dataList = [];
       dataList = res.data;
@@ -27,6 +27,13 @@ export const fetchData = () => {
 export const productData = (category,params={page:1},history) => {
   return (dispatch) => {
     dispatch(fetchingData(true))
+<<<<<<< HEAD
+    let url = `${baseURL2}/customer/categories/${category}/products`
+    // let url = `${baseURL2}/customer/products/${category}`
+    axios.get(url,{
+      params: {
+        sortBy
+=======
     let url = `${baseURL}/customer/categories/${category}/products`
     // let url = `${baseURL}/customer/products/${category}`
     let data={}
@@ -72,6 +79,7 @@ export const productData = (category,params={page:1},history) => {
         else if(data[prop]!==null && !Array.isArray(data[prop])){
           fd = fd+`${prop}=${data[prop]}&`
         }
+>>>>>>> 9fda79c6dc1b8bca59d178c1174f13c6534bf1bd
       }
     }
 
@@ -105,7 +113,7 @@ console.log("fd are",fd)
 
 export const applicableFilter = (category) => {
   return (dispatch) =>{
-    let url = `${baseURL}/customer/categories/${category}/filters`
+    let url = `${baseURL2}/customer/categories/${category}/filters`
 
     axios.get(url)
     .then (res =>{
@@ -125,7 +133,7 @@ export const applicableFilter = (category) => {
 // export const viewAllDeals = () => {
 //   return (dispatch) => {
 //     dispatch(fetchingData(true))
-//     let url = `${baseURL}/customer/shop/deals`
+//     let url = `${baseURL2}/customer/shop/deals`
 //     axios.get(url).then(res => {
 //       console.log("fetching deals list", res);
 //       let allDealsList = {}

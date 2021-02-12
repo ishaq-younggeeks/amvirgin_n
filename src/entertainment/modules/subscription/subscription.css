@@ -102,10 +102,31 @@ border: 2px solid #000;
 min-height: calc(108px - 27px);
 font-family: 'Montserrat', sans-serif;
 transition: transform .4s;
+position: relative;
 }
 
 .formpart .pricelabel:hover{
   transform: scale(1.1);
+}
+
+.label-hello{
+  color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.hello-check{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size:20px;
 }
 
 .pricelabel .price{

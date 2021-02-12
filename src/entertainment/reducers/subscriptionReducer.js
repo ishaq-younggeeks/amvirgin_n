@@ -7,7 +7,7 @@ import { param } from 'jquery';
 
 const initialState = {
   listingSubscriptionData: [],
-  subscriptionCheckout: "",
+  subscriptionCheckout: {},
   subscriptionFinal: {}
 }
 
@@ -41,7 +41,7 @@ export const susbcriptionCheckout = (id) => {
       if(res.data.status === 200 || 201){
         dispatch({
           type: SUBSCRIPTION_CHECKOUT,
-          payload: res.data.payload.rzpOrderId
+          payload: res.data.payload
         })
       }
     })
@@ -49,7 +49,7 @@ export const susbcriptionCheckout = (id) => {
   }
 }
 
-export const subscriptionFinalFnc = (transactionId, paymentId, signature, orderId, history) => {
+export const subscriptionFinalFnc = (orderId, paymentId, signature, transactionId, history) => {
   return(dispatch) => {
     let token = localStorage.getItem("UserToken");
     let config = {
@@ -57,20 +57,21 @@ export const subscriptionFinalFnc = (transactionId, paymentId, signature, orderI
         Authorization: "Bearer " + token
       }
     }
-
+        
     let params = {
-      transactionId, paymentId, signature, orderId
+      orderId, paymentId, signature, transactionId
     }
 
     axios
-    .get(`${baseURL}/customer/subscriptions/checkout`, params, config)
+    .post(`${baseURL}/customer/subscriptions/checkout`, params, config)
     .then((res) => {
       console.log(res);
-      if(res.data.status === 200 || 201){
+      if(res.data.status === 200 || 201 || 403){
         dispatch({
           type: SUBSCRIPTION_FINAL,
           payload: res.data
         })
+        history.push("/subscription/checkout")
       }
     })
     .catch((err) => console.log(err));
