@@ -125,7 +125,7 @@ class App extends Component {
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/video/:videoId" component={Show}></Route>
-          <Route exact path="/collection" component={Collection}></Route>
+          <Route exact path="/collection/:title" component={Collection}></Route>
           <Route exact path="/subscription" component={Subscritption}></Route>
           <Route exact path="/subscription/checkout" component={SubscriptionSuccessful}></Route> 
           

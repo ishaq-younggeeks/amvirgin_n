@@ -10,12 +10,23 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 class Collection extends Component {
+
+  constructor(props){
+    super(props);
+this.state = {
+  title:""
+}
+  }
   componentDidMount() {
     window.scrollTo(0, 0);
     this.props.collectionData(this.props.location.sectionData);
+    console.log("this.props",this.props.match.params.title)
+    this.setState({title:this.props.match.params.title})
   }
 
   render() {
+
+    const {title} = this.state
     return (
       <>
         <Helmet>
@@ -25,7 +36,7 @@ class Collection extends Component {
         <Header />
         <div className="bodysection">
           <div className="videocollection container">
-            <h6> Popular Movies </h6>
+            <h6> {title} </h6>
 
             <div className="row">
               {this.props.collectionDetail.length &&
@@ -44,7 +55,7 @@ class Collection extends Component {
                           <img className="image" src={collection.poster} />
                           <div className="middle">
                             <div className="imgslider">
-                              <img src="img/play.png" alt="play" />
+                              <img src={process.env.PUBLIC_URL+`/img/play.png`} alt="play" />
                             </div>
                           </div>
                         </div>
