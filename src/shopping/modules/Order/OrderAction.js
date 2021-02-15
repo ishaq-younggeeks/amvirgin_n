@@ -1,5 +1,6 @@
 import axios from "axios";
 import { actionTypes } from "redux-form";
+import { shop } from "../../../common/apiConstants";
 import { baseURL } from "../../../credential.json";
 import { ADDRESS_DETAIL, GET_RAZORPAY, PLACE_ORDER } from "./OrderConstant";
 //import {fetchCart} from '../Cart/shoppingCartAction'
@@ -17,7 +18,7 @@ export const getAddressDetail = () => {
     window.location.href = "/login";
   } else {
     return (dispatch) => {
-      let url = `${baseURL}/customer/addresses`;
+      let url = `${baseURL}${shop.address}`;
       axios
         .get(`${url}`, config)
         .then((res) => {
@@ -43,7 +44,7 @@ export const saveAddressDetail = (addressDetail) => {
   };
 
   return (dispatch) => {
-    let url = `${baseURL}/customer/addresses`;
+    let url = `${baseURL}${shop.address}`;
     axios
       .post(`${url}`, addressDetail, config)
       .then((res) => {
@@ -73,7 +74,7 @@ export const deleteAddress = (addressId) => {
   };
 
   return (dispatch) => {
-    let url = `${baseURL}/customer/addresses/${addressId}`;
+    let url = `${baseURL}${shop.address}${addressId}`;
 
     axios.delete(url, config).then((res) => {
       console.log("delete res", res);
@@ -93,7 +94,7 @@ export const updateSavedAddress = (addressId, data) => {
   };
 
   return (dispatch) => {
-    let url = `${baseURL}/customer/addresses/${addressId}`;
+    let url = `${baseURL}${shop.address}${addressId}`;
 
     axios.put(url, data, config).then((res) => {
       console.log("update res", res);
@@ -130,7 +131,7 @@ export const getRazorPayId = (selection) => {
     }
 
     axios
-      .post(`${baseURL}/customer/cart/checkout`, params, config)
+      .post(`${baseURL}${shop.checkout}`, params, config)
       .then((res) => {
         console.log(res);
         if(res.data.status === 200){
@@ -191,7 +192,7 @@ export const placeOrderFinal = (addressId, selection, razorPayId, razorpay_payme
     }
 
     axios
-    .post(`${baseURL}/customer/cart/submit`, params, config)
+    .post(`${baseURL}${shop.placeOrder}`, params, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 201 || 403){

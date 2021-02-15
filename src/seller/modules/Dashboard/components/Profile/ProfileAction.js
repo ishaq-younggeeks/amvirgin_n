@@ -4,6 +4,7 @@ import { baseURL } from "../../../../../credential.json";
 import React from 'react';
 import Modal from 'react-modal';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 export const uploadDisplay = (data) => dispatch => {
@@ -30,11 +31,11 @@ export const uploadDisplay = (data) => dispatch => {
     }
   };
 
-  Axios.post(`${baseURL}/seller/profile/avatar`, data, config)
+  Axios.post(`${baseURL}${seller.sellerProfile}/avatar`, data, config)
     .then(res => {
       console.log("updated avatar",res);
       //Still Working on It  
-      Axios.get(`${baseURL}/seller/profile`, { headers: { "Authorization": `Bearer ${token}` } })
+      Axios.get(`${baseURL}${seller.sellerProfile}`, { headers: { "Authorization": `Bearer ${token}` } })
       .then(res => {
         let data = res.data.data
         // $("#upload").css("width",'0%')
@@ -61,7 +62,7 @@ export const uploadDisplay = (data) => dispatch => {
 export const Fetchdata = () => dispatch => {
 
   let token = localStorage.getItem('token')
-  Axios.get(`${baseURL}/seller/profile`, { headers: { "Authorization": `Bearer ${token}` } })
+  Axios.get(`${baseURL}${seller.sellerProfile}`, { headers: { "Authorization": `Bearer ${token}` } })
     .then(res => {
       let data = res.data.data
       console.log("fetch profile",res);
@@ -79,7 +80,7 @@ export const Fetchdata = () => dispatch => {
 export const ChangePassword =(passwordData) => dispatch =>{
   let token = localStorage.getItem('token')
 
-  Axios.post(`${baseURL}/seller/profile`,passwordData, { headers: { "Authorization": `Bearer ${token}` } })
+  Axios.post(`${baseURL}${seller.sellerProfile}`,passwordData, { headers: { "Authorization": `Bearer ${token}` } })
     .then(res => {
       let data = res.data.data
       console.log("update profile",res);
@@ -102,7 +103,7 @@ export const updateProfile = (data) => dispatch => {
       Authorization: "Bearer " + token
     }
   };
-  Axios.put(`${baseURL}/seller/profile`,data,config)
+  Axios.put(`${baseURL}${seller.sellerProfile}`,data,config)
   .then(res => {
 
     console.log("update profile",res)

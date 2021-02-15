@@ -3,6 +3,7 @@ import { baseURL } from "../../../../../credential.json";
 import {FETCH_SALESSDETAILS } from './SellerGrowthConstant'
 import React from 'react';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 export const getSales = (days) => {
@@ -17,7 +18,7 @@ export const getSales = (days) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/growth/overview?days=${days}`, config)
+      .get(`${baseURL}${seller.sales}${days}`, config)
       .then(res => {
 		   console.log("getting growth sales details",res);
         if (res.data.status === 200) {

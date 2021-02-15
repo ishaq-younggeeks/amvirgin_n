@@ -1,12 +1,13 @@
 import axios from "axios";
 import { baseURL } from "../../../credential.json";
+import {seller} from ".././../../common/apiConstants";
 
 export const login = credentials => {
   return async dispatch => {
     //make async calls here
     try {
       const res = await axios
-        .post(`${baseURL}/seller/login?type=1`, credentials)
+        .post(`${baseURL}${seller.login}`, credentials)
         .then(res => {
           if (
             res.data.status === 404 ||
@@ -44,7 +45,7 @@ export const getSellerProfile = () => {
         }
       };
       try {
-        const res = await axios.get(`${baseURL}/seller/profile`, config);
+        const res = await axios.get(`${baseURL}${seller.profile}`, config);
         if (res.status === 401) {
           localStorage.removeItem("token");
           dispatch({
@@ -76,7 +77,7 @@ export const logout = token => {
         }
       };
       axios
-        .post(`${baseURL}/seller/logout`, {}, config)
+        .post(`${baseURL}${seller.logout}`, {}, config)
         .then(() => {
           localStorage.removeItem('token');
           dispatch({
@@ -108,7 +109,7 @@ export const registration = credentials => {
       otp: credentials.otp
     };
     return axios
-      .get(`${baseURL}/seller?email=${sellerCredentials.email}&type=1`)
+      .get(`${baseURL}${seller.registration}=${sellerCredentials.email}&type=1`)
       .then(res => {
         if (res.data.status === 409) {
           console.log(res.data);

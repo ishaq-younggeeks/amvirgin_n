@@ -2,11 +2,12 @@ import Axios from 'axios';
 import { baseURL } from "../../../credential.json";
 import { FETCH_CART, ADDTO_CART, DELETE_FROM_CART ,UPDATE_ITEM,AFTER_MOVETOWISHLIST_FETCH} from './shoppingCartConstant';
 import $ from 'jquery';
+import { shop } from '../../../common/apiConstants';
 
 // To get the cart data.
 export const fetchCart = () => dispatch => {
   //console.log('entered the fetch cart action----')
-  let url = `${baseURL}/customer/cart/retrieve?`;
+  let url = `${baseURL}${shop.fetchCart}`;
   let sessionid = localStorage.getItem('session');
   //console.log('this is cart', sessionid);
   Axios.get(`${url}` + 'sessionId=' + sessionid + '&customerId=' + 3)
@@ -28,7 +29,7 @@ export const fetchCart = () => dispatch => {
 // Action For adding product to cart
 export const addtoCart = (id,size) => dispatch => {
   console.log("id coming on select size",id,size)
-  let url = `${baseURL}/customer/cart/add`;
+  let url = `${baseURL}${shop.addToCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,
@@ -65,7 +66,7 @@ export const addtoCart = (id,size) => dispatch => {
 
 // Action to Delete Product From Cart
 export const deletefromCart = (id) => dispatch => {
-  let url = `${baseURL}/customer/cart/destroy`;
+  let url = `${baseURL}${shop.deleteFromCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,
@@ -89,7 +90,7 @@ export const deletefromCart = (id) => dispatch => {
 }
 
 export const updateitem = (id,qty) => dispatch => {
-  let url = `${baseURL}/customer/cart/update`;
+  let url = `${baseURL}${shop.updateCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,
@@ -116,7 +117,7 @@ export const updateitem = (id,qty) => dispatch => {
 export const movetoWishlisht = (id) => dispatch => {
   let token = localStorage.getItem('UserToken')
 
-  let url = `${baseURL}/customer/cart/wishlist/${id}`
+  let url = `${baseURL}${shop.moveToWishlist}${id}`
   let sessionid =localStorage.getItem('session')
 
   let data  = {

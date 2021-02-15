@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { entertainment } from '../../../../common/apiConstants';
 import { baseURL,baseURL2 } from "../../../../credential.json";
 import {VIDEO_DATA,TRENDING_DATA} from './ShowConstant'
 
 export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),history="") => {
   return  (dispatch) => {
-    let url = `${baseURL2}/customer/videos/${videoId}` 
+    let url = `${baseURL2}${entertainment.videos}${videoId}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.payload;
      console.log("data---------------------",Data);
@@ -22,7 +23,7 @@ export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),hist
 export const trendingDetail = () => {
 
   return  (dispatch) => {
-    let url = `${baseURL}/customer/entertainment/trending` 
+    let url = `${baseURL}${entertainment.trending}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.data;
      console.log("trending data",Data);

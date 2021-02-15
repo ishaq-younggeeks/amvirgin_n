@@ -3,6 +3,7 @@ import { baseURL } from "../../../../../credential.json";
 import {FETCH_CREATEADVT,CREATEADVT_STATUS,FETCH_ADVT, EDIT_ADVT, DELETE_ADVT} from './AdvConstant'
 import React from 'react';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 export const fetchAdvt = (page=1) => {
@@ -17,7 +18,7 @@ export const fetchAdvt = (page=1) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/promotions`, config)
+      .get(`${baseURL}${seller.advt}`, config)
       .then(res => {
 		   console.log("getting growth sales details",res);
         if (res.data.status === 200) {
@@ -43,7 +44,7 @@ export const creatAdvt = (data) => {
     let params = {
       action:"read"
     }
-    axios.post(`${baseURL}/seller/promotions`,data,config)
+    axios.post(`${baseURL}${seller.advt}`,data,config)
     .then(res =>{
         dispatch({
           type: FETCH_CREATEADVT,
@@ -69,7 +70,7 @@ export const editAdvt = (data, key) => {
       }
     }
     console.log(data, key)
-    axios.post(`${baseURL}/seller/promotions/${key}/update`, data, config)
+    axios.post(`${baseURL}${seller.advt}${key}/update`, data, config)
     .then(res => {
       if(res.data.status === 200){
         dispatch({
@@ -92,7 +93,7 @@ export const deleteAdvt = (key) => {
         Authorization: "Bearer " + token
       }
     };
-    axios.delete(`${baseURL}/seller/promotions/${key}`, config)
+    axios.delete(`${baseURL}${seller.advt}${key}`, config)
     .then(res =>{
         dispatch({  
           type: DELETE_ADVT,

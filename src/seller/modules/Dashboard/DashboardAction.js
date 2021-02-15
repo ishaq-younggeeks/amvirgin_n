@@ -1,6 +1,7 @@
 import axios from "axios";
 import { FETCH_DASHBOARD_DETAILS, FETCH_DASHBOARD_RANGE } from "./DashboardConstant";
 import { baseURL } from "../../../credential.json";
+import { seller } from "../../../common/apiConstants";
 
 export const getDashboardDetails = () => {
   return (dispatch) => {
@@ -11,7 +12,7 @@ export const getDashboardDetails = () => {
       },
     };
     axios
-      .get(`${baseURL}/seller/dashboard`, config)
+      .get(`${baseURL}${seller.dashboard}`, config)
       .then((res) => {
         console.log("Seller Dashboard API data", res);
         if (res.data.status === 200) {

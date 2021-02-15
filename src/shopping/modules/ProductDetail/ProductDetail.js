@@ -398,10 +398,11 @@ render() {
 				</div>
 			</div>
 			<hr />
+			{productDetail.payload && productDetail.payload.similar.length ? 
 			<div className="similarproducts">
 				<h4 className="simpro">Similar Products</h4>
 				<div className="row detailrow">
-					{productDetail.payload ? productDetail.payload.similar.map((item) => 
+					{productDetail.payload.similar.map((item) => 
 					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12" style={{marginBottom:"30px"}}>
 			            <Link onClick={()=>this.props.productDetailSimilar(item.key,this.props.history)}>
 						<img className="relimg" src={item.image? item.image : process.env.PUBLIC_URL + "/img/default.png"} />
@@ -411,9 +412,9 @@ render() {
 							<h5>{item.name}</h5>
 							<p className="offprice">Rs. {item.price.selling} <strike> Rs. {item.price.original}</strike> <span>50% off</span></p>
 						</div>
-				    </div>): null}
+				    </div>)}
 				</div>
-			</div>
+			</div> : null}
 		</div>
 		)						
 		:""}
