@@ -1,7 +1,7 @@
 import axios from "axios";
 import {baseURL} from "../.././../credential.json";
 import {NEWS_CATEGORY, NEWS_LISTING, ARTICLE_DETAILS} from "./NewsConstant";
-
+import {news} from '../../../common/apiConstants'
 export const newsCategoryFnc = () => {
     return (dispatch) => {
         let token = localStorage.getItem("UserToken");
@@ -12,7 +12,7 @@ export const newsCategoryFnc = () => {
         }
 
         axios
-        .get(`${baseURL}/customer/news/categories`, config)
+        .get(`${baseURL}${news.categories}`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -36,7 +36,7 @@ export const newsListingFnc = (category, page) => {
         }
 
         axios
-        .get(`${baseURL}/customer/news/categories/${category}?page=${page}`, config)
+        .get(`${baseURL}${news.categories}${category}?page=${page}`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -60,7 +60,7 @@ export const articleDetailsFnc = (newsId) => {
         };
 
         axios
-        .get(`${baseURL}/customer/news/articles/${newsId}`, config)
+        .get(`${baseURL}${news.articles}${newsId}`, config)
         .then((res) => {
             console.log(res);
             if(res.status === 200){

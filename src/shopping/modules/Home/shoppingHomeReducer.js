@@ -28,21 +28,8 @@ export const productData = (category,params={page:1},history) => {
   return (dispatch) => {
     dispatch(fetchingData(true))
     let url = `${baseURL2}/customer/categories/${category}/products`
-    // let url = `${baseURL}/customer/products/${category}`
     let data={}
     console.log("sending params",params)
-    // if(params===""){
-    //   data.params =
-    //     {
-    //       sortBy:"relevance",
-    //       page:"1"
-    //     }
-    //   }
-
-    //   else{ 
-    //     data=params.params
-    //   }
-    
     let fd = ""
 
     function otf(data){
@@ -58,8 +45,8 @@ export const productData = (category,params={page:1},history) => {
               {
                 return {low,high}
               }).sort((a,b)=>a.low>b.low?1:a.low<b.low?-1:0)
-
-              value = `${prop}[high]=${item.high[0]}&${prop}[low]=${item.low[item.length-1]}&`
+              console.log("items are in multiple price",item)
+               value = `${prop}[high]=${item[0].high}&${prop}[low]=${item[item.length-1].low}&`
             fd = fd+value
           }
 

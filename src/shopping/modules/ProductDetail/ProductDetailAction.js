@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { baseURL, baseURL2 } from "../../../credential.json";
+import { baseURL,baseURL2 } from "../../../credential.json";
 import {PRODUCT_DETAIL} from './ProductDetailConstant'
 
 

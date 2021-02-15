@@ -148,36 +148,23 @@ class Multiple extends Component {
         <h4 className="sidebar-title">{items.label} </h4>
         <div className="sidebar-widget-list mt-20">
           <ul>
-            <li>
+          {items.options.map((item,index) => {
+            return (
+              <li key={items.type+index}>
               <div className="sidebar-widget-list-left">
                 <input type="checkbox"
                   mode="multiple"
                   name={items.type}
                   onClick={this.props.handleChange}
-                  value={"green"}
+                  value={item.key}
                 />
-                <a href="#">Green <span>7</span> </a>
+                <a href="#">{item.name} <span>7</span> </a>
                 <span className="checkmark"></span>
               </div>
             </li>
-            <li>
-              <div className="sidebar-widget-list-left">
-                <input type="checkbox" mode="multiple" name={items.type} onClick={this.props.handleChange} value={"cream"} /> <a href="#">Cream <span>8</span> </a>
-                <span className="checkmark"></span>
-              </div>
-            </li>
-            <li>
-              <div className="sidebar-widget-list-left">
-                <input type="checkbox" mode="multiple" name={items.type} onClick={this.props.handleChange} value={"blue"} /> <a href="#">Blue <span>9</span> </a>
-                <span className="checkmark"></span>
-              </div>
-            </li>
-            <li>
-              <div className="sidebar-widget-list-left">
-                <input type="checkbox" mode="multiple" name={items.type} onClick={this.props.handleChange} value={"black"}  /> <a href="#">Black <span>3</span> </a>
-                <span className="checkmark"></span>
-              </div>
-            </li>
+            )
+          })}
+           
           </ul>
         </div>
       </div>
@@ -199,18 +186,16 @@ class Single extends Component {
         <h4 className="sidebar-title">{items.label} </h4>
         <div className="sidebar-widget-list mt-20">
           <ul>
-            <li>
-              <div className="sidebar-widget-list-left">
+          {items.options.map((item,index) => {
+            return (
+              <li key={items.type+index}>
+                 <div className="sidebar-widget-list-left">
                 <input type="radio" mode="single" name={items.type} onClick={this.props.handleChange} value={"green"} /> <a href="#">Green <span>7</span> </a>
                 <span className="radiomark"></span>
               </div>
             </li>
-            <li>
-              <div className="sidebar-widget-list-left">
-                <input type="radio" mode="single" name={items.type} onClick={this.props.handleChange} value={"cream"} /> <a href="#">Cream <span>8</span> </a>
-                <span className="radiomark"></span>
-              </div>
-            </li>
+                  )
+          })}
           </ul>
         </div>
       </div>
