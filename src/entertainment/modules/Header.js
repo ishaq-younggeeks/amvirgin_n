@@ -222,7 +222,7 @@ closeNav = () => {
               </li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
-              <li className="nav-item upp2">
+              {/* <li className="nav-item upp2">
                 <div className="nav-item searchbtn">
                   <div className="container">
                     <form className="searchbox" method="post" onSubmit={this.searchProducts}>
@@ -241,7 +241,7 @@ closeNav = () => {
                     </form>
                   </div>
                 </div>
-              </li>
+              </li> */}
               <li className="nav-item lessmargin ">
                 {item === 0 ?
                   <Link className="nav-link cart-nav" to="/shop/cart">
@@ -266,7 +266,7 @@ closeNav = () => {
                 }
 
               </li>
-              <li className="nav-item lessmargin">
+              {/* <li className="nav-item lessmargin">
                 <Link className="nav-link" to="#">
                   <img
                     className="cart upp2"
@@ -274,7 +274,7 @@ closeNav = () => {
                     alt=""
                   />
                 </Link>
-              </li>
+              </li> */}
               {this.renderLink()}
             </ul>
           </div>

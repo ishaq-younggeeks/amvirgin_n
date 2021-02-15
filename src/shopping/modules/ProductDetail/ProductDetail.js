@@ -7,8 +7,8 @@ import $ from 'jquery'
 import ReactImageMagnify from 'react-image-magnify';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import {productDetailSimilar} from "./ProductDetailAction"
-
+import {productDetailSimilar} from "./ProductDetailAction";
+import ReactStars from "react-rating-stars-component";
 
 class ProductDetail extends Component {
 
@@ -31,7 +31,6 @@ componentDidMount() {
 		this.setState({refresh:true})
 }
 
-
 // componentDidUpdate(prevProps, prevState) {
 // 	if (prevState.refresh !== this.state.refresh) {
 // 		console.log("component did update called")
@@ -45,11 +44,6 @@ zoomImage = (e,index) => {
 	this.setState({selectedImage:index})
 
 }
-
-
-
-
-
 
 render() {
 	
@@ -181,7 +175,7 @@ render() {
 							</label>
 						</div> */}
 					</div>
-					<h4 className="ssize">Color Availabile</h4>
+					<h4 className="ssize">Color Available</h4>
 					<div className="custom-radios coloravailable">
 					{productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Color").map((data)=>data.value).map((value,index) => {
 							return	value.map((values,index)=>{
@@ -299,8 +293,17 @@ render() {
 							<li>Easy 15 days returns and exchanges</li>
 							<li>Try &amp; Buy might be available</li>
 						</ul>
-						<p>Product Code: <b>10617902</b></p>
-						<p>Sold by: <b>WandWagon</b> </p>
+						{/* <p>Product Code : <b>10617902</b></p> */}
+						<p>Sold by : <b>{productDetail.payload.seller.name}</b> </p>
+						<p style={{display:"flex"}}><b>{productDetail.payload.seller.name}</b> &nbsp; <ReactStars 
+											value={productDetail.payload.seller.rating}
+											edit={false}
+											count={5}
+											size={26}
+											isHalf={true}
+											color="#CAD3D0"
+											activeColor="#ffd700"
+											/></p>
 					</div>
 				</div>
 			</div>
@@ -308,8 +311,17 @@ render() {
 			<div className="reviewsection row">
 				<div className="ratingsection">
 					<h3>Customer Reviews </h3>
-					<h4> 4.5 out of 5 </h4>
-					<span className="fa fa-star checked"></span>
+					<h4> {productDetail.payload.rating} out of 5 </h4>
+					<ReactStars 
+					value={productDetail.payload.rating}
+					edit={false}
+					count={5}
+                    size={32}
+					isHalf={true}
+					color="#CAD3D0"
+                    activeColor="#ffd700"
+					/>
+					{/* <span className="fa fa-star checked"></span>
 					<span className="fa fa-star checked"></span>
 					<span className="fa fa-star checked"></span>
 					<span className="fa fa-star checked"></span>
@@ -370,19 +382,19 @@ render() {
 						</div>
 						<div className="side right">
 							<div>5%</div>
-						</div>
-					</div>
+						</div> 
+					</div>*/}
 				</div>
 				<div className="reviews">
 					<div className="reviewpart">
-						<p> <img className="img" src={process.env.PUBLIC_URL + "img/user.png"} /><span className="name">James Doe</span> <span className="star fa fa-star checked"> 5 </span></p>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+						<p> <img className="img" src={process.env.PUBLIC_URL + "/img/default.png"} /><span className="name">{productDetail.payload.rating.name ? productDetail.payload.rating.name : "Tony Stark" }</span> <span className="star fa fa-star checked"> 5 </span></p>
+						<p>{productDetail.payload.rating.comment ? productDetail.payload.rating.comment : "Product quality is really good!"}</p>
 					</div>
 					<hr />
-					<div className="reviewpart">
-						<p> <img className="img" src={process.env.PUBLIC_URL + "img/user.png"} /><span className="name">Tony Stark</span> <span className="star fa fa-star checked"> 5 </span></p>
+					{/* <div className="reviewpart">
+						<p> <img className="img" src={process.env.PUBLIC_URL + "/img/default.png"} /><span className="name">Tony Stark</span> <span className="star fa fa-star checked"> 5 </span></p>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-					</div>
+					</div> */}
 				</div>
 			</div>
 			<hr />

@@ -1,6 +1,6 @@
 import {RECEIVED_SUBSCRIPTION_DATA, SUBSCRIPTION_CHECKOUT, SUBSCRIPTION_FINAL} from '../constants/subscription.constant'
 import {subscribeList} from "../actions/subscription.actions"
-import { baseURL } from "../../credential.json";
+import { baseURL, baseURL2 } from "../../credential.json";
 import axios from 'axios';
 import { param } from 'jquery';
 
@@ -14,7 +14,7 @@ const initialState = {
 
 export const subscribeListData = () => {
   return dispatch => {
-    axios.get(`${baseURL}/customer/subscriptions`)
+    axios.get(`${baseURL2}/customer/subscriptions`)
     .then((res) => {
       let dataList = []
       dataList = res.data.payload

@@ -27,14 +27,7 @@ export const fetchData = () => {
 export const productData = (category,params={page:1},history) => {
   return (dispatch) => {
     dispatch(fetchingData(true))
-<<<<<<< HEAD
     let url = `${baseURL2}/customer/categories/${category}/products`
-    // let url = `${baseURL2}/customer/products/${category}`
-    axios.get(url,{
-      params: {
-        sortBy
-=======
-    let url = `${baseURL}/customer/categories/${category}/products`
     // let url = `${baseURL}/customer/products/${category}`
     let data={}
     console.log("sending params",params)
@@ -79,7 +72,6 @@ export const productData = (category,params={page:1},history) => {
         else if(data[prop]!==null && !Array.isArray(data[prop])){
           fd = fd+`${prop}=${data[prop]}&`
         }
->>>>>>> 9fda79c6dc1b8bca59d178c1174f13c6534bf1bd
       }
     }
 
