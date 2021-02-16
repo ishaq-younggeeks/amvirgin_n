@@ -1,7 +1,8 @@
 import axios from "axios";
 import {baseURL} from "../.././../credential.json";
 import {NEWS_CATEGORY, NEWS_LISTING, ARTICLE_DETAILS} from "./NewsConstant";
-import {news} from '../../../common/apiConstants'
+import {news} from '../../../common/apiConstants';
+
 export const newsCategoryFnc = () => {
     return (dispatch) => {
         let token = localStorage.getItem("UserToken");

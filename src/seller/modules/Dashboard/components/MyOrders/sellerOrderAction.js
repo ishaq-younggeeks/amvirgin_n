@@ -1,4 +1,5 @@
 import axios from "axios";
+import { seller } from "../../../../../common/apiConstants";
 import { baseURL } from "../../../../../credential.json";
 import {
   GET_ALL_ORDERS,
@@ -21,7 +22,7 @@ export const myOrderList = (activeState, current, perPage) => {
 
     console.log("request", config);
     axios
-      .get(`${baseURL}/seller/orders?status=${activeState}`, config)
+      .get(`${baseURL}${seller.sellerOrders}?status=${activeState}`, config)
       .then((res) => {
         console.log("My Orders List ", res);
         if (res.data.status === 200) {
@@ -52,7 +53,7 @@ export const changeOrderStatusBulk = (key = null, status) => {
     console.log("Dispatched Order Bulk: ", allKey);
     axios
       .put(
-        `${baseURL}/seller/orders/status?key=${allKey}&status=${status}`,
+        `${baseURL}${seller.sellerOrders}/status?key=${allKey}&status=${status}`,
         {},
         config
       )
@@ -104,7 +105,7 @@ export const changeOrderStatus = (
 
     console.log("Dispatched Order Single: ", data);
     axios
-      .put(`${baseURL}/seller/orders/${key}/status`, data, config)
+      .put(`${baseURL}${seller.sellerOrders}/${key}/status`, data, config)
       .then((res) => {
         console.log("Single Order Status", res, key);
         if (res.data.status === 200) {
@@ -180,7 +181,7 @@ export const downloadLabelId = (key, status) => {
 
     console.log("Dispatched Order Single: ", data);
     axios
-      .put(`${baseURL}/seller/orders/${key}/status`, data, config)
+      .put(`${baseURL}${seller.sellerOrders}/${key}/status`, data, config)
       .then((res) => {
         console.log("Single Order Status", res, key);
         if (res.data.status === 200) {
@@ -217,7 +218,7 @@ export const FilterBySearch = (currentPage, perPage, key, status) => {
     };
     console.log("Filter: ", config.params);
     axios
-      .get(`${baseURL}/seller/orders`, config)
+      .get(`${baseURL}${seller.sellerOrders}`, config)
       .then((res) => {
         console.log("search response   ", res);
         if (res.data.status === 200) {
@@ -237,7 +238,7 @@ export const ViewOrderItem = (id) => {
     let token = localStorage.getItem("token");
     let config = { headers: { Authorization: "Bearer " + token } };
     axios
-      .get(`${baseURL}/seller/orders/${id}`, config)
+      .get(`${baseURL}${seller.sellerOrders}/${id}`, config)
       .then((res) => {
         console.log(res);
         if (res.data.status === 200) {

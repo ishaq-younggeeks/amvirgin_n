@@ -3,6 +3,7 @@ import {FETCHING , PRODUCT_DATA,FILTER_DATA} from './shoppingHomeConstant';
 import axios  from "axios";
 import { baseURL } from "../../../credential.json";
 import { connect } from 'react-redux';
+import { shop } from '../../../common/apiConstants';
 
 export function myData(data) {
   return {
@@ -20,7 +21,7 @@ export function product(productList) {
 }
 
 export const fetchHomeData=()=> dispatch =>{
-  axios.get(`${baseURL}/customer/shop/homepage`)
+  axios.get(`${baseURL}${shop.home}`)
   .then(res=>{
     console.log("shopping home data",res)
     dispatch({
@@ -36,7 +37,7 @@ export const fetchHomeData=()=> dispatch =>{
 }
 
 export const allDeals = () => dispatch =>{
-  axios.get(`${baseURL}/customer/shop/deals`)
+  axios.get(`${baseURL}${shop.allDeals}`)
   .then(res => {
     console.log("Shopping All Deals :", res)
     dispatch({

@@ -3,6 +3,7 @@ import { baseURL } from "../../../../../credential.json";
 import { FETCH_ANNOUNCEMENT } from './AnnouncmentConstant'
 import React from 'react';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 
@@ -16,7 +17,7 @@ export const fetchAnnouncement = () => {
       }
     };
     axios
-      .get(`${baseURL}/seller/announcements`, config)
+      .get(`${baseURL}${seller.announcement}`, config)
       .then(res => {
 		   console.log("getting all announcement",res.data);
         if (res.data.status === 200) {
@@ -44,7 +45,7 @@ export const markAnnouncementStatus = (key) => {
     let params = {
       action:"read"
     }
-    axios.put(`${baseURL}/seller/announcements/${key}/mark`,null,config)
+    axios.put(`${baseURL}${seller.announcement}${key}/mark`,null,config)
     .then(res =>{
       console.log("announcment status",res)
     })

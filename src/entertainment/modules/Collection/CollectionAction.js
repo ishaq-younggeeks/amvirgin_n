@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { entertainment } from '../../../common/apiConstants';
 import { baseURL,baseURL2 } from "../../../credential.json";
 import {COLLECTION_DATA,CLEAR_COLLECTION_DATA} from './CollectionConstant'
 
 export const collectionData = (collectionId=parseInt(localStorage.getItem("collectionId"))) => {
 
   return  (dispatch) => {
-    let url = `${baseURL2}/customer/entertainment/section/${collectionId}` 
+    let url = `${baseURL2}${entertainment.collection}${collectionId}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.payload;
       dispatch(myData(Data))

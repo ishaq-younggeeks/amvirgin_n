@@ -1,9 +1,15 @@
+
+
+.navbar{
+    background: hsl(0deg 0% 0% / 25%);
+}
+
 .logout {
     cursor: pointer;
     color: rgb(20, 19, 19)!important;
     display: none;
     top: 50px;
-    right:20px;
+    
     position: fixed;
 }
 .logP06:hover .logout{
@@ -20,6 +26,7 @@ ul {
     padding:10px;
     /* background:rgb(250, 249, 250); */
     background: black;
+   
 
 }
 

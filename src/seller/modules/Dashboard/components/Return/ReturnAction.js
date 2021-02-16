@@ -1,6 +1,7 @@
 import {baseURL} from "../../../../../credential.json"
 import axios from "axios";
 import {ALL_RETURN_ORDERS, APPROVE_RETURN, DISAPPROVE_RETURN} from "./ReturnConstant";
+import { seller } from "../../../../../common/apiConstants";
 
 export const getAllReturnOrders = () => {
     return (dispatch) => {
@@ -11,7 +12,7 @@ export const getAllReturnOrders = () => {
             }
         }
         axios
-        .get(`${baseURL}/seller/returns`, config)
+        .get(`${baseURL}${seller.returns}`, config)
         .then(res => {
             console.log("Return Orders :", res);
             if(res.data.status === 200){
@@ -37,7 +38,7 @@ export const approveReturn = (key) => {
         }
         console.log("API", config);
         axios
-        .post(`${baseURL}/seller/returns/${key}/approve`, {}, config)
+        .post(`${baseURL}${seller.returns}${key}/approve`, {}, config)
         .then(res => {
             console.log("Return Response", res);
             if(res.data.status === 200){
@@ -63,7 +64,7 @@ export const disApproveReturn = (key) => {
             }
         }
         axios
-        .post(`${baseURL}/seller/returns/${key}/disapprove`, {}, config)
+        .post(`${baseURL}${seller.returns}${key}/disapprove`, {}, config)
         .then(res => {
             console.log("Return Response", res);
             if(res.data.status === 200){

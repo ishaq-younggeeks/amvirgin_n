@@ -62,8 +62,9 @@ import NewsArticleDetails from "./news/modules/News/components/NewsArticleDetail
 
 // Footer Routes
 import PrivacyPolicy from "./footer/components/PrivacyPolicy"
-import RefundPolicy from "./footer/components/RefundPolicy"
+import AboutUs from "./footer/components/AboutUs"
 import TermsCondition from "./footer/components/TermsCondition"
+import ContactUs from "./footer/components/ContactUs";
 
 // Entertainment Routes
 const Home = lazy(() => import('./entertainment/modules/Home/components/Home'));
@@ -98,8 +99,9 @@ class App extends Component {
 
           {/* Footer Routes */}
           <Route exact path="/privacypolicy" component={PrivacyPolicy}/>
-          <Route exact path="/refundpolicy" component={RefundPolicy}/>
+          <Route exact path="/aboutus" component={AboutUs}/>
           <Route exact path="/termsconditions" component={TermsCondition}/>
+          <Route exact path="/contact" component={ContactUs} />
 
           {/* Shopping Routes */}
           {/* <Route exact path="/" component={ShoppingHomeContainer} /> */}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import {baseURL} from "../../../././credential.json";
+import { shop } from "../../../common/apiConstants";
 import {USERNAME_CHANGE, PASSWORD_CHANGE} from "./ProfileConstant";
 
 export const editUsername = (name) => {
@@ -13,7 +14,7 @@ export const editUsername = (name) => {
           params: {name : name}
         };
         axios
-        .put(`${baseURL}/customer/profile`, {name}, config)
+        .put(`${baseURL}${shop.profile}`, {name}, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -44,7 +45,7 @@ export const editPassword = (currentpwd, newpwd, confirmpwd) => {
             }
         }
         axios
-        .put(`${baseURL}/customer/profile/password`, {}, config)
+        .put(`${baseURL}${shop.profile}password`, {}, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200 || 401){

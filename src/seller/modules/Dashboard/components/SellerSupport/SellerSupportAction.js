@@ -3,6 +3,7 @@ import { baseURL } from "../../../../../credential.json";
 import { FETCH_TICKET_LIST,SAVE_BUISNESSDETAILS,FETCH_BANKDETAILS,CREATE_STATUS,FETCH_AGREEMENT,FETCH_AGREEMENTSTATUS} from './SellerSupportConstant'
 import React from 'react';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 export const getMyTickets = () => {
@@ -14,7 +15,7 @@ export const getMyTickets = () => {
       }
     };
     axios
-      .get(`${baseURL}/seller/support/tickets`, config)
+      .get(`${baseURL}${seller.support}`, config)
       .then(res => {
 		   console.log("getting ticekt details",res);
         if (res.data.status === 200) {
@@ -40,7 +41,7 @@ export const saveTicketDetails = (data) => {
     let params = {
       action:"read"
     }
-    axios.post(`${baseURL}/seller/support/tickets`,data,config)
+    axios.post(`${baseURL}${seller.support}`,data,config)
     .then(res =>{
         dispatch({
           type: CREATE_STATUS,

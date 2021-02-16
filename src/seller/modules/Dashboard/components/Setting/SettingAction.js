@@ -3,6 +3,7 @@ import { baseURL } from "../../../../../credential.json";
 import { FETCH_BUISNESSDETAILS,SAVE_BUISNESSDETAILS,FETCH_BANKDETAILS,BUISNESS_STATUS,FETCH_AGREEMENT,FETCH_AGREEMENTSTATUS} from './SettingConstant'
 import React from 'react';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 export const getBuisnessDetails = () => {
@@ -14,7 +15,7 @@ export const getBuisnessDetails = () => {
       }
     };
     axios
-      .get(`${baseURL}/seller/profile/business-details`, config)
+      .get(`${baseURL}${seller.business}`, config)
       .then(res => {
 		   console.log("getting buisness details",res);
         if (res.data.status === 200) {
@@ -40,7 +41,7 @@ export const saveBusinessDetails = (data) => {
     let params = {
       action:"read"
     }
-    axios.post(`${baseURL}/seller/profile/business-details`,data,config)
+    axios.post(`${baseURL}${seller.business}`,data,config)
     .then(res =>{
         dispatch({
           type: FETCH_BUISNESSDETAILS,
@@ -66,7 +67,7 @@ export const getBankDetails = () => {
       }
     };
     axios
-      .get(`${baseURL}/seller/profile/bank-details`, config)
+      .get(`${baseURL}${seller.bank}`, config)
       .then(res => {
 		   console.log("getting bank details",res);
         if (res.data.status === 200) {
@@ -92,7 +93,7 @@ export const saveBankDetails = (data) => {
     let params = {
       action:"read"
     }
-    axios.post(`${baseURL}/seller/profile/bank-details`,data,config)
+    axios.post(`${baseURL}${seller.bank}`,data,config)
     .then(res =>{
       dispatch({
         type: FETCH_BANKDETAILS,
@@ -111,7 +112,7 @@ export const saveBankDetails = (data) => {
 export const getMouAgreement = () => {
   return dispatch => {  
     axios
-      .get(`${baseURL}/seller/profile/mou`)
+      .get(`${baseURL}${seller.mou}`)
       .then(res => {
 		   console.log("getting mou agreement",res);
         if (res.data.status === 200) {
@@ -135,7 +136,7 @@ export const getMouAgreementSatus = () => {
       }
     };
     axios
-      .get(`${baseURL}/seller/profile/mou/status`,config)
+      .get(`${baseURL}${seller.mou}status`,config)
       .then(res => {
 		   console.log("get agreement status",res);
         if (res.data.status === 200) {
@@ -161,7 +162,7 @@ export const updateMouAgreementStatus = () => {
     let data = {
       agreed:true
     }
-    axios.put(`${baseURL}/seller/profile/mou`,data,config)
+    axios.put(`${baseURL}${seller.mou}`,data,config)
     .then(res =>{
       dispatch({
         type: FETCH_BANKDETAILS,

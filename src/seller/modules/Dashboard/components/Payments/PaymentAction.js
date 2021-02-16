@@ -3,6 +3,7 @@ import { baseURL } from "../../../../../credential.json";
 import { FETCH_PAYMENTOVERVIEW,FETCH_PAYMENTHISTORY,FETCH_ORDERTRANSACTION} from './PaymentConstant'
 import React from 'react';
 import $ from 'jquery'
+import { seller } from '../../../../../common/apiConstants';
 
 
 // export const getPaymentOverview = () => {
@@ -42,7 +43,7 @@ export const getPaymentHistoryInitial = (current, perPage) => {
     };
 
     axios
-      .get(`${baseURL}/seller/payments/overview`, config)
+      .get(`${baseURL}${seller.payments}`, config)
       .then(res => {
 		   console.log("Payments History Overview :", res);
         if (res.data.status === 200) {
@@ -74,7 +75,7 @@ export const getPaymentHistoryFromTo = (page,per_page, from, to, key) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/overview?start=${from}&end=${to}`, config)
+      .get(`${baseURL}${seller.payments}?start=${from}&end=${to}`, config)
       .then(res => {
 		   console.log("Payments History Search FromTo :", res);
         if (res.data.status === 200) {
@@ -106,7 +107,7 @@ export const getPaymentHistorySearch = (page,per_page, from, to, key) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/overview?key=${key}`, config)
+      .get(`${baseURL}${seller.payments}?key=${key}`, config)
       .then(res => {
 		   console.log("Payments History Search Key:", res);
         if (res.data.status === 200) {
@@ -134,7 +135,7 @@ export const getTransactionsOverview = (current, perPage) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/transactions`, config)
+      .get(`${baseURL}${seller.transactions}`, config)
       .then(res => {
 		   console.log("Transactions Overview :", res);
         if (res.data.status === 200) {
@@ -165,7 +166,7 @@ export const getTransactionsFromTo = (page,per_page,from,to,key) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/transactions?start=${from}&end=${to}`, config)
+      .get(`${baseURL}${seller.transactions}?start=${from}&end=${to}`, config)
       .then(res => {
 		   console.log("Transactions Search FromTo: ", res);
         if (res.data.status === 200) {
@@ -194,7 +195,7 @@ export const getTransactionsSearch = (current, perPage,from,to,key) => {
       }
     };
     axios
-      .get(`${baseURL}/seller/payments/transactions?referenceId=${key}`, config)
+      .get(`${baseURL}${seller.transactions}?referenceId=${key}`, config)
       .then(res => {
 		   console.log("Transactions Search Key: ", res);
         if (res.data.status === 200) {
