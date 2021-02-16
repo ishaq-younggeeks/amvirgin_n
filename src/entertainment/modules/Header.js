@@ -123,7 +123,7 @@ closeNav = () => {
             <div className="logout" style={{zIndex:"99999"}}>
               <div className="nav-hover">
               <ul>
-              <Link to="/myprofile/edit"><li><i className="fa fa-user mr-3 text-info"></i><span className="text-white nav-hover-item">Edit Profile</span></li></Link>
+              <Link to="/myprofile/edit"><li><i className="fa fa-user mr-3 text-info"></i><span className="text-white nav-hover-item">Profile</span></li></Link>
               <Link to="/subscription"><li><i className="fa fa-podcast mr-3 text-info"></i><span className="text-white nav-hover-item">Subscription</span></li></Link>
               <Link to="/myprofile/myOrders"><li><i className="fa fa-shopping-basket fa-fw mr-2 text-info"></i><span className="text-white nav-hover-item">My Orders</span></li></Link>
               <Link onClick={this.logout}><li><i className="fa fa-sign-out mr-3 text-info"></i><span className="text-white nav-hover-item">Logout</span></li></Link>
@@ -215,11 +215,11 @@ closeNav = () => {
                   News
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/#">
                   Chatmate
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <ul className="nav navbar-nav navbar-right">
               {/* <li className="nav-item upp2">

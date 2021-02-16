@@ -34,7 +34,7 @@ class Sliders extends Component {
                       <h3 className="description">{slider.description}</h3>
                       <div className="">
                         <Link to="/subscription">
-                          <button className="seeallbtn1" id={slider.i}>
+                          <button className="seeallbtn1" id={slider.i}><i style={{marginRight:"7px"}} className="fa fa-play"></i>
                             Subscribe
                           </button>
                         </Link>

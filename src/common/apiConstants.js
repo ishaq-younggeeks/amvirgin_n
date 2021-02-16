@@ -108,3 +108,10 @@ export const entertainment = {
     videos:"/customer/videos/",
     trending:"/customer/entertainment/trending",
 }
+
+/* Api list  for footer section */
+export const footer = {
+    privacyPolicy:"/customer/privacy-policy",
+    aboutUs:"/customer/about-us",
+    termsCondition:"/customer/terms-conditions",
+}

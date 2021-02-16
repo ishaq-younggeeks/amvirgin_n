@@ -46,6 +46,9 @@ import sellerReturnReducer from "../seller/modules/Dashboard/components/Return/R
 /*--------------------------NEWS------------------------------------*/
 import NewsReducer from "../news/modules/News/NewsReducer"
 
+/*--------------------------FOOTER------------------------------------*/
+import FooterReducer from "./../footer/components/FooterReducer"; 
+
 const rootReducer = combineReducers({
   router: connectRouter(history),
   /*--------------ENTERTAINMENT REDUCER---------------*/
@@ -88,5 +91,7 @@ const rootReducer = combineReducers({
   /*-----------------NEWS REDUCER--------------*/
   News:NewsReducer,
 
+  /*-----------------FOOTER REDUCER--------------*/
+  Footer:FooterReducer
 });
 export default rootReducer;
