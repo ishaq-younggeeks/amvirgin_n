@@ -84,7 +84,7 @@ class ProductSideBarCategories extends React.Component {
                         </form>
                       </div>
                     </div>
-                    <div className="sidebar-widget shop-sidebar-border pt-40">
+                    {/* <div className="sidebar-widget shop-sidebar-border pt-40">
                       <h4 className="sidebar-title">Shop By Categories</h4>
                       <div className="shop-catigory mt-20">
                         <ul id="faq">
@@ -120,7 +120,7 @@ class ProductSideBarCategories extends React.Component {
                           <li> <a href="#">Accessories</a></li>
                         </ul>
                       </div>
-                    </div>
+                    </div> */}
 
                     {filters && filters.length && filters.map((item, index) => {
 
@@ -148,23 +148,23 @@ class Multiple extends Component {
         <h4 className="sidebar-title">{items.label} </h4>
         <div className="sidebar-widget-list mt-20">
           <ul>
-          {items.options.map((item,index) => {
-            return (
-              <li key={items.type+index}>
-              <div className="sidebar-widget-list-left">
-                <input type="checkbox"
-                  mode="multiple"
-                  name={items.type}
-                  onClick={this.props.handleChange}
-                  value={item.key}
-                />
-                <a href="#">{item.name} <span>7</span> </a>
-                <span className="checkmark"></span>
-              </div>
-            </li>
-            )
-          })}
-           
+            {items.options.map((item, index) => {
+              return (
+                <li key={items.type + index}>
+                  <div className="sidebar-widget-list-left">
+                    <input type="checkbox"
+                      mode="multiple"
+                      name={items.type}
+                      onClick={this.props.handleChange}
+                      value={item.key}
+                    />
+                    <a href="#">{item.name} {item.count ?<span>{item.count}</span>:null} </a>
+                    <span className="checkmark"></span>
+                  </div>
+                </li>
+              )
+            })}
+
           </ul>
         </div>
       </div>
@@ -186,16 +186,16 @@ class Single extends Component {
         <h4 className="sidebar-title">{items.label} </h4>
         <div className="sidebar-widget-list mt-20">
           <ul>
-          {items.options.map((item,index) => {
-            return (
-              <li key={items.type+index}>
-                 <div className="sidebar-widget-list-left">
-                <input type="radio" mode="single" name={items.type} onClick={this.props.handleChange} value={"green"} /> <a href="#">Green <span>7</span> </a>
-                <span className="radiomark"></span>
-              </div>
-            </li>
-                  )
-          })}
+            {items.options.map((item, index) => {
+              return (
+                <li key={items.type + index}>
+                  <div className="sidebar-widget-list-left">
+                    <input type="radio" mode="single" name={items.type} onClick={this.props.handleChange} value={item.limit} /> <a href="#">{`${item.limit}% and above`} <span>{item.count}</span> </a>
+                    <span className="radiomark"></span>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>
@@ -216,7 +216,7 @@ class MultiplePrice extends Component {
                 <li key={index}>
                   <div className="sidebar-widget-list-left">
                     <input type="checkbox" mode="multiple_price" name={items.type} id={`${items.type}_${index}`} value={item.upper + "_" + item.lower} onClick={this.props.handleChange} />
-                    <a href="#">Rs. {item.upper} to Rs. {item.lower} <span>7</span> </a>
+                    <a onClick={this.props.handleChange}>Rs. {item.upper} to Rs. {item.lower} <span>{item.count}</span> </a>
                     <span className="checkmark"></span>
                   </div>
                 </li>)

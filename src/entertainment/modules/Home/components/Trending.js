@@ -1,12 +1,12 @@
 import React from "react";
 import Slider from "react-slick";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect,useHistory } from "react-router-dom";
 import { videoData } from "../../Show/components/ShowAction";
 import { connect } from "react-redux";
 
-const onClickHandler = async (e, props, videoId) => {
-  props.videoData(videoId, props.history);
-};
+
+
+
 const Trending = (props) => {
   var settings = {
     dots: props.dots,
@@ -15,6 +15,11 @@ const Trending = (props) => {
     speed: props.speed,
     slidesToShow: props.slidesToShow,
     slidesToScroll: props.slidesToScroll,
+  };
+
+  const history = useHistory();
+  const onClickHandler = async (e, props, videoId) => {
+    props.videoData(videoId, history);
   };
   let trendingData = props.trendingData;
   return (
@@ -38,7 +43,7 @@ const Trending = (props) => {
                         <img src={trending.poster} className="image" alt="" />
                         <div className="middle">
                           <div className="imgslider">
-                            <img src="img/play.png" alt="play" />
+                            <img src={process.env.PUBLIC_URL+"/img/play.png"} alt="play" />
                           </div>
                         </div>
                       </div>
