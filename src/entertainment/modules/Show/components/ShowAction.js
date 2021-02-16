@@ -8,12 +8,11 @@ export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),hist
     let url = `${baseURL2}${entertainment.videos}${videoId}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.payload;
-     console.log("data---------------------",Data);
+     console.log("data---------------------",videoId);
       dispatch(myData(Data))
       localStorage.setItem("videoId",videoId)
-     if(history){
+
      history.push({pathname:`/video/${videoId}`})
-     }
     }).catch(error => {
       console.log(error)
     })
@@ -23,7 +22,7 @@ export const videoData = (videoId=parseInt(localStorage.getItem("videoId")),hist
 export const trendingDetail = () => {
 
   return  (dispatch) => {
-    let url = `${baseURL}${entertainment.trending}` 
+    let url = `${baseURL2}/customer/entertainment/trending` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.data;
      console.log("trending data",Data);

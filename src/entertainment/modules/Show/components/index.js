@@ -55,7 +55,7 @@ class Show extends Component {
   }
   componentDidMount() {
 
-    // this.props.videoData( this.props.location.query)
+    this.props.videoData( this.props.location.query)
     // this.props.trendingDetail();
     this.props.dashboardData()
     this.setState({ refresh: true })
@@ -224,11 +224,11 @@ class Show extends Component {
 
   componentDidUpdate(prevProps, prevState) {
 
-    if (prevState.refresh !== this.state.refresh) {
-      console.log("updated video id ", this.props.location.query)
-      this.props.videoData()
-      window.scrollTo(0, 0)
-    }
+    // if (prevState.refresh !== this.state.refresh) {
+    //   console.log("updated video id ", this.props.location.query)
+    //   this.props.videoData()
+    //   window.scrollTo(0, 0)
+    // }
 
     if (prevState.playVideo !== this.state.playVideo) {
 
@@ -310,7 +310,7 @@ class Show extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div>
-                  <LivePlayer {...videoDetail} ref={this.playerRef} handlePlayPause={this.handlePlayPause}/>
+                 {videoDetail && videoDetail.sources && <LivePlayer videoDetail={videoDetail} src={videoDetail.sources.video[0].url}  ref={this.playerRef} handlePlayPause={this.handlePlayPause}/>}
                 </div>
                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
                 <button className="watchlist"><i className="fa fa-share"></i>Share</button>
