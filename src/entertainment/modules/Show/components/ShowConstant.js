@@ -2,3 +2,7 @@
 export const VIDEO_DATA = 'VIDEO_DATA';
 export const CLEAR_VIDEO_DATA = 'CLEAR_VIDEO_DATA';
 export const TRENDING_DATA = 'TRENDING_DATA';
+export const RENT_A_VIDEO = 'RENT_A_VIDEO';
+export const ALREADY_RENTED = 'ALREADY_RENTED';
+export const ALL_RENTED_VIDEOS = 'ALL_RENTED_VIDEOS';
+export const RENT_CHECKOUT = 'RENT_CHECKOUT';

@@ -1,4 +1,4 @@
-import {VIDEO_DATA,CLEAR_VIDEO_DATA,TRENDING_DATA} from './ShowConstant';
+import {VIDEO_DATA,CLEAR_VIDEO_DATA,TRENDING_DATA, RENT_A_VIDEO, ALREADY_RENTED, ALL_RENTED_VIDEOS, RENT_CHECKOUT} from './ShowConstant';
 
 
 const ACTION_HANDLERS = {
@@ -19,14 +19,40 @@ const ACTION_HANDLERS = {
       ...state,
       trendingData:action.data
     }
-
-  }
-
+  },
+  [RENT_A_VIDEO]:(state,action) => {
+    return {
+      ...state,
+      rentVideo:action.payload
+    }
+  },
+  [ALREADY_RENTED]:(state,action) => {
+    return {
+      ...state,
+      videoRentedAlready:action.payload
+    }
+  },
+  [ALL_RENTED_VIDEOS]:(state,action) => {
+    return {
+      ...state,
+      videoRentedAlready:action.payload
+    }
+  },
+  [RENT_CHECKOUT]:(state,action) => {
+    return {
+      ...state,
+      razorPay:action.payload
+    }
+  },
 };
 
 const initialState = {
   videoData:{},
-  trendingData:{}
+  trendingData:{},
+  rentVideo: "",
+  videoRentedAlready: "",
+  allRentedVideos: {},
+  razorPay: ""
 };
 
 export default function ShowVideos(state = initialState, action) {
