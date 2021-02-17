@@ -3,3 +3,4 @@ export const FETCH_WISH_PRODUCT = "FETCH_WISH_PRODUCT";
 export const ADD_WISHLIST = "ADD_WISHLIST";
 export const DELETE_WISHLIST = "DELETE_WISHLIST";
 export const MOVETO_CART = "MOVETO_CART";
+export const API_CALL = "API_CALL";

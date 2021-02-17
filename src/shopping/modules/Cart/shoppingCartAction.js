@@ -1,20 +1,21 @@
 import Axios from 'axios';
 import { baseURL,baseURL2 } from "../../../credential.json";
-import { FETCH_CART, ADDTO_CART, DELETE_FROM_CART ,UPDATE_ITEM,AFTER_MOVETOWISHLIST_FETCH} from './shoppingCartConstant';
+import { API_CALLING,FETCH_CART, ADDTO_CART, DELETE_FROM_CART ,UPDATE_ITEM,AFTER_MOVETOWISHLIST_FETCH} from './shoppingCartConstant';
 import $ from 'jquery';
 import { shop } from '../../../common/apiConstants';
 
 // To get the cart data.
 export const fetchCart = () => dispatch => {
-  //console.log('entered the fetch cart action----')
   let url = `${baseURL2}${shop.fetchCart}`;
   let sessionid = localStorage.getItem('session');
-  //console.log('this is cart', sessionid);
+  dispatch({
+    type:API_CALLING,
+  })
   Axios.get(`${url}` + 'sessionId=' + sessionid + '&customerId=' + 3)
     .then((res) => {
       let fetchedcart = res.data.data.cart
       let fetchedprice = res.data.data.cart
-      console.log("fetched cart data",fetchedcart)
+      console.log("fetched cart data",res)
       dispatch({
         type: FETCH_CART,
         payload: fetchedcart,
@@ -123,9 +124,16 @@ export const movetoWishlisht = (id) => dispatch => {
   let data  = {
     sessionId:sessionid
   }
-
   Axios.put(url,data,{ headers: { "Authorization": `Bearer ${token}` } }).then((res) => {
     console.log("moved successfully",res);
+    dispatch({
+      type:AFTER_MOVETOWISHLIST_FETCH,
+      payload:id
+    })
+    let total_items = parseInt(localStorage.getItem('total_item'))
+    $('#cart_counter').html(total_items-1?total_items-1:"");
+    localStorage.setItem('total_item',total_items-1?total_items-1:"")
+
   })
   .catch(err =>console.log(err))
 

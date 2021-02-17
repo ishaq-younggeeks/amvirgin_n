@@ -5,7 +5,8 @@ import { productDetail } from "../ProductDetail/ProductDetailAction";
 
 const mapStateToProps = (state) => {
     return ({
-        wishlist: state.wishlist.product
+        wishlist: state.wishlist.product,
+        isLoading:state.wishlist.isLoading
     })
 }
 

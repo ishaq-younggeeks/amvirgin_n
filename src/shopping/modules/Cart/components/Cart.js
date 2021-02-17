@@ -41,13 +41,12 @@ class Cart extends React.Component {
   }
 
   render() {
-    const cartdata = this.props.cartdata;
+    const {cartdata,isLoading} = this.props;
     console.log("cart data", cartdata);
     return (
       <div className="shopMain">
         <Header />
-        {/* <SubMenu/> */}
-        {cartdata.items && cartdata.items.length !== 0 ? (
+        {isLoading ?"": cartdata.items && cartdata.items.length !== 0 ? (
           <div className="specific">
             <div className="cartsection">
               <div className="product">

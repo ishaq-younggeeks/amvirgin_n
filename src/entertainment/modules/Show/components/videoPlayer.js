@@ -25,6 +25,7 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
         fluid: true,
         muted: false,
         responsive: true,
+        aspectRatio:'16:9',
         // sources: [{
         //   // src: '	https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
         //   // src: "https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8",
@@ -46,6 +47,9 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
             // `y` key = play
             if (event.which === 89) {
               this.play();
+            }
+            else {
+              console.log("hot keys", event.which)
             }
           }
         },
@@ -239,10 +243,6 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
       var track = new videojs.AudioTrack(audio);
       player.audioTracks().addTrack(track);
     })
-
-
-
-
   }
 
 
@@ -261,13 +261,10 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
     }),
   )
 
-
-
-
   return (
     <>
-      <div data-vjs-player>
-        <video ref={videoRef} className="video-js"></video>
+      <div data-vjs-player onContextMenu={(e)=>e.preventDefault()}>
+        <video ref={videoRef} className="video-js vjs-sublime-skin"></video>
       </div>
     </>
   );

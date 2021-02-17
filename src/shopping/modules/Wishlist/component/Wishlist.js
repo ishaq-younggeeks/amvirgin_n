@@ -32,6 +32,7 @@ class Wish extends React.Component {
   }
 
   render() {
+    const {wishlist,isLoading} = this.props
     if(localStorage.getItem('UserToken'))
     {       
      return (
@@ -39,11 +40,11 @@ class Wish extends React.Component {
         <Header />
         <SubMenu {...this.props}/>
         <div class="container-fluid specific wishlistpart">
-          {this.props.wishlist && this.props.wishlist.length? 
+          {isLoading ? "": wishlist && wishlist.length? 
           <>
           <p class="wishlist">Wishlist</p>
           <div class="flexpart wishlistsection">
-            {this.props.wishlist.length && this.props.wishlist.map((wishlistpro,i)=>               
+            {wishlist.length && wishlist.map((wishlistpro,i)=>               
               <div class="wishlistitem" key={wishlistpro.key}>
                 <Link onClick={() => this.props.productDetail(wishlistpro.key, this.props.history)}>
                   <img src={wishlistpro.gallery[0]} class="productimgwish" />

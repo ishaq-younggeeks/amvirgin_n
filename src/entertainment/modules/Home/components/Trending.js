@@ -4,9 +4,6 @@ import { Link, Redirect,useHistory } from "react-router-dom";
 import { videoData } from "../../Show/components/ShowAction";
 import { connect } from "react-redux";
 
-
-
-
 const Trending = (props) => {
   var settings = {
     dots: props.dots,
@@ -36,7 +33,6 @@ const Trending = (props) => {
             {trendingData && trendingData.length > 0 ? (
               trendingData.map((trending, i) => {
                 return (
-                  // <Link to={{pathname: `/show`, query: `${trending.id}`}}>
                   <Link onClick={(e) => onClickHandler(e, props, trending.id)}>
                     <div key={i}>
                       <div className="container1">

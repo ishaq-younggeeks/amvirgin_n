@@ -196,6 +196,7 @@ export const placeOrderFinal = (addressId, selection, razorPayId, razorpay_payme
     .then((res) => {
       console.log(res);
       if(res.data.status === 201 || 403){
+        localStorage.removeItem("session")
         dispatch({
           type: PLACE_ORDER,
           payload: res.data

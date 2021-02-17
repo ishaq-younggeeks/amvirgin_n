@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   console.log("cart data",state.cart.carts)
   return ({
     cartdata: state.cart.carts,
-    cartprice: state.cart.cartprice
+    cartprice: state.cart.cartprice,
+    isLoading:state.cart.isLoading
   })
 }
 

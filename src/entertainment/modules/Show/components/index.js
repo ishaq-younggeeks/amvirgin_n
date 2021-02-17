@@ -54,10 +54,10 @@ class Show extends Component {
     this.setState({ vResponse: dd });
   }
   componentDidMount() {
-
-    this.props.videoData(this.props.location.query)
-    // this.props.trendingDetail();
-    this.props.dashboardData()
+    const params = this.props.match.params.videoId
+    this.props.videoData(params)
+    this.props.trendingDetail();
+    // this.props.dashboardData()
     this.setState({ refresh: true })
 
 
@@ -110,147 +110,9 @@ class Show extends Component {
     }
   }
 
-  handleStop = () => {
-    this.setState({ url: null, playing: false })
-  }
-
-  handleToggleControls = () => {
-    const url = this.state.url
-    this.setState({
-      controls: !this.state.controls,
-      url: null
-    }, () => this.load(url))
-  }
-
-  handleToggleLight = () => {
-    this.setState({ light: !this.state.light })
-  }
-
-  handleToggleLoop = () => {
-    this.setState({ loop: !this.state.loop })
-  }
-
-  handleVolumeChange = (e, newValue) => {
-    this.setState({ volume: parseFloat(newValue / 100), muted: newValue === 0 ? true : false, })
-  }
-
-  handleVolumeSeekDown = (e, newValue) => {
-    this.setState({ seeking: false, volume: parseFloat(newValue / 100) });
-  };
-
-  hanldeMute = () => {
-    this.setState((prevState) => ({ muted: !prevState.muted }));
-  };
-
-  handleToggleMuted = () => {
-    this.setState({ muted: !this.state.muted })
-  }
-
-  handleSetPlaybackRate = e => {
-    this.setState({ playbackRate: parseFloat(e.target.value) })
-  }
-
-  handleTogglePIP = () => {
-    this.setState({ pip: !this.state.pip })
-  }
-
-  handlePlay = () => {
-    console.log('onPlay')
-    this.setState({ playing: true })
-  }
-
-  handleEnablePIP = () => {
-    console.log('onEnablePIP')
-    this.setState({ pip: true })
-  }
-
-  handleDisablePIP = () => {
-    console.log('onDisablePIP')
-    this.setState({ pip: false })
-  }
-
-  handlePause = () => {
-    console.log('onPause')
-    this.setState({ playing: false })
-  }
-
-  handleSeekMouseDown = e => {
-    this.setState({ seeking: true })
-  }
-
-  handleSeekChange = (e, newValue) => {
-    console.log("value", newValue)
-    this.setState({ played: parseFloat(newValue / 100) })
-  }
-
-  handleSeekMouseUp = (e, newValue) => {
-    this.setState({ seeking: false })
-    this.player.seekTo(newValue / 100, "fraction")
-  }
-
-
-  handleProgress = state => {
-    console.log('onProgress', this.count)
-    if (this.count > 2) {
-      this.controlsRef.current.style.visibility = "hidden";
-      this.controlsRef.current.style.opacity = 0;
-      this.count = 0;
-    }
-    if (this.controlsRef.current.style.visibility == "visible") {
-      this.count += 1;
-    }
-    // We only want to update time slider if we are not currently seeking
-    if (!this.state.seeking) {
-      this.setState(state)
-    }
-  }
-
-  handlePlaybackRate = (rate) => {
-    this.setState({ playbackRate: rate });
-  };
-
-  handleEnded = () => {
-    console.log('onEnded')
-    this.setState({ playing: this.state.loop })
-  }
-
-  handleDuration = (duration) => {
-    console.log('onDuration', duration)
-    this.setState({ duration })
-  }
-
-  handleClickFullscreen = () => {
-    screenfull.request(findDOMNode(this.player))
-  }
-
-  toggleFullScreen = () => {
-    screenfull.toggle(this.playerContainerRef.current);
-  };
-
-  renderLoadButton = (url, label) => {
-    return (
-      <button onClick={() => this.load(url)}>
-        {label}
-      </button>
-    )
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-
-    // if (prevState.refresh !== this.state.refresh) {
-    //   console.log("updated video id ", this.props.location.query)
-    //   this.props.videoData()
-    //   window.scrollTo(0, 0)
-    // }
-
-    if (prevState.playVideo !== this.state.playVideo) {
-
-    }
-  }
 
   componentWillUnmount() {
     this.props.clearVideoData()
-    localStorage.setItem("videoId", "")
   }
 
   episodeCredit = () => {
@@ -281,7 +143,7 @@ class Show extends Component {
       slidesToShow: 5.5,
       slidesToScroll: 1
     };
-    const { videoDetail } = this.props
+    const { videoDetail,trendingData } = this.props
     const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
     return (
       <>
@@ -327,9 +189,9 @@ class Show extends Component {
                       <button className="playbtn" onClick={() => this.handlePlayPause()}>
                         <i className={playing ? "fa fa-pause-circle" : "fa fa-play-circle"}></i>{playing ? "Pause" : "Play"}
                       </button>
-                      <Link to="/video/rentalpayment"><button className="playbtn"  style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
+                      {videoDetail.subscriptionType==="paid"?<Link to="/video/rentalpayment"><button className="playbtn"  style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
                         {`Rent @ Rs. ${videoDetail.price}`}
-                      </button></Link>
+                      </button></Link>:""}
                     </div>
                   </div>
                   <hr className="videohr" />
@@ -446,7 +308,7 @@ class Show extends Component {
 
             </div>
           }
-          {this.props.trendingData && this.props.trendingData.payload && this.props.trendingData.payload.length &&
+          {trendingData  && trendingData.length &&
             <Trending
               dots={false}
               arrows={true}
@@ -454,7 +316,7 @@ class Show extends Component {
               speed={500}
               slidesToShow={2.2}
               slidesToScroll={1}
-              trendingData={this.props.trendingData.payload}
+              trendingData={trendingData}
             />
           }
         </div>
@@ -465,10 +327,10 @@ class Show extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state Video data", state.ShowVideos.videoData)
+  console.log("state Video data", state.ShowVideos.trendingData)
   return {
     videoDetail: state.ShowVideos.videoData,
-    trendingData: state.Home.dashboardData,
+    trendingData: state.ShowVideos.trendingData,
     auth: state.authReducer
   }
 }
