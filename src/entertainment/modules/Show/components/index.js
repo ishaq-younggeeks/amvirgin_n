@@ -17,7 +17,7 @@ import ReactPlayer from 'react-player'
 import screenfull from 'screenfull'
 import { findDOMNode } from 'react-dom'
 
-import {LivePlayer} from './videoPlayer'
+import { LivePlayer } from './videoPlayer'
 class Show extends Component {
   constructor(props) {
     super(props);
@@ -42,20 +42,20 @@ class Show extends Component {
       playbackRate: 1.0,
       loop: false,
       timeDisplayFormat: "normal",
-      playIcon:true
+      playIcon: true
     }
     this.episodeCredit = this.episodeCredit.bind(this);
     this.controlsRef = React.createRef();
     this.playerRef = React.createRef();
     this.count = 0
- 
+
   }
   resCallBack = (dd) => {
     this.setState({ vResponse: dd });
   }
   componentDidMount() {
 
-    this.props.videoData( this.props.location.query)
+    this.props.videoData(this.props.location.query)
     // this.props.trendingDetail();
     this.props.dashboardData()
     this.setState({ refresh: true })
@@ -88,13 +88,26 @@ class Show extends Component {
     }, console.log("current state", this.state))
   }
 
-  handlePlayPause = (bigPlay) => {
-    console.log("bigplay",bigPlay)
-    if(bigPlay===undefined){
-      this.playerRef.current.playPause()
-    }
+  handleBuyOnRent = () => {
+    const { loggedIn, user } = this.props.auth
+  }
 
-    this.setState({ playing: !this.state.playing })
+  handlePlayPause = (bigPlay) => {
+    const { loggedIn, user } = this.props.auth
+    if (loggedIn) {
+
+      const { subscription } = user
+      if (subscription.active) {
+        console.log("bigplay", this.props)
+        if (bigPlay === undefined) {
+          this.playerRef.current.playPause()
+        }
+        this.setState({ playing: !this.state.playing })
+      }
+    }
+    else {
+      this.props.history.push('/subscription')
+    }
   }
 
   handleStop = () => {
@@ -246,20 +259,6 @@ class Show extends Component {
     }));
   }
 
-  handleMouseMove = () => {
-    console.log("mousemove", this.controlsRef.current.style);
-    if(!this.state.playIcon){
-    this.controlsRef.current.style.visibility = "visible";
-    this.controlsRef.current.style.opacity = 1;
-    this.count = 0;
-    }
-  };
-
-  hanldeMouseLeave = () => {
-    this.controlsRef.current.style.visibility = "hidden";
-    this.controlsRef.current.style.opacity = 0;
-    this.count = 0;
-  };
 
 
   onClickHandler = async (e, props, videoId) => {
@@ -268,20 +267,6 @@ class Show extends Component {
     console.log("videoId", videoId)
     props.videoData(videoId, props.history)
   }
-
-  format = (seconds) => {
-    if (isNaN(seconds)) {
-      return `00:00`;
-    }
-    const date = new Date(seconds * 1000);
-    const hh = date.getUTCHours();
-    const mm = date.getUTCMinutes();
-    const ss = date.getUTCSeconds().toString().padStart(2, "0");
-    if (hh) {
-      return `${hh}:${mm.toString().padStart(2, "0")}:${ss}`;
-    }
-    return `${mm}:${ss}`;
-  };
 
   ref = player => {
     this.player = player
@@ -310,33 +295,42 @@ class Show extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div>
-                 {videoDetail && videoDetail.sources && <LivePlayer videoDetail={videoDetail} src={videoDetail.sources.video[0].url}  ref={this.playerRef} handlePlayPause={this.handlePlayPause}/>}
+                  {videoDetail && videoDetail.sources && <LivePlayer videoDetail={videoDetail} src={videoDetail.sources.video[0].url} ref={this.playerRef} handlePlayPause={this.handlePlayPause} />}
                 </div>
                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
                 <button className="watchlist"><i className="fa fa-share"></i>Share</button>
               </div>
               <div className="col-md-6">
                 <div className="imgslider">
-                  <div className="col-md-8">
+                  <div className="col-md-12">
+
                     {videoDetail ?
                       (
                         <>
-                          <h3>{videoDetail.title}</h3>
-                          <h6>{videoDetail.type} |
+                          <div className="row">
+                            <h3>{videoDetail.title}</h3>
+                          </div>
+                          <div>
+                            <h6>{videoDetail.type} |
                                               {videoDetail.duration} |
                                               {videoDetail.genre} |
                                               {videoDetail.pgRating} |
                                               {videoDetail.cast}</h6>
+                          </div>
                         </>
 
                       ) : ""}
-
-                    <button className="trailerbtn">
-                      <img src={process.env.PUBLIC_URL+`/img/playred.png`} alt="play" className="play" />Trailer
+                    <div className="row">
+                      <button className="trailerbtn">
+                        <img src={process.env.PUBLIC_URL + `/img/playred.png`} alt="play" className="play" />Trailer
                                         </button>
-                    <button className="playbtn" onClick={() => this.handlePlayPause()}>
-                      <i className={playing ? "fa fa-pause-circle" : "fa fa-play-circle"}></i>{playing ? "Pause" : "Play"}
-                    </button>
+                      <button className="playbtn" onClick={() => this.handlePlayPause()}>
+                        <i className={playing ? "fa fa-pause-circle" : "fa fa-play-circle"}></i>{playing ? "Pause" : "Play"}
+                      </button>
+                      <Link to="/video/rentalpayment"><button className="playbtn"  style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
+                        {`Rent @ Rs. ${videoDetail.price}`}
+                      </button></Link>
+                    </div>
                   </div>
                   <hr className="videohr" />
                   <div className="details row">
@@ -474,7 +468,8 @@ const mapStateToProps = (state) => {
   console.log("state Video data", state.ShowVideos.videoData)
   return {
     videoDetail: state.ShowVideos.videoData,
-    trendingData: state.Home.dashboardData
+    trendingData: state.Home.dashboardData,
+    auth: state.authReducer
   }
 }
 const mapDispatchToProps = (dispatch) => {

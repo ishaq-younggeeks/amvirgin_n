@@ -252,7 +252,7 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
       playPause() {
       if (player.paused()) {
           player.play();
-          player.requestFullscreen()
+          // player.requestFullscreen()
         } else {
           player.pause();
         }

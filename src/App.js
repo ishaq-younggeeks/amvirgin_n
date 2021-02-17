@@ -67,6 +67,7 @@ import TermsCondition from "./footer/components/TermsCondition"
 import ContactUs from "./footer/components/ContactUs";
 
 // Entertainment Routes
+import RentalPayment from "./entertainment/modules/Show/components/RentalPayment"
 const Home = lazy(() => import('./entertainment/modules/Home/components/Home'));
 const Login = lazy(() => import('./entertainment/modules/SignUp/components'));
 const Show = lazy(() => import('./entertainment/modules/Show/components/index'));
@@ -126,6 +127,7 @@ class App extends Component {
           {/* Entertainment Routes */}
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
+          <Route exact path="/video/rentalpayment" component={RentalPayment}></Route>
           <Route exact path="/video/:videoId" component={Show}></Route>
           <Route exact path="/collection/:title" component={Collection}></Route>
           <Route exact path="/subscription" component={Subscritption}></Route>
