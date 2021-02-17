@@ -107,6 +107,8 @@ export const entertainment = {
     //video
     videos:"/customer/videos/",
     trending:"/customer/entertainment/trending",
+    getRental:"/customer/rentals",
+    rentCheckout:"/customer/rentals/checkout/"
 }
 
 /* Api list  for footer section */
@@ -114,4 +116,5 @@ export const footer = {
     privacyPolicy:"/customer/privacy-policy",
     aboutUs:"/customer/about-us",
     termsCondition:"/customer/terms-conditions",
+    contact:"/customer/contact-us"
 }

@@ -3,8 +3,9 @@ import {useState} from "react";
 import { connect } from "react-redux";
 import Header from "../../entertainment/modules/Header";
 import Footer from "../../shopping/modules/Home/components/FooterWhite";
+import {contactUs} from "./FooterAction";
 
-const ContactUs = () => {
+const ContactUs = (props) => {
     const [contactForm, setContactForm] = useState({
         fullname: "",
         email: "",
@@ -18,7 +19,7 @@ const ContactUs = () => {
 
     const handleOnChange = (e) => {
         e.preventDefault();
-        setContactForm({
+        setContactForm({...contactForm,
             [e.target.name] : e.target.value
         });
     };
@@ -29,24 +30,31 @@ const ContactUs = () => {
         let mobileError = "";
         let messageError = "";
         
-        if(!contactForm.fullname.trim()){
+        if(contactForm.fullname === ""){
             fullnameError = "Field cannot be empty!"
         }
 
-        if(!contactForm.email.trim()){
+        if(contactForm.email === ""){
             emailError = "Field cannot be empty!"
         }
-
-        if(!contactForm.mobile.trim()){
-            mobileError = "Field cannot be empty!"
+        else if (!/\S+@\S+\.\S+/.test(contactForm.email)){
+            emailError = "Invalid Email!"
         }
 
-        if(!contactForm.message.trim()){
+        if(contactForm.mobile === ""){
+            mobileError = "Field cannot be empty!"
+        }
+        else if (!/^[0-9]{10}$/.test(contactForm.mobile)) {
+            mobileError = "Invalid Mobile Number!";
+        }
+
+        if(contactForm.message === ""){
             messageError = "Field cannot be empty!"
         }
 
         if(fullnameError || emailError || mobileError || messageError){
             setContactForm({
+                ...contactForm,
                 fullnameError,
                 emailError,
                 mobileError,
@@ -60,7 +68,13 @@ const ContactUs = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         let isValid = validation();
-        isValid && console.log("isvalid :", isValid);
+        isValid && props.contactUs(contactForm.fullname, contactForm.email, contactForm.mobile, contactForm.message)
+        isValid && setContactForm({
+            fullname: "",
+            email: "",
+            mobile: "",
+            message: "",
+        })
     };
 
     console.log("State :", contactForm);
@@ -72,7 +86,7 @@ const ContactUs = () => {
           <div className="container-fluid blogsection specific mt-5">
             <form className="mb-5 mt-5" noValidate onSubmit={handleFormSubmit}>
               <div className="form-group">
-                <label for="exampleInputFullName">Full Name</label>
+                <label htmlFor="exampleInputFullName">Full Name</label>
                 <input
                   type="text"
                   name="fullname"
@@ -85,7 +99,7 @@ const ContactUs = () => {
                 {<p className="text-danger">{contactForm.fullnameError}</p>}
               </div>
               <div className="form-group">
-                <label for="exampleInputEmail">Email Address</label>
+                <label htmlFor="exampleInputEmail">Email Address</label>
                 <input
                   type="text"
                   name="email"
@@ -98,12 +112,13 @@ const ContactUs = () => {
                 {<p className="text-danger">{contactForm.emailError}</p>}
               </div>
               <div className="form-group">
-                <label for="exampleInputMobile">Mobile</label>
+                <label htmlFor="exampleInputMobile">Mobile</label>
                 <input
                   type="number"
                   name="mobile"
                   className="form-control"
                   id="exampleInputMobile"
+                  maxLength="10"
                   placeholder="Enter your Mobile"
                   value={contactForm.mobile}
                   onChange={handleOnChange}
@@ -111,7 +126,7 @@ const ContactUs = () => {
                 {<p className="text-danger">{contactForm.mobileError}</p>}
               </div>
               <div className="form-group">
-                <label for="exampleInputMessage">Message</label>
+                <label htmlFor="exampleInputMessage">Message</label>
                 <textarea
                   name="message"
                   className="form-control"
@@ -127,6 +142,7 @@ const ContactUs = () => {
                 Submit
               </button>
             </form>
+            <h4 className="text-success mb-3">{props.contactData}</h4>
           </div>
         </div>
         <Footer />
@@ -135,11 +151,15 @@ const ContactUs = () => {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    contactData: state.Footer.contact
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    contactUs: (fullname, email, mobile, message) => dispatch(contactUs(fullname, email, mobile, message))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactUs);

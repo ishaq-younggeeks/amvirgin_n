@@ -125,6 +125,7 @@ closeNav = () => {
               <ul>
               <Link to="/myprofile/edit"><li><i className="fa fa-user mr-3 text-info"></i><span className="text-white nav-hover-item">Profile</span></li></Link>
               <Link to="/subscription"><li><i className="fa fa-podcast mr-3 text-info"></i><span className="text-white nav-hover-item">Subscription</span></li></Link>
+              <Link to="/video/rentalVedio"><li><i className="fas fa-photo-video mr-3 text-info"></i><span className="text-white nav-hover-item">My Vedio</span></li></Link>
               <Link to="/myprofile/myOrders"><li><i className="fa fa-shopping-basket fa-fw mr-2 text-info"></i><span className="text-white nav-hover-item">My Orders</span></li></Link>
               <Link onClick={this.logout}><li><i className="fa fa-sign-out mr-3 text-info"></i><span className="text-white nav-hover-item">Logout</span></li></Link>
               </ul>
@@ -242,6 +243,7 @@ closeNav = () => {
                   </div>
                 </div>
               </li> */}
+              {this.renderLink()}
               <li className="nav-item lessmargin ">
                 {item === 0 ?
                   <Link className="nav-link cart-nav" to="/shop/cart">
@@ -275,7 +277,6 @@ closeNav = () => {
                   />
                 </Link>
               </li> */}
-              {this.renderLink()}
             </ul>
           </div>
         </nav>

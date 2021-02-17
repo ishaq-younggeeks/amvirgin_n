@@ -1,9 +1,10 @@
-import {PRIVACY_POLICY, ABOUT_US, TERMS_CONDITION} from "./FooterConstants";
+import {PRIVACY_POLICY, ABOUT_US, TERMS_CONDITION, CONTACT_US} from "./FooterConstants";
 
 const initialState = {
     privacyPolicy: "",
     aboutUs: "",
-    termsCondition: ""
+    termsCondition: "",
+    contact: ""
 }
 
 export default function (state = initialState, action) {
@@ -23,6 +24,11 @@ export default function (state = initialState, action) {
                 ...state,
                 termsCondition: action.payload
             }
+        case CONTACT_US:
+        return{
+            ...state,
+            contact: action.payload
+        }    
         default:
             return state;            
     };
