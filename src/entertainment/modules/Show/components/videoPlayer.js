@@ -187,6 +187,7 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
 
       console.log("sourc vedio",src,source)
       player.src({ src:source, type:"application/x-mpegURL" });
+      player.poster(poster)
      
     }
   }, [source,player]);
@@ -251,6 +252,7 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
       playPause() {
       if (player.paused()) {
           player.play();
+          // player.requestFullscreen()
         } else {
           player.pause();
         }
