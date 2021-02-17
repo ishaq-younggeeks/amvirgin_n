@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { baseURL } from "../../../credential.json";
+import { baseURL, baseURL2 } from "../../../credential.json";
 import { FETCH_CART, ADDTO_CART, DELETE_FROM_CART ,UPDATE_ITEM,AFTER_MOVETOWISHLIST_FETCH} from './shoppingCartConstant';
 import $ from 'jquery';
 import { shop } from '../../../common/apiConstants';
@@ -29,7 +29,7 @@ export const fetchCart = () => dispatch => {
 // Action For adding product to cart
 export const addtoCart = (id,size) => dispatch => {
   console.log("id coming on select size",id,size)
-  let url = `${baseURL}${shop.addToCart}`;
+  let url = `${baseURL2}${shop.addToCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,

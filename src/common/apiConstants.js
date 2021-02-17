@@ -114,4 +114,5 @@ export const footer = {
     privacyPolicy:"/customer/privacy-policy",
     aboutUs:"/customer/about-us",
     termsCondition:"/customer/terms-conditions",
+    contact:"/customer/contact-us"
 }
