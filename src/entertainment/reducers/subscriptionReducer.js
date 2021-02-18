@@ -36,7 +36,7 @@ export const susbcriptionCheckout = (id) => {
     }
 
     axios
-    .get(`${baseURL}${entertainment.checkout}/${id}`, config)
+    .get(`${baseURL2}${entertainment.checkout}/${id}`, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 200 || 201){
@@ -64,7 +64,7 @@ export const subscriptionFinalFnc = (orderId, paymentId, signature, transactionI
     }
 
     axios
-    .post(`${baseURL}${entertainment.checkout}`, params, config)
+    .post(`${baseURL2}${entertainment.checkout}`, params, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 200 || 201 || 403){

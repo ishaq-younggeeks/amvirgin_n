@@ -5,9 +5,10 @@ import "../../../categorystyle.css";
 import { fetchData, productData } from "../shoppingHomeReducer";
 
 class Footer extends Component {
+  
   componentDidMount = () => {
     this.props.fetchData();
-    console.log("Footer :", this.props.footerData); 
+    console.log("Footer :", this.props.footerData);
   };
 
   render() {
@@ -19,11 +20,15 @@ class Footer extends Component {
               <p className="head">
                 <Link to="shop"> ONLINE SHOPPING </Link>
               </p>
-              {/* {this.props.footerData.map((item => <p>
-                <Link to="#">{item.name}</Link>
-              </p>))} */}
+              {this.props.footerData
+                ? Array.from(this.props.footerData).map((item) => (
+                    <p>
+                      <Link to="#">{item.name}</Link>
+                    </p>
+                  ))
+                : null}
               <p>
-                <Link to="#">Men 2</Link>
+                <Link to="#">Men</Link>
               </p>
               <p>
                 <Link to="#">Women</Link>
@@ -46,20 +51,21 @@ class Footer extends Component {
                 <Link to="shop"> Useful Links </Link>
               </p>
               <p>
-              <Link to="/contact">Contact Us</Link>
+                <Link to="/contact">Contact Us</Link>
               </p>
               <p>
                 <Link to="#">FAQ</Link>
               </p>
               <p>
-                <Link to="#">T&C</Link>
+                <Link to="/termsconditions">T&C</Link>
               </p>
               <p>
-                <Link to="#">Terms of use</Link>
+                <Link to="/termsconditions">Terms of use</Link>
               </p>
               <p>
-                {this.props.loggedIn ? <Link to="/myprofile/myOrders">Track Orders</Link> : null}
-                {!this.props.loggedIn ? <Link to="/login">Login / Register</Link> : null}
+                {this.props.loggedIn ? (
+                  <Link to="/myprofile/myOrders">Track Orders</Link>
+                ) : null}
               </p>
               <p>
                 <Link to="#">Shipping</Link>
@@ -71,7 +77,7 @@ class Footer extends Component {
                 <Link to="#">Returns</Link>
               </p>
               <p>
-              <Link to="/privacypolicy">Privacy Policy</Link>
+                <Link to="/privacypolicy">Privacy Policy</Link>
               </p>
             </div>
             <div className="part2">
