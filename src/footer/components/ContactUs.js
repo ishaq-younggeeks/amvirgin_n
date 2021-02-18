@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 import { connect } from "react-redux";
 import Header from "../../entertainment/modules/Header";
-import Footer from "../../shopping/modules/Home/components/FooterWhite";
+import Footer from "../../entertainment/modules/Footer";
 import {contactUs} from "./FooterAction";
 
 const ContactUs = (props) => {
@@ -83,7 +83,7 @@ const ContactUs = (props) => {
       <>
         <Header />
         <div className="bg-black text-white mb-5">
-          <div className="container-fluid blogsection specific mt-5">
+          <div className="container blogsection specific mt-5">
             <form className="mb-5 mt-5" noValidate onSubmit={handleFormSubmit}>
               <div className="form-group">
                 <label htmlFor="exampleInputFullName">Full Name</label>

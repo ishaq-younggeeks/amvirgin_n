@@ -187,6 +187,7 @@ function signoutUser(token) {
           dispatch(getSessionProfile())
           dispatch(Recieveuserbyid(response.data));
           dispatch({ type: userConstants.UNAUTH_USER });
+          // <Redirect to="/login" />
         }
       })
       .catch(function(err) {
