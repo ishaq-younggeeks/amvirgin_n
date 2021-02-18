@@ -1,57 +1,66 @@
-import {VIDEO_DATA,CLEAR_VIDEO_DATA,TRENDING_DATA, RENT_A_VIDEO, ALREADY_RENTED, ALL_RENTED_VIDEOS, RENT_CHECKOUT} from './ShowConstant';
+import {
+  VIDEO_DATA,
+  CLEAR_VIDEO_DATA
+  , TRENDING_DATA,
+  RENT_A_VIDEO,
+  ALREADY_RENTED,
+  ALL_RENTED_VIDEOS,
+  RENT_CHECKOUT,
+  FETCH_RENTALVEDIO
+} from './ShowConstant';
 
 
 const ACTION_HANDLERS = {
   [VIDEO_DATA]: (state, action) => {
     return {
       ...state,
-      videoData:action.data
+      videoData: action.data
     }
   },
   [CLEAR_VIDEO_DATA]: (state, action) => {
     return {
       ...state,
-      videoData:action.data
+      videoData: action.data
     }
   },
-  [TRENDING_DATA]:(state,action) => {
+  [TRENDING_DATA]: (state, action) => {
     return {
       ...state,
-      trendingData:action.data
+      trendingData: action.data
     }
   },
-  [RENT_A_VIDEO]:(state,action) => {
+  [RENT_A_VIDEO]: (state, action) => {
     return {
       ...state,
-      rentVideo:action.payload
+      rentVideo: action.payload
     }
   },
-  [ALREADY_RENTED]:(state,action) => {
+  [ALREADY_RENTED]: (state, action) => {
     return {
       ...state,
-      videoRentedAlready:action.payload
+      videoRentedAlready: action.payload
     }
   },
-  [ALL_RENTED_VIDEOS]:(state,action) => {
+  [ALL_RENTED_VIDEOS]: (state, action) => {
     return {
       ...state,
-      videoRentedAlready:action.payload
+      allRentedVideos: action.payload
     }
   },
-  [RENT_CHECKOUT]:(state,action) => {
+  [RENT_CHECKOUT]: (state, action) => {
     return {
       ...state,
-      razorPay:action.payload
+      razorPay: action.payload
     }
   },
 };
 
 const initialState = {
-  videoData:{},
-  trendingData:{},
+  videoData: {},
+  trendingData: {},
   rentVideo: "",
-  videoRentedAlready: "",
-  allRentedVideos: {},
+  rentedVedio: [],
+  allRentedVideos: [],
   razorPay: ""
 };
 

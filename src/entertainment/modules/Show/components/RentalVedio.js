@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import Footer from "../../../../shopping/modules/Home/components/FooterWhite";
+import Footer from "../../Footer";
 import Header from '../../Header';
-import { rentCheckout } from "./ShowAction";
+import { allRentedVideos } from "./ShowAction";
 import { Helmet } from "react-helmet";
 import {Link} from 'react-router-dom'
-const RentalVedio = (props) => {
 
+const RentalVideo = (props) => {
+
+  const {allRentedVideos} = props
+
+  console.log("all rented vedios",allRentedVideos)
 
   useEffect(() => {
-
+    props.allRentedVideosfnc()
   }, [])
 
   return (
@@ -21,13 +25,13 @@ const RentalVedio = (props) => {
         <Header />
         <div className="bodysection">
           <div className="videocollection container">
-            <h6> {"efg"} </h6>
+            <h6> {"My Videos"} </h6>
 
             <div className="row">
-              {/* {this.props.collectionDetail.length &&
-                this.props.collectionDetail.map((collection, index) => {
-                  return ( */}
-                    <div className="col-md-2 videomob">
+              {allRentedVideos && allRentedVideos.length &&
+                allRentedVideos.map((item, index) => {
+                  return (
+                    <div className="col-md-2 videomob" key= {index}>
                       <Link
                         // onClick={() =>
                         //   this.props.videoData(
@@ -35,9 +39,11 @@ const RentalVedio = (props) => {
                         //     this.props.history
                         //   )
                         // }
+
+                        to={`/video/${item.video.id}`}
                       >
                         <div className="collection container2">
-                          <img className="image" src="" />
+                          <img className="image" src={item.video.poster} />
                           <div className="middle">
                             <div className="imgslider">
                               <img src={process.env.PUBLIC_URL+`/img/play.png`} alt="play" />
@@ -45,13 +51,13 @@ const RentalVedio = (props) => {
                           </div>
                         </div>
                         <div className="infomovie">
-                          <h3></h3>
-                          <h5></h5>
+                          <h3>{item.video.title}</h3>
+                          <h5>{item.video.type}</h5>
                         </div>
                       </Link>
                     </div>
-                  {/* );
-                })} */}
+                   );
+                })}
             </div>
 
             <hr className="videohr" />
@@ -64,14 +70,14 @@ const RentalVedio = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-
+    allRentedVideos:state.ShowVideos.allRentedVideos
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    rentCheckout: (videoKey) => dispatch(rentCheckout(videoKey))
+    allRentedVideosfnc: () => dispatch(allRentedVideos())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RentalVedio);
+export default connect(mapStateToProps, mapDispatchToProps)(RentalVideo);

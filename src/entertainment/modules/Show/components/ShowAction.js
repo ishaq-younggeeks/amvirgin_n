@@ -33,6 +33,7 @@ export const trendingDetail = () => {
   }
 }
 
+
 export const rentCheckout = (videoId) => {
   return (dispatch) => {
     let token = localStorage.getItem('UserToken');
