@@ -5,16 +5,16 @@ import "../../../categorystyle.css";
 import { fetchData, productData } from "../shoppingHomeReducer";
 
 class Footer extends Component {
-  
+
   componentDidMount = () => {
-    
+
   };
 
   render() {
-   
-   const {footerData} = this.props
-   const {data} = footerData
-   console.log("Footer",footerData)
+
+    const { footerData } = this.props
+    const { data } = footerData
+    console.log("Footer", footerData)
     return (
       <footer className="specific">
         <div className="footerwhite">
@@ -25,10 +25,10 @@ class Footer extends Component {
               </p>
               {data && data.length
                 ? data.map((item) => (
-                    <p>
-                      <Link to="#">{item.name}</Link>
-                    </p>
-                  ))
+                  <p>
+                    <Link to="#">{item.name}</Link>
+                  </p>
+                ))
                 : null}
             </div>
             <div className="part1">
@@ -72,22 +72,22 @@ class Footer extends Component {
               <div className="footerimg">
                 <Link to="#">
                   {" "}
-                  <img src={process.env.PUBLIC_URL+"/img/googleplay.png"} />
+                  <img src={process.env.PUBLIC_URL + "/img/googleplay.png"} />
                 </Link>
               </div>
               <div className="footerimg">
                 <Link to="#">
                   {" "}
-                  <img src={process.env.PUBLIC_URL+"/img/appstore.png"} />{" "}
+                  <img src={process.env.PUBLIC_URL + "/img/appstore.png"} />{" "}
                 </Link>
               </div>
             </div>
             <div className="part2">
-              <img className="iconimg" src={process.env.PUBLIC_URL+"/img/original.png"} />
+              <img className="iconimg" src={process.env.PUBLIC_URL + "/img/original.png"} />
               <h6>100% ORIGINAL guarantee for all products </h6>
-              <img className="iconimg" src={process.env.PUBLIC_URL+"/img/return.png"} />
+              <img className="iconimg" src={process.env.PUBLIC_URL + "/img/return.png"} />
               <h6>Return within 30days of receiving your order </h6>
-              <img className="iconimg" src={process.env.PUBLIC_URL+"img/truck.png"} />
+              <img className="iconimg" src={process.env.PUBLIC_URL + "/img/truck.png"} />
               <h6>Get free delivery for every order above Rs. 1000 </h6>
             </div>
           </div>
@@ -97,7 +97,7 @@ class Footer extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log("current state in footer",state.shopping.data)
+  console.log("current state in footer", state.shopping.data)
   return {
     loggedIn: state.authReducer.loggedIn,
     footerData: state.shopping.data,
