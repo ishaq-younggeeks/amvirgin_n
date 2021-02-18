@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import Cart from './components/Cart';
 import { fetchCart, deletefromCart, addtoCart, updateitem,movetoWishlisht } from './shoppingCartAction';
 
-
 const mapStateToProps = (state) => {
   console.log("cart data",state.cart.carts)
   return ({

@@ -99,7 +99,8 @@ export const updateitem = (id,qty) => dispatch => {
     quantity:qty
   }
   Axios.put(`${url}`, data).then((res) => {
-    let CartData = res.data.data.cart.items
+    console.log("after update quantity",res)
+    let CartData = res.data.data.cart
     let fetchedprice = res.data.data.cart
     let total_items=res.data.data.cart.items.length;
     localStorage.setItem('total_item',total_items)
