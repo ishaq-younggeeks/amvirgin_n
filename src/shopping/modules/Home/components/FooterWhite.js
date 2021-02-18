@@ -87,7 +87,7 @@ class Footer extends Component {
               <div className="footerimg">
                 <Link to="#">
                   {" "}
-                  <img src="img/googleplay.png" />
+                  <img src={process.env.PUBLIC_URL + "img/googleplay.png"} />
                 </Link>
               </div>
               <div className="footerimg">
