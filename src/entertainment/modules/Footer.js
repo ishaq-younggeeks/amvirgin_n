@@ -34,9 +34,9 @@ class Footer extends Component {
                             </div>
                         </div>
                         <div className="col-md-3">
-                            <div className="footerlogo"><img src={process.env.PUBLIC_URL+"/img/logo2.png"} alt="amvirgin"/></div>
+                            <div className="footerlogo"><a href="https://amvirgin.in/" target="_blank"><img src={process.env.PUBLIC_URL+"/img/logo2.png"} alt="amvirgin"/></a></div>
                                 <img className="appstore" src={process.env.PUBLIC_URL+"/img/appstore.png"} alt="amvirgin"/>
-                                <img className="googleplay" src={process.env.PUBLIC_URL+"/img/googleplay.png"} alt="amvirgin"/>
+                                <a href="https://play.google.com/store/apps/details?id=com.example.amvirgin" target="_blank"><img className="googleplay" src={process.env.PUBLIC_URL+"/img/googleplay.png"} alt="amvirgin"/></a>
                             </div>
                     </div>
                     </div>

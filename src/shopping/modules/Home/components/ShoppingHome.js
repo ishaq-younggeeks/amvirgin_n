@@ -138,7 +138,7 @@ class ShoppingHome extends React.Component {
           /> : <center><h1>No Trending Products</h1></center>} 
         { homeData.popularStuff && <PopularStuff popularStuff={homeData.popularStuff} {...this.props}/>}
         {homeData.trendingNow && <Trends trendingNow={homeData.trendingNow} {...this.props}/>}
-          <Footer />
+          <Footer {...this.props}/>
       </div>
       </>
     )

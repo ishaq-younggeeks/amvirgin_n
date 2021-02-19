@@ -1,7 +1,7 @@
 import axios from "axios";
 import { footer } from "../../common/apiConstants";
 import {baseURL2, baseURL3} from "../../credential.json";
-import {PRIVACY_POLICY, ABOUT_US, TERMS_CONDITION, CONTACT_US} from "./FooterConstants";
+import {PRIVACY_POLICY, ABOUT_US, TERMS_CONDITION, FAQ, CANCELLATION_POLICY, RETURN_POLICY, SHIPPING_POLICY, CONTACT_US} from "./FooterConstants";
 
 export const privacyPolicy = () => {
     return (dispatch) => {
@@ -57,6 +57,78 @@ export const termsCondition = () => {
     }
 }
 
+export const faqFnc = () => {
+    return (dispatch) => {
+      
+        axios
+        .get(`${baseURL3}${footer.faq}`)
+        .then((res) => {
+            console.log(res);
+            if(res.status === 200){
+                dispatch({
+                    type: FAQ,
+                    payload: res.data    
+                })
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+} 
+
+export const cancellationPolicyFnc = () => {
+    return (dispatch) => {
+      
+        axios
+        .get(`${baseURL3}${footer.cancellationPolicy}`)
+        .then((res) => {
+            console.log(res);
+            if(res.status === 200){
+                dispatch({
+                    type: CANCELLATION_POLICY,
+                    payload: res.data    
+                })
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+} 
+
+export const returnPolicyFnc = () => {
+    return (dispatch) => {
+      
+        axios
+        .get(`${baseURL3}${footer.returnPolicy}`)
+        .then((res) => {
+            console.log(res);
+            if(res.status === 200){
+                dispatch({
+                    type: RETURN_POLICY,
+                    payload: res.data    
+                })
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+} 
+
+export const shippingPolicyFnc = () => {
+    return (dispatch) => {
+      
+        axios
+        .get(`${baseURL3}${footer.shippingPolicy}`)
+        .then((res) => {
+            console.log(res);
+            if(res.status === 200){
+                dispatch({
+                    type: SHIPPING_POLICY,
+                    payload: res.data    
+                })
+            }
+        })
+        .catch((err) => console.log(err));
+    }    
+}
+
 export const contactUs = (name, email, mobile, query) => {
     return (dispatch) => {
         let token = localStorage.getItem("UserToken");
@@ -87,3 +159,4 @@ export const contactUs = (name, email, mobile, query) => {
         .catch((err) => console.log(err));
     }
 }
+

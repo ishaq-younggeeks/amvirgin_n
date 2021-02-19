@@ -1,5 +1,5 @@
 import axios from "axios";
-import {baseURL} from "../../.././credential.json"; 
+import {baseURL, baseURL2} from "../../.././credential.json"; 
 import { shop } from "../../../common/apiConstants";
 import {GET_ALL_MY_ORDERS, ORDER_DETAILS, TRACK_ORDER_STATUS, ORDER_CANCELLATION} from "./ViewMyOrdersConstants";
 
@@ -13,7 +13,7 @@ export const getAllMyOrders = (page) => {
         };
 
         axios
-        .get(`${baseURL}${shop.myOrders}?page=${page}`, config)
+        .get(`${baseURL2}${shop.myOrders}?page=${page}`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -37,7 +37,7 @@ export const viewMyOrderDetails = (orderNumber) => {
         };
 
         axios
-        .get(`${baseURL}${shop.myOrders}/${orderNumber}`, config)
+        .get(`${baseURL2}${shop.myOrders}/${orderNumber}`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -61,7 +61,7 @@ export const orderCancellation = (orderId, reason) => {
         };
         
         axios
-        .put(`${baseURL}${shop.myOrders}/${orderId}/cancel?reason=${reason}`, {}, config)
+        .put(`${baseURL2}${shop.myOrders}/${orderId}/cancel?reason=${reason}`, {}, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -85,7 +85,7 @@ export const trackOrderStatus = (orderId) => {
         };
 
         axios
-        .get(`${baseURL}${shop.myOrders}/${orderId}/track`, config)
+        .get(`${baseURL2}${shop.myOrders}/${orderId}/track`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
