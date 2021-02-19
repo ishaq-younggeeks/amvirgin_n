@@ -1,5 +1,5 @@
 import axios from "axios";
-import {baseURL} from "../.././../credential.json";
+import {baseURL, baseURL2} from "../.././../credential.json";
 import {NEWS_CATEGORY, NEWS_LISTING, ARTICLE_DETAILS} from "./NewsConstant";
 import {news} from '../../../common/apiConstants';
 
@@ -13,7 +13,7 @@ export const newsCategoryFnc = () => {
         }
 
         axios
-        .get(`${baseURL}${news.categories}`, config)
+        .get(`${baseURL2}${news.categories}`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -37,7 +37,7 @@ export const newsListingFnc = (category, page) => {
         }
 
         axios
-        .get(`${baseURL}${news.categories}${category}?page=${page}`, config)
+        .get(`${baseURL2}${news.categories}${category}?page=${page}`, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
@@ -61,7 +61,7 @@ export const articleDetailsFnc = (newsId) => {
         };
 
         axios
-        .get(`${baseURL}${news.articles}${newsId}`, config)
+        .get(`${baseURL2}${news.articles}${newsId}`, config)
         .then((res) => {
             console.log(res);
             if(res.status === 200){

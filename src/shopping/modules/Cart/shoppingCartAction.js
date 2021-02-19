@@ -16,7 +16,8 @@ export const fetchCart = () => dispatch => {
      
       console.log("fetched cart data",res)
       if(res.status === 200){
-        if(res.data){
+        if(res.data.data){
+          console.log("Calling", res);
           let fetchedcart = res.data.data.cart
           let fetchedprice = res.data.data.cart
           dispatch({

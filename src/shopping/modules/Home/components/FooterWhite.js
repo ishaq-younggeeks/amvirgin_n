@@ -70,10 +70,10 @@ class Footer extends Component {
                 <Link to="shop"> EXPERIENCE OUR APP ON MOBILE </Link>
               </p>
               <div className="footerimg">
-                <Link to="#">
+                <a href="https://play.google.com/store/apps/details?id=com.example.amvirgin" target="_blank">
                   {" "}
                   <img src={process.env.PUBLIC_URL + "/img/googleplay.png"} />
-                </Link>
+                </a>
               </div>
               <div className="footerimg">
                 <Link to="#">
