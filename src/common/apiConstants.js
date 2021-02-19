@@ -116,5 +116,9 @@ export const footer = {
     privacyPolicy:"/customer/privacy-policy",
     aboutUs:"/customer/about-us",
     termsCondition:"/customer/terms-conditions",
-    contact:"/customer/contact-us"
+    contact:"/customer/contact-us",
+    shippingPolicy:"/customer/shipping",
+    faq:"/customer/faq",
+    returnPolicy:"/customer/returns",
+    cancellationPolicy:" /customer/cancellation"
 }

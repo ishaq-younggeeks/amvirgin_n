@@ -65,6 +65,10 @@ import PrivacyPolicy from "./footer/components/PrivacyPolicy"
 import AboutUs from "./footer/components/AboutUs"
 import TermsCondition from "./footer/components/TermsCondition"
 import ContactUs from "./footer/components/ContactUs";
+import FAQ from "./footer/components/FAQ";
+import CancellationPolicy from "./footer/components/CancellationPolicy";
+import ShippingPolicy from "./footer/components/ShippingPolicy";
+import ReturnPolicy from "./footer/components/ReturnPolicy";
 
 // Entertainment Routes
 import RentalPayment from "./entertainment/modules/Show/components/RentalPayment"
@@ -104,6 +108,10 @@ class App extends Component {
           <Route exact path="/aboutus" component={AboutUs}/>
           <Route exact path="/termsconditions" component={TermsCondition}/>
           <Route exact path="/contact" component={ContactUs} />
+          <Route exact path="/faq" component={FAQ} />
+          <Route exact path="/returnpolicy" component={ReturnPolicy} />
+          <Route exact path="/cancellationPolicy" component={CancellationPolicy} />
+          <Route exact path="/shippingPolicy" component={ShippingPolicy} />
 
           {/* Shopping Routes */}
           {/* <Route exact path="/" component={ShoppingHomeContainer} /> */}

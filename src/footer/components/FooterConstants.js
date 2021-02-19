@@ -2,3 +2,7 @@ export const PRIVACY_POLICY = "PRIVACY_POLICY";
 export const ABOUT_US = "ABOUT_US";
 export const TERMS_CONDITION = "TERMS_CONDITION";
 export const CONTACT_US = "CONTACT_US"; 
+export const FAQ = 'FAQ';
+export const CANCELLATION_POLICY = "CANCELLATION_POLICY";
+export const RETURN_POLICY = "RETURN_POLICY";
+export const SHIPPING_POLICY = "SHIPPING_POLICY";

@@ -26,7 +26,7 @@ class Footer extends Component {
               {data && data.length
                 ? data.map((item) => (
                     <p>
-                      <Link to="#">{item.name}</Link>
+                      <Link to="#" onClick={() => this.props.productData(item.key,{sortBy:"relevance",page:1},this.props.history)}>{item.name}</Link>
                     </p>
                   ))
                 : null}
@@ -39,7 +39,7 @@ class Footer extends Component {
                 <Link to="/contact">Contact Us</Link>
               </p>
               <p>
-                <Link to="#">FAQ</Link>
+                <Link to="/faq">FAQ</Link>
               </p>
               <p>
                 <Link to="/termsconditions">T&C</Link>
@@ -53,13 +53,13 @@ class Footer extends Component {
                 ) : null}
               </p>
               <p>
-                <Link to="#">Shipping</Link>
+                <Link to="/shippingpolicy">Shipping</Link>
               </p>
               <p>
-                <Link to="#">Cancellation</Link>
+                <Link to="/cancellationpolicy">Cancellation</Link>
               </p>
               <p>
-                <Link to="#">Returns</Link>
+                <Link to="/returnpolicy">Returns</Link>
               </p>
               <p>
                 <Link to="/privacypolicy">Privacy Policy</Link>
