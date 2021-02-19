@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import Footer from "../../shopping/modules/Home/components/FooterWhite";
+import Footer from "../../entertainment/modules/Footer";
 import {cancellationPolicyFnc} from "./FooterAction";
 import ReactHtmlParser from 'react-html-parser';
 import Header from '../../entertainment/modules/Header';

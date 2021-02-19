@@ -340,10 +340,10 @@ button:focus {
 }
 
 .slidershop img {
-  max-height: 30vw;
+  max-height: 35vw;
   width: 100%;
   object-fit: cover;
-  object-position: 100% 100%;
+  /* object-position: 100% 100%; */
 }
 
 .sliderepisode .container1 {
