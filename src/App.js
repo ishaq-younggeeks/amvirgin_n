@@ -4,17 +4,11 @@ import { connect } from "react-redux";
 //Shopping Routes
 import ShoppingHomeContainer from "./shopping/modules/Home";
 import ShoppingCartContainer from "./shopping/modules/Cart";
-import ShoppingWishlistContainer from "./shopping/modules/Wishlist/";
 import ShoppingProductContainer from "./shopping/modules/ProductCategory";
 import ViewShopProductDetails from "./shopping/modules/ProductDetail"
-import ShopPlaceOrder from "./shopping/modules/Order"
-import ShopPayment from "./shopping/modules/Order/components/ShopPayment"
-import ShopEditProfile from "./shopping/modules/Profile/EditProfile";
+
 import ViewAllDeals from "./shopping/modules/Home/components/ViewAllDeals";
-import ViewMyOrders from "./shopping/modules/ViewMyOrders/ViewMyOrders";
-import ViewMyOrderDetails from "./shopping/modules/ViewMyOrders/ViewMyOrderDetails";
-import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
-import OrderSuccessful from "./shopping/modules/Order/components/OrderSuccessful";
+
 import SubscriptionSuccessful from "./entertainment/modules/subscription/SubscriptionSuccessful";
 
 // Seller Routes
@@ -73,6 +67,8 @@ import ReturnPolicy from "./footer/components/ReturnPolicy";
 // Entertainment Routes
 import RentalPayment from "./entertainment/modules/Show/components/RentalPayment"
 import RentalVedio from "./entertainment/modules/Show/components/RentalVedio"
+
+import {ShopRoute} from './AppRoute'
 const Home = lazy(() => import('./entertainment/modules/Home/components/Home'));
 const Login = lazy(() => import('./entertainment/modules/SignUp/components'));
 const Show = lazy(() => import('./entertainment/modules/Show/components/index'));
@@ -86,7 +82,7 @@ class App extends Component {
   };
   
   render() {
-    const { currentUser } = this.props;
+    const { currentSeller,currentUser } = this.props;
     const token = localStorage.getItem("token");
     if(localStorage.getItem('session')===null)
     {
@@ -99,6 +95,7 @@ class App extends Component {
       <Suspense fallback={null}>
         <Switch>
           {/* News Routes */}
+          <Route exact path="/" component={Home}></Route>
           <Route exact path="/news" component={NewsContainer}/>
           <Route exact path="/news/newsDetails" component={NewsDetailContainer}/>
           <Route exact path="/news/details" component={NewsArticleDetails}/>
@@ -124,17 +121,9 @@ class App extends Component {
             component={ShoppingProductContainer}
           />
           <Route exact path="/productdetail/:pat1" component={ViewShopProductDetails} />
-          <Route exact path="/wishlist" component={ShoppingWishlistContainer} />
-          <Route exact path="/placeOrder" component={ShopPlaceOrder} />
-          <Route exact path="/ShopPayment" component={ShopPayment} />
-          <Route exact path="/myprofile/edit" component={ShopEditProfile} />
-          <Route exact path="/myprofile/myOrders" component={ViewMyOrders} />
-          <Route exact path="/myprofile/myOrders/orderDetails" component={ViewMyOrderDetails} />
-          <Route exact path="/myprofile/myOrders/trackOrder" component={TrackOrder} />
-          <Route exact path="/success" component={OrderSuccessful} />
-
+          {ShopRoute.map((item , i)=>(currentUser?
+<Route exact {...item}/> :  null ))}
           {/* Entertainment Routes */}
-          <Route exact path="/" component={Home}></Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/video/rentalVedio" component={RentalVedio}></Route>
           <Route exact path="/video/rentalpayment" component={RentalPayment}></Route>
@@ -144,101 +133,116 @@ class App extends Component {
           <Route exact path="/subscription/checkout" component={SubscriptionSuccessful}></Route> 
           
           {/* Seller Routes */}
-          <Route path="/seller/login" exact component={SellerLogin} />
+          <Route exact path="/seller/login" exact component={SellerLogin} />
           <Route
             path="/seller/registration"
             exact
             component={SellerRegistration}
           />
-          {currentUser && token && (
+          {currentSeller && token && (
             <Navigation>
-              <Route path="/seller/dashboard" exact component={Dashboard} />
-              <Route path="/seller/dashboard/profile" exact component={Profile} />
-              <Route path="/seller/dashboard/notification" exact component={SellerNotification} />
-              <Route path="/seller/dashboard/sales" exact component={Sellersales} />
-              <Route path="/seller/dashboard/Setting" exact component={Setting} />
-              <Route path="/seller/dashboard/mou" exact component={SellerMou} />
-              <Route path="/seller/dashboard/BusinessDetail" exact component={BusinessDetail} />
-              <Route path="/seller/dashboard/support" exact component={SellerSupport} />
-              <Route path="/seller/dashboard/support/myticket" exact component={SellerSupportTicket} />
-              <Route path="/seller/dashboard/payments/summary" exact component={SellerPayments} />
-              <Route path="/seller/dashboard/payments/previous-payment" exact component={SellerPreviousPayments} />
-              <Route path="/seller/dashboard/payments/order-transaction" exact component={SellerOrderTransactions} />
-              <Route path="/seller/dashboard/advertisement" exact component={SellerAdvertisement}/>
-              <Route path="/seller/dashboard/advertisement/create-advt" exact component ={SellerCreateAdvts}/>
-              <Route path="/seller/dashboard/return" exact component={Return}/>
+              <Route exact path="/seller/dashboard" exact component={Dashboard} />
+              <Route exact path="/seller/dashboard/profile" exact component={Profile} />
+              <Route exact path="/seller/dashboard/notification" exact component={SellerNotification} />
+              <Route exact path="/seller/dashboard/sales" exact component={Sellersales} />
+              <Route exact path="/seller/dashboard/Setting" exact component={Setting} />
+              <Route exact path="/seller/dashboard/mou" exact component={SellerMou} />
+              <Route exact path="/seller/dashboard/BusinessDetail" exact component={BusinessDetail} />
+              <Route exact path="/seller/dashboard/support" exact component={SellerSupport} />
+              <Route exact path="/seller/dashboard/support/myticket" exact component={SellerSupportTicket} />
+              <Route exact path="/seller/dashboard/payments/summary" exact component={SellerPayments} />
+              <Route exact path="/seller/dashboard/payments/previous-payment" exact component={SellerPreviousPayments} />
+              <Route exact path="/seller/dashboard/payments/order-transaction" exact component={SellerOrderTransactions} />
+              <Route exact path="/seller/dashboard/advertisement" exact component={SellerAdvertisement}/>
+              <Route exact path="/seller/dashboard/advertisement/create-advt" exact component ={SellerCreateAdvts}/>
+              <Route exact path="/seller/dashboard/return" exact component={Return}/>
               <Route
+               exact
                 path="/seller/dashboard/myorders"
-                exact
+               
                 component={MyOrders}
               />
                <Route
-                path="/seller/dashboard/myorders/returns-order"
                 exact
+                path="/seller/dashboard/myorders/returns-order"
+               
                 component={MyOrdersReturns}
               />
               <Route
+               exact
                 path="/seller/dashboard/myorders/cancelled-orders"
-                exact
+               
                 component={MyOrdersCancelled}
               />
               <Route
+              exact
                 path="/seller/dashboard/brand-approval"
-                exact
+                
                 component={BrandApproval}
               />
               <Route
+                exact
               path="/seller/dashboard/vieworders"
-              exact
+            
               component={ViewOrders}
             />
               <Route
-                path="/seller/dashboard/myproducts"
                 exact
+                path="/seller/dashboard/myproducts"
+              
                 component={MyProducts}
               />
               <Route
+               exact
                 path="/seller/dashboard/brandlist"
-                exact
+               
                 component={MyBrands}
               />
                <Route
+                  exact
                 path="/seller/dashboard/myproducts/:slug"
-                exact
+             
                 component={ViewProductDetails}
               />
               <Route
+               exact
                 path="/seller/dashboard/editProduct/:slug"
-                exact
+               
                 component={EditProduct}
               />
               <Route
+               exact
                 path="/seller/dashboard/listing"
-                exact
+               
                 component={ListingType} 
               />
               <Route
+              exact
                 path="/seller/dashboard/selectcategory"
-                exact
+                
                 component={ProductCategory}
               />
               <Route
+                 exact
                 path="/seller/dashboard/ProductBrand"
-                exact
+             
                 component={ProductBrand}
               />
               <Route
+                exact
               path="/seller/dashboard/addproduct"
-              exact
+            
               component={SellerAddProduct}
               />
               <Route
+               exact
               path="/seller/dashboard/addproduct/bulk"
-              exact
+             
               component={SellerBulkAddProduct}
               />
             </Navigation>
           )}
+              
           <Redirect to="/" />
         </Switch>
         </Suspense>
@@ -250,7 +254,9 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     invalidToken: state.sellerAuth.invalidToken,
-    currentUser: state.sellerAuth.currentUser
+    currentSeller: state.sellerAuth.currentUser,
+    currentUser:state.authReducer.loggedIn
+    
   };
 };
 const mapDispatchToProps = dispatch => {

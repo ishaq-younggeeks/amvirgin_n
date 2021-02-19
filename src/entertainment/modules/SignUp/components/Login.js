@@ -165,7 +165,7 @@ class Login extends Component {
               <button type="button" className="changeBtn" size="large">Login With Password</button>
           </div>
       )
-      if(!this.props.loggedIn){ 
+      // if(!this.props.loggedIn){ 
         return (
           <div className="front">
             <div className="halfleft"><h6 className="title">Sign in</h6></div>
@@ -249,10 +249,10 @@ class Login extends Component {
         </div>
         ); 
       }
-      else{
-        return <Redirect to="/" />
-    }
-  }
+    //   else{
+    //     return <Redirect to="/" />
+    // }
+  // }
 }
 
 const mapStateToProps = state => {

@@ -62,6 +62,12 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
   }, [player])
 
   useEffect(() => {
+    // videojs.Hls.xhr.beforeRequest = function(options){
+    //   options.uri = options.uri+'/liveout/?md5=_PwgAm2z_kO8FgmWRWXvhQ&expires=1574698730';
+    //   //.replace('cloudfront.net', 'foo.com');
+    //   console.log(options);
+    //   return options;
+    // };
 
 
     if(source){
