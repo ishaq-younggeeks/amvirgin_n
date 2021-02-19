@@ -5,19 +5,16 @@ import Footer from '../../Footer';
 import './style.css';
 import Trending from '../../Home/components/Trending';
 import Slider from "react-slick";
-import ReadMoreReact from 'read-more-react';
-import { GetData } from '../../../../db.js';
+
 import $ from 'jquery'
 import { connect } from 'react-redux';
 import { videoData, clearVideoData, trendingDetail } from './ShowAction'
 import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
-// import ReactPlayer from './CreatePlayer'
-import ReactPlayer from 'react-player'
-import screenfull from 'screenfull'
-import { findDOMNode } from 'react-dom'
 
-import { LivePlayer } from './videoPlayer'
+
+
+import { LivePlayer } from './videoPlayer_old'
 class Show extends Component {
   constructor(props) {
     super(props);
@@ -42,7 +39,8 @@ class Show extends Component {
       playbackRate: 1.0,
       loop: false,
       timeDisplayFormat: "normal",
-      playIcon: true
+      playIcon: true,
+      setPlayer:false
     }
     this.episodeCredit = this.episodeCredit.bind(this);
     this.controlsRef = React.createRef();
@@ -67,17 +65,12 @@ class Show extends Component {
     //     this.setState({trending: res.data.data.trendingPicks});
     // }).catch(err=>console.log("error occur",err));
   }
-  videoJsOptions = {
-    autoplay: false,
-    playbackRates: [0.5, 1, 1.25, 1.5, 2],
-    controls: true,
-    sources: [
-      {
-        src: 'https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8',
-        type: 'application/x-mpegURL',
-      },
-    ],
-  };
+
+  componentDidUpdate = (prevProps,prevState) => {
+    if(prevProps.videoDetail!== this.props.videoDetail){
+      window.scrollTo(0, 0)
+    }
+  }
 
   load = url => {
     this.setState({
@@ -98,9 +91,10 @@ class Show extends Component {
 
       const { subscription } = user
       if (subscription.active) {
+        this.setState({setPlayer:true})
         console.log("bigplay", this.props)
         if (bigPlay === undefined) {
-          this.playerRef.current.playPause()
+          // this.playerRef.current.playPause()
         }
         this.setState({ playing: !this.state.playing })
       }
@@ -157,7 +151,9 @@ class Show extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div>
-                  {videoDetail && videoDetail.sources && <LivePlayer videoDetail={videoDetail} src={videoDetail.sources.video[0].url} ref={this.playerRef} handlePlayPause={this.handlePlayPause} />}
+                 
+                  {this.state.setPlayer ? <LivePlayer videoDetail={videoDetail} src={videoDetail.sources.video[0].url} ref={this.playerRef} handlePlayPause={this.handlePlayPause} />: <img src={videoDetail.poster || process.env.PUBLIC_URL+ "/img/logo.png"} style={{width: "100%",
+    maxHeight: "300px"}}/>}
                 </div>
                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
                 <button className="watchlist"><i className="fa fa-share"></i>Share</button>
@@ -346,5 +342,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Show);
-
-//export default Show;

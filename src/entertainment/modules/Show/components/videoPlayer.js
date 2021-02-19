@@ -17,9 +17,9 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
   useEffect(() => {
     (async ()=>{
       
-     setSrc(src)
+      // setSrc(src)
       const videoJsOptions = {
-        autoplay: false,
+        autoplay: true,
         playbackRates: [0.5, 1, 1.25, 1.5, 2],
         controls: true,
         fluid: true,
@@ -29,8 +29,7 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
         // sources: [{
         //   // src: '	https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
         //   // src: "https://amvirgin.citrixcrm.xyz/storage/videos/streams/XfAUGG0sEz4ep4NmJOkCXxcb/20_13.m3u8",
-        //   // src: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
-        //   src:{src},
+        //   src: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
         //   type: "application/x-mpegURL"
         // }],
         sources:[{src:{src},type:"application/x-mpegURL"}],
@@ -105,17 +104,6 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
   
         console.log('onPlayerReady')
       })
-      var track = new videojs.AudioTrack({
-        id: 'my-dd2',
-        kind: 'translation',
-        label: 'enfgjhghgf',
-        language: 'es',
-        audio: "https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/camera_flashing_2.mp3"
-        ,
-      });
-  
-  
-  
       // Add the track to the player's audio track list.
       setPlayer(p)
     })()
@@ -145,29 +133,9 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
       audioTrackList.addEventListener('change', function () {
         console.log("calling audio tracklist")
         // Log the currently enabled AudioTrack label.
-        for (var i = 0; i < audioTrackList.length; i++) {
-          var track = audioTrackList[i];
-          console.log("current audio track list", audioTrackList[0].kind)
-          if (track.enabled) {
-            videojs.log(track.label);
-            // dispatchEvent()
-            // dispatchEvent( track.enabledChange_.guid)
-            // EventTarget.trigger()
-            //   console.log("player audio",track.enabledChange_.guid)
-            // // videojs.log(t);
-            var audio = document.getElementById('audio');
-            let t = player.currentTime()
-            // var source = document.getElementById('audioSource');
-            // source.src = `https://amvirgin.citrixcrm.xyz/storage/videos/audio_tracks/XtyqTtlh1EqDZ2FkFPmpVOsXVEy4w9jXmkhH4XgY.mp3#t=${t}`
-
-            // audio.load(); //call this to just preload the audio without playing
-            // audio.play(); //call this to play the song right away
-            // return;
-          }
-        }
       });
 
-      console.log("current player", videoRef)
+      console.log("current player", player)
       // player.on('play', () => {
       //   // console.log("playing")
       //   // callActiveTrack();
@@ -182,29 +150,29 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
 
   }, [player])
 
-  useEffect(() => {
-    if (player) {
+  // useEffect(() => {
+  //   if (player) {
 
-      console.log("sourc vedio",src,source)
-      player.src({ src:source, type:"application/x-mpegURL" });
-      player.poster(poster)
+  //     console.log("sourc vedio",src,source)
+  //     player.src({ src:source, type:"application/x-mpegURL" });
+  //     player.poster(poster)
      
-    }
-  }, [source,player]);
+  //   }
+  // }, [source,player]);
 
-  useEffect(() => {
-    console.log("update call",src)
-    if(player){
+  // useEffect(() => {
+  //   console.log("update call",src)
+  //   if(player){
 
-      if(!player.paused()){
-        player.paused()
-      }
-      setSrc(src)
-      player.src({ src:source, type:"application/x-mpegURL" });
-      player.load()
-      player.play()
-    }
-  },[videoDetail])
+  //     if(!player.paused()){
+  //       player.paused()
+  //     }
+  //     setSrc(src)
+  //     player.src({ src:source, type:"application/x-mpegURL" });
+  //     player.load()
+  //     player.play()
+  //   }
+  // },[source,videoDetail])
 
 
   const callActiveTrack = () => {
@@ -260,7 +228,7 @@ export const LivePlayer = forwardRef(({videoDetail,src,handlePlayPause}, ref) =>
   return (
     <>
       <div data-vjs-player onContextMenu={(e)=>e.preventDefault()}>
-        <video ref={videoRef} className="video-js vjs-sublime-skin"></video>
+        <video ref={videoRef} className="video-js"></video>
       </div>
     </>
   );

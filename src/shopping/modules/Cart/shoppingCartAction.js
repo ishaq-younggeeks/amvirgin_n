@@ -13,14 +13,27 @@ export const fetchCart = () => dispatch => {
   })
   Axios.get(`${url}` + 'sessionId=' + sessionid + '&customerId=' + 3)
     .then((res) => {
-      let fetchedcart = res.data.data.cart
-      let fetchedprice = res.data.data.cart
+     
       console.log("fetched cart data",res)
-      dispatch({
-        type: FETCH_CART,
-        payload: fetchedcart,
-        payload2: fetchedprice
-      })
+      if(res.status === 200){
+        if(res.data){
+          let fetchedcart = res.data.data.cart
+          let fetchedprice = res.data.data.cart
+          dispatch({
+            type: FETCH_CART,
+            payload: fetchedcart,
+            payload2: fetchedprice
+          })
+        }
+        else {
+          dispatch({
+            type: FETCH_CART,
+            payload: [],
+            payload2: []
+          })
+        }
+      }
+     
     })
     .catch(error => {
       console.log(error)
