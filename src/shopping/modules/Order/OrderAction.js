@@ -4,7 +4,7 @@ import { shop } from "../../../common/apiConstants";
 import { baseURL, baseURL2 } from "../../../credential.json";
 import { ADDRESS_DETAIL, GET_RAZORPAY, PLACE_ORDER } from "./OrderConstant";
 //import {fetchCart} from '../Cart/shoppingCartAction'
-
+import $ from 'jquery'
 export const getAddressDetail = () => {
   let token = localStorage.getItem("UserToken");
 
@@ -197,6 +197,9 @@ export const placeOrderFinal = (addressId, selection, razorPayId, razorpay_payme
       console.log(res);
       if(res.data.status === 201 || 403){
         localStorage.removeItem("session")
+        let total_items = 0
+        $('#cart_counter').html(total_items?total_items:"");
+    localStorage.setItem('total_item',total_items?total_items:"")
         dispatch({
           type: PLACE_ORDER,
           payload: res.data

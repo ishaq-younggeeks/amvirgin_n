@@ -11,8 +11,7 @@ import { connect } from 'react-redux';
 import { videoData, clearVideoData, trendingDetail } from './ShowAction'
 import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
-
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { LivePlayer } from './videoPlayer'
 class Show extends Component {
@@ -40,7 +39,7 @@ class Show extends Component {
       loop: false,
       timeDisplayFormat: "normal",
       playIcon: true,
-      setPlayer:false
+      setPlayer: false
     }
     this.episodeCredit = this.episodeCredit.bind(this);
     this.controlsRef = React.createRef();
@@ -57,6 +56,8 @@ class Show extends Component {
     this.props.trendingDetail();
     // this.props.dashboardData()
     this.setState({ refresh: true })
+    console.log("this.props",this.props)
+    this.setState({url:window.location.href})
 
 
     window.scrollTo(0, 0)
@@ -66,9 +67,11 @@ class Show extends Component {
     // }).catch(err=>console.log("error occur",err));
   }
 
-  componentDidUpdate = (prevProps,prevState) => {
-    if(prevProps.videoDetail!== this.props.videoDetail){
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.videoDetail !== this.props.videoDetail) {
       window.scrollTo(0, 0)
+      this.setState({url:window.location.href})
+
     }
   }
 
@@ -91,7 +94,7 @@ class Show extends Component {
 
       const { subscription } = user
       if (subscription.active) {
-        this.setState({setPlayer:true})
+        this.setState({ setPlayer: true })
         console.log("bigplay", this.props)
         if (bigPlay === undefined) {
           // this.playerRef.current.playPause()
@@ -137,7 +140,7 @@ class Show extends Component {
       slidesToShow: 5.5,
       slidesToScroll: 1
     };
-    const { videoDetail,trendingData } = this.props
+    const { videoDetail, trendingData } = this.props
     const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
     return (
       <>
@@ -151,12 +154,29 @@ class Show extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div>
-                 
-                  {this.state.setPlayer ? <LivePlayer src={videoDetail.sources.video[0].url} videoDetail={videoDetail}  ref={this.playerRef} handlePlayPause={this.handlePlayPause} />: <img src={videoDetail.poster || process.env.PUBLIC_URL+ "/img/logo.png"} style={{width: "100%",
-    maxHeight: "300px"}}/>}
+
+                  {this.state.setPlayer ? <LivePlayer src={videoDetail.sources.video[0].url} videoDetail={videoDetail} ref={this.playerRef} handlePlayPause={this.handlePlayPause} /> : <img src={videoDetail.poster || process.env.PUBLIC_URL + "/img/logo.png"} style={{
+                    width: "100%",
+                    maxHeight: "300px"
+                  }} />}
                 </div>
                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
-                <button className="watchlist"><i className="fa fa-share"></i>Share</button>
+               
+                    <CopyToClipboard text={window.location.href} 
+          onCopy={() => {
+            this.setState({copied: true})
+            setTimeout(()=>{this.setState({copied:false})},1500)
+            }}>
+           <button
+                  className="watchlist"
+
+                >
+                  <i className="fa fa-share"></i>
+                    Share</button>
+        </CopyToClipboard>
+
+        {this.state.copied ? <span style={{color: 'white', margin:"5px",padding:"5px",background:"green",borderRadius:"5px"}}>url Copied.</span> : null}     
+
               </div>
               <div className="col-md-6">
                 <div className="imgslider">
@@ -185,9 +205,9 @@ class Show extends Component {
                       <button className="playbtn" onClick={() => this.handlePlayPause()}>
                         <i className={playing ? "fa fa-pause-circle" : "fa fa-play-circle"}></i>{playing ? "Pause" : "Play"}
                       </button>
-                      {videoDetail.subscriptionType==="paid"?<Link to="/video/rentalpayment"><button className="playbtn"  style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
+                      {videoDetail.subscriptionType === "paid" ? <Link to="/video/rentalpayment"><button className="playbtn" style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
                         {`Rent @ Rs. ${videoDetail.price}`}
-                      </button></Link>:""}
+                      </button></Link> : ""}
                     </div>
                   </div>
                   <hr className="videohr" />
@@ -304,7 +324,7 @@ class Show extends Component {
 
             </div>
           }
-          {trendingData  && trendingData.length &&
+          {trendingData && trendingData.length &&
             <Trending
               dots={false}
               arrows={true}
