@@ -3,9 +3,13 @@ import { baseURL } from "../../credential.json";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import cookie from "react-cookies";
-import { history } from "../../Store/history";
+import { createBrowserHistory as createHistory } from 'history';
 import {getSessionProfile} from '../../globalComponents/sessionprofileAction'
 import { entertainment } from "../../common/apiConstants";
+
+const history = createHistory()
+
+
 export const userActions = {
   login,
   Register,
@@ -38,6 +42,7 @@ function login(body) {
           });
           dispatch(Recieveuserbyid(response.data));
           dispatch({ type: userConstants.AUTH_USER });
+          history.goBack()
         } else if (response.data.status === 404) {
           dispatch({ type: userConstants.NOT_REGISTERED });
         } else if (response.data.status === 401 || 400 ) {
@@ -187,7 +192,7 @@ function signoutUser(token) {
           dispatch(getSessionProfile())
           dispatch(Recieveuserbyid(response.data));
           dispatch({ type: userConstants.UNAUTH_USER });
-          // <Redirect to="/login" />
+
         }
       })
       .catch(function(err) {

@@ -13,6 +13,7 @@ export const fetchData = () => {
     dispatch(fetchingData(true))
     axios.get(`${baseURL2}/customer/categories`)
     .then(res => {
+
       let dataList = [];
       dataList = res.data;
       dispatch(myData(dataList))
