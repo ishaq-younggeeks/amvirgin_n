@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 
 
-import { LivePlayer } from './videoPlayer_old'
+import { LivePlayer } from './videoPlayer'
 class Show extends Component {
   constructor(props) {
     super(props);
@@ -152,7 +152,7 @@ class Show extends Component {
               <div className="col-md-6">
                 <div>
                  
-                  {this.state.setPlayer ? <LivePlayer videoDetail={videoDetail} src={videoDetail.sources.video[0].url} ref={this.playerRef} handlePlayPause={this.handlePlayPause} />: <img src={videoDetail.poster || process.env.PUBLIC_URL+ "/img/logo.png"} style={{width: "100%",
+                  {this.state.setPlayer ? <LivePlayer src={videoDetail.sources.video[0].url} videoDetail={videoDetail}  ref={this.playerRef} handlePlayPause={this.handlePlayPause} />: <img src={videoDetail.poster || process.env.PUBLIC_URL+ "/img/logo.png"} style={{width: "100%",
     maxHeight: "300px"}}/>}
                 </div>
                 <button className="watchlist"><i className="fa fa-bars"></i>Watchlist</button>
