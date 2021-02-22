@@ -28,22 +28,22 @@ class ViewMyOrderDetails extends Component {
     console.log("Status", status); 
     if(status === "placed"){
       this.setState({
-        statusClass: "c1"
+        statusClass: "c0"
       })
     }
     if(status === "dispatched"){
       this.setState({
-        statusClass: "c2"
+        statusClass: "c1"
       })
     }
     if(status === "out-for-delivery"){
       this.setState({
-        statusClass: "c3"
+        statusClass: "c2"
       })
     }
     if(status === "delivered"){
       this.setState({
-        statusClass: "c4"
+        statusClass: "c3"
       })
     }
     if(status === "cancelled"){

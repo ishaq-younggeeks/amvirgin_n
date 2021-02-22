@@ -1,10 +1,11 @@
-import {GET_ALL_MY_ORDERS, ORDER_DETAILS, TRACK_ORDER_STATUS, ORDER_CANCELLATION} from "./ViewMyOrdersConstants";
+import {GET_ALL_MY_ORDERS, ORDER_DETAILS, TRACK_ORDER_STATUS, ORDER_CANCELLATION, GIVE_REVIEW} from "./ViewMyOrdersConstants";
 
 const initialState = {
     myOrders : [],
     myOrderDetails: [],
     orderTracking: [],
-    cancelReason: ""
+    cancelReason: "",
+    giveReview: ""
 }
 
 export default function (state = initialState, action){
@@ -28,7 +29,12 @@ export default function (state = initialState, action){
             return{
                 ...state,
                 cancelReason: action.payload
-            }           
+            }  
+        case GIVE_REVIEW:
+            return{
+                ...state,
+                giveReview: action.payload
+            }               
         default:
             return state    
     }

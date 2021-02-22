@@ -108,7 +108,7 @@ class ViewMyOrders extends Component {
                         Total : ₹ {item1.details.total}
                       </p>
                     </div>
-                    <div className="col-sm-5">
+                    <div className="col-sm-4">
                       <p
                         style={{
                           fontSize: "17px",
@@ -137,13 +137,22 @@ class ViewMyOrders extends Component {
                         Status : <span style={{ color:item1.details.status === "cancelled" ? "#ce3838" : "green" }}>{item1.details.status}</span>
                       </p>
                     </div>
-                    <a className="col-sm-2" href="#" onClick={() => localStorage.setItem("OrderNumber", item1.key + item1.details.status)}>
+                    <div className="col-sm-3">
+                    <a href="#" onClick={() => localStorage.setItem("OrderNumber", item1.key + item1.details.status)}>
                       <Link to="/myprofile/myOrders/orderDetails">
                         <a href="#" className="btn btn-primary">
                           Order Details
                         </a>
                       </Link>
                     </a>
+                    <a className="ml-3" href="#" onClick={() => localStorage.setItem("OrderNumber", item1.key)}>
+                      <Link to="/myprofile/myOrders/reviews">
+                        <a href="#" className="btn btn-primary">
+                          Add a review
+                        </a>
+                      </Link>
+                    </a>
+                    </div>
                   </div>
                 </div>
               </div>

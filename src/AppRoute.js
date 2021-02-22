@@ -6,6 +6,7 @@ import ViewMyOrders from "./shopping/modules/ViewMyOrders/ViewMyOrders";
 import ViewMyOrderDetails from "./shopping/modules/ViewMyOrders/ViewMyOrderDetails";
 import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
 import OrderSuccessful from "./shopping/modules/Order/components/OrderSuccessful";
+import AddReview from "./shopping/modules/ViewMyOrders/AddReview"
 
 
 //seller Routes
@@ -75,6 +76,10 @@ export const ShopRoute = [
     {
         path: '/success',
         component: OrderSuccessful,
+    },
+    {
+        path:'/myprofile/myOrders/review',
+        component: AddReview
     }
 
 ]

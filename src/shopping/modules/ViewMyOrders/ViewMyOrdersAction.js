@@ -1,7 +1,7 @@
 import axios from "axios";
 import {baseURL, baseURL2} from "../../.././credential.json"; 
 import { shop } from "../../../common/apiConstants";
-import {GET_ALL_MY_ORDERS, ORDER_DETAILS, TRACK_ORDER_STATUS, ORDER_CANCELLATION} from "./ViewMyOrdersConstants";
+import {GET_ALL_MY_ORDERS, ORDER_DETAILS, TRACK_ORDER_STATUS, ORDER_CANCELLATION, GIVE_REVIEW} from "./ViewMyOrdersConstants";
 
 export const getAllMyOrders = (page) => {
     return(dispatch) => {
@@ -64,7 +64,7 @@ export const orderCancellation = (orderId, reason) => {
         .put(`${baseURL2}${shop.myOrders}/${orderId}/cancel?reason=${reason}`, {}, config)
         .then((res) => {
             console.log(res);
-            if(res.data.status === 200){
+            if(res.data.status === 200 || 304){
                 dispatch({
                     type: ORDER_CANCELLATION,
                     payload: res.data.messsage
@@ -92,6 +92,30 @@ export const trackOrderStatus = (orderId) => {
                 dispatch({
                     type: TRACK_ORDER_STATUS,
                     payload: res.data.payload
+                })
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+}
+
+export const giveReviewFnc = (key, orderKey) => {
+    return (dispatch) => {
+        let token = localStorage.getItem("UserToken");
+        let config = {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        }
+
+        axios
+        .post(`${baseURL2}customer/products/${key}/reviews/${orderKey}`, config)
+        .then((res) => {
+            console.log(res);
+            if(res.data.status === 200 || 201){
+                dispatch({
+                    type: GIVE_REVIEW,
+                    payload: res.data.message
                 })
             }
         })
