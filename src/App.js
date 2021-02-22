@@ -58,6 +58,9 @@ class App extends Component {
   render() {
     const { currentSeller, currentUser } = this.props;
     const token = localStorage.getItem("token");
+    const p123  = 'seller'=== window.location.pathname.match('/seller/i')
+    console.log("history in home route",p123)
+    const userToken = localStorage.getItem("UserToken")
     if (localStorage.getItem('session') === null) {
       this.props.getSessionProfile();
     }
@@ -94,8 +97,7 @@ class App extends Component {
               component={ShoppingProductContainer}
             />
             <Route exact path="/productdetail/:pat1" component={ViewShopProductDetails} />
-            {ShopRoute.map((item, i) => (currentUser ?
-              <Route exact {...item} /> : null))}
+            
             {/* Entertainment Routes */}
             <Route exact path="/login" component={Login}></Route>
             <Route exact path="/video/rentalVedio" component={RentalVedio}></Route>
@@ -112,12 +114,15 @@ class App extends Component {
               exact
               component={SellerRegistration}
             />
-            {currentSeller && token &&
+            {userToken  &&  ShopRoute.map((item, i) => 
+              <Route exact {...item} /> )}
+            {'seller'=== window.location.pathname.match('/seller/i') && currentSeller && token &&
               <Navigation>
                 {SellerRoute.map((item, i) =>
                   <Route exact {...item} />)}
               </Navigation>
             }
+            
             <Redirect to="/" />
           </Switch>
         </Suspense>

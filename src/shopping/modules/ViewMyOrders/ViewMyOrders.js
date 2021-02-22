@@ -34,6 +34,7 @@ class ViewMyOrders extends Component {
             }}
           />
         </div>
+        {}
         {allMyOrders && allMyOrders.length
           ? allMyOrders.map((item1, i) => (
               <div
