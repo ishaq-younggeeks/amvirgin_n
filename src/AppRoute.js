@@ -7,6 +7,43 @@ import ViewMyOrderDetails from "./shopping/modules/ViewMyOrders/ViewMyOrderDetai
 import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
 import OrderSuccessful from "./shopping/modules/Order/components/OrderSuccessful";
 
+
+//seller Routes
+
+
+import Dashboard from "./seller/modules/Dashboard/Dashboard";
+import Profile from "./seller/modules/Dashboard/components/Profile";
+import Sellersales from "./seller/modules/Dashboard/components/Sales/Sales";
+import SellerNotification from "./seller/modules/Dashboard/components/Notification/Notification";
+import Navigation from "./seller/modules/Dashboard/components/Navigation/Navigation";
+import ViewOrders from "./seller/modules/Dashboard/components/MyOrders/ViewOrder";
+import MyOrders from "./seller/modules/Dashboard/components/MyOrders/MyOrders";
+import MyOrdersCancelled from "./seller/modules/Dashboard/components/MyOrders/OrdersCancelled";
+import MyOrdersReturns from "./seller/modules/Dashboard/components/MyOrders/OrdersReturn";
+import MyProducts from "./seller/modules/Dashboard/components/MyProducts/components/MyProducts";
+import MyBrands from "./seller/modules/Dashboard/components/MyProducts/components/Brandlist"
+import EditProduct from "./seller/modules/Dashboard/components/MyProducts/components/EditProduct"
+import ProductBrand from "./seller/modules/Dashboard/components/MyProducts/components/ProductBrand";
+import BrandApproval from "./seller/modules/Dashboard/components/MyProducts/components/BrandApproval";
+import ListingType from "./seller/modules/Dashboard/components/MyProducts/components/ListingType"
+import ProductCategory from "./seller/modules/Dashboard/components/MyProducts/components/ProductCategory";
+import SellerAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
+import SellerBulkAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/BulkAddProduct";
+import Setting from "./seller/modules/Dashboard/components/Setting/Setting";
+import SellerPayments from "./seller/modules/Dashboard/components/Payments";
+import SellerAdvertisement from "./seller/modules/Dashboard/components/Advertisement";
+import SellerCreateAdvts from "./seller/modules/Dashboard/components/Advertisement/CreateAdvt"
+import SellerPreviousPayments from "./seller/modules/Dashboard/components/Payments/PreviousPayment";
+import SellerOrderTransactions from "./seller/modules/Dashboard/components/Payments/Transaction"
+import SellerSupport from "./seller/modules/Dashboard/components/SellerSupport/SellerSupport";
+import SellerMou from "./seller/modules/Dashboard/components/Setting/Mou"
+import SellerSupportTicket from "./seller/modules/Dashboard/components/SellerSupport/MyTicket"
+import BusinessDetail from "./seller/modules/Dashboard/components/Setting/BusinessDetail";
+import ViewProductDetails from "./seller/modules/Dashboard/components/MyProducts/components/ViewProductDetails";
+import Return from "./seller/modules/Dashboard/components/Return/Return";
+
+
+
 export const ShopRoute = [
     {
         path: '/wishlist',
@@ -29,7 +66,7 @@ export const ShopRoute = [
         component: ViewMyOrders,
     },
     {
-        path: 'myprofile/myOrders/orderDetails',
+        path: '/myprofile/myOrders/orderDetails',
         component: ViewMyOrderDetails,
     },
     {
@@ -41,4 +78,141 @@ export const ShopRoute = [
         component: OrderSuccessful,
     }
 
+]
+
+
+
+
+
+
+
+export const SellerRoute = [
+    {
+        path: "/seller/dashboard",
+        component: Dashboard
+    },
+    {
+        path: "/seller/dashboard/profile",
+        component: Profile
+    }, { path: "/seller/dashboard/notification", component: SellerNotification }
+    , { path: "/seller/dashboard/sales", component: Sellersales }
+    , { path: "/seller/dashboard/Setting", component: Setting }
+    , { path: "/seller/dashboard/mou", component: SellerMou }
+    , { path: "/seller/dashboard/BusinessDetail", component: BusinessDetail }
+    , { path: "/seller/dashboard/support", component: SellerSupport }
+    , { path: "/seller/dashboard/support/myticket", component: SellerSupportTicket }
+    , { path: "/seller/dashboard/payments/summary", component: SellerPayments }
+    , { path: "/seller/dashboard/payments/previous-payment", component: SellerPreviousPayments }
+    , { path: "/seller/dashboard/payments/order-transaction", component: SellerOrderTransactions }
+    , { path: "/seller/dashboard/advertisement", component: SellerAdvertisement }
+    , { path: "/seller/dashboard/advertisement/create-advt", component: SellerCreateAdvts }
+    , { path: "/seller/dashboard/return", component: Return }
+    , {
+        path: "/seller/dashboard/myorders"
+
+        , component: MyOrders
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/myorders/returns-order"
+
+        , component: MyOrdersReturns
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/myorders/cancelled-orders"
+
+        , component: MyOrdersCancelled
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/brand-approval"
+
+        , component: BrandApproval
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/vieworders"
+
+        , component: ViewOrders
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/myproducts"
+
+        , component: MyProducts
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/brandlist"
+
+        , component: MyBrands
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/myproducts/:slug"
+
+        , component: ViewProductDetails
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/editProduct/:slug"
+
+        , component: EditProduct
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/listing"
+
+        , component: ListingType
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/selectcategory"
+
+        , component: ProductCategory
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/ProductBrand"
+
+        , component: ProductBrand
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/addproduct"
+
+        , component: SellerAddProduct
+    }
+
+
+
+    , {
+        path: "/seller/dashboard/addproduct/bulk",
+        component: SellerBulkAddProduct
+    }
 ]
