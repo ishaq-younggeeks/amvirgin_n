@@ -31,17 +31,17 @@ import ViewMyOrdersReducer from "../shopping/modules/ViewMyOrders/ViewMyOrdersRe
 
 /*----------------------SELLER IMPORT FILES-----------------------*/
 import sellerAuthReducer from "../seller/modules/Authentication/sellerAuthReducer";
-import sellerProfileReducer from "../seller/modules/Dashboard/components/Profile/ProfileReducer";
-import sellerAddProductReducer from "../seller/modules/Dashboard/components/MyProducts/sellerAddProductReducer";
-import sellerOrderReducer from "../seller/modules/Dashboard/components/MyOrders/sellerOrderReducer"
-import sellerAnnouncementReducer from "../seller/modules/Dashboard/components/Notification/AnnouncmentReducer";
-import sellerSettingReducer from "../seller/modules/Dashboard/components/Setting/SettingReducer";
-import sellerSupportReducer from "../seller/modules/Dashboard/components/SellerSupport/SellerSupportReducer";
-import sellerPaymentReducer from "../seller/modules/Dashboard/components/Payments/PaymentReducer";
-import sellerGrowthReducer from "../seller/modules/Dashboard/components/Sales/SellerGrowthReducer";
-import sellerAdvtReducer from "../seller/modules/Dashboard/components/Advertisement/AdvReducer"
+import sellerProfileReducer from "../seller/modules/components/Profile/ProfileReducer";
+import sellerAddProductReducer from "../seller/modules/components/MyProducts/sellerAddProductReducer";
+import sellerOrderReducer from "../seller/modules/components/MyOrders/sellerOrderReducer"
+import sellerAnnouncementReducer from "../seller/modules/components/Notification/AnnouncmentReducer";
+import sellerSettingReducer from "../seller/modules/components/Setting/SettingReducer";
+import sellerSupportReducer from "../seller/modules/components/SellerSupport/SellerSupportReducer";
+import sellerPaymentReducer from "../seller/modules/components/Payments/PaymentReducer";
+import sellerGrowthReducer from "../seller/modules/components/Sales/SellerGrowthReducer";
+import sellerAdvtReducer from "../seller/modules/components/Advertisement/AdvReducer"
 import sellerDashboardReducer from "../seller/modules/Dashboard/DashboardReducer";
-import sellerReturnReducer from "../seller/modules/Dashboard/components/Return/ReturnReducer";
+import sellerReturnReducer from "../seller/modules/components/Return/ReturnReducer";
 
 /*--------------------------NEWS------------------------------------*/
 import NewsReducer from "../news/modules/News/NewsReducer"

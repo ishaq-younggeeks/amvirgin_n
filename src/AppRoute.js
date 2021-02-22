@@ -12,35 +12,34 @@ import OrderSuccessful from "./shopping/modules/Order/components/OrderSuccessful
 
 
 import Dashboard from "./seller/modules/Dashboard/Dashboard";
-import Profile from "./seller/modules/Dashboard/components/Profile";
-import Sellersales from "./seller/modules/Dashboard/components/Sales/Sales";
-import SellerNotification from "./seller/modules/Dashboard/components/Notification/Notification";
-import Navigation from "./seller/modules/Dashboard/components/Navigation/Navigation";
-import ViewOrders from "./seller/modules/Dashboard/components/MyOrders/ViewOrder";
-import MyOrders from "./seller/modules/Dashboard/components/MyOrders/MyOrders";
-import MyOrdersCancelled from "./seller/modules/Dashboard/components/MyOrders/OrdersCancelled";
-import MyOrdersReturns from "./seller/modules/Dashboard/components/MyOrders/OrdersReturn";
-import MyProducts from "./seller/modules/Dashboard/components/MyProducts/components/MyProducts";
-import MyBrands from "./seller/modules/Dashboard/components/MyProducts/components/Brandlist"
-import EditProduct from "./seller/modules/Dashboard/components/MyProducts/components/EditProduct"
-import ProductBrand from "./seller/modules/Dashboard/components/MyProducts/components/ProductBrand";
-import BrandApproval from "./seller/modules/Dashboard/components/MyProducts/components/BrandApproval";
-import ListingType from "./seller/modules/Dashboard/components/MyProducts/components/ListingType"
-import ProductCategory from "./seller/modules/Dashboard/components/MyProducts/components/ProductCategory";
-import SellerAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
-import SellerBulkAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/BulkAddProduct";
-import Setting from "./seller/modules/Dashboard/components/Setting/Setting";
-import SellerPayments from "./seller/modules/Dashboard/components/Payments";
-import SellerAdvertisement from "./seller/modules/Dashboard/components/Advertisement";
-import SellerCreateAdvts from "./seller/modules/Dashboard/components/Advertisement/CreateAdvt"
-import SellerPreviousPayments from "./seller/modules/Dashboard/components/Payments/PreviousPayment";
-import SellerOrderTransactions from "./seller/modules/Dashboard/components/Payments/Transaction"
-import SellerSupport from "./seller/modules/Dashboard/components/SellerSupport/SellerSupport";
-import SellerMou from "./seller/modules/Dashboard/components/Setting/Mou"
-import SellerSupportTicket from "./seller/modules/Dashboard/components/SellerSupport/MyTicket"
-import BusinessDetail from "./seller/modules/Dashboard/components/Setting/BusinessDetail";
-import ViewProductDetails from "./seller/modules/Dashboard/components/MyProducts/components/ViewProductDetails";
-import Return from "./seller/modules/Dashboard/components/Return/Return";
+import Profile from "./seller/modules/components/Profile";
+import Sellersales from "./seller/modules/components/Sales/Sales";
+import SellerNotification from "./seller/modules/components/Notification/Notification";
+import ViewOrders from "./seller/modules/components/MyOrders/ViewOrder";
+import MyOrders from "./seller/modules/components/MyOrders/MyOrders";
+import MyOrdersCancelled from "./seller/modules/components/MyOrders/OrdersCancelled";
+import MyOrdersReturns from "./seller/modules/components/MyOrders/OrdersReturn";
+import MyProducts from "./seller/modules/components/MyProducts/components/MyProducts";
+import MyBrands from "./seller/modules/components/MyProducts/components/Brandlist"
+import EditProduct from "./seller/modules/components/MyProducts/components/EditProduct"
+import ProductBrand from "./seller/modules/components/MyProducts/components/ProductBrand";
+import BrandApproval from "./seller/modules/components/MyProducts/components/BrandApproval";
+import ListingType from "./seller/modules/components/MyProducts/components/ListingType"
+import ProductCategory from "./seller/modules/components/MyProducts/components/ProductCategory";
+import SellerAddProduct from "./seller/modules/components/MyProducts/components/AddProduct";
+import SellerBulkAddProduct from "./seller/modules/components/MyProducts/components/BulkAddProduct";
+import Setting from "./seller/modules/components/Setting/Setting";
+import SellerPayments from "./seller/modules/components/Payments";
+import SellerAdvertisement from "./seller/modules/components/Advertisement";
+import SellerCreateAdvts from "./seller/modules/components/Advertisement/CreateAdvt"
+import SellerPreviousPayments from "./seller/modules/components/Payments/PreviousPayment";
+import SellerOrderTransactions from "./seller/modules/components/Payments/Transaction"
+import SellerSupport from "./seller/modules/components/SellerSupport/SellerSupport";
+import SellerMou from "./seller/modules/components/Setting/Mou"
+import SellerSupportTicket from "./seller/modules/components/SellerSupport/MyTicket"
+import BusinessDetail from "./seller/modules/components/Setting/BusinessDetail";
+import ViewProductDetails from "./seller/modules/components/MyProducts/components/ViewProductDetails";
+import Return from "./seller/modules/components/Return/Return";
 
 
 
