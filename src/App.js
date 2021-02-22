@@ -14,40 +14,11 @@ import SubscriptionSuccessful from "./entertainment/modules/subscription/Subscri
 // Seller Routes
 import SellerLogin from "./seller/modules/Authentication/components/Login";
 import SellerRegistration from "./seller/modules/Authentication/components/Registration";
-import Dashboard from "./seller/modules/Dashboard/Dashboard";
-import Profile from "./seller/modules/Dashboard/components/Profile";
-import Sellersales from "./seller/modules/Dashboard/components/Sales/Sales";
-import SellerNotification from "./seller/modules/Dashboard/components/Notification/Notification";
 import Navigation from "./seller/modules/Dashboard/components/Navigation/Navigation";
-import ViewOrders from "./seller/modules/Dashboard/components/MyOrders/ViewOrder";
-import MyOrders from "./seller/modules/Dashboard/components/MyOrders/MyOrders";
-import MyOrdersCancelled from "./seller/modules/Dashboard/components/MyOrders/OrdersCancelled";
-import MyOrdersReturns from "./seller/modules/Dashboard/components/MyOrders/OrdersReturn";
-import MyProducts from "./seller/modules/Dashboard/components/MyProducts/components/MyProducts";
-import MyBrands from "./seller/modules/Dashboard/components/MyProducts/components/Brandlist"
-import EditProduct from "./seller/modules/Dashboard/components/MyProducts/components/EditProduct"
-import ProductBrand from "./seller/modules/Dashboard/components/MyProducts/components/ProductBrand";
-import BrandApproval from "./seller/modules/Dashboard/components/MyProducts/components/BrandApproval";
-import ListingType from "./seller/modules/Dashboard/components/MyProducts/components/ListingType"
-import ProductCategory from "./seller/modules/Dashboard/components/MyProducts/components/ProductCategory";
-import SellerAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
-import SellerBulkAddProduct from "./seller/modules/Dashboard/components/MyProducts/components/BulkAddProduct";
-import Setting from "./seller/modules/Dashboard/components/Setting/Setting";
-import SellerPayments from "./seller/modules/Dashboard/components/Payments";
-import SellerAdvertisement from "./seller/modules/Dashboard/components/Advertisement";
-import SellerCreateAdvts from "./seller/modules/Dashboard/components/Advertisement/CreateAdvt"
-import SellerPreviousPayments from "./seller/modules/Dashboard/components/Payments/PreviousPayment";
-import SellerOrderTransactions from "./seller/modules/Dashboard/components/Payments/Transaction"
-import SellerSupport from "./seller/modules/Dashboard/components/SellerSupport/SellerSupport";
-import SellerMou from "./seller/modules/Dashboard/components/Setting/Mou"
-import SellerSupportTicket from "./seller/modules/Dashboard/components/SellerSupport/MyTicket"
-import BusinessDetail from "./seller/modules/Dashboard/components/Setting/BusinessDetail";
-import ViewProductDetails from "./seller/modules/Dashboard/components/MyProducts/components/ViewProductDetails";
+
 import { getSellerProfile } from "./seller/modules/Authentication/sellerAuthAction";
 import {getSessionProfile} from './globalComponents/sessionprofileAction.js'
-import Return from "./seller/modules/Dashboard/components/Return/Return";
 import { Loader } from "./seller/modules/assets/loader.gif";
-import AddProduct from "./seller/modules/Dashboard/components/MyProducts/components/AddProduct";
 
 // News Routes
 import NewsContainer from "./news/modules/News"
@@ -68,7 +39,7 @@ import ReturnPolicy from "./footer/components/ReturnPolicy";
 import RentalPayment from "./entertainment/modules/Show/components/RentalPayment"
 import RentalVedio from "./entertainment/modules/Show/components/RentalVedio"
 
-import {ShopRoute} from './AppRoute'
+import {ShopRoute,SellerRoute} from './AppRoute'
 const Home = lazy(() => import('./entertainment/modules/Home/components/Home'));
 const Login = lazy(() => import('./entertainment/modules/SignUp/components'));
 const Show = lazy(() => import('./entertainment/modules/Show/components/index'));
@@ -139,110 +110,9 @@ class App extends Component {
             exact
             component={SellerRegistration}
           />
-          {currentSeller && token && (
-            <Navigation>
-              <Route exact path="/seller/dashboard" exact component={Dashboard} />
-              <Route exact path="/seller/dashboard/profile" exact component={Profile} />
-              <Route exact path="/seller/dashboard/notification" exact component={SellerNotification} />
-              <Route exact path="/seller/dashboard/sales" exact component={Sellersales} />
-              <Route exact path="/seller/dashboard/Setting" exact component={Setting} />
-              <Route exact path="/seller/dashboard/mou" exact component={SellerMou} />
-              <Route exact path="/seller/dashboard/BusinessDetail" exact component={BusinessDetail} />
-              <Route exact path="/seller/dashboard/support" exact component={SellerSupport} />
-              <Route exact path="/seller/dashboard/support/myticket" exact component={SellerSupportTicket} />
-              <Route exact path="/seller/dashboard/payments/summary" exact component={SellerPayments} />
-              <Route exact path="/seller/dashboard/payments/previous-payment" exact component={SellerPreviousPayments} />
-              <Route exact path="/seller/dashboard/payments/order-transaction" exact component={SellerOrderTransactions} />
-              <Route exact path="/seller/dashboard/advertisement" exact component={SellerAdvertisement}/>
-              <Route exact path="/seller/dashboard/advertisement/create-advt" exact component ={SellerCreateAdvts}/>
-              <Route exact path="/seller/dashboard/return" exact component={Return}/>
-              <Route
-               exact
-                path="/seller/dashboard/myorders"
-               
-                component={MyOrders}
-              />
-               <Route
-                exact
-                path="/seller/dashboard/myorders/returns-order"
-               
-                component={MyOrdersReturns}
-              />
-              <Route
-               exact
-                path="/seller/dashboard/myorders/cancelled-orders"
-               
-                component={MyOrdersCancelled}
-              />
-              <Route
-              exact
-                path="/seller/dashboard/brand-approval"
-                
-                component={BrandApproval}
-              />
-              <Route
-                exact
-              path="/seller/dashboard/vieworders"
-            
-              component={ViewOrders}
-            />
-              <Route
-                exact
-                path="/seller/dashboard/myproducts"
-              
-                component={MyProducts}
-              />
-              <Route
-               exact
-                path="/seller/dashboard/brandlist"
-               
-                component={MyBrands}
-              />
-               <Route
-                  exact
-                path="/seller/dashboard/myproducts/:slug"
-             
-                component={ViewProductDetails}
-              />
-              <Route
-               exact
-                path="/seller/dashboard/editProduct/:slug"
-               
-                component={EditProduct}
-              />
-              <Route
-               exact
-                path="/seller/dashboard/listing"
-               
-                component={ListingType} 
-              />
-              <Route
-              exact
-                path="/seller/dashboard/selectcategory"
-                
-                component={ProductCategory}
-              />
-              <Route
-                 exact
-                path="/seller/dashboard/ProductBrand"
-             
-                component={ProductBrand}
-              />
-              <Route
-                exact
-              path="/seller/dashboard/addproduct"
-            
-              component={SellerAddProduct}
-              />
-              <Route
-               exact
-              path="/seller/dashboard/addproduct/bulk"
-             
-              component={SellerBulkAddProduct}
-              />
-            </Navigation>
-          )}
-              
+          {SellerRoute.map((item , i)=>(currentSeller && token?
+            (<Navigation>
+<Route exact {...item}/> </Navigation>):  null ))}          
           <Redirect to="/" />
         </Switch>
         </Suspense>
