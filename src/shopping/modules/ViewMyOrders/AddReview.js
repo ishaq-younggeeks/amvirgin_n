@@ -2,11 +2,11 @@ import React from "react";
 import Header from "../../../entertainment/modules/Header";
 import SubMenu from "../Home/components/SubMenu";
 
-const AddReview = () => {
+const AddReview = (props) => {
   return (
     <div>
       <Header />
-      <SubMenu {...this.props} />
+      <SubMenu {...props} />
       <h1>Hello</h1>
     </div>
   );

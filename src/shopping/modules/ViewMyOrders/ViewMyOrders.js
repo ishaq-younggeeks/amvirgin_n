@@ -146,7 +146,7 @@ class ViewMyOrders extends Component {
                       </Link>
                     </a>
                     <a className="ml-3" href="#" onClick={() => localStorage.setItem("OrderNumber", item1.key)}>
-                      <Link to="/myprofile/myOrders/reviews">
+                      <Link to="/myprofile/myOrders/review">
                         <a href="#" className="btn btn-primary">
                           Add a review
                         </a>
