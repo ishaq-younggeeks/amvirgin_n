@@ -1,6 +1,8 @@
 import React, { Component, Suspense, lazy } from "react";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+
+import {userActions} from './entertainment/actions'
 //Shopping Routes
 import ShoppingHomeContainer from "./shopping/modules/Home";
 import ShoppingCartContainer from "./shopping/modules/Cart";
@@ -48,6 +50,7 @@ const Subscritption = lazy(() => import('./entertainment/modules/subscription'))
 
 class App extends Component {
   componentDidMount = () => {
+    this.props.getUserProfile()
     this.props.getSellerProfile();
     this.props.getSessionProfile();
   };
@@ -134,7 +137,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSellerProfile: () => dispatch(getSellerProfile()),
-    getSessionProfile: () => dispatch(getSessionProfile())
+    getSessionProfile: () => dispatch(getSessionProfile()),
+    getUserProfile:() => dispatch(userActions.getuserbyid()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);
