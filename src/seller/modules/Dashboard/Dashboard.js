@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Dashboard.css";
-import Chart from "./components/Chart/Chart";
+import Chart from "../components/Chart/Chart";
 import { connect } from "react-redux";
-import { Fetchdata } from "./components/Profile/ProfileAction";
+import { Fetchdata } from "../components/Profile/ProfileAction";
 import { getDashboardDetails } from "./DashboardAction";
 import { baseURL } from "../../../credential.json";
 import axios from "axios";
