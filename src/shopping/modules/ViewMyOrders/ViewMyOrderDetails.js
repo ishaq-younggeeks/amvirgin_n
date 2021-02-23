@@ -15,44 +15,42 @@ class ViewMyOrderDetails extends Component {
       modalIsOpen: false,
       cReason: "",
       cReasonError: "",
-      statusClass: "c4"
+      statusClass: "c4",
     };
   }
 
-  componentDidMount = () => {
-    let orderNumberStatus = localStorage.getItem("OrderNumber");
-    console.log("Status :", orderNumberStatus);
-    let num = orderNumberStatus.charAt(0);
-    this.props.viewMyOrderDetails(num);
-    let status = orderNumberStatus.substring(1);
-    console.log("Status", status); 
-    if(status === "placed"){
+  componentDidMount = async () => {
+    const orderId = this.props.match.params.OrderId;
+    await this.props.viewMyOrderDetails(orderId);
+    let status = "placed";
+    console.log("Status", status);
+    if (status === "placed") {
       this.setState({
-        statusClass: "c0"
-      })
+        statusClass: "c0",
+      });
     }
-    if(status === "dispatched"){
+    if (status === "dispatched") {
       this.setState({
-        statusClass: "c1"
-      })
+        statusClass: "c1",
+      });
     }
-    if(status === "out-for-delivery"){
+    if (status === "out-for-delivery") {
       this.setState({
-        statusClass: "c2"
-      })
+        statusClass: "c2",
+      });
     }
-    if(status === "delivered"){
+    if (status === "delivered") {
       this.setState({
-        statusClass: "c3"
-      })
+        statusClass: "c3",
+      });
     }
-    if(status === "cancelled"){
+    if (status === "cancelled") {
       this.setState({
-        statusClass: "c5"
-      })
+        statusClass: "c5",
+      });
     }
   };
-  
+
   openModal = () => {
     this.setState({
       modalIsOpen: true,
@@ -103,7 +101,7 @@ class ViewMyOrderDetails extends Component {
     e.preventDefault();
     let isValid = this.validate();
     if (isValid) {
-      let id = localStorage.getItem("OrderNumber");
+      let id = this.props.match.params.OrderId;
       this.props.orderCancellation(id, this.state.cReason);
       this.setState({
         cReason: "",
@@ -140,129 +138,141 @@ class ViewMyOrderDetails extends Component {
           className="col-sm-12"
           style={{ margin: "0 0 2rem 3rem", width: "95%" }}
         >
-          <div className="whitepbox">
-            <div
-              className="row"
-              style={{ height: "170px", alignItem: "center" }}
-            >
-              <div className="col-sm-1">
-                {myOrderDetails.image ? (
-                  <img
-                    src={myOrderDetails.image}
-                    style={{
-                      width: "9rem",
-                      objectFit: "cover",
-                      height: "150px",
-                      margin: "2px 0 0 3rem",
-                    }}
-                  />
-                ) : (
-                  <img
-                    src={process.env.PUBLIC_URL + "/img/default.png"}
-                    style={{
-                      width: "9rem",
-                      objectFit: "cover",
-                      height: "150px",
-                      margin: "2px 0 0 3rem",
-                    }}
-                  />
-                )}
-              </div>
-              <div className="col-sm-4">
-                            <h3
-                              style={{
-                                color: "#ce3838",
-                                fontSize: "19px",
-                                padding: "10px 0",
-                                fontWeight: "bold",
-                                marginLeft: "6rem",
-                              }}
-                            >
-                             "product name"
-                            </h3>
+         
+    <div className="whitepbox">
+       {myOrderDetails && myOrderDetails.subOrders && myOrderDetails.subOrders.length &&
+myOrderDetails.subOrders.filter((subOrder) => subOrder.key === parseInt(this.props.match.params.OrderId) ).map((item,index) => {
+  return item.items.filter((subOrderItem) =>subOrderItem.key === parseInt(this.props.match.params.activeSubOrder) ).map((product,index) => {
 
-                <p
-                  style={{
-                    fontSize: "15px",
-                    padding: "10px 0",
-                    fontWeight: "400px",
-                    marginLeft: "6rem",
-                  }}
-                >
-                  Quantity :{" "}
-                  {myOrderDetails.details
-                    ? myOrderDetails.details.quantity
-                    : null}
-                </p>
-                <p
-                  style={{
-                    fontSize: "15px",
-                    padding: "10px 0",
-                    fontWeight: "400px",
-                    marginLeft: "6rem",
-                  }}
-                >
-                  Total : ₹{" "}
-                  {myOrderDetails.details ? myOrderDetails.details.total : null}
-                </p>
-              </div>
-              <div className="col-sm-5">
-                <p
-                  style={{
-                    fontSize: "15px",
-                    padding: "10px 0",
-                    fontWeight: "400px",
-                  }}
-                >
-                  Order # :{" "}
-                  {myOrderDetails.details
-                    ? myOrderDetails.details.number
-                    : null}
-                </p>
-                <p
-                  style={{
-                    fontSize: "15px",
-                    padding: "10px 0",
-                    fontWeight: "400px",
-                  }}
-                >
-                  Order Status : {" "}
-                  {myOrderDetails.details
-                    ? myOrderDetails.details.status
-                    : null}
-                </p>
-                <p
-                  style={{
-                    fontSize: "15px",
-                    padding: "10px 0",
-                    fontWeight: "400px",
-                  }}
-                >
-                  Payment Mode :{" "}
-                  {myOrderDetails.details
-                    ? myOrderDetails.details.paymentMode
-                    : null}
-                </p>
-              </div>
-              <div className="col-sm-2">
-                {myOrderDetails.details &&
-                myOrderDetails.details.status != "cancelled" ? (
-                  <Link>
-                    <a
-                      href="#"
-                      className="btn btn-primary"
-                      onClick={() => this.openModal()}
-                    >
-                      Cancel Order
-                    </a>
-                  </Link>
-                ) : (
-                  <h4 style={{ color: "#ce3838", fontWeight: "bold" }}>
-                    Your Order has been cancelled!
-                  </h4>
-                )}
-              </div>
-            </div>
+console.log("current product",product)
+  return (
+    <div
+      className="row"
+      style={{ height: "170px", alignItem: "center" }}
+    >
+      <div className="col-sm-1">
+        {myOrderDetails.image ? (
+          <img
+            src={myOrderDetails.image}
+            style={{
+              width: "9rem",
+              objectFit: "cover",
+              height: "150px",
+              margin: "2px 0 0 3rem",
+            }}
+          />
+        ) : (
+          <img
+            src={process.env.PUBLIC_URL + "/img/default.png"}
+            style={{
+              width: "9rem",
+              objectFit: "cover",
+              height: "150px",
+              margin: "2px 0 0 3rem",
+            }}
+          />
+        )}
+      </div>
+      <div className="col-sm-4">
+        <h3
+          style={{
+            color: "#ce3838",
+            fontSize: "19px",
+            padding: "10px 0",
+            fontWeight: "bold",
+            marginLeft: "6rem",
+          }}
+        >
+          {product.product.name}
+        </h3>
+
+        <p
+          style={{
+            fontSize: "15px",
+            padding: "10px 0",
+            fontWeight: "400px",
+            marginLeft: "6rem",
+          }}
+        >
+          Quantity :{" "}
+          {myOrderDetails.details
+            ? myOrderDetails.details.quantity
+            : null}
+        </p>
+        <p
+          style={{
+            fontSize: "15px",
+            padding: "10px 0",
+            fontWeight: "400px",
+            marginLeft: "6rem",
+          }}
+        >
+          Total : ₹{" "}
+          {product.total}
+        </p>
+      </div>
+      <div className="col-sm-5">
+        <p
+          style={{
+            fontSize: "15px",
+            padding: "10px 0",
+            fontWeight: "400px",
+          }}
+        >
+          Order # :{" "}
+          {myOrderDetails.details
+            ? myOrderDetails.details.number
+            : null}
+        </p>
+        <p
+          style={{
+            fontSize: "15px",
+            padding: "10px 0",
+            fontWeight: "400px",
+          }}
+        >
+          Order Status :{" "}
+          {myOrderDetails.details
+            ? myOrderDetails.details.status
+            : null}
+        </p>
+        <p
+          style={{
+            fontSize: "15px",
+            padding: "10px 0",
+            fontWeight: "400px",
+          }}
+        >
+          Payment Mode :{" "}
+          {myOrderDetails.details
+            ? myOrderDetails.details.paymentMode
+            : null}
+        </p>
+      </div>
+      <div className="col-sm-2">
+        {myOrderDetails.details &&
+        myOrderDetails.details.status != "cancelled" ? (
+          <Link>
+            <a
+              href="#"
+              className="btn btn-primary"
+              onClick={() => this.openModal()}
+            >
+              Cancel Order
+            </a>
+          </Link>
+        ) : (
+          <h4 style={{ color: "#ce3838", fontWeight: "bold" }}>
+            Your Order has been cancelled!
+          </h4>
+        )}
+      </div>
+    </div>
+  )
+})
+ }) 
+}
+
             <hr />
             <div
               className="row"
@@ -280,15 +290,24 @@ class ViewMyOrderDetails extends Component {
                   ORDER TRACKING :
                 </h4>
               </div>
-              {this.state.statusClass !== "c5" ?
-              <div className="row shop-tracking-status" style={{width:"80%", margin:"0 0 0 9rem"}}>
+              {this.state.statusClass !== "c5" ? (
+                <div
+                  className="row shop-tracking-status"
+                  style={{ width: "80%", margin: "0 0 0 9rem" }}
+                >
                   <div className="col-md-12">
                     <div className="order-status">
                       <div
                         className="order-status-timeline list-group"
                         style={{ width: "100%" }}
                       >
-                        <div className={this.state.statusClass + ' ' + 'order-status-timeline-completion'}></div>
+                        <div
+                          className={
+                            this.state.statusClass +
+                            " " +
+                            "order-status-timeline-completion"
+                          }
+                        ></div>
                       </div>
 
                       <div className="image-order-status image-order-status-new active img-circle">
@@ -308,15 +327,22 @@ class ViewMyOrderDetails extends Component {
                         <div className="icon"></div>
                       </div>
                     </div>
+                  </div>
                 </div>
-              </div>: <div className="row shop-tracking-status" style={{width:"80%", margin:"0 0 0 9rem"}}>
+              ) : (
+                <div
+                  className="row shop-tracking-status"
+                  style={{ width: "80%", margin: "0 0 0 9rem" }}
+                >
                   <div className="col-md-12">
                     <div className="order-status">
                       <div
                         className="order-status-timeline list-group"
                         style={{ width: "100%" }}
                       >
-                        <div className={'c5 order-status-timeline-cancelled'}></div>
+                        <div
+                          className={"c5 order-status-timeline-cancelled"}
+                        ></div>
                       </div>
 
                       <div className="image-order-status image-order-status-new active img-circle">
@@ -328,8 +354,9 @@ class ViewMyOrderDetails extends Component {
                         <div className="icon"></div>
                       </div>
                     </div>
+                  </div>
                 </div>
-              </div>}
+              )}
             </div>
             <hr />
             <div
@@ -456,7 +483,8 @@ class ViewMyOrderDetails extends Component {
               </div>
             </div>
           </div>
-        </div>
+        
+</div>
         <div>
           <Modal
             isOpen={this.state.modalIsOpen}

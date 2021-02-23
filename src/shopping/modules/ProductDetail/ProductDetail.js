@@ -130,105 +130,48 @@ render() {
 					<h4 className="ssize">Select Size</h4>
 					
 					<div className="custom-radios">
-						{/* <div>
-							<input type="radio" id="size-1" name="size" value="small" defaultChecked />
-							<label for="size-1">
-								<span>S</span>
-							</label>
-						</div> */}
 						
 						{productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Size").map((data)=>data.value).map((value,index) => {
-							return	value.map((values,index)=>{
 							return (
 								index===0?(
 									<div>
-									<input type="radio" id={`size-${value.key}`} name="size" value={values} defaultChecked />
+									<input type="radio" id={`size-${value.key}`} name="size" value={value} defaultChecked />
 									<label for={`size-${value.key}`}>
-								<span>{values}</span>
+								<span>{value}</span>
 									</label>
 								</div>
 							):(
 								<div>
-								<input type="radio" id={`size-${value.key}`} name="size" value={values} />
+								<input type="radio" id={`size-${value.key}`} name="size" value={value} />
 								<label for={`size-${value.key}`}>
-							<span>{values}</span>
+							<span>{value}</span>
 								</label>
 							</div>
 								)
-							)})}):""}
-						{/* <div>
-							<input type="radio" id="size-2" name="size" value="medium" />
-							<label for="size-2">
-								<span>M</span>
-							</label>
-						</div>
-						<div>
-							<input type="radio" id="size-3" name="size" value="large" />
-							<label for="size-3">
-								<span>L </span>
-							</label>
-						</div>
-						<div>
-							<input type="radio" id="size-4" name="size" value="extralarge" />
-							<label for="size-4">
-								<span>XL </span>
-							</label>
-						</div> */}
+							)}):""}
+
 					</div>
 					<h4 className="ssize">Color Available</h4>
 					<div className="custom-radios coloravailable">
 					{productDetail.payload.options.length?productDetail.payload.options.filter((data)=>data.label==="Color").map((data)=>data.value).map((value,index) => {
-							return	value.map((values,index)=>{
-								console.log("color value",value)
 							return (
 								index===0?(
 									<div>
 									<input type="radio" id="color-1" name="color" value="color-1" defaultChecked />
 									<label for="color-1">
-										<span style={{backgroundColor:`${values}`}}></span>
+										<span style={{backgroundColor:`${value}`}}></span>
 									</label>
 								</div>
 							):(
 								<div>
 								<input type="radio" id="color-2" name="color" value="color-2" />
 								<label for="color-2">
-									<span style={{backgroundColor:`${values}`}}></span>
+									<span style={{backgroundColor:`${value}`}}></span>
 								</label>
 							</div>
 								)
-							)})}):""}
-						{/* <div>
-							<input type="radio" id="color-1" name="color" value="color-1" defaultChecked />
-							<label for="color-1">
-								<span style={{backgroundColor:"black"}}></span>
-							</label>
-						</div>
-						<div>
-							<input type="radio" id="color-2" name="color" value="color-2" />
-							<label for="color-2">
-								<span className="green"></span>
-							</label>
-						</div>
-						<div>
-							<input type="radio" id="color-3" name="color" value="color-2" />
-							<label for="color-3">
-								<span className="white"></span>
-							</label>
-						</div>
+							)}):""}
 
-						<div>
-							<input type="radio" id="color-4" name="color" value="color-3" />
-							<label for="color-4">
-								<span className="blue"> </span>
-							</label>
-						</div>
-
-						<div>
-							<input type="radio" id="color-5" name="color" value="color-4" />
-							<label for="color-5">
-								<span className="red"> </span>
-							</label>
-						</div> */}
 					</div>
 					<hr />
 					<div className="detailproduct">
