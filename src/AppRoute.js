@@ -87,7 +87,7 @@ export const ShopRoute = [
         component: ViewMyOrderDetails,
     },
     {
-        path:'/myprofile/myOrders/review',
+        path:'/myprofile/myOrders/review/:product/:order',
         component: AddReview
     },
     {

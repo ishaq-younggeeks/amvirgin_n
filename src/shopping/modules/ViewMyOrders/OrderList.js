@@ -109,7 +109,7 @@ import { Link } from 'react-router-dom';
               <Link className="btn btn-primary text-white" to={`/myprofile/myOrders/${items.key}/orderDetails/${item3.key}`}>
                   Order Details
               </Link>
-              <Link className="ml-3 btn btn-primary text-white" to="/myprofile/myOrders/review">
+              <Link className="ml-3 btn btn-primary text-white" to={`/myprofile/myOrders/review/${items.key}/${item3.key}`}>
                   Add a review
               </Link>
             </div>

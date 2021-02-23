@@ -22,8 +22,11 @@ const AddReview = (props) => {
   const onSubmitHandle = (e) => {
     e.preventDefault();
     if(rating && rating > 0){
-    let key = localStorage.getItem("key")
-    props.giveReviewFnc(key, key, {rating, comment, image});
+    let productKey = props.match.params.product;
+    let orderKey = props.match.params.order; 
+    console.log({orderKey});
+    console.log({productKey});
+    props.giveReviewFnc(productKey, orderKey, {rating, comment, image});
     console.log("API Calling!");
     }
   }
