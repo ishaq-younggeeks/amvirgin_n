@@ -17,6 +17,9 @@ export const getAllMyOrders = (page) => {
         .then((res) => {
             console.log(res);
             if(res.data.status === 200){
+                const {payload} = res.data
+                const {data} =payload
+                console.log("data all123",data)
                 dispatch({
                     type: GET_ALL_MY_ORDERS,
                     payload: res.data.payload.data

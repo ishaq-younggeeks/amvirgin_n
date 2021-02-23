@@ -73,6 +73,7 @@ class Show extends Component {
     if (prevProps.videoDetail !== this.props.videoDetail) {
       window.scrollTo(0, 0)
       this.setState({url:window.location.href})
+      this.setState({setPlayer:false})
 
     }
   }

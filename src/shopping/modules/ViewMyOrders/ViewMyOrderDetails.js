@@ -169,10 +169,6 @@ class ViewMyOrderDetails extends Component {
                 )}
               </div>
               <div className="col-sm-4">
-                {myOrderDetails.subOrders
-                  ? myOrderDetails.subOrders.map((item) =>
-                      item.items
-                        ? item.items.map((item1) => (
                             <h3
                               style={{
                                 color: "#ce3838",
@@ -182,12 +178,9 @@ class ViewMyOrderDetails extends Component {
                                 marginLeft: "6rem",
                               }}
                             >
-                              {item1.product.name}
+                             "product name"
                             </h3>
-                          ))
-                        : null
-                    )
-                  : null}
+
                 <p
                   style={{
                     fontSize: "15px",

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ProductMainContent from './ProductMainContent';
-
+import {Link} from 'react-router-dom'
 import $, { extend } from 'jquery'
 
 class ProductSideBarCategories extends React.Component {
@@ -158,7 +158,7 @@ class Multiple extends Component {
                       onClick={this.props.handleChange}
                       value={item.key}
                     />
-                    <a href="#">{item.name} {item.count ?<span>{item.count}</span>:null} </a>
+                    <Link >{item.name} {item.count ?<span>{item.count}</span>:null} </Link>
                     <span className="checkmark"></span>
                   </div>
                 </li>
