@@ -22,34 +22,39 @@ class ViewMyOrderDetails extends Component {
   componentDidMount = async () => {
     const orderId = this.props.match.params.OrderId;
     await this.props.viewMyOrderDetails(orderId);
-    let status = "placed";
-    console.log("Status", status);
-    if (status === "placed") {
-      this.setState({
-        statusClass: "c0",
-      });
-    }
-    if (status === "dispatched") {
-      this.setState({
-        statusClass: "c1",
-      });
-    }
-    if (status === "out-for-delivery") {
-      this.setState({
-        statusClass: "c2",
-      });
-    }
-    if (status === "delivered") {
-      this.setState({
-        statusClass: "c3",
-      });
-    }
-    if (status === "cancelled") {
-      this.setState({
-        statusClass: "c5",
-      });
-    }
   };
+
+   componentDidUpdate = (prevProps) => {
+     if(prevProps.myOrderDetails !== this.props.myOrderDetails){
+      let status = this.props.myOrderDetails.details.status;
+      console.log("Status", status);
+      if (status === "placed") {
+        this.setState({
+          statusClass: "c0",
+        });
+      }
+      if (status === "dispatched") {
+        this.setState({
+          statusClass: "c1",
+        });
+      }
+      if (status === "out-for-delivery") {
+        this.setState({
+          statusClass: "c2",
+        });
+      }
+      if (status === "delivered") {
+        this.setState({
+          statusClass: "c3",
+        });
+      }
+      if (status === "cancelled") {
+        this.setState({
+          statusClass: "c5",
+        });
+      }
+     }
+   }
 
   openModal = () => {
     this.setState({
@@ -195,9 +200,7 @@ console.log("current product",product)
           }}
         >
           Quantity :{" "}
-          {myOrderDetails.details
-            ? myOrderDetails.details.quantity
-            : null}
+          {product.quantity}
         </p>
         <p
           style={{
