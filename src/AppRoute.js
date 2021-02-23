@@ -83,7 +83,7 @@ export const ShopRoute = [
         component: ViewMyOrders,
     },
     {
-        path: '/myprofile/myOrders/orderDetails',
+        path: '/myprofile/myOrders/:OrderId/orderDetails/:activeSubOrder',
         component: ViewMyOrderDetails,
     },
     {

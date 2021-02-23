@@ -106,20 +106,12 @@ import { Link } from 'react-router-dom';
               </p>
             </div>
             <div className="col-sm-3">
-            <a href="#" onClick={() => localStorage.setItem("OrderNumber", )}>
-              <Link to="/myprofile/myOrders/orderDetails">
-                <a href="#" className="btn btn-primary">
+              <Link className="btn btn-primary text-white" to={`/myprofile/myOrders/${items.key}/orderDetails/${item3.key}`}>
                   Order Details
-                </a>
               </Link>
-            </a>
-            <a className="ml-3" href="#" onClick={() => localStorage.setItem("OrderNumber", item3.key)}>
-              <Link to="/myprofile/myOrders/review">
-                <a href="#" className="btn btn-primary">
+              <Link className="ml-3 btn btn-primary text-white" to="/myprofile/myOrders/review">
                   Add a review
-                </a>
               </Link>
-            </a>
             </div>
           </div>
         </div>
