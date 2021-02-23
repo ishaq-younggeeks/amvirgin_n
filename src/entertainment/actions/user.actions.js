@@ -145,7 +145,7 @@ function OtpVerify(otp) {
 }
 
 //////////////////////get user detail by token/////////////////////
-function getuserbyid(token) {
+function getuserbyid(token=localStorage.getItem('UserToken')) {
   return (dispatch, getState) => {
     return new Promise(function(resolve, reject) {
       axios

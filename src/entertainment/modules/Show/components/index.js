@@ -8,7 +8,7 @@ import Slider from "react-slick";
 
 import $ from 'jquery'
 import { connect } from 'react-redux';
-import { videoData, clearVideoData, trendingDetail } from './ShowAction'
+import { videoData, clearVideoData, trendingDetail,allRentedVideos } from './ShowAction'
 import { dashboardData } from "../../Home/components/HomeAction";
 import { Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -44,7 +44,6 @@ class Show extends Component {
     this.episodeCredit = this.episodeCredit.bind(this);
     this.controlsRef = React.createRef();
     this.playerRef = React.createRef();
-    this.count = 0
 
   }
   resCallBack = (dd) => {
@@ -58,6 +57,9 @@ class Show extends Component {
     this.setState({ refresh: true })
     console.log("this.props",this.props)
     this.setState({url:window.location.href})
+
+      this.props.allRentedVideosfnc()
+
 
 
     window.scrollTo(0, 0)
@@ -127,9 +129,7 @@ class Show extends Component {
     props.videoData(videoId, props.history)
   }
 
-  ref = player => {
-    this.player = player
-  }
+
 
   render() {
     var settings = {
@@ -140,7 +140,7 @@ class Show extends Component {
       slidesToShow: 5.5,
       slidesToScroll: 1
     };
-    const { videoDetail, trendingData } = this.props
+    const { videoDetail, trendingData,allRentedVideos,auth } = this.props
     const { url, playing, controls, light, volume, muted, loop, played, loaded, duration, playbackRate, pip } = this.state
     return (
       <>
@@ -205,7 +205,7 @@ class Show extends Component {
                       <button className="playbtn" onClick={() => this.handlePlayPause()}>
                         <i className={playing ? "fa fa-pause-circle" : "fa fa-play-circle"}></i>{playing ? "Pause" : "Play"}
                       </button>
-                      {videoDetail.subscriptionType === "paid" ? <Link to="/video/rentalpayment"><button className="playbtn" style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
+                      {videoDetail.subscriptionType === "paid" ? allRentedVideos.findIndex(item => item.video.id===parseInt(this.props.match.params.videoId))!==-1 ?"":  <Link to="/video/rentalpayment"><button className="playbtn" style={{ marginLeft: "10px" }} onClick={() => this.handleBuyOnRent()}>
                         {`Rent @ Rs. ${videoDetail.price}`}
                       </button></Link> : ""}
                     </div>
@@ -347,7 +347,9 @@ const mapStateToProps = (state) => {
   return {
     videoDetail: state.ShowVideos.videoData,
     trendingData: state.ShowVideos.trendingData,
-    auth: state.authReducer
+    auth: state.authReducer,
+    allRentedVideos:state.ShowVideos.allRentedVideos
+
   }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -358,6 +360,8 @@ const mapDispatchToProps = (dispatch) => {
     clearVideoData: () => dispatch(clearVideoData()),
     trendingDetail: () => dispatch(trendingDetail()),
     dashboardData: () => dispatch(dashboardData()),
+    allRentedVideosfnc: () => dispatch(allRentedVideos())
+
   });
 };
 

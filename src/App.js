@@ -1,6 +1,8 @@
 import React, { Component, Suspense, lazy } from "react";
 import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+
+import {userActions} from './entertainment/actions'
 //Shopping Routes
 import ShoppingHomeContainer from "./shopping/modules/Home";
 import ShoppingCartContainer from "./shopping/modules/Cart";
@@ -48,6 +50,7 @@ const Subscritption = lazy(() => import('./entertainment/modules/subscription'))
 
 class App extends Component {
   componentDidMount = () => {
+    this.props.getUserProfile()
     this.props.getSellerProfile();
     this.props.getSessionProfile();
   };
@@ -55,6 +58,9 @@ class App extends Component {
   render() {
     const { currentSeller, currentUser } = this.props;
     const token = localStorage.getItem("token");
+    const p123  = 'seller'=== window.location.pathname.match('/seller/i')
+    console.log("history in home route",p123)
+    const userToken = localStorage.getItem("UserToken")
     if (localStorage.getItem('session') === null) {
       this.props.getSessionProfile();
     }
@@ -91,8 +97,7 @@ class App extends Component {
               component={ShoppingProductContainer}
             />
             <Route exact path="/productdetail/:pat1" component={ViewShopProductDetails} />
-            {ShopRoute.map((item, i) => (currentUser ?
-              <Route exact {...item} /> : null))}
+            
             {/* Entertainment Routes */}
             <Route exact path="/login" component={Login}></Route>
             <Route exact path="/video/rentalVedio" component={RentalVedio}></Route>
@@ -109,12 +114,15 @@ class App extends Component {
               exact
               component={SellerRegistration}
             />
-            {currentSeller && token &&
+            {userToken  &&  ShopRoute.map((item, i) => 
+              <Route exact {...item} /> )}
+            {'seller'=== window.location.pathname.match('/seller/i') && currentSeller && token &&
               <Navigation>
                 {SellerRoute.map((item, i) =>
                   <Route exact {...item} />)}
               </Navigation>
             }
+            
             <Redirect to="/" />
           </Switch>
         </Suspense>
@@ -134,7 +142,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSellerProfile: () => dispatch(getSellerProfile()),
-    getSessionProfile: () => dispatch(getSessionProfile())
+    getSessionProfile: () => dispatch(getSessionProfile()),
+    getUserProfile:() => dispatch(userActions.getuserbyid()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

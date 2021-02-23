@@ -99,7 +99,7 @@ export const trackOrderStatus = (orderId) => {
     }
 }
 
-export const giveReviewFnc = (key, orderKey) => {
+export const giveReviewFnc = (key, orderKey, rating) => {
     return (dispatch) => {
         let token = localStorage.getItem("UserToken");
         let config = {
@@ -107,9 +107,11 @@ export const giveReviewFnc = (key, orderKey) => {
                 Authorization: "Bearer " + token
             }
         }
+        let params = {rating}
+        console.log(params);
 
         axios
-        .post(`${baseURL2}customer/products/${key}/reviews/${orderKey}`, config)
+        .post(`${baseURL2}customer/products/${key}/reviews/${orderKey}`, params, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200 || 201){

@@ -1,7 +1,5 @@
 import React, { Component, createRef, StrictMode } from "react";
 import { connect } from "react-redux";
-import axios from 'axios'
-import { baseURL } from "../../../../../credential.json";
 import Modal from 'react-modal';
 import { addProduct, currencyList, categoryList, getAttribute,hsnList,clearError } from "../sellerAddProductAction";
 import "./MyProducts.css";
@@ -103,7 +101,7 @@ class AddProduct extends Component {
   validate = () => {
     const errors = {}
       if(this.state.name.trim()==='')
-        errors.name = 'Username is required';
+        errors.name = 'Product name is required';
       if(this.state.originalPrice.trim()==='')
         errors.originalPrice = 'MRP is required';
       if(this.state.sellingPrice==='')
