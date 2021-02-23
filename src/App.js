@@ -38,10 +38,9 @@ import ShippingPolicy from "./footer/components/ShippingPolicy";
 import ReturnPolicy from "./footer/components/ReturnPolicy";
 
 // Entertainment Routes
-import RentalPayment from "./entertainment/modules/Show/components/RentalPayment"
-import RentalVedio from "./entertainment/modules/Show/components/RentalVedio"
 
-import { ShopRoute, SellerRoute } from './AppRoute'
+
+import { ShopRoute, SellerRoute, EntertainmentRoute } from './AppRoute'
 const Home = lazy(() => import('./entertainment/modules/Home/components/Home'));
 const Login = lazy(() => import('./entertainment/modules/SignUp/components'));
 const Show = lazy(() => import('./entertainment/modules/Show/components/index'));
@@ -100,8 +99,6 @@ class App extends Component {
             
             {/* Entertainment Routes */}
             <Route exact path="/login" component={Login}></Route>
-            <Route exact path="/video/rentalVedio" component={RentalVedio}></Route>
-            <Route exact path="/video/rentalpayment" component={RentalPayment}></Route>
             <Route exact path="/video/:videoId" component={Show}></Route>
             <Route exact path="/collection/:title" component={Collection}></Route>
             <Route exact path="/subscription" component={Subscritption}></Route>
@@ -114,9 +111,12 @@ class App extends Component {
               exact
               component={SellerRegistration}
             />
-            {userToken  &&  ShopRoute.map((item, i) => 
+            {userToken && EntertainmentRoute.map((item,i) =>
               <Route exact {...item} /> )}
-            {'seller'=== window.location.pathname.match('/seller/i') && currentSeller && token &&
+            {userToken  &&  ShopRoute.map((item, i) => 
+              <Route exact {...item} /> )
+              }
+            {window.location.pathname.match(/seller/i) && currentSeller && token &&
               <Navigation>
                 {SellerRoute.map((item, i) =>
                   <Route exact {...item} />)}
@@ -146,4 +146,5 @@ const mapDispatchToProps = dispatch => {
     getUserProfile:() => dispatch(userActions.getuserbyid()),
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);

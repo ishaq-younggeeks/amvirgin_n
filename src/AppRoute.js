@@ -8,6 +8,10 @@ import TrackOrder from "./shopping/modules/ViewMyOrders/TrackOrder";
 import OrderSuccessful from "./shopping/modules/Order/components/OrderSuccessful";
 import AddReview from "./shopping/modules/ViewMyOrders/AddReview"
 
+//entertainment Routes 
+import RentalPayment from "./entertainment/modules/Show/components/RentalPayment"
+import RentalVedio from "./entertainment/modules/Show/components/RentalVedio"
+
 
 //seller Routes
 
@@ -41,6 +45,19 @@ import SellerSupportTicket from "./seller/modules/components/SellerSupport/MyTic
 import BusinessDetail from "./seller/modules/components/Setting/BusinessDetail";
 import ViewProductDetails from "./seller/modules/components/MyProducts/components/ViewProductDetails";
 import Return from "./seller/modules/components/Return/Return";
+
+
+
+export const EntertainmentRoute = [
+    {
+        path: '/video/rentalVedio',
+        component: RentalVedio,
+    },
+    {
+        path: '/video/rentalpayment',
+        component: RentalPayment,
+    },
+]
 
 
 

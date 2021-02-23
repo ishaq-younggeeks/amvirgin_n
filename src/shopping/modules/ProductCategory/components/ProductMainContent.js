@@ -181,7 +181,7 @@ class ProductMainContent extends React.Component {
                                 <div className="swiper-wrapper">
                                   {item.gallery.map((image, gindex) => {
                                     return (
-                                      <div key={"gallery" + item.key + gindex} className="swiper-slide"><img src={image} alt="product" /></div>
+                                      <div key={"gallery" + item.key + gindex} className="swiper-slide"><img src={image} alt="product" style={{width:"100%",height:"100%"}} /></div>
                                     )
                                   })}
                                 </div>
