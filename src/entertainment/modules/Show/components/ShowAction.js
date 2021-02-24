@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { entertainment } from '../../../../common/apiConstants';
-import { baseURL, baseURL2 } from "../../../../credential.json";
+import { baseURL } from "../../../../credential.json";
 import {VIDEO_DATA,TRENDING_DATA, RENT_A_VIDEO, ALREADY_RENTED, ALL_RENTED_VIDEOS, RENT_CHECKOUT} from './ShowConstant'
 
 export const videoData = (videoId,history="") => {
   return  (dispatch) => {
-    let url = `${baseURL2}${entertainment.videos}${videoId}` 
+    let url = `${baseURL}${entertainment.videos}${videoId}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.payload;
      console.log("data---------------------", videoId);
@@ -19,7 +19,7 @@ export const videoData = (videoId,history="") => {
 
 export const trendingDetail = () => {
   return  (dispatch) => {
-    let url = `${baseURL2}${entertainment.trending}` 
+    let url = `${baseURL}${entertainment.trending}` 
     axios.get(`${url}`).then(res => {
      let  Data = res.data.payload;
      console.log("trending data",res.data.payload);
@@ -44,7 +44,7 @@ export const rentCheckout = (videoId) => {
     }
     
     axios
-    .post(`${baseURL2}${entertainment.rentCheckout}20`, {}, config)
+    .post(`${baseURL}${entertainment.rentCheckout}20`, {}, config)
     .then((res) => {
       console.log(res);
       if(res.status === 200){
@@ -76,7 +76,7 @@ export const rentVideoSuccess = (paymentId, orderId, signature, transactionId, v
     }
 
     axios
-    .post(`${baseURL2}${entertainment.rentCheckout}${videoKey}/submit`, params, config)
+    .post(`${baseURL}${entertainment.rentCheckout}${videoKey}/submit`, params, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 201){
@@ -106,7 +106,7 @@ export const allRentedVideos = () => {
     }
 
     axios
-    .get(`${baseURL2}${entertainment.getRental}`, config)
+    .get(`${baseURL}${entertainment.getRental}`, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 200){

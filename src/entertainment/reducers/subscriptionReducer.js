@@ -1,6 +1,6 @@
 import {RECEIVED_SUBSCRIPTION_DATA, SUBSCRIPTION_CHECKOUT, SUBSCRIPTION_FINAL} from '../constants/subscription.constant'
 import {subscribeList} from "../actions/subscription.actions"
-import { baseURL, baseURL2 } from "../../credential.json";
+import { baseURL } from "../../credential.json";
 import axios from 'axios';
 import { param } from 'jquery';
 import { entertainment } from '../../common/apiConstants';
@@ -15,7 +15,7 @@ const initialState = {
 
 export const subscribeListData = () => {
   return dispatch => {
-    axios.get(`${baseURL2}${entertainment.subscription}`)
+    axios.get(`${baseURL}${entertainment.subscription}`)
     .then((res) => {
       let dataList = []
       dataList = res.data.payload
@@ -36,7 +36,7 @@ export const susbcriptionCheckout = (id) => {
     }
 
     axios
-    .get(`${baseURL2}${entertainment.checkout}/${id}`, config)
+    .get(`${baseURL}${entertainment.checkout}/${id}`, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 200 || 201){
@@ -64,7 +64,7 @@ export const subscriptionFinalFnc = (orderId, paymentId, signature, transactionI
     }
 
     axios
-    .post(`${baseURL2}${entertainment.checkout}`, params, config)
+    .post(`${baseURL}${entertainment.checkout}`, params, config)
     .then((res) => {
       console.log(res);
       if(res.data.status === 200 || 201 || 403){

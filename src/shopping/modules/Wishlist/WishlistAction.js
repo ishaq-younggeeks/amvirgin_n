@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { baseURL,baseURL2 } from "../../../credential.json";
+import { baseURL } from "../../../credential.json";
 import { API_CALL,FETCH_WISHLIST, DELETE_WISHLIST,MOVETO_CART } from './WishlistConstant';
 import $ from 'jquery';
 import { shop } from '../../../common/apiConstants';
@@ -12,7 +12,7 @@ export const AddWishlist = (id) => dispatch => {
   if(!token){
     window.location.href='/login'
   }else{
-  Axios.put(`${baseURL2}${shop.wishlist}` + id, {}, { headers: { "Authorization": `Bearer ${token}` } })
+  Axios.put(`${baseURL}${shop.wishlist}` + id, {}, { headers: { "Authorization": `Bearer ${token}` } })
     .then(res => {
       $(`#wishlist${id}`).addClass('wishlistedbtn');
       $(`#wishlist${id}`).text("Wishlisted");
@@ -28,7 +28,7 @@ export const AddWishlist = (id) => dispatch => {
 export const deleteWish = (id) => dispatch => {
   let token = localStorage.getItem('UserToken')
 
-  Axios.delete(`${baseURL2}${shop.wishlist}` + id, { headers: { "Authorization": `Bearer ${token}` } })
+  Axios.delete(`${baseURL}${shop.wishlist}` + id, { headers: { "Authorization": `Bearer ${token}` } })
   .then(res => {
     let url = `${baseURL}/customer/wishlist`;
     Axios.get(`${url}`, { headers: { "Authorization": `Bearer ${token}` } })
@@ -52,7 +52,7 @@ export const deleteWish = (id) => dispatch => {
 // To get the cart data.
 export const fetchWishlist = () => dispatch => {
   let token = localStorage.getItem('UserToken')
-  let url = `${baseURL2}${shop.wishlist}`;
+  let url = `${baseURL}${shop.wishlist}`;
   dispatch({
     type:API_CALL
   })
@@ -76,7 +76,7 @@ export const moveToCart = (id) => dispatch => {
   let config = {
     headers: { "Authorization": `Bearer ${token}` }
   }
-  Axios.put(`${baseURL2}${shop.wishlist}cart/${id}`,{sessionId},config)
+  Axios.put(`${baseURL}${shop.wishlist}cart/${id}`,{sessionId},config)
   .then((res)=>{
     console.log("res after moving item to cart",res)
     if(res.data.status===200){

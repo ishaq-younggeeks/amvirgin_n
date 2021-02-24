@@ -1,7 +1,7 @@
 import {myData,fetchingData,product,release,fetchApplicableFilter} from './shoppingHomeAction';
 import {DATA_RECEIVED,HOME_DATA,FETCHING,PRODUCT_DATA, ALL_DEALS,FILTER_DATA} from './shoppingHomeConstant';
 import axios from 'axios';
-import { baseURL, baseURL2 } from "../../../credential.json";
+import { baseURL } from "../../../credential.json";
 import { browserHistory, Redirect } from 'react-router';
 import history from '../../../Store/history'
 import { push } from 'react-router-redux'
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 export const fetchData = () => {
   return (dispatch) => {
     dispatch(fetchingData(true))
-    axios.get(`${baseURL2}/customer/categories`)
+    axios.get(`${baseURL}/customer/categories`)
     .then(res => {
 
       let dataList = [];
@@ -28,7 +28,7 @@ export const fetchData = () => {
 export const productData = (category,params={page:1},history) => {
   return (dispatch) => {
     dispatch(fetchingData(true))
-    let url = `${baseURL2}/customer/categories/${category}/products`
+    let url = `${baseURL}/customer/categories/${category}/products`
     let data={}
     console.log("sending params",params)
     let fd = ""
@@ -93,7 +93,7 @@ console.log("fd are",fd)
 
 export const applicableFilter = (category) => {
   return (dispatch) =>{
-    let url = `${baseURL2}/customer/categories/${category}/filters`
+    let url = `${baseURL}/customer/categories/${category}/filters`
 
     axios.get(url)
     .then (res =>{
@@ -113,7 +113,7 @@ export const applicableFilter = (category) => {
 // export const viewAllDeals = () => {
 //   return (dispatch) => {
 //     dispatch(fetchingData(true))
-//     let url = `${baseURL2}/customer/shop/deals`
+//     let url = `${baseURL}/customer/shop/deals`
 //     axios.get(url).then(res => {
 //       console.log("fetching deals list", res);
 //       let allDealsList = {}

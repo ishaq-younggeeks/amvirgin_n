@@ -1,12 +1,12 @@
 import Axios from 'axios';
-import { baseURL,baseURL2 } from "../../../credential.json";
+import { baseURL } from "../../../credential.json";
 import { API_CALLING,FETCH_CART, ADDTO_CART, DELETE_FROM_CART ,UPDATE_ITEM,AFTER_MOVETOWISHLIST_FETCH} from './shoppingCartConstant';
 import $ from 'jquery';
 import { shop } from '../../../common/apiConstants';
 
 // To get the cart data.
 export const fetchCart = () => dispatch => {
-  let url = `${baseURL2}${shop.fetchCart}`;
+  let url = `${baseURL}${shop.fetchCart}`;
   let sessionid = localStorage.getItem('session');
   dispatch({
     type:API_CALLING,
@@ -17,6 +17,9 @@ export const fetchCart = () => dispatch => {
       console.log("fetched cart data",res)
       if(res.status === 200){
         if(res.data.data){
+                    let total_items=res.data.data.cart.itemCount;
+    $('#cart_counter').html(total_items?total_items:"");
+    localStorage.setItem('total_item',total_items?total_items:"")
           console.log("Calling", res);
           let fetchedcart = res.data.data.cart
           let fetchedprice = res.data.data.cart
@@ -44,7 +47,7 @@ export const fetchCart = () => dispatch => {
 // Action For adding product to cart
 export const addtoCart = (id,size) => dispatch => {
   console.log("id coming on select size",id,size)
-  let url = `${baseURL2}${shop.addToCart}`;
+  let url = `${baseURL}${shop.addToCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,
@@ -81,7 +84,7 @@ export const addtoCart = (id,size) => dispatch => {
 
 // Action to Delete Product From Cart
 export const deletefromCart = (id) => dispatch => {
-  let url = `${baseURL2}${shop.deleteFromCart}`;
+  let url = `${baseURL}${shop.deleteFromCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,
@@ -105,7 +108,7 @@ export const deletefromCart = (id) => dispatch => {
 }
 
 export const updateitem = (id,qty) => dispatch => {
-  let url = `${baseURL2}${shop.updateCart}`;
+  let url = `${baseURL}${shop.updateCart}`;
   let sessionid = localStorage.getItem('session');
   let data = {
     sessionId: sessionid,
@@ -133,7 +136,7 @@ export const updateitem = (id,qty) => dispatch => {
 export const movetoWishlisht = (id) => dispatch => {
   let token = localStorage.getItem('UserToken')
 
-  let url = `${baseURL2}${shop.moveToWishlist}${id}`
+  let url = `${baseURL}${shop.moveToWishlist}${id}`
   let sessionid =localStorage.getItem('session')
 
   let data  = {

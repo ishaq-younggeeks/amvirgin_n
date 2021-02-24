@@ -46,7 +46,7 @@ class Cart extends React.Component {
     return (
       <div className="shopMain">
         <Header />
-        {isLoading ?"": cartdata.items && cartdata.items.length !== 0 ? (
+        {isLoading ?"": cartdata.items && cartdata.items.length? (
           <div className="specific">
             <div className="cartsection">
               <div className="product">
