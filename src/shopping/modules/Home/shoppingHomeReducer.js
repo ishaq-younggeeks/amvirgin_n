@@ -41,13 +41,13 @@ export const productData = (category,params={page:1},history) => {
           let value=""
           if(prop==="price")
           {
-            let item = data[prop].map(
-              ({low,high})=>
-              {
-                return {low,high}
-              }).sort((a,b)=>a.low>b.low?1:a.low<b.low?-1:0)
-              console.log("items are in multiple price",item)
-               value = `${prop}[high]=${item[0].high}&${prop}[low]=${item[item.length-1].low}&`
+            let lower = data[prop].map(({high}) =>parseInt(high))
+            let higher = data[prop].map(({low}) =>parseInt(low))
+            let low = Math.min(...lower)
+            let high = Math.max(...higher)
+             
+              console.log("items are in multiple price",)
+               value = `${prop}[low]=${low}&${prop}[high]=${high}&`
             fd = fd+value
           }
 

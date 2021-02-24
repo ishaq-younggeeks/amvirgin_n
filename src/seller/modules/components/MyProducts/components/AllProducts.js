@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
-import Loader from 'react-loader-spinner'
-import MyProductNavigation from './MyProductNavigation'
+import Loader from "react-loader-spinner";
+import MyProductNavigation from "./MyProductNavigation";
 
 import {
   getAllProducts,
@@ -13,7 +13,7 @@ import {
   updateProductStatus,
   editProduct,
   clearState,
-  FilterBySearch
+  FilterBySearch,
 } from "../sellerAddProductAction";
 import Modal from "react-modal";
 import "./MyProducts.css";
@@ -80,15 +80,24 @@ class AllProducts extends Component {
 
   submitSearch = (e) => {
     e.preventDefault();
-    this.props.FilterBySearch(1,this.state.pagination,this.state.searching,this.props.activeState)
-  }
+    this.props.FilterBySearch(
+      1,
+      this.state.pagination,
+      this.state.searching,
+      this.props.activeState
+    );
+  };
 
   onSubmit(e) {
     e.preventDefault();
     this.props.clearState("products", []);
 
-    this.props.FilterBySearch(1,this.state.pagination,this.state.searching,this.props.activeState)
-
+    this.props.FilterBySearch(
+      1,
+      this.state.pagination,
+      this.state.searching,
+      this.props.activeState
+    );
   }
   activeFilter(e) {
     e.preventDefault();
@@ -96,26 +105,30 @@ class AllProducts extends Component {
       activestatus: e.target.value,
       currentPage: 1,
     });
-    this.props.getAllProducts(1,this.state.pagination,e.target.value)
+    this.props.getAllProducts(1, this.state.pagination, e.target.value);
   }
 
   paginationnum(e) {
     e.preventDefault();
     let perPage = parseInt(e.target.value);
-          this.props.clearState("products", []);
+    this.props.clearState("products", []);
 
     this.setState({
       pagination: perPage,
       currentPage: 1,
     });
-    this.props.getAllProducts(1, perPage,this.state.activestatus);
+    this.props.getAllProducts(1, perPage, this.state.activestatus);
   }
 
   paginate = (e, direction, current) => {
     e.preventDefault();
     if (direction === "inc") {
       this.props.clearState("products", []);
-      this.props.getAllProducts(current + 1, this.state.pagination,this.state.activestatus);
+      this.props.getAllProducts(
+        current + 1,
+        this.state.pagination,
+        this.state.activestatus
+      );
       this.setState((prevState) => {
         return { currentPage: prevState.currentPage + 1 };
       });
@@ -132,7 +145,7 @@ class AllProducts extends Component {
   };
 
   render() {
-    const { product, metaData,isFetching } = this.props;
+    const { product, metaData, isFetching } = this.props;
     console.log("product", product);
     const customStyles = {
       content: {
@@ -152,7 +165,6 @@ class AllProducts extends Component {
       >
         <MyProductNavigation activeTab1={true} />
         <div>
-          
           <div
             className="categorycontainer myprocontainer w-50 row"
             style={{ textAlign: "center", padding: "20px" }}
@@ -343,101 +355,101 @@ class AllProducts extends Component {
               </tr>
             </thead>
 
-            {!isFetching?<tbody>
-             { this.props.products.map((data, i) =>
-                        <>
-                          <tr key={data.key}>
-                            <td>
-                              {data.image ? (
-                                <img
-                                  src={data.image}
-                                  style={{ width: "50px" }}
-                                />
-                              ) : (
-                                <img
-                                  src={
-                                    process.env.PUBLIC_URL + "/img/default.png"
-                                  }
-                                  style={{ width: "50px" }}
-                                />
-                              )}
-                            </td>
-                            <td
-                              className="destypehover"
-                              style={{ cursor: "pointer" }}
-                              onClick={() => this.productDetail(data.key)}
-                            >
-                              {data.name}
-                            </td>
-                            <td>{data.key}</td>
-                            <td>HRX</td>
-                            <td>{data.listingDate}</td>
-                            <td>{data.originalPrice}</td>
-                            <td>{data.sellingPrice}</td>
-                            <td>{data.category}</td>
-                            <td>{data.sku}</td>
-                            <td>{data.stock}</td>
-                            <td>
-                              {/* <Link type="button" className="btn"  to = {`/seller/dashboard/myproducts/${data.key}`} > */}
-                              {!(this.state.activestatus==="underprocess")?<Link
-                                type="button"
-                                className="btn toolnewtip"
-                                onClick={() =>
-                                  this.props.editProduct(
-                                    data.key,
-                                    this.props.history
-                                  )
-                                }
-                              >
-                                <i className="far fa-edit"></i>
-                                <span className="tooltiptext">Edit</span>
-                              </Link>:null}
-                              {this.state.activestatus==="active"?<button
-                                className="btn toolnewtip"
-                                onClick={() =>
-                                  this.props.updateProductStatus(
-                                    data.key,
-                                    "inactive"
-                                    
-                                  )
-                                }
-                              >
-                                <i className="fas fa-unlink" />
-                                <span className="tooltiptext">Inactive</span>
-                              </button>:this.state.activestatus==="underprocess"?null:this.state.activestatus==="rejected"?null:<button
-                                className="btn toolnewtip"
-                                onClick={() =>
-                                  this.props.updateProductStatus(
-                                    data.key,
-                                    "active"
-                                    
-                                  )
-                                }
-                              >
-                                <i className="fas fa-link" />
-                                <span className="tooltiptext">Active</span>
-                              </button>}
-                            </td>
-                          </tr>
-                        </>
-                  )}
-            </tbody>:
-            <tbody>
-             <tr>
-               <td colSpan="9" className="d-flex align-items-center"> 
-            <div className="loaderHorizontal">
-            <Loader
-         type="ThreeDots"
-         color="#000"
-         height={20}
-         width={100}
-        //  timeout={3000} //3 secs
- 
-      />
-      </div>
-      </td>
-      </tr>
-      </tbody>}
+            {!isFetching ? (
+              <tbody>
+                {this.props.products.map((data, i) => (
+                  <>
+                    <tr key={data.key}>
+                      <td>
+                        {data.image ? (
+                          <img src={data.image} style={{ width: "50px" }} />
+                        ) : (
+                          <img
+                            src={process.env.PUBLIC_URL + "/img/default.png"}
+                            style={{ width: "50px" }}
+                          />
+                        )}
+                      </td>
+                      <td
+                        className="destypehover"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => this.productDetail(data.key)}
+                      >
+                        {data.name}
+                      </td>
+                      <td>{data.key}</td>
+                      <td>HRX</td>
+                      <td>{data.listingDate}</td>
+                      <td>{data.originalPrice}</td>
+                      <td>{data.sellingPrice}</td>
+                      <td>{data.category}</td>
+                      <td>{data.sku}</td>
+                      <td>{data.stock}</td>
+                      <td>
+                        {/* <Link type="button" className="btn"  to = {`/seller/dashboard/myproducts/${data.key}`} > */}
+                        {!(this.state.activestatus === "underprocess") ? (
+                          <Link
+                            type="button"
+                            className="btn toolnewtip"
+                            onClick={() =>
+                              this.props.editProduct(
+                                data.key,
+                                this.props.history
+                              )
+                            }
+                          >
+                            <i className="far fa-edit"></i>
+                            <span className="tooltiptext">Edit</span>
+                          </Link>
+                        ) : null}
+                        {this.state.activestatus === "active" ? (
+                          <button
+                            className="btn toolnewtip"
+                            onClick={() =>
+                              this.props.updateProductStatus(
+                                data.key,
+                                "inactive"
+                              )
+                            }
+                          >
+                            <i className="fas fa-unlink" />
+                            <span className="tooltiptext">Inactive</span>
+                          </button>
+                        ) : this.state.activestatus ===
+                          "underprocess" ? null : this.state.activestatus ===
+                          "rejected" ? null : (
+                          <button
+                            className="btn toolnewtip"
+                            onClick={() =>
+                              this.props.updateProductStatus(data.key, "active")
+                            }
+                          >
+                            <i className="fas fa-link" />
+                            <span className="tooltiptext">Active</span>
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  </>
+                ))}
+              </tbody>
+            ) : (
+              <tbody>
+                <tr>
+                  <td colSpan="9" className="d-flex align-items-center">
+                    <div className="loaderHorizontal">
+                      <Loader
+                        type="ThreeDots"
+                        color="#000"
+                        height={20}
+                        width={100}
+                        //  timeout={3000} //3 secs
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            )}
           </table>
         </div>
         <Modal
@@ -511,7 +523,7 @@ const mapStateToProps = (state) => {
   console.log("seller data", state.sellerAddProduct.products, "id");
   return {
     products: state.sellerAddProduct.products,
-    isFetching:state.sellerAddProduct.isFetching,
+    isFetching: state.sellerAddProduct.isFetching,
     categories: state.sellerAddProduct.categories,
     getProductError: state.sellerAddProduct.getProductError,
     product: state.sellerAddProduct.product,
@@ -521,14 +533,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAllProducts: (current, perPage,status) =>
-      dispatch(getAllProducts(current, perPage,status)),
+    getAllProducts: (current, perPage, status) =>
+      dispatch(getAllProducts(current, perPage, status)),
     categoryList: () => dispatch(categoryList()),
     getProduct: (slug) => dispatch(getProduct(slug)),
-    updateProductStatus: (id, history) => dispatch(updateProductStatus(id, history)),
+    updateProductStatus: (id, history) =>
+      dispatch(updateProductStatus(id, history)),
     editProduct: (slug, history) => dispatch(editProduct(slug, history)),
-    clearState:(state,type) => dispatch(clearState(state,type)),
-    FilterBySearch:(currentPage,perPage,query,status) => dispatch(FilterBySearch(currentPage,perPage,query,status)),
+    clearState: (state, type) => dispatch(clearState(state, type)),
+    FilterBySearch: (currentPage, perPage, query, status) =>
+      dispatch(FilterBySearch(currentPage, perPage, query, status)),
   };
 };
 

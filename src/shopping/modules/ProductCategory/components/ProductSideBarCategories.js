@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import ProductMainContent from './ProductMainContent';
-import {Link} from 'react-router-dom'
-import $, { extend } from 'jquery'
+import React, { Component } from "react";
+import ProductMainContent from "./ProductMainContent";
+import { Link } from "react-router-dom";
+import $, { extend } from "jquery";
 
 class ProductSideBarCategories extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      elementStyle: { position: 'relaitve' },
-      priceRange: 1
-    }
+      elementStyle: { position: "relaitve" },
+      priceRange: 1,
+    };
   }
 
   componentDidMount() {
-
     $("#hide").click(function () {
       $(".catsmob").hide();
     });
@@ -21,46 +20,47 @@ class ProductSideBarCategories extends React.Component {
       $(".catsmob").show();
     });
 
-    let x = window.matchMedia("(max-width: 720px)")
-    console.log("media width", x)
-    this.myCategories(x)
+    let x = window.matchMedia("(max-width: 720px)");
+    console.log("media width", x);
+    this.myCategories(x);
     // this.myCategories(x) // Call listener function at run time
     //x.addListener(this.myCategories) // Attach listener function on state changes
   }
 
   myCategories = (x) => {
-    if (x.matches) { // If media query matches
-      console.log("for position absolute")
-      this.setState({ elementStyle: { ...this.state.someProperty, position: "absolute" } })
+    if (x.matches) {
+      // If media query matches
+      console.log("for position absolute");
+      this.setState({
+        elementStyle: { ...this.state.someProperty, position: "absolute" },
+      });
       //$(".catsmob").style.position = "absolute";
     } else {
-
-      console.log("for position relative")
-      this.setState({ elementStyle: { ...this.state.someProperty, position: "relative" } })
+      console.log("for position relative");
+      this.setState({
+        elementStyle: { ...this.state.someProperty, position: "relative" },
+      });
       //$(".catsmob").style.position = "relative";
     }
-  }
+  };
 
   renderFilters = (mode, items) => {
     switch (mode) {
       case "multiple":
-        return <Multiple items={items}{...this.props} />
+        return <Multiple items={items} {...this.props} />;
         break;
       case "single":
-        return <Single items={items} {...this.props} />
+        return <Single items={items} {...this.props} />;
         break;
       case "multiple_price":
-        return <MultiplePrice items={items}{...this.props} />
+        return <MultiplePrice items={items} {...this.props} />;
       default:
       // code block
     }
-
-  }
-
-
+  };
 
   render() {
-    const { filters } = this.props
+    const { filters } = this.props;
     return (
       <React.Fragment>
         <div className="col-lg-3">
@@ -68,7 +68,11 @@ class ProductSideBarCategories extends React.Component {
             <button id="hide">Hide</button>
             <button id="show">Show</button>
           </div>
-          <div id="catshopmobile" className="catsmob" style={this.state.elementStyle}>
+          <div
+            id="catshopmobile"
+            className="catsmob"
+            style={this.state.elementStyle}
+          >
             <div className="sidebar">
               <div className="sidebar__inner">
                 <div className="wrapper">
@@ -122,10 +126,16 @@ class ProductSideBarCategories extends React.Component {
                       </div>
                     </div> */}
 
-                    {filters && filters.length && filters.map((item, index) => {
-
-                      return item.type === "price" ? this.renderFilters(item.mode + '_' + item.type, item) : this.renderFilters(item.mode, item)
-                    })}
+                    {filters && filters.length
+                      ? filters.map((item, index) => {
+                          return item.type === "price"
+                            ? this.renderFilters(
+                                item.mode + "_" + item.type,
+                                item
+                              )
+                            : this.renderFilters(item.mode, item);
+                        })
+                      : null}
                   </div>
                 </div>
               </div>
@@ -133,16 +143,14 @@ class ProductSideBarCategories extends React.Component {
           </div>
         </div>
       </React.Fragment>
-
-    )
+    );
   }
 }
 export default ProductSideBarCategories;
 
-
 class Multiple extends Component {
   render() {
-    const { items } = this.props
+    const { items } = this.props;
     return (
       <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
         <h4 className="sidebar-title">{items.label} </h4>
@@ -152,35 +160,35 @@ class Multiple extends Component {
               return (
                 <li key={items.type + index}>
                   <div className="sidebar-widget-list-left">
-                    <input type="checkbox"
+                    <input
+                      type="checkbox"
                       mode="multiple"
                       name={items.type}
                       onClick={this.props.handleChange}
                       value={item.key}
                     />
-                    <Link >{item.name} {item.count ?<span>{item.count}</span>:null} </Link>
+                    <Link>
+                      {item.name}{" "}
+                      {item.count ? <span>{item.count}</span> : null}{" "}
+                    </Link>
                     <span className="checkmark"></span>
                   </div>
                 </li>
-              )
+              );
             })}
-
           </ul>
         </div>
       </div>
-
-    )
+    );
   }
 }
 
 class Single extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
   }
   render() {
-
-    const { items } = this.props
+    const { items } = this.props;
     return (
       <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
         <h4 className="sidebar-title">{items.label} </h4>
@@ -190,22 +198,31 @@ class Single extends Component {
               return (
                 <li key={items.type + index}>
                   <div className="sidebar-widget-list-left">
-                    <input type="radio" mode="single" name={items.type} onClick={this.props.handleChange} value={item.limit} /> <a href="#">{`${item.limit}% and above`} <span>{item.count}</span> </a>
+                    <input
+                      type="radio"
+                      mode="single"
+                      name={items.type}
+                      onClick={this.props.handleChange}
+                      value={item.limit}
+                    />{" "}
+                    <a href="#">
+                      {`${item.limit}% and above`} <span>{item.count}</span>{" "}
+                    </a>
                     <span className="radiomark"></span>
                   </div>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 
 class MultiplePrice extends Component {
   render() {
-    const { items } = this.props
+    const { items } = this.props;
     return (
       <div className="sidebar-widget pt-40 mt-40 shop-sidebar-border">
         <h4 className="sidebar-title">{items.label} </h4>
@@ -215,16 +232,26 @@ class MultiplePrice extends Component {
               return (
                 <li key={index}>
                   <div className="sidebar-widget-list-left">
-                    <input type="checkbox" mode="multiple_price" name={items.type} id={`${items.type}_${index}`} value={item.upper + "_" + item.lower} onClick={this.props.handleChange} />
-                    <a onClick={this.props.handleChange}>Rs. {item.upper} to Rs. {item.lower} <span>{item.count}</span> </a>
+                    <input
+                      type="checkbox"
+                      mode="multiple_price"
+                      name={items.type}
+                      id={`${items.type}_${index}`}
+                      value={item.upper + "_" + item.lower}
+                      onClick={this.props.handleChange}
+                    />
+                    <a onClick={this.props.handleChange}>
+                      Rs. {item.upper} to Rs. {item.lower}{" "}
+                      <span>{item.count}</span>{" "}
+                    </a>
                     <span className="checkmark"></span>
                   </div>
-                </li>)
+                </li>
+              );
             })}
           </ul>
         </div>
       </div>
-
-    )
+    );
   }
 }
