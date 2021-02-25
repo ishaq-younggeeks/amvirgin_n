@@ -1,7 +1,9 @@
 const initialState = {
   loginError: null,
   registrationError: null,
-  currentUser: {}
+  currentUser: {},
+  otpModel: false,
+  otpError: ""
 };
 
 const sellerAuthReducer = (state = initialState, action) => {
@@ -31,7 +33,17 @@ const sellerAuthReducer = (state = initialState, action) => {
         currentUser: {},
         loginError: null
       };
-
+      case "OTP_MODEL_SHOW":
+        return {
+          ...state,
+          currentUser: {},
+          otpModel: true
+        };
+        case "OTP_ERROR":
+          return {
+            ...state,
+            otpError: action.payload 
+          };  
     case "SELLER_LOGOUT_FAILED":
       return {
         ...state,
@@ -48,7 +60,7 @@ const sellerAuthReducer = (state = initialState, action) => {
       return {
         ...state,
         registrationError:
-          action.payload.message ||
+          action.payload ||
           "There might be some issue with our servers, Please try again later!"
       };
 

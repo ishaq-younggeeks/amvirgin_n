@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { registration } from "../sellerAuthAction";
-
+import Modal from 'react-modal';
 import Logo from "../../assets/logo.png";
-
+import {sendSellerOtp} from "../../../../seller/modules/Authentication/sellerAuthAction"
 import "./Registration.css";
 
 class Registration extends Component {
@@ -24,8 +24,16 @@ class Registration extends Component {
     phoneError: "",
     passwordError: "",
     cpasswordError: "",
-    otpError: ""
+    otpError: "",
+    modalIsOpen: false
   };
+
+  handleOTPChangeRegister = event => {
+    this.setState({
+        otp: event.target.value
+    })
+}
+
 
   handleRedirect = (e) => {
     this.setState({
@@ -50,6 +58,32 @@ class Registration extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  openModal = () => {
+    console.log("Calling Open");
+    this.setState({
+      modalIsOpen: true
+    })
+  }
+
+  closeModal = () => {
+    console.log("Calling Close");
+    this.setState({
+      modalIsOpen: false
+    });
+  }
+
+  customStyles = {
+    content: {
+      top: "40%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+};
+
 
   validate = () => { 
     let nameError = "";
@@ -87,18 +121,13 @@ class Registration extends Component {
       cpasswordError = "Passwords do not match";
     }
 
-    if (!this.state.otp.trim()) {
-      otpError = "Please enter OTP";
-    }
-
-    if(nameError || emailError || phoneError || passwordError || cpasswordError || otpError){
+    if(nameError || emailError || phoneError || passwordError || cpasswordError){
       this.setState({
         nameError,
         emailError,
         phoneError,
         passwordError,
         cpasswordError,
-        otpError
       });
       return false
     }
@@ -106,7 +135,7 @@ class Registration extends Component {
     return true;
   };
 
-  handleSubmit = (e) => {
+  handleRegisterSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
     let isValid = this.validate();
@@ -122,7 +151,35 @@ class Registration extends Component {
       }
 
       let phoneNumber = parseInt(this.state.phoneNumber, 10);
-      let otp = parseInt(this.state.otp, 10);
+      this.props.sendSellerOtp(phoneNumber);
+      // let otp = parseInt(this.state.otp, 10);
+      // const registrationData = {
+      //   name: this.state.name,
+      //   email: this.state.email,
+      //   password: this.state.password,
+      //   phoneNumber,
+      //   otp,
+      // };
+
+      // this.props.registration(registrationData);
+      // if (this.props.registrationError === "") {
+      //   this.setState({
+      //     name: "",
+      //     email: "",
+      //     password: "",
+      //     confirmPassword: "",
+      //     phoneNumber: "",
+      //     otp: "",
+      //     phoneError: "",
+      //   });
+      // }
+    }
+  };
+
+  handleOtpSubmit = (e) => {
+    e.preventDefault();
+    let phoneNumber = parseInt(this.state.phoneNumber, 10);
+     let otp = parseInt(this.state.otp, 10);
       const registrationData = {
         name: this.state.name,
         email: this.state.email,
@@ -143,11 +200,11 @@ class Registration extends Component {
           phoneError: "",
         });
       }
-    }
-  };
+  }
 
   render() {
-    const { registrationError, currentUser } = this.props;
+    const { registrationError, currentUser, otpmodel, otpError } = this.props;
+    console.log("Register :", otpmodel, registrationError, currentUser, otpError);
     const token = localStorage.getItem("token");
     if (currentUser && token) {
       return <Redirect to="/seller/dashboard" />;
@@ -162,7 +219,7 @@ class Registration extends Component {
             </a>
           </div>
           <div className="card" style={{ background: "#0000007a!important" }}>
-            <form noValidate onSubmit={this.handleSubmit}>
+            <form noValidate onSubmit={this.handleRegisterSubmit}>
               <div className="form-group">
                 <label htmlFor="sellerName" style={{ color: "#fff" }}>
                   Seller Name
@@ -280,7 +337,7 @@ class Registration extends Component {
               <div className="error">
               <p>{this.state.cpasswordError}</p>
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="otp" style={{ color: "#fff" }}>
                   Enter OTP
                 </label>
@@ -297,7 +354,7 @@ class Registration extends Component {
               </div>
               <div className="error">
               <p>{this.state.otpError}</p>
-              </div>
+              </div> */}
               <button className="btn btn-block" type="submit">
                 SIGN UP
               </button>
@@ -318,6 +375,25 @@ class Registration extends Component {
             </button>
           </div>
         </div>
+        <Modal
+                isOpen={otpmodel && this.openModal}
+                onRequestClose={this.closeModal}
+                style={this.customStyles}
+                ariaHideApp={false}
+                >
+                <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
+                <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
+                <form onSubmit={this.handleOtpSubmit}>    
+                <input type="text" placeholder="OTP" autoFocus onChange={(e) => this.setState({otp: e.target.value}) } value={this.state.otp} required/>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
+                {/* {registering && 
+                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                } */}
+                {/* { success ? success : null} */}
+                </form>
+                {registrationError ? registrationError : ''}     
+                {otpError ? otpError : ''}         
+                </Modal>
       </section>
     );
   }
@@ -327,12 +403,15 @@ const mapStateToProps = (state) => {
   return {
     registrationError: state.sellerAuth.registrationError,
     currentUser: state.sellerAuth.currentUser,
+    otpmodel: state.sellerAuth.otpModel,
+    otpError: state.sellerAuth.otpError
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     registration: (creds) => dispatch(registration(creds)),
+    sendSellerOtp: num => dispatch(sendSellerOtp(num)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Registration);

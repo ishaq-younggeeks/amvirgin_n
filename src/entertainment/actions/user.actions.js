@@ -100,7 +100,7 @@ function sendOtp(num) {
       .get(`${baseURL}${entertainment.otp}${num}&type=3`, headers)
       .then((response) => {
         console.log("submission mobile",response);
-        if (response.data.status === 404) {
+        if (response.status === 200) {
           dispatch({ type: userConstants.OTP_MODEL_SHOW });
         }
       })

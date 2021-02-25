@@ -140,9 +140,9 @@ class AddProduct extends Component {
     if (this.state.sku.trim() === "") errors.sku = "SKU is required";
     if (this.state.stock.trim() === "") errors.stock = "stock is required";
     if (this.state.procurementSla === "")
-      errors.procurementSla = "procurementSla is Required";
+      errors.procurementSla = "procurement SLA is Required";
     else if (parseInt(this.state.procurementSla) > 2)
-      errors.procurementSla = "procurementSla may not be greater than 2";
+      errors.procurementSla = "procurement SLA may not be greater than 2";
     if (
       parseInt(this.state.maxQuantityPerOrder) > parseInt(this.state.stock) &&
       parseInt(this.state.stock) !== 0
@@ -927,78 +927,72 @@ class AddProduct extends Component {
                     <div className="row">
                       <h3>Upload Picture(s)</h3>
                     </div>
-                    <div className="row p-2">
-                      <div className="col-4">
-                        <center>
-                          <hr />
+                    <div>
+                      <div className="w-25">
+                    <center>
+                      <hr />
+                      <img
+                        src="https://static.thenounproject.com/png/187803-200.png"
+                        onClick={this.handleAddImage}
+                        style={{ width: "100px", cursor: "pointer" }}
+                      />
+                    </center>
+                    </div>
+                    <div className="w-75" style={{display:"flex"}}>
+                    {this.state.imgPreviewUrls.map((imagePreviewUrl, i) => {
+                      return (
+                        <div
+                          key={`imgPreviewUrls${i}`}
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            flexWrap: "wrap",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div
+                            style={{ color: "red", cursor: "pointer" }}
+                            onClick={() => this.imageRemoveHandler(i)}
+                            key={i}
+                          >
+                            <i
+                              className="fas fa-times-circle"
+                              style={{ fontSize: "24px" }}
+                            ></i>
+                          </div>
                           <img
-                            src="https://static.thenounproject.com/png/187803-200.png"
-                            onClick={this.handleAddImage}
-                            style={{ width: "100px", cursor: "pointer" }}
+                            key={i}
+                            alt="previewImg"
+                            src={imagePreviewUrl}
+                            style={{ height: "150px", width: "150px" }}
+                            id="previewImg"
                           />
-                        </center>
-                      </div>
-                      <div className="col-8" style={{ display: "flex" }}>
-                        {this.state.imgPreviewUrls.map((imagePreviewUrl, i) => {
-                          return (
-                            <div
-                              key={`imgPreviewUrls${i}`}
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                flexWrap: "wrap",
-                                alignItems: "center",
-                              }}
-                            >
-                              <div
-                                style={{ color: "red", cursor: "pointer" }}
-                                onClick={() => this.imageRemoveHandler(i)}
-                                key={i}
-                              >
-                                <i
-                                  className="fas fa-times-circle"
-                                  style={{ fontSize: "24px" }}
-                                ></i>
-                              </div>
-                              <img
-                                key={i}
-                                alt="previewImg"
-                                src={imagePreviewUrl}
-                                style={{ height: "150px", width: "150px" }}
-                                id="previewImg"
-                              />
-                              <input
-                                type="radio"
-                                name="primaryImageIndex"
-                                value={i + 1}
-                                onChange={this.onChangeHandler}
-                                checked={
-                                  parseInt(this.state.primaryImageIndex) ===
-                                  i + 1
-                                }
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                      </div>
-                      <div className="row">
-                      <center style={{ marginTop: "40px" }}>
-                        <Link
-                          className="btn btn-primary"
-                          onClick={this.saveData}
-                        >
-                          Save & Close
-                        </Link>
-                        <Link
-                          className="btn btn-primary"
-                          onClick={this.closeModal}
-                          style={{ marginLeft: "10px" }}
-                        >
-                          Close
-                        </Link>
-                      </center>
-                      </div>
+                          <input
+                            type="radio"
+                            name="primaryImageIndex"
+                            value={i + 1}
+                            onChange={this.onChangeHandler}
+                            checked={
+                              parseInt(this.state.primaryImageIndex) === i + 1
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    </div>
+                    <center style={{ marginTop: "40px" }}>
+                      <Link className="btn btn-primary" onClick={this.saveData}>
+                        Save & Close
+                      </Link>
+                      <Link
+                        className="btn btn-primary"
+                        onClick={this.closeModal}
+                        style={{ marginLeft: "10px" }}
+                      >
+                        Close
+                      </Link>
+                    </center>
+                    </div>
                   </div>
                 </Modal>
               </div>
@@ -1075,7 +1069,7 @@ class AddProduct extends Component {
                               ></i>
                             ) : null}
                           </span>{" "}
-                          Product Desciption
+                          Product Description
                           {errors.ps2Count > 0 ? (
                             <span
                               className=""
@@ -1707,7 +1701,7 @@ class AddProduct extends Component {
                         htmlFor="lowStockThreshold"
                         style={{ color: "#000" }}
                       >
-                        Low Stock Threshold
+                        Low Stock Threshold<span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <input
                         type="number"
@@ -1822,7 +1816,7 @@ class AddProduct extends Component {
                         htmlFor="maxQuantityPerOrder"
                         style={{ color: "#000" }}
                       >
-                        Maximum Quantity per order
+                        Maximum Quantity per order<span style={{ color: "#ff0000" }}>*</span>
                       </label>
                       <input
                         type="number"
@@ -2306,7 +2300,7 @@ class AddProduct extends Component {
           <div className="variantContainer">
             <div className="variant">
               <div className="variant-child1">
-                <p>Creating variant makes product togther</p>
+                <p>Creating variant makes product together</p>
               </div>
               <div className="createVarient">
                 <button
@@ -2314,7 +2308,7 @@ class AddProduct extends Component {
                   onClick={this.openvariantDialog}
                   disabled={this.state.variantButton}
                 >
-                  Create Varient
+                  Create Variant
                 </button>
               </div>
             </div>

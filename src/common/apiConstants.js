@@ -43,10 +43,11 @@ export const seller = {
     login:"/seller/login?type=1",
     profile:"/seller/profile",
     logout:"/seller/logout",
-    registration:"/seller?email=",
+    registration:"/seller/register",
     dashboard:"/seller/dashboard",
     advt:"/seller/promotions/",
     sellerOrders:"/seller/orders",
+    otp:"/seller/exists?mobile=",
 
     //product
     currencies:"/seller/currencies",
@@ -81,7 +82,7 @@ export const seller = {
 
     //settings
     business:"/seller/profile/business-details",
-    bank:"/seller/profile/business-details",
+    bank:"/seller/profile/bank-details",
     mou:"/seller/profile/mou/",
 }
 
