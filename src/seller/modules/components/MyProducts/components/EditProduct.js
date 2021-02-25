@@ -124,9 +124,9 @@ class EditProduct extends Component {
       if(this.state.stock==='')
         errors.stock = 'stock is required';
         if(this.state.procurementSla==='')
-        errors.procurementSla = 'procurementSla is Required';
+        errors.procurementSla = 'Procurement SLA is Required';
           else if(parseInt(this.state.procurementSla)>2)
-          errors.procurementSla = 'procurementSla may not be greater than 2';
+          errors.procurementSla = 'Procurement SLA may not be greater than 2';
 
       if(this.state.maxQuantityPerOrder==='')
         errors.maxQuantityPerOrder = ' max qty required';

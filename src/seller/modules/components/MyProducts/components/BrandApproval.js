@@ -445,7 +445,7 @@ class ApprovalofBrand extends Component {
                         Other online marketplace
                       </option>
                       <option value="brand retail website">
-                        Brand Retial Website
+                        Brand Retail Website
                       </option>
                       <option value="Not applicable">Not Applicable</option>
                       <option value="brick and mortar shop">
@@ -684,7 +684,6 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="TmExpireon"
                           className="form-control"
-                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>
@@ -729,7 +728,6 @@ class ApprovalofBrand extends Component {
                           type="Date"
                           name="BalExpiryDate"
                           className="form-control"
-                          max={this.state.maxDate}
                           onChange={this.onChangeHandler}
                         />
                       </div>

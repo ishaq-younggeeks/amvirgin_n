@@ -1,5 +1,5 @@
 import { userConstants } from "../constants";
-import { baseURL } from "../../credential.json";
+import { baseURL2 } from "../../credential.json";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import cookie from "react-cookies";
@@ -27,7 +27,7 @@ function login(body) {
   return (dispatch, getState) => {
     dispatch({ type: userConstants.LOGIN_REQUEST });
     axios
-      .post(`${baseURL}${entertainment.login}`, body)
+      .post(`${baseURL2}${entertainment.login}`, body)
       .then(function(response) {
         if (response.data.status === 200) {
           dispatch({ type: userConstants.LOGIN_SUCCESS });
@@ -62,7 +62,7 @@ function Register(body) {
   };
   return (dispatch, getState) => {
     axios
-      .post(`${baseURL}${entertainment.register}`, body, headers)
+      .post(`${baseURL2}${entertainment.register}`, body, headers)
       .then(function(response) {
         console.log("response from registring",response);
         if (response.data.status === 201) {
@@ -97,10 +97,10 @@ function sendOtp(num) {
   };
   return (dispatch, getState) => {
     axios
-      .get(`${baseURL}${entertainment.otp}${num}&type=3`, headers)
+      .get(`${baseURL2}${entertainment.otp}${num}&type=3`, headers)
       .then((response) => {
         console.log("submission mobile",response);
-        if (response.data.status === 404) {
+        if (response.status === 200) {
           dispatch({ type: userConstants.OTP_MODEL_SHOW });
         }
       })
@@ -118,7 +118,7 @@ function forgotPwd(type, value) {
   };
   return (dispatch, getState) => {
     axios
-      .get(`${baseURL}${entertainment.resetPwd}${type}=${value}&type=${type}`, headers)
+      .get(`${baseURL2}${entertainment.resetPwd}${type}=${value}&type=${type}`, headers)
       .then((response) => {
         console.log("submission mobile",response);
         if (response.data.status === 200) {
@@ -149,7 +149,7 @@ function getuserbyid(token=localStorage.getItem('UserToken')) {
   return (dispatch, getState) => {
     return new Promise(function(resolve, reject) {
       axios
-        .get(`${baseURL}${entertainment.profile}`, {
+        .get(`${baseURL2}${entertainment.profile}`, {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then(function(response) {
@@ -180,7 +180,7 @@ function signoutUser(token) {
   return (dispatch, getState) => {
     axios
       .post(
-        `${baseURL}${entertainment.logout}`,
+        `${baseURL2}${entertainment.logout}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )

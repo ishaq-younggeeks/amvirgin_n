@@ -124,9 +124,9 @@ class AddProduct extends Component {
       if(this.state.stock.trim()==='')
         errors.stock = 'stock is required';
         if(this.state.procurementSla==='')
-        errors.procurementSla = 'procurementSla is Required';
+        errors.procurementSla = 'Procurement SLA is Required';
           else if(parseInt(this.state.procurementSla)>2)
-          errors.procurementSla = 'procurementSla may not be greater than 2';
+          errors.procurementSla = 'Procurement SLA may not be greater than 2';
       if(parseInt(this.state.maxQuantityPerOrder)>parseInt(this.state.stock) && parseInt(this.state.stock)!==0)
         errors.maxQuantityPerOrder =  `max qty per order should be less than or equal to ${this.state.stock}`;
       else  if(parseInt(this.state.maxQuantityPerOrder)>parseInt(this.state.stock) && parseInt(this.state.stock)===0)
@@ -1130,7 +1130,7 @@ class AddProduct extends Component {
                   </div>
                   <div className="col-auto colwidth50">
                     <label className="mr-sm-2" htmlFor="lowStockThreshold" style={{ color: "#000" }}>
-                      Low Stock Threshold
+                      Low Stock Threshold<span style={{ color: '#ff0000' }}>*</span>
                     </label>
                     <input type="number" min="0" name="lowStockThreshold" className="form-control" onChange={this.onChangeHandler} value={this.state.lowStockThreshold}/>
                     {errors.lowStockThreshold && <div className="alert alert-danger">{errors.lowStockThreshold}</div>}
@@ -1172,7 +1172,7 @@ class AddProduct extends Component {
                   </div>
                   <div className="col-auto colwidth50">
                     <label className="mr-sm-2" htmlFor="maxQuantityPerOrder" style={{ color: "#000" }}>
-                      Maximum Quantity per order
+                      Maximum Quantity per order<span style={{ color: '#ff0000' }}>*</span>
                     </label>
                     <input type="number" min="0" name="maxQuantityPerOrder" className="form-control" onChange={this.onChangeHandler} value={this.state.maxQuantityPerOrder}/>
                     {errors.maxQuantityPerOrder && <div className="alert alert-danger">{errors.maxQuantityPerOrder}</div>}
@@ -1413,10 +1413,10 @@ class AddProduct extends Component {
           <div className="variantContainer">
             <div className="variant">
             <div className="variant-child1">
-              <p>Creating variant makes product togther</p>
+              <p>Creating variant makes product together</p>
             </div>
             <div className="createVarient">
-              <button className="btn btn-primary " onClick={this.openvariantDialog} disabled={this.state.variantButton}>Create Varient</button>
+              <button className="btn btn-primary " onClick={this.openvariantDialog} disabled={this.state.variantButton}>Create Variant</button>
             </div>
             </div>
           </div>

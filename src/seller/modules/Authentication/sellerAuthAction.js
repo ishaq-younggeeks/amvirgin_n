@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseURL } from "../../../credential.json";
+import { baseURL2 } from "../../../credential.json";
 import {seller} from ".././../../common/apiConstants";
 
 export const login = credentials => {
@@ -7,7 +7,7 @@ export const login = credentials => {
     //make async calls here
     try {
       const res = await axios
-        .post(`${baseURL}${seller.login}`, credentials)
+        .post(`${baseURL2}${seller.login}`, credentials)
         .then(res => {
           if (
             res.data.status === 404 ||
@@ -45,7 +45,7 @@ export const getSellerProfile = () => {
         }
       };
       try {
-        const res = await axios.get(`${baseURL}${seller.profile}`, config);
+        const res = await axios.get(`${baseURL2}${seller.profile}`, config);
         if (res.status === 401) {
           localStorage.removeItem("token");
           dispatch({
@@ -68,6 +68,29 @@ export const getSellerProfile = () => {
   };
 };
 
+
+export const sendSellerOtp = (num) => {
+  var headers = {
+    "Content-Type": "application/json"
+  };
+  return (dispatch, getState) => {
+    axios
+      .get(`${baseURL2}${seller.otp}${num}&type=3`, headers)
+      .then((response) => {
+        console.log("submission mobile",response);
+        if (response.status === 200) {
+          dispatch({ 
+          type: "OTP_MODEL_SHOW",
+          payload: true 
+        });
+        }
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
+}
+
 export const logout = token => {
   return (dispatch, getState) => {
     if (token) {
@@ -77,7 +100,7 @@ export const logout = token => {
         }
       };
       axios
-        .post(`${baseURL}${seller.logout}`, {}, config)
+        .post(`${baseURL2}${seller.logout}`, {}, config)
         .then(() => {
           localStorage.removeItem('token');
           dispatch({
@@ -109,35 +132,51 @@ export const registration = credentials => {
       otp: credentials.otp
     };
     return axios
-      .get(`${baseURL}${seller.registration}=${sellerCredentials.email}&type=1`)
-      .then(res => {
-        if (res.data.status === 409) {
-          console.log(res.data);
-          dispatch({
-            type: "SELLER_ALREADY_REGISTERED",
-            payload: res.data
-          });
-        } else if (res.data.status === 404) {
-          axios({
-            method: "post",
-            url: `${baseURL}/seller/register`,
-            data: sellerCredentials
-          }).then(res => {
-            if (res.data.status === 201) {
-              localStorage.setItem("token", res.data.data.token);
-              dispatch({
-                type: "SELLER_REGISTRATION_SUCCESS",
-                payload: res.data.data
-              });
-            } else {
-              dispatch({
-                type: "SELLER_REGISTRATION_ERROR",
-                payload: res.data
-              });
-            }
-          });
-        }
+      .post(`${baseURL2}${seller.registration}`, sellerCredentials)
+      .then((res) => {
+        console.log(res);
+        if (res.data.status === 201) {
+                  localStorage.setItem("token", res.data.data.token);
+                  dispatch({
+                    type: "SELLER_REGISTRATION_SUCCESS",
+                    payload: res.data.data
+                  })
+                }
+                if (res.data.status === 401 || 400) {
+                  dispatch({ 
+                  type: "OTP_ERROR",
+                  payload: res.data.message 
+                });
+                }        
       })
+      // .then(res => {
+      //   if (res.data.status === 409) {
+      //     console.log(res.data);
+      //     dispatch({
+      //       type: "SELLER_ALREADY_REGISTERED",
+      //       payload: res.data
+      //     });
+      //   } else if (res.data.status === 404) {
+      //     axios({
+      //       method: "post",
+      //       url: `${baseURL2}/seller/register`,
+      //       data: sellerCredentials
+      //     }).then(res => {
+      //       if (res.data.status === 201) {
+      //         localStorage.setItem("token", res.data.data.token);
+      //         dispatch({
+      //           type: "SELLER_REGISTRATION_SUCCESS",
+      //           payload: res.data.data
+      //         });
+      //       } else {
+      //         dispatch({
+      //           type: "SELLER_REGISTRATION_ERROR",
+      //           payload: res.data
+      //         });
+      //       }
+      //     });
+      //   }
+      // })
       .catch(err => {
         console.log(err);
         dispatch({
