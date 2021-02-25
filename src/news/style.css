@@ -171,6 +171,7 @@
 .blogsection{
     margin: 0px 4%;
     width: 92%!important;
+    min-height: 250px;
 }
 
 .newsvideo{

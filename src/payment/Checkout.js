@@ -27,7 +27,8 @@ componentDidMount() {
     this.setState({amount:e.target.value})
   }
 
-  openCheckout = () => {
+  openCheckout = (e) => {
+    e.preventDefault()
     let options = {
       "key": 'rzp_test_iRpMdLQpCCvhrE',
       "key_secret": 'Hb1DIYDKOL54Gyfbj7sMsJVf',
@@ -36,6 +37,7 @@ componentDidMount() {
       "order_id": this.props.razorPay,
       "image": process.env.PUBLIC_URL + "/img/default.png",
       "handler": (response) => {
+        console.log("err rzpy", response)
         this.props.placeOrderFinal(this.props.addressId, this.props.paymentMethod, response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature, this.props.history);
       },
       "prefill": {
@@ -48,11 +50,23 @@ componentDidMount() {
       },
       "theme": {
         "color": "#F37254"
-      }
+      },
+      "modal":{
+        "ondismiss":() => {
+          // window.location.replace("fgyj")
+          window.location.reload()
+          // document.querySelector(".razorpay-backdrop").style.display = "none";
+        }
+    }
     };
 
     var rzp1 = new window.Razorpay(options);
         rzp1.open();
+        rzp1.on('payment.failed', function (response){
+          console.log("calling error razpy",response)
+          console(response.error.code);
+        
+  });
   }
   render() {
     console.log("Razorpay Order ID :", this.props.razorPay);

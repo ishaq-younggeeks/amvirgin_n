@@ -375,9 +375,8 @@ class Show extends Component {
                 </button> */}
                 <button
                   className={
-                    this.state.isOpen
-                      ? "tablinks episodebtn active"
-                      : "tablinks episodebtn"
+                    "tablinks episodebtn active"
+
                   }
                   onClick={this.episodeCredit}
                 >

@@ -37,6 +37,13 @@ class ProductCategories extends React.Component {
     this.setState({ categoryId: data["categoryId"], hist: data["productHistory"] }, console.log("categoryId", data["categoryId"]))
     this.state.refresh = true
   }
+  componentDidUpdate(prevProps){
+    if(prevProps.match!==this.props.match){
+      console.log("calling did")
+      this.props.applicableFilter(this.props.match.params.pat1)
+    }
+
+  }
 
   handleChange = (e) => {
 
