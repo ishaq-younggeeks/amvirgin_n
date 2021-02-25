@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseURL,baseURL2 } from "../credential.json";
+import { baseURL } from "../credential.json";
 
 
 export const getSessionProfile = () => {
@@ -7,7 +7,7 @@ export const getSessionProfile = () => {
   return async dispatch => {
     try {
       const session = localStorage.getItem("session");
-      let url = `${baseURL2}/customer/sessions`
+      let url = `${baseURL}/customer/sessions`
       if(session!=="undefined"){
 
           let res = await axios.get(`${url}/${session}`)

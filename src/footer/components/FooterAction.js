@@ -1,6 +1,6 @@
 import axios from "axios";
 import { footer } from "../../common/apiConstants";
-import {baseURL2, baseURL3} from "../../credential.json";
+import {baseURL, baseURL3} from "../../credential.json";
 import {PRIVACY_POLICY, ABOUT_US, TERMS_CONDITION, FAQ, CANCELLATION_POLICY, RETURN_POLICY, SHIPPING_POLICY, CONTACT_US} from "./FooterConstants";
 
 export const privacyPolicy = () => {
@@ -146,7 +146,7 @@ export const contactUs = (name, email, mobile, query) => {
         }
         
         console.log("Params :", params);
-        axios.post(`${baseURL2}${footer.contact}`, params, config)
+        axios.post(`${baseURL}${footer.contact}`, params, config)
         .then((res) => {
             console.log(res);
             if(res.data.status === 200 || 201){

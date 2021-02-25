@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { shop } from '../../../common/apiConstants';
-import { baseURL,baseURL2 } from "../../../credential.json";
+import { baseURL } from "../../../credential.json";
 import {PRODUCT_DETAIL} from './ProductDetailConstant'
 
 
 export const productDetail = (productId,history) => {
   return (dispatch) => {
     console.log('calling productDetails',productId)
-    let url = `${baseURL2}${shop.products}`;
+    let url = `${baseURL}${shop.products}`;
     axios.get(`${url}/${productId}`).then(res => {
       let productDetail= []
       productDetail = res;
@@ -32,7 +32,7 @@ export const productDetail = (productId,history) => {
 export const productDetailSimilar = (productId,history) => {
   return (dispatch) => {
     console.log('calling productDetails',productId)
-    let url = `${baseURL2}${shop.products}`;
+    let url = `${baseURL}${shop.products}`;
     axios.get(`${url}/${productId}`).then(res => {
       let productDetail= []
       productDetail = res;

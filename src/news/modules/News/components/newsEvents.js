@@ -29,16 +29,16 @@ class NewsEvents extends React.Component {
               {this.props.category && this.props.category.categories
                 ? this.props.category.categories.map((item, i) => (
                     <li className={`nav-item + ${i === this.state.active_class ? "active-news" : ""}`}>
-                      <a
+                      <Link
                         className={
                           "nav-link " +
                           (i % 2 === 0 ? "colororange" : "coloryellow")
                         }
-                        href="#" onClick={() => (this.props.newsListingFnc(item.key, "1"), this.setState({active_class: i}))}
+                        href="" onClick={() => (this.props.newsListingFnc(item.key, "1"), this.setState({active_class: i}))}
                       >
                         {" "}
                         {item.name} <span className="sr-only">(current)</span>
-                      </a>
+                      </Link>
                     </li>
                   ))
                 : null}

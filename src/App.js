@@ -96,7 +96,8 @@ class App extends Component {
               component={ShoppingProductContainer}
             />
             <Route exact path="/productdetail/:pat1" component={ViewShopProductDetails} />
-            
+            {userToken && EntertainmentRoute.map((item,i) =>
+              <Route exact {...item} /> )}
             {/* Entertainment Routes */}
             <Route exact path="/login" component={Login}></Route>
             <Route exact path="/video/:videoId" component={Show}></Route>
@@ -111,8 +112,7 @@ class App extends Component {
               exact
               component={SellerRegistration}
             />
-            {userToken && EntertainmentRoute.map((item,i) =>
-              <Route exact {...item} /> )}
+           
             {userToken  &&  ShopRoute.map((item, i) => 
               <Route exact {...item} /> )
               }
