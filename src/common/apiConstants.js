@@ -82,7 +82,7 @@ export const seller = {
 
     //settings
     business:"/seller/profile/business-details",
-    bank:"/seller/profile/business-details",
+    bank:"/seller/profile/bank-details",
     mou:"/seller/profile/mou/",
 }
 

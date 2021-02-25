@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseURL2 } from "../../../credential.json";
+import {baseURL}   from "../../../credential.json"
 import {seller} from ".././../../common/apiConstants";
 
 export const login = credentials => {
@@ -7,7 +7,7 @@ export const login = credentials => {
     //make async calls here
     try {
       const res = await axios
-        .post(`${baseURL2}${seller.login}`, credentials)
+        .post(`${baseURL}${seller.login}`, credentials)
         .then(res => {
           if (
             res.data.status === 404 ||
@@ -45,7 +45,7 @@ export const getSellerProfile = () => {
         }
       };
       try {
-        const res = await axios.get(`${baseURL2}${seller.profile}`, config);
+        const res = await axios.get(`${baseURL}${seller.profile}`, config);
         if (res.status === 401) {
           localStorage.removeItem("token");
           dispatch({
@@ -75,7 +75,7 @@ export const sendSellerOtp = (num) => {
   };
   return (dispatch, getState) => {
     axios
-      .get(`${baseURL2}${seller.otp}${num}&type=3`, headers)
+      .get(`${baseURL}${seller.otp}${num}&type=3`, headers)
       .then((response) => {
         console.log("submission mobile",response);
         if (response.status === 200) {
@@ -100,7 +100,7 @@ export const logout = token => {
         }
       };
       axios
-        .post(`${baseURL2}${seller.logout}`, {}, config)
+        .post(`${baseURL}${seller.logout}`, {}, config)
         .then(() => {
           localStorage.removeItem('token');
           dispatch({
@@ -132,7 +132,7 @@ export const registration = credentials => {
       otp: credentials.otp
     };
     return axios
-      .post(`${baseURL2}${seller.registration}`, sellerCredentials)
+      .post(`${baseURL}${seller.registration}`, sellerCredentials)
       .then((res) => {
         console.log(res);
         if (res.data.status === 201) {
@@ -159,7 +159,7 @@ export const registration = credentials => {
       //   } else if (res.data.status === 404) {
       //     axios({
       //       method: "post",
-      //       url: `${baseURL2}/seller/register`,
+      //       url: `${baseURL}/seller/register`,
       //       data: sellerCredentials
       //     }).then(res => {
       //       if (res.data.status === 201) {
