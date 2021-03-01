@@ -165,7 +165,8 @@ class BusinessDetails extends React.Component {
                 {bankDetails && Object.keys(bankDetails).length ? (
                   <div
                     className=" profile-tab"
-                    style={{ textAlign: "justify" }}
+                    style={{ textAlign: "justify",overflow: "auto",
+                     height:"400px" }}
                   >
                     <div className="row">
                       <div className="col-md-10">

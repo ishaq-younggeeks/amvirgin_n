@@ -145,7 +145,7 @@ class ProductBrand extends Component {
                     
                   Select one of your Approved brands from below :
                   <ul>
-                    {this.props.approvedbrand && this.props.approvedbrand.length? this.props.approvedbrand.map(res=>{
+                    {!this.props.isBrandLoading? this.props.approvedbrand && this.props.approvedbrand.length? this.props.approvedbrand.map(res=>{
                       {
                         return(
                           res.status==="approved"?
@@ -157,7 +157,8 @@ class ProductBrand extends Component {
                         
                       }
 
-                    }):<li style={{color:"dodgerblue"}}>no approved brand </li>}
+                    }):<li style={{color:"dodgerblue"}}>no approved brand </li>
+                  :null}
                   
                   </ul>  
                          
@@ -227,6 +228,7 @@ const mapStateToProps = state => {
   return {
     BrandData: state.sellerAddProduct.BrandDetails,
     approvedbrand: state.sellerAddProduct.approvedbrand,
+    isBrandLoading:state.sellerAddProduct.isBrandLoading
   };
 };
 

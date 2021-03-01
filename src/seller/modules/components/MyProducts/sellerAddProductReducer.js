@@ -7,6 +7,7 @@ const intialState = {
   product: {},
   BrandList:[],
   BrandDetails:[],
+  isBrandLoading:false,
   approvedbrand:[],
   addProductError: "",
   getProductError: "",
@@ -32,8 +33,13 @@ const sellerAddProductReducer = (state = intialState, action) => {
       case "BrandApproved":
       return {
         ...state,
+        isBrandLoading:false,
         approvedbrand:action.payload
       }
+      case "isBrandLoading":
+        return {
+          isBrandLoading:true
+        }
       case "BrandDetails":
         return {
           ...state,

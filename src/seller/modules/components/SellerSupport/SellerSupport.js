@@ -8,6 +8,7 @@ import CreateTicket from './CreateTicket';
 import Modal from "react-modal";
 import {connect} from 'react-redux';
 import {saveTicketDetails,clearSavedStatus} from './SellerSupportAction';
+import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
 class SellerSupport extends React.Component {
   constructor(props) {
@@ -25,10 +26,22 @@ class SellerSupport extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.savedStatus!==this.props.savedStatus){
+      if(this.props.savedStatus.status===200){
+        this.setState({open:false})
+        ToastsStore.success(this.props.savedStatus.message);
+
+      }
+    }
+  }
+
 
   render() {
     
     return (
+      <>
+      <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
       <div>
         <div className="row" style={{marginTop:"5%", marginLeft: "4px", alignItems:"center"}}>
           <h2>Ask for queries</h2>
@@ -71,6 +84,7 @@ class SellerSupport extends React.Component {
         
         {this.state.open?<CreateTicket openCreateTicket={this.openCreateTicket} open={this.state.open} issue={this.state.issue}{...this.props}/>:null}
       </div>
+      </>
     );
   }
 }

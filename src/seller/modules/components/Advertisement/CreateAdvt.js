@@ -13,6 +13,7 @@ export default class CreateAdvt extends Component {
       message: "",
       banner: "",
       previewBanner: "",
+      fileFormat:false
     };
   }
 
@@ -26,20 +27,39 @@ export default class CreateAdvt extends Component {
 
   handleImageChange(e, preview) {
     e.preventDefault();
-    console.log("logo ulpoad", e.target.files);
-    console.log("logo ulpoad", e.target.files);
-    let reader = new FileReader();
-    reader.onloadend = () => {
+    let validObject = ['image/jpeg','image/jpg','image/png']
+    let findIndex = -1
+    if(e.target.files)
+    {
+      findIndex = validObject.findIndex((item) => item === e.target.files[0].type)
+    }
+
+      
+           
+    if( findIndex!== -1 )
+    {
+      this.setState({fileFormat:false})
+      console.log("hitting")
+      let reader = new FileReader();
+      reader.onloadend = () => {
+        this.setState({
+          [preview]: reader.result,
+        });
+      };
+      reader.readAsDataURL(e.target.files[0]);
       this.setState({
-        [preview]: reader.result,
+        [e.target.name]: e.target.files[0],
       });
-    };
-    reader.readAsDataURL(e.target.files[0]);
-    this.setState({
-      [e.target.name]: e.target.files[0],
-    });
-    console.log(e.target);
-    //this.saveData();
+      console.log(e.target);
+      //this.saveData();
+    }
+
+    else 
+    {
+      this.setState({fileFormat:true})
+    }
+
+    
   }
 
   onChangeHandler = (e) => {
@@ -180,6 +200,7 @@ export default class CreateAdvt extends Component {
                 >
                   upload
                 </button>
+                {this.state.fileFormat && <p style={{color:"red"}}>Invalid file format</p>}
               </div>
             <div
               className="col-sm-4"
@@ -195,6 +216,7 @@ export default class CreateAdvt extends Component {
                 style={{ height: "200px", width: "180px" }}
                 id="previewImg"
               />
+              
             </div>
           </div>
           <div className="row justify-content-center">
@@ -213,6 +235,7 @@ export default class CreateAdvt extends Component {
           </div>
         </form>
         <div>
+          
                     {this.props.savedStatus && <p style={{color:this.props.savedStatus.status===200?"green":"red"}}>{this.props.savedStatus.message}</p>}
                 </div>
         
