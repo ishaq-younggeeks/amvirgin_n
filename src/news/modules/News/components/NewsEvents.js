@@ -65,7 +65,7 @@ class NewsEvents extends React.Component {
                         <Link to="/news/details">
                         <a href="#" onClick={() => localStorage.setItem("newsId", item.key)}>
                           <div>
-                            <img src={item.thumbnail} alt="news1" style={{width:"76.3%"}}/>
+                            <img src={item.thumbnail} alt="news1" style={{width:"100%"}}/>
                           </div>
                           <div className="details">
                             <h3>

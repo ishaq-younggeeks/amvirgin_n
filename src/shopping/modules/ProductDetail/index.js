@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import ProductDetail from './ProductDetail';
 import {productDetail} from './ProductDetailAction';
 import {addtoCart} from "../Cart/shoppingCartAction";
+import {productData} from '../Home/shoppingHomeReducer';
 
 
 const mapStateToProps = (state) => {
@@ -14,7 +15,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return({
         addtoCart:(id) => dispatch(addtoCart(id)),
-        getproduct:(id) => dispatch(productDetail(id))
+        getproduct:(id) => dispatch(productDetail(id)),
+        productData:(id,sortKey,currentPage,history) => dispatch(productData(id,sortKey,currentPage,history)),
+
 	});
 };
 

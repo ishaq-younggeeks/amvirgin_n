@@ -45,6 +45,10 @@ zoomImage = (e,index) => {
 
 }
 
+callApiProductData = (key) => {
+	this.props.productData(key,{sortBy:"relevance",page:1},this.props.history)
+ }
+
 render() {
 	
 	const { productDetail } = this.props;
@@ -73,9 +77,8 @@ render() {
         <div className="productsection container">
 			<ul className="breadcrumb">
 				<li><Link to="/">Home</Link></li>
-				<li><Link to="/">Men</Link></li>
-				<li><Link to="/">Clothing</Link></li>
-				<li>Hoodies</li>
+				<li><Link to="/shop">Shop</Link></li>
+				<li onClick={()=>{this.callApiProductData(productDetail.payload.category.key)}} style={{cursor:"pointer"}}>{productDetail.payload.category.name}</li>
 			</ul>
 			<div className="row">
 				<div className="col-md-6">
