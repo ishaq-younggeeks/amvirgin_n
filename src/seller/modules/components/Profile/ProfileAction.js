@@ -84,10 +84,23 @@ export const ChangePassword =(passwordData) => dispatch =>{
     .then(res => {
       let data = res.data.data
       console.log("update profile",res);
-      dispatch({
-        type: FETCH_PROFILE,
-        payload: data
-      })
+      if(res.data.status === 200)
+      {
+        const {message}=res.data
+        dispatch({
+          type: PROFILE_SAVED_STATUS,
+          payload: {
+            status:200,
+            message
+          }
+        })
+        dispatch({
+          type: FETCH_PROFILE,
+          payload: data
+        })
+
+      }
+     
     })
     .catch(error => {
       console.log('Error in deleting Wishlist', error)

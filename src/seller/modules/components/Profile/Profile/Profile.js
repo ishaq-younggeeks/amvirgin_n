@@ -5,6 +5,7 @@ import { baseURL } from "../../../../../credential.json";
 import EditProfile from "./EditProfile";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
+import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
 class Profile extends React.Component {
   profile_image = createRef();
@@ -71,9 +72,15 @@ class Profile extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.savedStatus && this.props.savedStatus.status === 200) {
+    if (prevProps.savedStatus !==this.props.savedStatus) {
       //Perform some operation here
-      this.classMethod();
+      if(this.props.savedStatus.status===200)
+      {
+        ToastsStore.success(this.props.savedStatus.message);
+        console.log("calling it after save")
+        this.classMethod();
+      }
+      
     }
   }
 
@@ -222,6 +229,9 @@ class Profile extends React.Component {
       },
     };
     return (
+      <>
+            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
+
       <div
         className="container-fliud emp-profile up6per"
         style={{ marginTop: "6%" }}
@@ -520,6 +530,7 @@ class Profile extends React.Component {
           </div>
         </div>
       </div>
+      </>
     );
   }
 }
