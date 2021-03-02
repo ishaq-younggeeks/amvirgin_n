@@ -80,30 +80,42 @@ export const Fetchdata = () => dispatch => {
 export const ChangePassword =(passwordData) => dispatch =>{
   let token = localStorage.getItem('token')
 
-  Axios.post(`${baseURL}${seller.sellerProfile}`,passwordData, { headers: { "Authorization": `Bearer ${token}` } })
+  Axios.put(`${baseURL}${seller.sellerPassword}`,passwordData, { headers: { "Authorization": `Bearer ${token}` } })
     .then(res => {
       let data = res.data.data
       console.log("update profile",res);
-      if(res.data.status === 200)
-      {
-        const {message}=res.data
-        dispatch({
+      const {status,message} =res.data
+       dispatch({
           type: PROFILE_SAVED_STATUS,
           payload: {
-            status:200,
-            message
+            status:status,
+            message:message
           }
         })
-        dispatch({
-          type: FETCH_PROFILE,
-          payload: data
-        })
+      if(res.data.status === 200)
+      {
+        console.log("calling saved ")
+        const {message}=res.data
+       
+        // dispatch({
+        //   type: FETCH_PROFILE,
+        //   payload: data
+        // })
 
       }
      
     })
     .catch(error => {
-      console.log('Error in deleting Wishlist', error)
+      console.log()
+      const {status,message} = error.response.data
+      dispatch({
+        type: PROFILE_SAVED_STATUS,
+        payload: {
+          status:status,
+          message:message
+        }
+      })
+      console.log('Error in change password',status,error.response)
     })
 }
 

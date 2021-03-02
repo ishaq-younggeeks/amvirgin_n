@@ -147,18 +147,7 @@ class Profile extends React.Component {
       confirm: this.state.confirm,
     };
     console.log(data);
-    let token = localStorage.getItem("token");
-    axios
-      .put(`${baseURL}/seller/profile/password`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        let data = res.data.data;
-        console.log("password changed succesfully",res);
-      })
-      .catch((error) => {
-        console.log("Error in deleting Wishlist", error);
-      });
+    this.props.changePassword(data)
   }
 
   emailUpdate(e) {
@@ -228,6 +217,7 @@ class Profile extends React.Component {
         transform: "translate(-50%, -50%)",
       },
     };
+    console.log("current props",this.props.savedStatus)
     return (
       <>
             <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
@@ -524,6 +514,7 @@ class Profile extends React.Component {
                       value="Update password"
                     />
                   </div>
+                  {this.props.savedStatus && <p style={{color:"red"}}>{this.props.savedStatus.message}</p>}
                 </form>
               </Modal>
             </div>

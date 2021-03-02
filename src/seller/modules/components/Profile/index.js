@@ -1,6 +1,6 @@
 import Profile from './Profile/Profile';
 import { connect } from 'react-redux';
-import { uploadDisplay, Fetchdata,updateProfile,clearSavedStatus } from './ProfileAction';
+import { uploadDisplay, Fetchdata,updateProfile,clearSavedStatus,ChangePassword } from './ProfileAction';
 import { countryList,stateList,cityList } from '../MyProducts/sellerAddProductAction'
 
 const mapStateToProps = (state) => {
@@ -23,6 +23,7 @@ const mapDispatchToProps = (dispatch) => {
         cityList: (stateId) => dispatch(cityList(stateId)),
         clearSavedStatus:() => dispatch(clearSavedStatus()),
         updateProfile:(data) => dispatch(updateProfile(data)),
+        changePassword:(data) => dispatch(ChangePassword(data))
 
     });
 }

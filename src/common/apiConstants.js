@@ -70,6 +70,7 @@ export const seller = {
     payments:"/seller/payments/overview",
     transactions:"/seller/payments/transactions",
     sellerProfile:"/seller/profile",
+    sellerPassword:"/seller/profile/password",
 
     //returns
     returns:"/seller/returns/",
