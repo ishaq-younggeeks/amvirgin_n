@@ -33,6 +33,8 @@ class Register extends Component {
         }
     }
     flip(){
+
+        this.props.flip()
         document.querySelector("#flipper").classList.toggle("flip");
     }
     resendotp = () => {

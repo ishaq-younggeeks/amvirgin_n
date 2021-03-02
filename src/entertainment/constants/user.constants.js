@@ -18,5 +18,6 @@ export const userConstants = {
     WRONG_OTP: 'WRONG_OTP',
 
     FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+    INVALID_CREDENTIAL:'INVALID_CREDENTIAL'
     
 }

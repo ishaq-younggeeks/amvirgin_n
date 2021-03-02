@@ -84,7 +84,7 @@ render() {
 				<div className="col-md-6">
 					<div className="productpage">
 						<div className="imgcontainer">
-						<ReactImageMagnify {...imageProps} />	
+						<ReactImageMagnify {...imageProps}  />	
 							<div className="bzoom_wrap">
 								<ul id="" className="" style={{display: "flex",flexDirection:"row",marginTop:"5px"}}>
 									

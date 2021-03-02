@@ -6,7 +6,8 @@ const initialState = {
   loggedIn: false,
   loggingIn: false,
   wrongOTP: null,
-  forgotPwdRes: null
+  forgotPwdRes: null,
+  loginResponse:{}
 }
 
 export const LoginReducer = (state = initialState, action) => {
@@ -19,11 +20,13 @@ export const LoginReducer = (state = initialState, action) => {
         case userConstants.LOGIN_SUCCESS:
           return {
             loggedIn: true,
+            loggingIn:false,
             user: action.user
           };
         case userConstants.NOT_REGISTERED:
           return {
             ...state,
+            loggingIn:false,
             notRegister: "You are not Registered. Please Register."
           };
         case userConstants.WRONG_OTP:
@@ -37,7 +40,21 @@ export const LoginReducer = (state = initialState, action) => {
             forgotPwdRes: "Please check your email/mobile to reset password."
           };    
         case userConstants.LOGIN_FAILURE:
-          return {};
+          return {
+            ...state,
+            loginResponse:action.payload
+          };
+          case userConstants.INVALID_CREDENTIAL:
+          return {
+            ...state,
+            loggingIn: false,
+            loginResponse:action.payload
+          };
+          case "CLEAR_REDUX_STATE":
+            return {
+              ...state,
+              ...action.payload
+            }
         case userConstants.LOGOUT:
           return {};
         default:

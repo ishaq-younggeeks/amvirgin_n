@@ -19,7 +19,8 @@ export const userActions = {
   getuserbyid,
   Recieveuserbyid,
   signoutUser,
-  forgotPwd
+  forgotPwd,
+  clearState
 };
 
 //Consumer Login function
@@ -46,6 +47,10 @@ function login(body) {
         } else if (response.data.status === 404) {
           dispatch({ type: userConstants.NOT_REGISTERED });
         } else if (response.data.status === 401 || 400 ) {
+          dispatch({
+             type: userConstants.INVALID_CREDENTIAL,
+             payload:response.data
+            });
           dispatch({ type: userConstants.WRONG_OTP});
         }
       })
@@ -192,11 +197,19 @@ function signoutUser(token) {
           dispatch(getSessionProfile())
           dispatch(Recieveuserbyid(response.data));
           dispatch({ type: userConstants.UNAUTH_USER });
-
         }
       })
       .catch(function(err) {
         console.log(err);
       });
   };
+}
+
+ function clearState(reduxState) {
+  return dispatch => {
+    dispatch({ 
+      type:"CLEAR_REDUX_STATE",
+      payload:reduxState
+    })
+  }
 }
