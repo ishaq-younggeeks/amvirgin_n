@@ -124,3 +124,7 @@ export const footer = {
     returnPolicy:"/customer/returns",
     cancellationPolicy:" /customer/cancellation"
 }
+
+export const auth = {
+    socialLogin:"/customer/login/social"
+}

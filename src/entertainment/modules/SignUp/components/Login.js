@@ -116,7 +116,7 @@ class Login extends Component {
       if(!isNaN(username)){
           console.log("Inside Logging Button True Username", username)
           localStorage.setItem("username", username.trim())
-          this.props.sendOtp(username.trim())
+          this.props.sendOtp(username.trim(),"login")
           // this.setState({modalIsOpen: true})
       }
     }
@@ -124,6 +124,7 @@ class Login extends Component {
   };
 
   handleOtpSubmitLogin = (e) => {
+
     console.log("working on click")
     e.preventDefault();
     this.setState({ submitted: true });
@@ -154,6 +155,10 @@ class Login extends Component {
     if(prevProps.loggedIn!==this.props.loggedIn){
     this.forceUpdate();
     }
+
+    if(prevProps.otpModal!==this.props.otpModal){
+      this.setState({modalIsOpen:this.props.otpModal})
+    }
   }
 
   render() {
@@ -170,6 +175,9 @@ class Login extends Component {
               <button type="button" className="changeBtn" size="large">Login With Password</button>
           </div>
       )
+      if(loggedIn){
+        return <Redirect to="/"/>
+      }
         return (
           <div className="front">
             <div className="halfleft"><h6 className="title">Sign in</h6></div>
@@ -177,7 +185,7 @@ class Login extends Component {
                 <Link className="flipbutton halfright" id="loginButton" to="#" onClick={this.flip.bind(this)}>Register →</Link>
             </div>
             <form className="loginsignupform">
-                <LoginWithSocial />
+                <LoginWithSocial loginWithSocial={this.props.loginWithSocial}/>
                 <hr className="hrsign" />
                 <h4 className="signwith">or sign in with</h4>
     
@@ -203,7 +211,6 @@ class Login extends Component {
                 </div>
                 <Modal
                 isOpen={this.state.modalIsOpen}
-                onRequestClose={this.closeModal}
                 style={this.customStyles}
                 ariaHideApp={false}
                 >
@@ -254,14 +261,16 @@ class Login extends Component {
 
 const mapStateToProps = state => {
 
-  const { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes,loginResponse  } = state.LoginReducer;
+  const { notRegister,loggingIn, wrongOTP, forgotPwdRes,loginResponse,otpModal} = state.LoginReducer;
+  const {loggedIn} = state.authReducer
   console.log("etfewte",state.LoginReducer)
-  return { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes,loginResponse };
+  return { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes,loginResponse,otpModal };
 }
 const mapDispatchToProps = dispatch => {
   return {
     login: creds => dispatch(userActions.login(creds)),
-    sendOtp: num => dispatch(userActions.sendOtp(num)),
+    loginWithSocial:(params) => dispatch(userActions.loginWithSocial(params)),
+    sendOtp: (num,type) => dispatch(userActions.sendOtp(num,type)),
     forgotPwd: (type, reg) => dispatch(userActions.forgotPwd(type, reg)),
     clearState:(state) => dispatch(userActions.clearState(state))
   };

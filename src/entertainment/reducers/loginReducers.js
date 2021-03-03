@@ -6,6 +6,7 @@ const initialState = {
   loggedIn: false,
   loggingIn: false,
   wrongOTP: null,
+  otpModal:false,
   forgotPwdRes: null,
   loginResponse:{}
 }
@@ -50,6 +51,12 @@ export const LoginReducer = (state = initialState, action) => {
             loggingIn: false,
             loginResponse:action.payload
           };
+          case userConstants.LOGIN_MODAL_STATUS:
+            return {
+              ...state,
+              otpModal:true
+             
+            };
           case "CLEAR_REDUX_STATE":
             return {
               ...state,
