@@ -84,7 +84,7 @@ render() {
 				<div className="col-md-6">
 					<div className="productpage">
 						<div className="imgcontainer">
-						<ReactImageMagnify {...imageProps} />	
+						<ReactImageMagnify {...imageProps} style={{height:"650px"}}/>	
 							<div className="bzoom_wrap">
 								<ul id="" className="" style={{display: "flex",flexDirection:"row",marginTop:"5px"}}>
 									
@@ -227,11 +227,11 @@ render() {
 					</div>
 					<div className="deliveryoption">
 						<h4>Delivery options </h4>
-						<h6>Pincode Availability</h6>
+						{/* <h6>Pincode Availability</h6>
 						<form autoComplete="off">
 							<input type="text" placeholder="Enter pincode" className="pincode-code" value="" style={{ width: 'auto' }} name="pincode" />
 							<input type="submit" className="pincode-check pincode-button" style={{ width: 'auto' }} value="Check" />
-						</form>
+						</form> */}
 						<ul>
 							<li>100% Original Products</li>
 							<li>Free Delivery on order above Rs. 1199</li>

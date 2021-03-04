@@ -13,6 +13,7 @@ class FAQ extends Component {
     }
   
     render() {
+      console.log("FAQ :", this.props.faqData);
       return (
         <>
         <Header />
@@ -27,7 +28,7 @@ class FAQ extends Component {
   
   const mapStateToProps = (state) => {
     return {
-        faqData: state.Footer.faqData
+        faqData: state.Footer.faq
     };
   };
   

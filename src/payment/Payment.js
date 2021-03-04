@@ -47,10 +47,10 @@ class Payment extends Component {
         return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"upi"} paymentMethod={"4"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       case "Wallet":
         return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"wallet"} paymentMethod={"5"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
-      case "Gift":
-        return <Gift addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={""} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
-      case "RazorPay":
-        return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={""} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
+      // case "Gift":
+      //   return <Gift addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={""} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
+      // case "RazorPay":
+      //   return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={""} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
       default:
         return <Checkout addressId={this.props.addressId} total={this.props.total} razorPay={this.props.razorPay} prefillMethod={"card"} paymentMethod={"1"} placeOrderFinal={this.props.placeOrderFinal}{...this.props}/>;
     }
@@ -128,7 +128,7 @@ class Payment extends Component {
                 {" "}
                 WALLETS{" "}
               </button>
-              <button
+              {/* <button
                 className={
                   this.state.render === "RazorPay"
                     ? this.activeClass()
@@ -149,7 +149,7 @@ class Payment extends Component {
               >
                 {" "}
                 GIFT CARD{" "}
-              </button>
+              </button> */}
             </div>
             {this._renderPaymentComp()}
           </div>

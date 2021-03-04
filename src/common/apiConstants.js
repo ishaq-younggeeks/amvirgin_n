@@ -121,5 +121,5 @@ export const footer = {
     shippingPolicy:"/customer/shipping",
     faq:"/customer/faq",
     returnPolicy:"/customer/returns",
-    cancellationPolicy:" /customer/cancellation"
+    cancellationPolicy:"/customer/cancellation"
 }

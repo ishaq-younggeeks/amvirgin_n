@@ -172,6 +172,9 @@ class Register extends Component {
                         {submitted && !user.email &&
                             <div className="alert error alert-danger">Email is required</div>
                         }
+                         {submitted && (!/\S+@\S+\.\S+/.test(user.email)) &&
+                            <div className="alert error alert-danger">Invalid Email</div>
+                        }
                     </div>
                     <div className="input-field">
                         {/* <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} onBlur={this.handleBlur} id="number" required/> */}

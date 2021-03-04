@@ -15,8 +15,6 @@ class Footer extends Component {
                                 <div className="col-md-4 footerline">
                                     <ul style={{padding:'inherit'}}><h4 style={{color:'#fff'}}>Legal</h4>
                                         <li><Link style={{color:'#fff'}} to="/faq">FAQ</Link></li>
-                                        <li><Link style={{color:'#fff'}} to="/cancellationpolicy">Cancellation</Link></li>
-                                        <li><Link style={{color:'#fff'}} to="/returnpolicy">Returns</Link></li>
                                         <li><Link style={{color:'#fff'}} to="/privacypolicy">Privacy Policy</Link></li>
                                         <li><Link style={{color:'#fff'}} to="/termsconditions">Terms &amp; Conditions</Link></li>
                                         <li><Link style={{color:'#fff'}} to="/aboutus">About Us</Link></li>

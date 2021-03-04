@@ -36,21 +36,12 @@ class Footer extends Component {
                 <Link to="shop"> Useful Links </Link>
               </p>
               <p>
-                <Link to="/contact">Contact Us</Link>
+                {this.props.loggedIn ? (
+                  <Link to="/myprofile/myOrders">Track Orders</Link>
+                  ) : null}
               </p>
               <p>
                 <Link to="/faq">FAQ</Link>
-              </p>
-              <p>
-                <Link to="/termsconditions">T&C</Link>
-              </p>
-              <p>
-                <Link to="/termsconditions">Terms of use</Link>
-              </p>
-              <p>
-                {this.props.loggedIn ? (
-                  <Link to="/myprofile/myOrders">Track Orders</Link>
-                ) : null}
               </p>
               <p>
                 <Link to="/shippingpolicy">Shipping</Link>
@@ -63,6 +54,15 @@ class Footer extends Component {
               </p>
               <p>
                 <Link to="/privacypolicy">Privacy Policy</Link>
+              </p>
+              <p>
+                  <Link to="/termsconditions">Terms & Conditions</Link>
+              </p>
+              <p>
+                  <Link to="/aboutus">About Us</Link>
+              </p>
+              <p>
+              <Link to="/contact">Contact Us</Link>
               </p>
             </div>
             <div className="part2">

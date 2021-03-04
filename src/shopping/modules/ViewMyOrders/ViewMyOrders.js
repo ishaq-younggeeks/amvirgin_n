@@ -39,7 +39,9 @@ class ViewMyOrders extends Component {
           ? allMyOrders.map((item, i) => (
             <OrderList  items={item}/>
             ))
-          : null}
+          :<div style={{ margin: "2rem 2rem 0 2rem" }}>
+          <h3 style={{ color: "#ce3838" }}>No Orders Placed Yet.</h3>
+        </div>}
       </>
     );
   }

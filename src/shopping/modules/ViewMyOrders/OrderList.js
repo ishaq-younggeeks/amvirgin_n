@@ -20,9 +20,9 @@ import { Link } from 'react-router-dom';
             style={{ height: "170px", alignItem: "center" }}
           >
             <div className="col-sm-1">
-              {items.details.image ? (
+              {item3.product ? (
                 <img
-                  src={items.details.image}
+                  src={item3.product.image}
                   style={{
                     width: "9rem",
                     objectFit: "cover",
