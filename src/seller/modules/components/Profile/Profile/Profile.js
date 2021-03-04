@@ -5,6 +5,7 @@ import { baseURL } from "../../../../../credential.json";
 import EditProfile from "./EditProfile";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
+import { ToastsContainer, ToastsStore, ToastsContainerPosition } from 'react-toasts';
 
 class Profile extends React.Component {
   profile_image = createRef();
@@ -71,9 +72,15 @@ class Profile extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.savedStatus && this.props.savedStatus.status === 200) {
+    if (prevProps.savedStatus !==this.props.savedStatus) {
       //Perform some operation here
-      this.classMethod();
+      if(this.props.savedStatus.status===200)
+      {
+        ToastsStore.success(this.props.savedStatus.message);
+        console.log("calling it after save")
+        this.classMethod();
+      }
+      
     }
   }
 
@@ -140,18 +147,7 @@ class Profile extends React.Component {
       confirm: this.state.confirm,
     };
     console.log(data);
-    let token = localStorage.getItem("token");
-    axios
-      .put(`${baseURL}/seller/profile/password`, data, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        let data = res.data.data;
-        console.log("password changed succesfully",res);
-      })
-      .catch((error) => {
-        console.log("Error in deleting Wishlist", error);
-      });
+    this.props.changePassword(data)
   }
 
   emailUpdate(e) {
@@ -221,7 +217,11 @@ class Profile extends React.Component {
         transform: "translate(-50%, -50%)",
       },
     };
+    console.log("current props",this.props.savedStatus)
     return (
+      <>
+            <ToastsContainer store={ToastsStore} position={ToastsContainerPosition.TOP_RIGHT} />
+
       <div
         className="container-fliud emp-profile up6per"
         style={{ marginTop: "6%" }}
@@ -514,12 +514,14 @@ class Profile extends React.Component {
                       value="Update password"
                     />
                   </div>
+                  {this.props.savedStatus && <p style={{color:"red"}}>{this.props.savedStatus.message}</p>}
                 </form>
               </Modal>
             </div>
           </div>
         </div>
       </div>
+      </>
     );
   }
 }

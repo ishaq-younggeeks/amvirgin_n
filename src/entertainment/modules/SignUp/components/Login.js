@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { userActions } from "../../../actions";
 import LoginWithSocial from './LoginWithSocial';
 import Modal from 'react-modal';
+import Loader from "react-loader-spinner";
 
 class Login extends Component {
   constructor(props) {
@@ -36,6 +37,9 @@ class Login extends Component {
   }
 
   handleForOtp = () => {
+    this.props.clearState({
+      loginResponse:{}
+    })
     this.setState({loginBtn:!this.state.loginBtn})
   }
 
@@ -112,14 +116,16 @@ class Login extends Component {
       if(!isNaN(username)){
           console.log("Inside Logging Button True Username", username)
           localStorage.setItem("username", username.trim())
-          this.props.sendOtp(username.trim())
-          this.setState({modalIsOpen: true})
+          this.props.sendOtp(username.trim(),"login")
+          // this.setState({modalIsOpen: true})
       }
     }
     }
   };
 
   handleOtpSubmitLogin = (e) => {
+
+    console.log("working on click")
     e.preventDefault();
     this.setState({ submitted: true });
     const { username, otp } = this.state;
@@ -149,12 +155,16 @@ class Login extends Component {
     if(prevProps.loggedIn!==this.props.loggedIn){
     this.forceUpdate();
     }
+
+    if(prevProps.otpModal!==this.props.otpModal){
+      this.setState({modalIsOpen:this.props.otpModal})
+    }
   }
 
   render() {
-    const { notRegister, loggingIn, otpmodel, wrongOTP, forgotPwdRes } = this.props;
+    const { notRegister, loggingIn, otpmodel,loggedIn, wrongOTP, forgotPwdRes,loginResponse } = this.props;
     const { username, password, submitted } = this.state;
-    console.log("Forgot Password Res :", forgotPwdRes)
+    console.log("Forgot Password Res :", this.props)
     const loginWithOtp = (
       <div>
           <button type="button" className="changeBtn" size="large">Login With OTP</button>
@@ -165,7 +175,9 @@ class Login extends Component {
               <button type="button" className="changeBtn" size="large">Login With Password</button>
           </div>
       )
-      // if(!this.props.loggedIn){ 
+      if(loggedIn){
+        return <Redirect to="/"/>
+      }
         return (
           <div className="front">
             <div className="halfleft"><h6 className="title">Sign in</h6></div>
@@ -173,7 +185,7 @@ class Login extends Component {
                 <Link className="flipbutton halfright" id="loginButton" to="#" onClick={this.flip.bind(this)}>Register →</Link>
             </div>
             <form className="loginsignupform">
-                <LoginWithSocial />
+                <LoginWithSocial loginWithSocial={this.props.loginWithSocial}/>
                 <hr className="hrsign" />
                 <h4 className="signwith">or sign in with</h4>
     
@@ -199,11 +211,10 @@ class Login extends Component {
                 </div>
                 <Modal
                 isOpen={this.state.modalIsOpen}
-                onRequestClose={this.closeModal}
                 style={this.customStyles}
                 ariaHideApp={false}
                 >
-                <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
+                <h4 style={{color:"#ce3838"}}>Please Enter OTP 2 :</h4>
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handleOtpSubmitLogin}>    
                 <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required maxLength="4"/>
@@ -227,43 +238,41 @@ class Login extends Component {
                 {notRegister ? <p style={{color:"#ce3838"}}>{notRegister}</p> : null}
                 {forgotPwdRes ? <p style={{color: "#ce3838"}}>{forgotPwdRes}</p> : null}
                 </Modal>
-            
-                {/* <div className="input-field" style={{display: this.state.loginBtn ? 'block' : 'none' }}>
-                    <input type="text" ref="otp" id="otp-field"  />
-                    <label htmlFor="otp-field">OTP *</label>
-                </div> */}
-                
-                {/* <input type="checkbox" className="checkcheck" name="termscondition" value=""/>
-                    <span className="agreeinput"> I understand and agree to the 
-                        <Link to="!#">Terms & Conditions</Link> and 
-                        <Link to="!#">Private Policy</Link>
-                    </span><br /> */}
-                    {/* <Link to="!#" className="forgotpwd">Forgot Password? </Link> */}
                     <a href="#" onClick={this.openModal1}><p className="forgotpwd">Forgot Password?</p></a>
-                <input type="button" className="signinbtn" value="Sign in" onClick={this.handleSubmit}/>
-                {loggingIn &&
-                    <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                }
+                <button  className="signinbtn submitbutton"  onClick={this.handleSubmit} disabled={loggingIn}>
+                  sign in
+                  <span className="loaderwithbutton">{loggingIn &&
+                   <Loader
+                   type="ThreeDots"
+                   color="#00BFFF"
+                   height={20}
+                   width={30}
+                   /> 
+                }</span>
+                  </button>
+               {loginResponse?<p style={{color:"red"}}>{loginResponse.message}</p> : null}
                 {notRegister ? <p style={{color:"white"}}>{notRegister}</p> : null}
             </form>
         </div>
-        ); 
+        );
       }
-    //   else{
-    //     return <Redirect to="/" />
-    // }
-  // }
+
 }
 
 const mapStateToProps = state => {
-  const { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes  } = state.LoginReducer;
-  return { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes };
+
+  const { notRegister,loggingIn, wrongOTP, forgotPwdRes,loginResponse,otpModal} = state.LoginReducer;
+  const {loggedIn} = state.authReducer
+  console.log("etfewte",state.LoginReducer)
+  return { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes,loginResponse,otpModal };
 }
 const mapDispatchToProps = dispatch => {
   return {
     login: creds => dispatch(userActions.login(creds)),
-    sendOtp: num => dispatch(userActions.sendOtp(num)),
-    forgotPwd: (type, reg) => dispatch(userActions.forgotPwd(type, reg))
+    loginWithSocial:(params) => dispatch(userActions.loginWithSocial(params)),
+    sendOtp: (num,type) => dispatch(userActions.sendOtp(num,type)),
+    forgotPwd: (type, reg) => dispatch(userActions.forgotPwd(type, reg)),
+    clearState:(state) => dispatch(userActions.clearState(state))
   };
 };
 

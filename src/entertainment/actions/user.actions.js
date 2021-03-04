@@ -1,11 +1,10 @@
 import { userConstants } from "../constants";
 import { baseURL } from "../../credential.json";
-import { Redirect } from "react-router-dom";
 import axios from "axios";
 import cookie from "react-cookies";
 import { createBrowserHistory as createHistory } from 'history';
 import {getSessionProfile} from '../../globalComponents/sessionprofileAction'
-import { entertainment } from "../../common/apiConstants";
+import { entertainment,auth } from "../../common/apiConstants";
 
 const history = createHistory()
 
@@ -19,7 +18,9 @@ export const userActions = {
   getuserbyid,
   Recieveuserbyid,
   signoutUser,
-  forgotPwd
+  forgotPwd,
+  clearState,
+  loginWithSocial
 };
 
 //Consumer Login function
@@ -46,6 +47,10 @@ function login(body) {
         } else if (response.data.status === 404) {
           dispatch({ type: userConstants.NOT_REGISTERED });
         } else if (response.data.status === 401 || 400 ) {
+          dispatch({
+             type: userConstants.INVALID_CREDENTIAL,
+             payload:response.data
+            });
           dispatch({ type: userConstants.WRONG_OTP});
         }
       })
@@ -91,7 +96,7 @@ function Register(body) {
 }
 
 //send otp function
-function sendOtp(num) {
+function sendOtp(num,type) {
   var headers = {
     "Content-Type": "application/json"
   };
@@ -101,6 +106,10 @@ function sendOtp(num) {
       .then((response) => {
         console.log("submission mobile",response);
         if (response.status === 200) {
+          if(type==="login"){
+          dispatch({type: userConstants.LOGIN_MODAL_STATUS})
+          }
+          else
           dispatch({ type: userConstants.OTP_MODEL_SHOW });
         }
       })
@@ -192,11 +201,50 @@ function signoutUser(token) {
           dispatch(getSessionProfile())
           dispatch(Recieveuserbyid(response.data));
           dispatch({ type: userConstants.UNAUTH_USER });
-
         }
       })
       .catch(function(err) {
         console.log(err);
       });
   };
+}
+
+ function clearState(reduxState) {
+  return dispatch => {
+    dispatch({
+      type:"CLEAR_REDUX_STATE",
+      payload:reduxState
+    })
+  }
+}
+
+
+function loginWithSocial(params){
+  console.log("calling login social api")
+  return (dispatch) => {
+    axios.post(`${baseURL}${auth.socialLogin}`,null,{params:params})
+    .then((res) => {
+
+      if(res.data.status===200){
+        dispatch({ type: userConstants.LOGIN_SUCCESS });
+        localStorage.setItem('UserToken',res.data.data.token)
+        localStorage.setItem("name", res.data.data.name);
+        localStorage.setItem("email", res.data.data.email);
+        localStorage.setItem("mobile", res.data.data.mobile);
+        cookie.save("token", res.data.data.token, {
+          path: "/",
+          maxAge: 60 * 60 * 24,
+          expire: 60 * 60 * 24
+        });
+        dispatch(Recieveuserbyid(res.data));
+
+        dispatch({ type: userConstants.AUTH_USER });
+          history.goBack()
+      }
+      console.log("res in login with social",res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 }

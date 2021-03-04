@@ -204,9 +204,12 @@ class Single extends Component {
                       name={items.type}
                       onClick={this.props.handleChange}
                       value={item.limit}
+                      id={items.type+item.limit}
                     />{" "}
                     <a href="#">
-                      {`${item.limit}% and above`} <span>{item.count}</span>{" "}
+                      <label
+                      //  htmlFor={items.type+item.limit}
+                       >{`${item.limit}% and above`} <span>{item.count}</span>{" "}</label>
                     </a>
                     <span className="radiomark"></span>
                   </div>

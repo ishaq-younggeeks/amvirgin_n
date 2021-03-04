@@ -424,13 +424,20 @@ export const BrandApproval = (data) =>{
 export const ApprovedBrands = (category) => {
   return dispatch=>{
     let token =localStorage.getItem('token')
+    dispatch({
+      type:"isBrandLoading",
+    })
     axios.get(`${baseURL}${seller.approved}`,{ headers: { "Authorization": `Bearer ${token}` },params:{category:parseInt(category)} })
     .then(res=>{
       console.log('Brands we have',res.data.data)
-      dispatch({
-        type: "BrandApproved",
-        payload: res.data.data
-        });
+      if(res.data.status===200)
+      {
+        dispatch({
+          type: "BrandApproved",
+          payload: res.data.data
+          });
+      }
+     
     })
     .catch(error => {
       console.log(error);

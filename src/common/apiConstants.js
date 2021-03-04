@@ -70,6 +70,7 @@ export const seller = {
     payments:"/seller/payments/overview",
     transactions:"/seller/payments/transactions",
     sellerProfile:"/seller/profile",
+    sellerPassword:"/seller/profile/password",
 
     //returns
     returns:"/seller/returns/",
@@ -122,4 +123,8 @@ export const footer = {
     faq:"/customer/faq",
     returnPolicy:"/customer/returns",
     cancellationPolicy:"/customer/cancellation"
+}
+
+export const auth = {
+    socialLogin:"/customer/login/social"
 }

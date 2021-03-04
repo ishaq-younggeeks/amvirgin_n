@@ -108,6 +108,27 @@ color: #fff;
   letter-spacing: 1px;
   font-weight: 600;
 }
+
+.formsection .submitbutton {
+  background: linear-gradient(rgba(240,0,0,0.8), rgba(204,0,0,0.2));
+  color: #fff;
+  border: 0px solid #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: Montserrat;
+  margin: 27px auto;
+  letter-spacing: 1px;
+  font-weight: 600;
+  padding:10px;
+  display: flex;
+    justify-content: center;
+}
+
+.loaderwithbutton {
+  margin-left:1rem;
+}
+
+
 .formsection input[type=button]:hover{
   margin: 15px auto 25px;
 }

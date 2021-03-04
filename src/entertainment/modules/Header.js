@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { userActions } from "../actions";
 import {globalSearch} from "../../globalComponents/globalAction/Action"
 import "./style.css";
+import {useGoogleLogout} from 'react-google-login';
 
 class Header extends Component {
   constructor(props) {
@@ -90,6 +91,16 @@ closeNav = () => {
   logout = () => {
     var token = cookie.load("token");
     const { signoutUser } = this.props;
+    if (window.gapi) {
+      const auth2 = window.gapi.auth2.getAuthInstance()
+      if (auth2 != null) {
+        auth2.signOut().then(auth2.disconnect().then(
+          (res) =>{
+            console.log("res after logout")
+          }
+        ))
+      }
+    }
     signoutUser(token);
   };
   

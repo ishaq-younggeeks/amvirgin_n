@@ -156,7 +156,7 @@ class Register extends Component {
                     <Link className="flipbutton halfright" id="registerButton" onClick={this.flip.bind(this)} to="#">Sign in →</Link>
                 </div>
                 <form className="loginsignupform">
-                    <LoginWithSocial />
+                    <LoginWithSocial loginWithSocial={this.props.loginWithSocial}/>
                     <hr className="hrsign" />
                     <h4 className="signwith">or Register with</h4>
                     <div className="input-field">
@@ -330,6 +330,8 @@ const mapDispatchToProps = (dispatch) => {
         sendOtp: num => dispatch(userActions.sendOtp(num)),
         otphide:() => dispatch(userActions.otphide()),
         OtpVerify:otp => dispatch(userActions.OtpVerify(otp)),
+        loginWithSocial:(params) => dispatch(userActions.loginWithSocial(params)),
+
     }
 }
 
