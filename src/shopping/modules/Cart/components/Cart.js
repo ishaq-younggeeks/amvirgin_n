@@ -35,18 +35,22 @@ class Cart extends React.Component {
     }
   };
 
-  movetoWishlist = (e,id) => {
+  movetoWishlist = (e, id) => {
     e.preventDefault();
-    this.props.movetoWishlisht(id)
-  }
+    this.props.movetoWishlisht(id);
+  };
+
+  componentDidUpdate(prevProps) {}
 
   render() {
-    const {cartdata,isLoading} = this.props;
+    const { cartdata, isLoading } = this.props;
     console.log("cart data", cartdata);
     return (
       <div className="shopMain">
         <Header />
-        {isLoading ?"": cartdata.items && cartdata.items.length? (
+        {isLoading ? (
+          ""
+        ) : cartdata.items && cartdata.items.length ? (
           <div className="specific">
             <div className="cartsection">
               <div className="product">
@@ -112,7 +116,17 @@ class Cart extends React.Component {
                                           console.log("f")
                                         )
                                       : console.log("ún")}
-                                    <select className="form-control" id="size">
+                                    <select
+                                      className="form-control"
+                                      id="size"
+                                      value={
+                                        cartproduct.product.options
+                                          .filter(
+                                            (item) => item.label === "Size"
+                                          )
+                                          .map((item) => item.value)[0]
+                                      }
+                                    >
                                       {/* {(() => {
                                       const size = [];
                                       for (let i = 1; i <= 4; i++) {
@@ -127,13 +141,12 @@ class Cart extends React.Component {
                                       return size;
                                   })()}  */}
 
-                                      <option>XXS</option>
-                                      <option>XS</option>
-                                      <option>S</option>
-                                      <option>M</option>
-                                      <option>L</option>
-                                      <option>XL</option>
-                                      <option>XXL</option>
+                                      <option value="XXS">XXS</option>
+                                      <option value="XS">XS</option>
+                                      <option value="S">S</option>
+                                      <option value="MS">M</option>
+                                      <option value="L">L</option>
+                                      <option value="XL">XL</option>
                                     </select>
                                   </div>
                                 </div>
@@ -184,7 +197,12 @@ class Cart extends React.Component {
                                           <button
                                             type="button"
                                             className="btn btn-default wishlistcart"
-                                            onClick={(e) => this.movetoWishlist(e,cartproduct.key)}
+                                            onClick={(e) =>
+                                              this.movetoWishlist(
+                                                e,
+                                                cartproduct.key
+                                              )
+                                            }
                                           >
                                             Move to Wishlist
                                           </button>
@@ -192,7 +210,12 @@ class Cart extends React.Component {
                                       </div>
                                     </div>
                                   </div>
-                                  <button className="wishlistcart" onClick={(e) => this.movetoWishlist(e,cartproduct.key)}>
+                                  <button
+                                    className="wishlistcart"
+                                    onClick={(e) =>
+                                      this.movetoWishlist(e, cartproduct.key)
+                                    }
+                                  >
                                     Move to Wishlist
                                   </button>
                                 </div>

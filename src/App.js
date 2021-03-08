@@ -52,6 +52,16 @@ class App extends Component {
     this.props.getUserProfile()
     this.props.getSellerProfile();
     this.props.getSessionProfile();
+    if(!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser');
+    } else {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log("position",position)
+      }, (err)=>{
+console.log("err",err)
+      });
+    }
+
   };
 
   render() {
