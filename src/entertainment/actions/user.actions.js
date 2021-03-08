@@ -66,6 +66,7 @@ function Register(body) {
     "Content-Type": "application/json"
   };
   return (dispatch, getState) => {
+    dispatch({type: userConstants.OTP_SUBMIT});
     axios
       .post(`${baseURL}${entertainment.register}`, body, headers)
       .then(function(response) {
@@ -89,7 +90,8 @@ function Register(body) {
         }
         //console.log(response)
       })
-      .catch(function(err) {
+      .catch(function(err) {console.log("err response",err.response)
+
         console.log(err);
       });
   };
@@ -101,6 +103,9 @@ function sendOtp(num,type) {
     "Content-Type": "application/json"
   };
   return (dispatch, getState) => {
+    dispatch({
+      type:userConstants.REGISTER_REQUEST
+    })
     axios
       .get(`${baseURL}${entertainment.otp}${num}&type=3`, headers)
       .then((response) => {

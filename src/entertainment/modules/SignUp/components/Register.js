@@ -6,6 +6,9 @@ import cookie from 'react-cookies';
 import { connect } from "react-redux";
 import { userActions } from "../../../actions";
 import Modal from 'react-modal';
+import "./style.css";
+import Loader from "react-loader-spinner";
+
 class Register extends Component {
     constructor(props){
         super(props);
@@ -23,6 +26,15 @@ class Register extends Component {
             submitted: false
         }
     }
+
+    componentDidUpdate = (prevProps) => {
+        if(prevProps.otpmodel !== this.props.otpmodel){
+            this.setState({
+                modalIsOpen: this.props.otpmodel
+            })
+        }
+    }
+
     togglePassword = () => {
         $(".toggle-password").toggleClass("fa-eye fa-eye-slash");
         var input = $($(".toggle-password").attr("toggle"));
@@ -52,6 +64,7 @@ class Register extends Component {
     }
     
     handleOTPChangeRegister = event => {
+        if(event.target.value.length <= 4)
         this.setState({
             otp: event.target.value
         })
@@ -111,11 +124,14 @@ class Register extends Component {
             otp:parseInt(this.state.otp),
             checkbox:this.state.checkbox
         };
+
+        console.log("Mobile :", user.mobile.length);
         if(user.password === user.password_confirmation && this.state.checkbox === true){
-            if(user.name && user.password && user.email && user.checkbox && user.mobile){
+            if(user.name && user.password && user.email && user.checkbox && user.mobile && user.mobile.length === 10 && (/\S+@\S+\.\S+/.test(user.email))){
+                console.log("Calling");
                 let num = this.state.mobile
                 this.props.sendOtp(num)
-                this.setState({modalIsOpen: true})
+                // this.setState({modalIsOpen: true})
             }
         }
 
@@ -130,24 +146,30 @@ class Register extends Component {
             password:this.state.user.password,
             password_confirmation:this.state.user.password_confirmation,
             mobile:this.state.mobile,
-            otp:parseInt(this.state.otp),
+            otp:this.state.otp,
             checkbox:this.state.checkbox
         };
         if(user.password === user.password_confirmation && this.state.checkbox === true){
-            if(user.name && user.password && user.email && user.checkbox && user.mobile){
+            if(user.name && user.password && user.email && user.checkbox && user.mobile && user.mobile.length === 10 && user.otp.length === 4){
                 this.props.register(user);
             }
         }
     }
 
-    toggle = () => {
+    handleChangeCheckbox = (e) => {
+        if(e.target.checked)
         this.setState({
-            checkbox:!this.state.checkbox
+            checkbox: true
         })
+        else {
+            this.setState({
+                checkbox: false
+            })
+        }
     }
 
     render(){
-        const { success, registering, failure, otpmodel } = this.props;
+        const { success, registering, failure, otpmodel, submittingOtp } = this.props;
         const { user, submitted } = this.state;
         return(
             <div className="back">
@@ -169,19 +191,19 @@ class Register extends Component {
                     <div className="input-field">
                         <input type="email" name="email" value={this.state.email} onChange={this.onChange} id="email" required/>
                         <label htmlFor="email">Email *</label>
-                        {submitted && !user.email &&
-                            <div className="alert error alert-danger">Email is required</div>
+                        {submitted && !user.email ?
+                            <div className="alert error alert-danger">Email is required</div> : submitted && (!/\S+@\S+\.\S+/.test(user.email)) ? <div className="alert error alert-danger">Invalid Email</div> : null
                         }
-                         {submitted && (!/\S+@\S+\.\S+/.test(user.email)) &&
+                         {/* {submitted && (!/\S+@\S+\.\S+/.test(user.email)) &&
                             <div className="alert error alert-danger">Invalid Email</div>
-                        }
+                        } */}
                     </div>
                     <div className="input-field">
                         {/* <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} onBlur={this.handleBlur} id="number" required/> */}
-                        <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} id="number" required/>
+                        <input type="number" name="mobile" min="0" value={this.state.mobile} onChange={this.onChange} id="number" required/>
                         <label htmlFor="number">Mobile Number *</label>
-                        {submitted && !user.mobile &&
-                            <div className="alert error alert-danger">Mobile is required</div>
+                        {submitted && !user.mobile ?
+                            <div className="alert error alert-danger">Mobile is required</div> : submitted && (user.mobile.length !== 10) ? <div className="alert error alert-danger">Mobile number must be of 10 digits</div> : null 
                         }
                     </div>
                     <div className="input-field">
@@ -198,25 +220,35 @@ class Register extends Component {
                          {/* <input type="password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.onChange} id="confirm_password-field2"  />
                         <label htmlFor="confirm_password-field2">Confirm Password *</label>
                         <span toggle="#password" className="fa fa-fw fa-eye-slash field-icon" ></span> */}
-                        {submitted && !user.password_confirmation &&
-                            <div className="alert error alert-danger">Confirm Password is required</div>
+                        {submitted && !user.password_confirmation ?
+                            <div className="alert error alert-danger">Confirm Password is required</div> : submitted && user.password_confirmation != user.password ?  <div className="alert error alert-danger">Password do not match</div> :null
                         }
                     </div>
-                    <input type="checkbox" name="checkbox" className="checkcheck" onClick={() => this.toggle()} value={this.state.checkbox}/>
+                    <input type="checkbox" name="checkbox" className="checkcheck" onClick={this.handleChangeCheckbox} value={this.state.checkbox}/>
                     <span className="agreeinput"> I understand and agree to the 
                         <Link to="!#"> Terms & Conditions</Link> and 
                         <Link to="!#"> Private Policy</Link>
-                    {submitted && !user.checkbox &&
+                    {submitted && !this.state.checkbox &&
                         <div style={{color:"#ce3838"}}>Checkbox is required</div>
                     }
                     </span><br />
                     <div style={{ clear: 'both' }}></div>
-                    <input type="button" onClick={(e) => this.handleRegisterSubmit(e)} value="Register"/>
-                    {registering && 
+                    <button className="signinbtn submitbutton" onClick={(e) => this.handleRegisterSubmit(e)} disabled={registering}>Register
+                    <span className="loaderwithbutton">{registering &&
+                   <Loader
+                   type="ThreeDots"
+                   color="#00BFFF"
+                   height={20}
+                   width={30}
+                   timeout={5000}
+                   /> 
+                }</span>
+                </button>
+                    {/* {registering && 
                         <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    }
-                    { success ? success : null}
-                    {failure ? failure : ''}
+                    } */}
+                    {success ? <p style={{color:"green"}}>{success}</p> : null}
+                    {/* {failure ? <p style={{color:"red"}}>{failure}</p> : null} */}
                 </form>
 
                 <div className="modal fade in" role="dialog" style={{ display: this.props.signuploader ? "block" : "none" }}>
@@ -264,7 +296,7 @@ class Register extends Component {
                     </div>
                 </div> */}
                 <Modal
-                isOpen={this.props.otpmodel ? true : this.state.modalIsOpen}
+                isOpen={this.state.modalIsOpen}
                 onRequestClose={this.closeModal}
                 style={this.customStyles}
                 ariaHideApp={false}
@@ -272,13 +304,22 @@ class Register extends Component {
                 <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handleOtpSubmit}>    
-                <input type="text" placeholder="OTP" autoFocus onChange={this.handleOTPChangeRegister} value={this.state.otp} required/>
-                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
-                {registering && 
-                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                }
-                { success ? success : null}
-                {failure ? failure : ''}               
+                <input type="number" placeholder="Enter 4 digit OTP" autoFocus onChange={this.handleOTPChangeRegister} value={this.state.otp} required/>
+                <div className="d-flex">
+                <button style={{display:"flex", padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit" disabled={submittingOtp}>Submit <span className="loaderwithbutton">{submittingOtp &&
+                   <Loader
+                   type="ThreeDots"
+                   color="#00BFFF"
+                   height={12}
+                   width={20}
+                   timeout={4000}
+                   /> 
+                }</span></button>
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", margin:"30px 0 0 10px"}} onClick={this.handleRegisterSubmit}>Resend OTP</button>
+                </div>
+                <div>
+                {failure ? <p style={{color:"red"}}>{failure}</p> : null}
+                </div>
                 </form>
                 </Modal>
 
@@ -319,9 +360,9 @@ class PasswordField extends React.Component {
 
 
 const mapStateToProps = (state) => {
-    const {registering,success,failure,otpmodel } = state.registrationReducer;
+    const {registering, success, failure, otpmodel, submittingOtp } = state.registrationReducer;
     const { loggedIn  } = state.LoginReducer;
-    return { registering,success,failure,otpmodel,loggedIn }
+    return {registering, success, failure, otpmodel, submittingOtp, loggedIn }
 }
 
 const mapDispatchToProps = (dispatch) => {

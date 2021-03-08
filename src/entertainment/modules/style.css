@@ -29,6 +29,10 @@ ul {
 
 }
 
+.icon-color{
+    color: rgb(153, 0, 0);
+}
+
 
 .nav-hover-item:hover{
     color:red!important;

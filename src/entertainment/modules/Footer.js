@@ -14,10 +14,10 @@ class Footer extends Component {
                             <div className="row">
                                 <div className="col-md-4 footerline">
                                     <ul style={{padding:'inherit'}}><h4 style={{color:'#fff'}}>Legal</h4>
-                                        <li><Link style={{color:'#fff'}} to="/faq">FAQ</Link></li>
-                                        <li><Link style={{color:'#fff'}} to="/privacypolicy">Privacy Policy</Link></li>
-                                        <li><Link style={{color:'#fff'}} to="/termsconditions">Terms &amp; Conditions</Link></li>
-                                        <li><Link style={{color:'#fff'}} to="/aboutus">About Us</Link></li>
+                                        <li><Link style={{color:'#fff'}} to="/faq" target="_blank">FAQ</Link></li>
+                                        <li><Link style={{color:'#fff'}} to="/privacypolicy" target="_blank">Privacy Policy</Link></li>
+                                        <li><Link style={{color:'#fff'}} to="/termsconditions" target="_blank">Terms &amp; Conditions</Link></li>
+                                        <li><Link style={{color:'#fff'}} to="/aboutus" target="_blank">About Us</Link></li>
                                         <li></li>
                                     </ul>
                                 </div>

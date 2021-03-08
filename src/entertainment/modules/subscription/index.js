@@ -562,7 +562,6 @@ class Card extends Component {
             placeOrderFinal={this.props.placeOrderFinal}
             {...this.props}
           />
-          ;
         </div>
       </>
     );
@@ -608,7 +607,6 @@ class NetBank extends Component {
             placeOrderFinal={this.props.placeOrderFinal}
             {...this.props}
           />
-          ;
         </div>
       </>
     );
@@ -645,7 +643,6 @@ class BhimUpi extends Component {
             placeOrderFinal={this.props.placeOrderFinal}
             {...this.props}
           />
-          ;
         </div>
       </>
     );
@@ -673,7 +670,6 @@ class Wallet extends Component {
             placeOrderFinal={this.props.placeOrderFinal}
             {...this.props}
           />
-          ;
         </div>
       </>
     );

@@ -78,14 +78,14 @@ class ProductSideBarCategories extends React.Component {
                 <div className="wrapper">
                   <div className="sidebar-wrapper sticker">
                     <div className="sidebar-widget">
-                      <h4 className="sidebar-title">Search </h4>
                       <div className="sidebar-search mb-40 mt-20">
-                        <form className="sidebar-search-form" action="#">
+                      <h2 className="sidebar-title">Filters : </h2>
+                        {/* <form className="sidebar-search-form" action="#">
                           <input type="text" placeholder="Search here..." />
                           <button>
                             <i className="la la-search"></i>
                           </button>
-                        </form>
+                        </form> */}
                       </div>
                     </div>
                     {/* <div className="sidebar-widget shop-sidebar-border pt-40">
@@ -206,7 +206,7 @@ class Single extends Component {
                       value={item.limit}
                       id={items.type+item.limit}
                     />{" "}
-                    <a href="#">
+                    <a href="#" onClick={(e) => e.preventDefault()}>
                       <label
                       //  htmlFor={items.type+item.limit}
                        >{`${item.limit}% and above`} <span>{item.count}</span>{" "}</label>

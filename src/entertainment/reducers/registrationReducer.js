@@ -5,6 +5,7 @@ const initialState = {
   registering:false,
   failure:'',
   otpmodel: false,
+  submittingOtp: false,
 }
 export function registrationReducer(state = initialState, action) {
   switch (action.type) {
@@ -13,6 +14,11 @@ export function registrationReducer(state = initialState, action) {
         ...state, 
         registering: true
        };
+    case userConstants.OTP_SUBMIT:
+      return {
+        ...state,
+        submittingOtp: true
+      }   
     case userConstants.REGISTER_SUCCESS:
       return {
         ...state,

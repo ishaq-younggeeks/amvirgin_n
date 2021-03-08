@@ -41,25 +41,25 @@ class Footer extends Component {
                   ) : null}
               </p>
               <p>
-                <Link to="/faq">FAQ</Link>
+                <Link to="/faq" target="_blank">FAQ</Link>
               </p>
               <p>
-                <Link to="/shippingpolicy">Shipping</Link>
+                <Link to="/shippingpolicy" target="_blank">Shipping</Link>
               </p>
               <p>
-                <Link to="/cancellationpolicy">Cancellation</Link>
+                <Link to="/cancellationpolicy" target="_blank">Cancellation</Link>
               </p>
               <p>
-                <Link to="/returnpolicy">Returns</Link>
+                <Link to="/returnpolicy" target="_blank">Returns</Link>
               </p>
               <p>
-                <Link to="/privacypolicy">Privacy Policy</Link>
+                <Link to="/privacypolicy" target="_blank">Privacy Policy</Link>
               </p>
               <p>
-                  <Link to="/termsconditions">Terms & Conditions</Link>
+                  <Link to="/termsconditions" target="_blank">Terms & Conditions</Link>
               </p>
               <p>
-                  <Link to="/aboutus">About Us</Link>
+                  <Link to="/aboutus" target="_blank">About Us</Link>
               </p>
               <p>
               <Link to="/contact">Contact Us</Link>

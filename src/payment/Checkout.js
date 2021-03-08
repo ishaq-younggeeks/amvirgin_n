@@ -6,7 +6,7 @@ class Checkout extends Component {
   constructor(props) {
     super(props)
     this.state ={
-      amount: 0,
+      amount: 100,
       name: "",
       email: "",
       method: ""
@@ -18,7 +18,6 @@ componentDidMount() {
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
   script.async = true;
   document.body.appendChild(script);
-  console.log("react component called");
   let name = localStorage.getItem("name");
   let email = localStorage.getItem("email");
   this.setState({name, email});
@@ -28,11 +27,12 @@ componentDidMount() {
   }
 
   openCheckout = (e) => {
+    console.log("Total :", this.props.total);
     e.preventDefault()
     let options = {
       "key": 'rzp_test_iRpMdLQpCCvhrE',
       "key_secret": 'Hb1DIYDKOL54Gyfbj7sMsJVf',
-      "amount": this.props.total * 100, // 2000 paise = INR 20, amount in paisa
+      "amount": this.state.amount * 100, // 2000 paise = INR 20, amount in paisa
       "name": "AmVirgin",
       "order_id": this.props.razorPay,
       "image": process.env.PUBLIC_URL + "/img/default.png",
@@ -46,7 +46,7 @@ componentDidMount() {
         "method": this.props.prefillMethod,
       },
       "notes": {
-        "address": "Hello World"
+        "address": "NA"
       },
       "theme": {
         "color": "#F37254"
@@ -69,7 +69,6 @@ componentDidMount() {
   });
   }
   render() {
-    console.log("Razorpay Order ID :", this.props.razorPay);
     return (
       <>
      <div id="Card" className=" ">

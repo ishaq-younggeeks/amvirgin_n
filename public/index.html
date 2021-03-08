@@ -103,6 +103,21 @@
     </script>
   </body>
   	<style>
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active
+{
+ -webkit-box-shadow: 0 0 0 30px black inset !important;
+}
+
+input:-webkit-autofill
+{
+ -webkit-text-fill-color: rgb(255, 255, 255) !important;
+}
+.loginsignupform input:-webkit-autofill~label,.loginsignupform input:-webkit-autofill:focus~label{
+  top:-24px;
+}
       .affix {
       top: 0;
       width: 100%;

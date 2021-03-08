@@ -231,7 +231,7 @@ class Cart extends React.Component {
                 </div>
                 <div className="priceproduct">
                   <span>Bag discount</span>
-                  <span className="desc">Rs.{cartdata.discount}</span>
+                  <span className="desc">Rs.{cartdata.discount ? cartdata.discount : "0"}</span>
                 </div>
                 <div className="priceproduct">
                   <span>Coupon Discount</span>
@@ -239,13 +239,13 @@ class Cart extends React.Component {
                     <button className="applycoupon">Apply Coupon</button>
                   </span>
                 </div>
-                <div className="priceproduct">
+                {/* <div className="priceproduct">
                   <span>Tax</span>
                   <span className="desc">{cartdata.tax}</span>
-                </div>
+                </div> */}
                 <div className="priceproduct">
                   <span>Order Total</span>
-                  <span className="desc">{cartdata.total}</span>
+                  <span className="desc">Rs.{cartdata.subTotal}</span>
                 </div>
                 <div className="priceproduct">
                   <span>Delivery Charges</span>
@@ -256,7 +256,7 @@ class Cart extends React.Component {
                 <hr />
                 <div className="priceproduct totalprice">
                   <span>Total</span>
-                  <span className="desc">{cartdata.total}</span>
+                  <span className="desc">Rs.{cartdata.subTotal}</span>
                 </div>
                 <Link
                   to="/placeOrder"

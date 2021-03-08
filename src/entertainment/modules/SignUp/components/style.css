@@ -329,7 +329,8 @@ color: #fff;
    border-color: #ddd;
 }
 
-.loginsignupform input:focus ~ label, .loginsignupform input:valid ~ label {
+.loginsignupform input:focus ~ label, .loginsignupform input:valid ~ label, .loginsignupform input:-webkit-autofill,.loginsignupform input:-webkit-autofill:focus
+{
   font-size: 13px;
   font-family: Montserrat;
   top: -24px;
@@ -437,4 +438,13 @@ color: #fff;
   background: rgb(204, 0, 0);
   cursor: pointer;
   color: #fff;
+}
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
 }

@@ -156,9 +156,9 @@ console.log("current product",product)
       style={{ height: "170px", alignItem: "center" }}
     >
       <div className="col-sm-1">
-        {myOrderDetails.image ? (
+        {product.product ? (
           <img
-            src={myOrderDetails.image}
+            src={product.product.image}
             style={{
               width: "9rem",
               objectFit: "cover",

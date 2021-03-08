@@ -29,19 +29,19 @@ componentDidMount(){
           <span>Order Total</span>
             <span className="desc"> ₹ {priceDetail.subTotal}</span>
           </div>
-          <div className="priceproduct">
+          {/* <div className="priceproduct">
           <span>Tax</span>
            <span className="desc"> ₹ {priceDetail.tax}</span>
-          </div>
+          </div> */}
           <div className="priceproduct">
           <span>Delivery Charges</span>
           <span className="desc"> <del>149</del> <span className="redspan">FREE</span></span>
           </div>
           <hr/>
           <div className="priceproduct totalprice">
-          <span>Total</span><span className="desc"> ₹ {priceDetail.total}</span>
+          <span>Total</span><span className="desc"> ₹ {priceDetail.subTotal}</span>
           </div>
-          {this.props.AddressId ? <Link to={{pathname:"/ShopPayment",addressId:this.props.AddressId, total:priceDetail.total}} type="button" className="btn btn-red">Continue</Link>:""}
+          {this.props.AddressId ? <Link to={{pathname:"/ShopPayment",addressId:this.props.AddressId, total:priceDetail.subTotal}} type="button" className="btn btn-red">Continue</Link>:""}
         </div>
       </>
     )
