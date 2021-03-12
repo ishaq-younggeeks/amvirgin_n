@@ -9,7 +9,7 @@ class NewsEvents extends React.Component {
     super(props);
     this.state = {
       category_id: 1,
-      active_class: 0
+      active_class: 0,
     };
   }
 
@@ -28,17 +28,25 @@ class NewsEvents extends React.Component {
             <ul className="navbar-nav m-auto">
               {this.props.category && this.props.category.categories
                 ? this.props.category.categories.map((item, i) => (
-                    <li className={`nav-item + ${i === this.state.active_class ? "active-news" : ""}`}>
-                      <Link
+                    <li
+                      className={`nav-item + ${
+                        i === this.state.active_class ? "active-news" : ""
+                      }`}
+                    >
+                      <a
                         className={
                           "nav-link " +
                           (i % 2 === 0 ? "colororange" : "coloryellow")
                         }
-                        href="" onClick={() => (this.props.newsListingFnc(item.key, "1"), this.setState({active_class: i}))}
+                        href="#"
+                        onClick={() => (
+                          this.props.newsListingFnc(item.key, "1"),
+                          this.setState({ active_class: i })
+                        )}
                       >
                         {" "}
                         {item.name} <span className="sr-only">(current)</span>
-                      </Link>
+                      </a>
                     </li>
                   ))
                 : null}
@@ -50,44 +58,66 @@ class NewsEvents extends React.Component {
             {" "}
             News
           </h3>
-          <hr style={{
+          <hr
+            style={{
               color: "red",
               backgroundColor: "#ce3838",
               height: 3,
               borderColor: "#ce3838",
-            }}/>
+            }}
+          />
           <div className="flexsection">
             {this.props.newsListing && this.props.newsListing.data
               ? this.props.newsListing.data.map((item) => {
                   if (item.type !== "video") {
                     return (
-                      <div className="blogpart" style={{width:"76.3%"}}>
+                      <div className="blogpart" style={{ width: "76.3%" }}>
                         <Link to="/news/details">
-                        <a href="#" onClick={() => localStorage.setItem("newsId", item.key)}>
-                          <div>
-                            <img src={item.thumbnail} alt="news1" style={{width:"76.3%"}}/>
-                          </div>
-                          <div className="details">
-                            <h3>
-                              <span>{item.type}</span>
-                            </h3>
-                            <p>{item.title}</p>
-                            <h5>{item.author ? item.author : "Admin"}</h5>
-                            <h6>
-                              {item.published} | {item.estimatedRead} Minutes |{" "}
-                              {item.views} Views
-                            </h6>
-                          </div>
-                        </a>
+                          <a
+                            href="#"
+                            onClick={() =>
+                              localStorage.setItem("newsId", item.key)
+                            }
+                          >
+                            <div>
+                              <img
+                                src={item.thumbnail}
+                                alt="news1"
+                                style={{ width: "76.3%" }}
+                              />
+                            </div>
+                            <div className="details">
+                              <h3>
+                                <span>{item.type}</span>
+                              </h3>
+                              <p>{item.title}</p>
+                              <h5>{item.author ? item.author : "Admin"}</h5>
+                              <h6>
+                                {item.published} | {item.estimatedRead} Minutes
+                                | {item.views} Views
+                              </h6>
+                            </div>
+                          </a>
                         </Link>
                       </div>
                     );
                   }
                   return (
-                    <div className="blogpart" style={{width:"76.3%"}}>
+                    <div className="blogpart" style={{ width: "76.3%" }}>
                       <a href="#">
                         <div>
-                          <video src={item.video} alt="news1" controls="controls" onContextMenu={(e)=>  {e.preventDefault(); return false;}} onClick={() => this.props.articleDetailsFnc(item.key)}/>
+                          <video
+                            src={item.video}
+                            alt="news1"
+                            controls="controls"
+                            onContextMenu={(e) => {
+                              e.preventDefault();
+                              return false;
+                            }}
+                            onClick={() =>
+                              this.props.articleDetailsFnc(item.key)
+                            }
+                          />
                         </div>
                         <div className="details">
                           <h3>
@@ -122,7 +152,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     newsListingFnc: (category, page) =>
       dispatch(newsListingFnc(category, page)),
-      articleDetailsFnc: (id) => dispatch(articleDetailsFnc(id))  
+    articleDetailsFnc: (id) => dispatch(articleDetailsFnc(id)),
   };
 };
 
