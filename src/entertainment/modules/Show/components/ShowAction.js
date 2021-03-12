@@ -135,3 +135,29 @@ export function myData(data) {
       data:data
   }
 }
+
+export const videoStatistic = (videoKey,seriesNo) => {
+  return dispatch =>{
+    let token = localStorage.getItem("UserToken");
+    let config = {
+      headers : {
+        Authorization: "Bearer " + token
+      }
+    }
+    const urlPath = ""
+    if(seriesNo ==='undefined'){
+       urlPath = `${baseURL}${entertainment.statistic}/${videoKey}`
+    }
+    else {
+      urlPath = `${baseURL}${entertainment.statistic}/${videoKey}/stats/${seriesNo}`
+    }
+    axios
+    .post(urlPath, {}, config)
+    .then( (res) => {
+
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+}

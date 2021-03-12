@@ -110,7 +110,8 @@ export const entertainment = {
     videos:"/customer/videos/",
     trending:"/customer/entertainment/trending",
     getRental:"/customer/rentals",
-    rentCheckout:"/customer/rentals/checkout/"
+    rentCheckout:"/customer/rentals/checkout/",
+    statistic:"/customer/videos"
 }
 
 /* Api list  for footer section */
