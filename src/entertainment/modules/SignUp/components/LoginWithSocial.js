@@ -12,10 +12,14 @@ class LoginWithSocial extends Component {
         }
 
 
-        this.props.loginWithSocial(params,)
+        this.props.loginWithSocial(params)
       }
        responseFacebook = (response) => {
-        console.log("facebook response",response);
+           console.log("facebook response",response)
+        let params = {          
+        }
+        this.props.loginWithSocial(params)
+
       }
 
       onSuccess = () =>{
