@@ -72,6 +72,10 @@ class Login extends Component {
   }
 
   openModal1 = () => {
+    this.props.clearState({
+      sendingForgotRequest: false,
+      forgotPwdRes: null
+    })
     this.setState({
       modalIsOpen1: true,
     });
@@ -117,15 +121,12 @@ class Login extends Component {
           console.log("Inside Logging Button True Username", username)
           localStorage.setItem("username", username.trim())
           this.props.sendOtp(username.trim(),"login")
-          // this.setState({modalIsOpen: true})
       }
     }
     }
   };
 
   handleOtpSubmitLogin = (e) => {
-
-    console.log("working on click")
     e.preventDefault();
     this.setState({ submitted: true });
     const { username, otp } = this.state;
@@ -162,7 +163,7 @@ class Login extends Component {
   }
 
   render() {
-    const { notRegister, loggingIn, otpmodel,loggedIn, wrongOTP, forgotPwdRes,loginResponse } = this.props;
+    const { notRegister, loggingIn, otpmodel,loggedIn, wrongOTP, sendingForgotRequest, forgotPwdRes, loginResponse, sendingOtp } = this.props;
     const { username, password, submitted } = this.state;
     console.log("Forgot Password Res :", this.props)
     const loginWithOtp = (
@@ -214,7 +215,7 @@ class Login extends Component {
                 style={this.customStyles}
                 ariaHideApp={false}
                 >
-                <h4 style={{color:"#ce3838"}}>Please Enter OTP 2 :</h4>
+                <h4 style={{color:"#ce3838"}}>Please Enter OTP :</h4>
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handleOtpSubmitLogin}>    
                 <input type="number" placeholder="OTP" autoFocus onChange={this.handleOTPChange} value={this.state.otp} required maxLength="4"/>
@@ -233,20 +234,29 @@ class Login extends Component {
                 <hr style={{color:"#ce3838", borderColor:"#ce3838"}}/>
                 <form onSubmit={this.handlePasswordChangeSubmit}>    
                 <input type="text" placeholder="Registered Mobile / Email" autoFocus onChange={this.handlePasswordChange} value={this.state.changePassword} required/>
-                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit">Submit</button>
-                </form>
-                {notRegister ? <p style={{color:"#ce3838"}}>{notRegister}</p> : null}
-                {forgotPwdRes ? <p style={{color: "#ce3838"}}>{forgotPwdRes}</p> : null}
-                </Modal>
-                    <a href="#" onClick={this.openModal1}><p className="forgotpwd">Forgot Password?</p></a>
-                <button  className="signinbtn submitbutton"  onClick={this.handleSubmit} disabled={loggingIn}>
-                  sign in
-                  <span className="loaderwithbutton">{loggingIn &&
+                <button style={{padding:"5px 25px 5px 25px", backgroundColor:"#ce3838", color:"white", borderRadius:"5px", border:"none", marginTop:"30px"}} type="submit" disabled={sendingForgotRequest}>Submit<span className="loaderwithbutton">{sendingForgotRequest &&
                    <Loader
                    type="ThreeDots"
                    color="#00BFFF"
                    height={20}
                    width={30}
+                   timeout={5000}
+                   /> 
+                }</span></button>
+                </form>
+                {notRegister ? <p style={{color:"#ce3838"}}>{notRegister}</p> : null}
+                {forgotPwdRes ? <p style={{color: "#ce3838"}}>{forgotPwdRes}</p> : null}
+                </Modal>
+                  <a href="#" onClick={this.openModal1}><p className="forgotpwd">Forgot Password?</p></a>
+                <button  className="signinbtn submitbutton"  onClick={this.handleSubmit} disabled={sendingOtp || loggingIn}>
+                  sign in
+                  <span className="loaderwithbutton">{loggingIn || sendingOtp &&
+                   <Loader
+                   type="ThreeDots"
+                   color="#00BFFF"
+                   height={20}
+                   width={30}
+                   timeout={5000}
                    /> 
                 }</span>
                   </button>
@@ -261,10 +271,10 @@ class Login extends Component {
 
 const mapStateToProps = state => {
 
-  const { notRegister,loggingIn, wrongOTP, forgotPwdRes,loginResponse,otpModal} = state.LoginReducer;
+  const { notRegister, loggingIn, wrongOTP, sendingForgotRequest, forgotPwdRes, loginResponse, otpModal, sendingOtp} = state.LoginReducer;
   const {loggedIn} = state.authReducer
   console.log("etfewte",state.LoginReducer)
-  return { notRegister,loggingIn,loggedIn, wrongOTP, forgotPwdRes,loginResponse,otpModal };
+  return { notRegister, loggingIn, loggedIn, wrongOTP, sendingForgotRequest, forgotPwdRes, loginResponse, otpModal, sendingOtp };
 }
 const mapDispatchToProps = dispatch => {
   return {

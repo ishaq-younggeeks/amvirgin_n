@@ -90,9 +90,11 @@ function Register(body) {
         }
         //console.log(response)
       })
-      .catch(function(err) {console.log("err response",err.response)
-
-        console.log(err);
+      .catch(function(err) {
+        dispatch({
+          type: userConstants.REGISTER_FAILURE,
+          failure: err.response.data.message
+        });
       });
   };
 }
@@ -105,6 +107,9 @@ function sendOtp(num,type) {
   return (dispatch, getState) => {
     dispatch({
       type:userConstants.REGISTER_REQUEST
+    })
+    dispatch({
+      type:userConstants.SENDING_OTP
     })
     axios
       .get(`${baseURL}${entertainment.otp}${num}&type=3`, headers)
@@ -131,6 +136,7 @@ function forgotPwd(type, value) {
     "Content-Type": "application/json"
   };
   return (dispatch, getState) => {
+    dispatch({ type: userConstants.FORGOT_PASSWORD_REQUEST, });
     axios
       .get(`${baseURL}${entertainment.resetPwd}${type}=${value}&type=${type}`, headers)
       .then((response) => {

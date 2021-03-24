@@ -1,7 +1,7 @@
 import axios from "axios";
 import {baseURL} from "../../../././credential.json";
 import { shop } from "../../../common/apiConstants";
-import {USERNAME_CHANGE, PASSWORD_CHANGE} from "./ProfileConstant";
+import {USERNAME_CHANGE, PASSWORD_CHANGE, PASSWORD_CHANGE_ERROR} from "./ProfileConstant";
 
 export const editUsername = (name) => {
     console.log("Edit Username Calling ", name);
@@ -55,6 +55,20 @@ export const editPassword = (currentpwd, newpwd, confirmpwd) => {
                 })
             }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {  
+            dispatch({
+                type: PASSWORD_CHANGE_ERROR,
+                payload: err.response.data.message
+             })})
+        }
+}
+
+export const clearProfileState = (reduxState) => {
+    return (dispatch) => {
+        console.log("calling fnc");
+        dispatch({
+            type: "CLEAR_REDUX_STATE_PROFILE",
+            payload: reduxState
+        })
     }
 }

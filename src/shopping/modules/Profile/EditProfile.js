@@ -5,7 +5,8 @@ import Footer from "../../../entertainment/modules/Footer";
 import "./Profile.css";
 import Modal from "react-modal";
 import { connect } from "react-redux";
-import { editPassword, editUsername } from "./ProfileAction";
+import { editPassword, editUsername, clearProfileState } from "./ProfileAction";
+import { Link } from "react-router-dom";
 
 class EditProfile extends Component {
   constructor() {
@@ -46,12 +47,21 @@ class EditProfile extends Component {
   };
 
   openModal1 = () => {
+    this.props.clearProfileState({
+      usernameChange: ""
+    });
+
     this.setState({
       modalIsOpen1: true,
     });
   };
 
   openModal2 = () => {
+    this.props.clearProfileState({
+      passwordChange: "",
+      passwordChangeError: ""
+    });
+    console.log("calling method");
     this.setState({
       modalIsOpen2: true,
     });
@@ -90,7 +100,7 @@ class EditProfile extends Component {
   handlePasswordChange = (e) => {
     e.preventDefault();
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.split(" ").join("")
     });
   };
 
@@ -175,7 +185,7 @@ class EditProfile extends Component {
     let email = localStorage.getItem("email");
     let mobile = localStorage.getItem("mobile");
     let username = localStorage.getItem("name");
-    const { usernameChangeRes, passwordChangeRes } = this.props;
+    const { usernameChangeRes, passwordChangeRes, passwordError } = this.props;
     return (
       <div className="shopMain">
         <Header />
@@ -201,7 +211,7 @@ class EditProfile extends Component {
                 <a
                   href="#"
                   style={{ marginLeft: "15px", color: "red" }}
-                  onClick={() => this.setState({ modalIsOpen1: true })}
+                  onClick={this.openModal1}
                 >
                   Change Username?
                 </a>
@@ -211,13 +221,12 @@ class EditProfile extends Component {
               Password :
             </div>
             <ul className="list-group list-group-flush">
-              <li className="list-group-item">********{" "} <a
-                href="#"
+              <li className="list-group-item">********{" "} <Link
                 style={{ marginLeft: "63px", color: "red" }}
-                onClick={() => this.setState({ modalIsOpen2: true })}
+                onClick={this.openModal2}
               >
                 Change Password?
-              </a></li>
+              </Link></li>
             </ul>
           </div>
           <hr />
@@ -408,9 +417,11 @@ class EditProfile extends Component {
               Submit
             </button>
           </form>
-
           {passwordChangeRes ? (
             <p style={{ color: "#ce3838" }}>{passwordChangeRes}</p>
+          ) : null}
+           {passwordError ? (
+            <p style={{ color: "#ce3838" }}>{passwordError}</p>
           ) : null}
         </Modal>
       </div>
@@ -422,6 +433,7 @@ const mapStateToProps = (state) => {
   return {
     usernameChangeRes: state.EditProfile.usernameChange,
     passwordChangeRes: state.EditProfile.passwordChange,
+    passwordError: state.EditProfile.passwordChangeError
   };
 };
 
@@ -430,6 +442,7 @@ const mapDispatchToProps = (dispatch) => {
     editUsername: (name) => dispatch(editUsername(name)),
     editPassword: (currentpwd, newpwd, confirmpwd) =>
       dispatch(editPassword(currentpwd, newpwd, confirmpwd)),
+      clearProfileState: (reduxState) => dispatch(clearProfileState(reduxState))
   };
 };
 

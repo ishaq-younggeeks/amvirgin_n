@@ -58,7 +58,6 @@ class Register extends Component {
     }
     otpverify = (e) => {
         e.preventDefault();
-        //const token = cookie.load('cred')
         var otp = this.state.otp;
         this.props.OtpVerify(otp );
     }
@@ -70,11 +69,6 @@ class Register extends Component {
         })
     }
 
-    // handleBlur = (e) => {
-    //     const num = e.target.value;
-    //    // this.setState({ mobile: `${num}` })
-    //     this.props.sendOtp(num);
-    // }
     onChange = (e) => {
         const { name, value } = e.target;
         const { user } = this.state;
@@ -125,16 +119,13 @@ class Register extends Component {
             checkbox:this.state.checkbox
         };
 
-        console.log("Mobile :", user.mobile.length);
         if(user.password === user.password_confirmation && this.state.checkbox === true){
             if(user.name && user.password && user.email && user.checkbox && user.mobile && user.mobile.length === 10 && (/\S+@\S+\.\S+/.test(user.email))){
                 console.log("Calling");
                 let num = this.state.mobile
                 this.props.sendOtp(num)
-                // this.setState({modalIsOpen: true})
             }
         }
-
     }
 
     handleOtpSubmit = (e) => {
@@ -152,6 +143,9 @@ class Register extends Component {
         if(user.password === user.password_confirmation && this.state.checkbox === true){
             if(user.name && user.password && user.email && user.checkbox && user.mobile && user.mobile.length === 10 && user.otp.length === 4){
                 this.props.register(user);
+                this.setState({
+                    user:{}
+                })
             }
         }
     }
@@ -194,12 +188,8 @@ class Register extends Component {
                         {submitted && !user.email ?
                             <div className="alert error alert-danger">Email is required</div> : submitted && (!/\S+@\S+\.\S+/.test(user.email)) ? <div className="alert error alert-danger">Invalid Email</div> : null
                         }
-                         {/* {submitted && (!/\S+@\S+\.\S+/.test(user.email)) &&
-                            <div className="alert error alert-danger">Invalid Email</div>
-                        } */}
                     </div>
                     <div className="input-field">
-                        {/* <input type="text" name="mobile" value={this.state.mobile} onChange={this.onChange} onBlur={this.handleBlur} id="number" required/> */}
                         <input type="number" name="mobile" min="0" value={this.state.mobile} onChange={this.onChange} id="number" required/>
                         <label htmlFor="number">Mobile Number *</label>
                         {submitted && !user.mobile ?
@@ -208,18 +198,12 @@ class Register extends Component {
                     </div>
                     <div className="input-field">
                     <PasswordField toggle="#password-field2" htmlFor="password-field2" name="password" value={this.state.password} onChange={this.onChange} id="password-field2" eye_name="current_password" text="Password *"/>
-                        {/* <input type="password" name="password" value={this.state.password} onChange={this.onChange} id="password-field2" /> */}
-                        {/* <label htmlFor="password-field2">Password *</label>
-                        <span toggle="#password-field2" className="fa fa-fw fa-eye-slash field-icon toggle-password" onClick={this.togglePassword}></span> */}
                         {submitted && !user.password &&
                             <div className="alert error alert-danger">Password is required</div>
                         }
                     </div>
                     <div className="input-field">
                     <PasswordField toggle="#password" htmlFor="confirm_password-field2" name="password_confirmation" value={this.state.password} onChange={this.onChange} id="confirm_password-field2" eye_name="confirm_password" text="Confirm Password *"/>
-                         {/* <input type="password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.onChange} id="confirm_password-field2"  />
-                        <label htmlFor="confirm_password-field2">Confirm Password *</label>
-                        <span toggle="#password" className="fa fa-fw fa-eye-slash field-icon" ></span> */}
                         {submitted && !user.password_confirmation ?
                             <div className="alert error alert-danger">Confirm Password is required</div> : submitted && user.password_confirmation != user.password ?  <div className="alert error alert-danger">Password do not match</div> :null
                         }
@@ -244,11 +228,7 @@ class Register extends Component {
                    /> 
                 }</span>
                 </button>
-                    {/* {registering && 
-                        <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                    } */}
                     {success ? <p style={{color:"green"}}>{success}</p> : null}
-                    {/* {failure ? <p style={{color:"red"}}>{failure}</p> : null} */}
                 </form>
 
                 <div className="modal fade in" role="dialog" style={{ display: this.props.signuploader ? "block" : "none" }}>
@@ -260,41 +240,7 @@ class Register extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <!--otp Popup--> */}
-                {/* <div className="modal" role="dialog" style={{ display: this.props.otpmodel ? "block" : "none",top:'170px' }}>
-                    <div className="modal-dialog otp_confirm"> */}
-
-                        {/* <!-- Modal content--> */}
-                        {/* <div className="modal-content model-box">
-                            <div className="modal-body otpmodel text-center">
-                                <i className="fa fa-times" onClick={this.removeotp} style={{ position: "absolute", right: "12px", top: "12px" }}></i>
-                                <form className="form-signin otp" onSubmit={this.otpverify}>
-                                    <div className="form-group col-xs-12 col-sm-7 col-md-7 col-lg-7 ">
-                                        <input 
-                                            type="text" 
-                                            value={this.state.otp} 
-                                            className="form-control" 
-                                            onChange={this.handleOTPChange} 
-                                            placeholder="Enter OTP" 
-                                            required 
-                                            autoFocus 
-                                        />
-                                       
-                                    </div>
-                                    <div className="form-group col-xs-12 col-sm-5 col-md-5 col-lg-5  ">
-                                        <button className=" verify-button " type="submit">Verify </button>
-                                    </div>
-                                </form> */}
-                                {/* <div className="footer-pay">
-                                    <a onClick={this.resendotp} href="javascript:void(0)">Resend OTP</a>
-                                </div> */}
-
-                            {/* </div>
-
-                        </div>
-
-                    </div>
-                </div> */}
+            
                 <Modal
                 isOpen={this.state.modalIsOpen}
                 onRequestClose={this.closeModal}
@@ -322,11 +268,8 @@ class Register extends Component {
                 </div>
                 </form>
                 </Modal>
-
-
                 {/* <!-- End otp Popup--> */}
                             </div>
-                        
         );
     }
 }
