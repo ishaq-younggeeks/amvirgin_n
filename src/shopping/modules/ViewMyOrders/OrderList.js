@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import './ViewMyOrders.css';
 
 
  const OrderList = (props) =>{
@@ -11,15 +12,13 @@ import { Link } from 'react-router-dom';
                     item2.items
                       ? item2.items.map((item3) => (
         <div
-        className="col-sm-12"
-        style={{ margin: "0 0 2rem 3rem", width: "95%" }}
+        className="col-sm-12 orderlist"
       >
         <div className="whitepbox">
           <div
-            className="row"
-            style={{ height: "170px", alignItem: "center" }}
+            className="row orderlist-row"
           >
-            <div className="col-sm-1">
+            <div className="col-sm-1 order-img">
               {item3.product ? (
                 <img
                   src={item3.product.image}
@@ -43,35 +42,18 @@ import { Link } from 'react-router-dom';
               )}
             </div>
             <div className="col-sm-4">
-             
-                          <p
-                            style={{
-                              fontSize: "18px",
-                              padding: "10px 0",
-                              fontWeight: "400px",
-                              marginLeft: "6rem",
-                            }}
-                          >
-                            {item3.product.name}
-                          </p>
-              
               <p
-                style={{
-                  fontSize: "15px",
-                  padding: "10px 0",
-                  fontWeight: "400px",
-                  marginLeft: "6rem",
-                }}
+              className="ol-product-name"
+              >
+              {item3.product.name}
+              </p>          
+              <p
+                className="ol-quantity-total"
               >
                 Quantity : {item3.quantity}
               </p>
               <p
-                style={{
-                  fontSize: "15px",
-                  padding: "10px 0",
-                  fontWeight: "400px",
-                  marginLeft: "6rem",
-                }}
+                className="ol-quantity-total"
               >
                 Total : ₹ {item3.total}
               </p>

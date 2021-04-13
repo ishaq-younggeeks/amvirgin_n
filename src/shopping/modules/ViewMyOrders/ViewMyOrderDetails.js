@@ -165,6 +165,7 @@ console.log("current product",product)
               height: "150px",
               margin: "2px 0 0 3rem",
             }}
+            className="order-img"
           />
         ) : (
           <img
@@ -175,40 +176,34 @@ console.log("current product",product)
               height: "150px",
               margin: "2px 0 0 3rem",
             }}
+            className="order-img"
           />
         )}
       </div>
       <div className="col-sm-4">
         <h3
           style={{
-            color: "#ce3838",
-            fontSize: "19px",
-            padding: "10px 0",
-            fontWeight: "bold",
-            marginLeft: "6rem",
+           
           }}
+          className="vod-product"
         >
           {product.product.name}
         </h3>
 
         <p
           style={{
-            fontSize: "15px",
-            padding: "10px 0",
-            fontWeight: "400px",
             marginLeft: "6rem",
           }}
+          className="vod-others"
         >
           Quantity :{" "}
           {product.quantity}
         </p>
         <p
           style={{
-            fontSize: "15px",
-            padding: "10px 0",
-            fontWeight: "400px",
             marginLeft: "6rem",
           }}
+          className="vod-others"
         >
           Total : ₹{" "}
           {product.total}
@@ -216,11 +211,7 @@ console.log("current product",product)
       </div>
       <div className="col-sm-5">
         <p
-          style={{
-            fontSize: "15px",
-            padding: "10px 0",
-            fontWeight: "400px",
-          }}
+          className="vod-others"
         >
           Order # :{" "}
           {myOrderDetails.details
@@ -228,11 +219,7 @@ console.log("current product",product)
             : null}
         </p>
         <p
-          style={{
-            fontSize: "15px",
-            padding: "10px 0",
-            fontWeight: "400px",
-          }}
+        className="vod-others"
         >
           Order Status :{" "}
           {myOrderDetails.details
@@ -240,11 +227,7 @@ console.log("current product",product)
             : null}
         </p>
         <p
-          style={{
-            fontSize: "15px",
-            padding: "10px 0",
-            fontWeight: "400px",
-          }}
+          className="vod-others"
         >
           Payment Mode :{" "}
           {myOrderDetails.details
