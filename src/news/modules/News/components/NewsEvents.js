@@ -87,7 +87,7 @@ class NewsEvents extends React.Component {
                     <div className="blogpart" style={{width:"76.3%"}}>
                       <a href="#">
                         <div>
-                          <video src={item.video} alt="news1" controls="controls" onContextMenu={(e)=>  {e.preventDefault(); return false;}} onClick={() => this.props.articleDetailsFnc(item.key)}/>
+                          <video src={item.video} alt="news1" controls="controls" onContextMenu={(e)=>  {e.preventDefault(); return false;}} style={{width:"100%"}} onClick={() => this.props.articleDetailsFnc(item.key)}/>
                         </div>
                         <div className="details">
                           <h3>

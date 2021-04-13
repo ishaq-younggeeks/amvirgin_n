@@ -3,9 +3,6 @@ import "../../../style.css"
 import Header from "../../../../entertainment/modules/Header";
 import Footer from "../../../../entertainment/modules/Footer";
 import NewsEvents from "./NewsEvents";
-// import MainNewsSection from "./MainNewsSection";
-import NewsVideoSection from "./NewsVideoSection";
-import MoreNews from "./MoreNews";
 
 class News extends React.Component {
   constructor(props) {
@@ -25,9 +22,6 @@ class News extends React.Component {
         <Header/>
         <div class="newsbody">
           <NewsEvents category={this.props.newsCategory}/>
-          {/* <MainNewsSection/>
-          <NewsVideoSection/>
-          <MoreNews/> */}
           <Footer/>
         </div>
       </>

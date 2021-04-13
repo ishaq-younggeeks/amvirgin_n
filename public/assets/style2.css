@@ -4182,7 +4182,7 @@ ul .bzoom_small_thumbs li,
     margin-right: 0px;
   }
   .section1 {
-    margin-top: 70px;
+    margin-top: 60px;
   }
   .navbar {
     z-index: 999;
@@ -4529,4 +4529,18 @@ li.nav-item.lessmargin a p{
 		margin-right: auto!important;
 	}
 
+}
+
+@media (max-width:720px){
+  .navclass{background:#000!important;height:60px!important;}
+  #navbar{height:60px !important;}
+  .section1 {
+    margin-top: 60px;
+  }
+  .specific4{margin: 10px auto 50px !important;}
+  .dealover h4{
+    padding: 12px 0px 12px 12px!important;
+    font-size: 20px!important;
+  }
+  .imgbrand{width:100%;margin-bottom:80px!important;}
 }

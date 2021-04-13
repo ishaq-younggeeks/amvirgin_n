@@ -187,8 +187,8 @@ closeNav = () => {
           <div className="overlay-content">
             <Link to="/">Home</Link>
             <Link to="/shop">Shop</Link>
-            <Link>News</Link>
-            <Link>Chatmate</Link>
+            <Link to="/news">News</Link>
+            <Link to="/login">Sign In</Link>
           </div>
         </div>
         <nav className={this.classs()} id="navbar">

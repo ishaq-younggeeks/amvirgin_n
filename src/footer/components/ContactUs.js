@@ -82,7 +82,7 @@ const ContactUs = (props) => {
     return (
       <>
         <Header />
-        <div className="bg-black text-white mb-5">
+        <div className="bg-black text-white">
           <div className="container blogsection specific mt-5">
             <form className="mb-5 mt-5" noValidate onSubmit={handleFormSubmit}>
               <div className="form-group">
